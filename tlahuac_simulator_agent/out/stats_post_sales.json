@@ -1,0 +1,28 @@
+{
+  "total_conversations": 55,
+  "total_messages": 1648,
+  "messages_per_conversation": {
+    "min": 4,
+    "max": 77,
+    "mean": 29.963636363636365,
+    "median": 27
+  },
+  "role_distribution": {
+    "customer": 505,
+    "dealership": 984,
+    "unknown": 159
+  },
+  "pii_statistics": {
+    "messages_with_pii": 1599,
+    "pii_hit_rate": 0.9702669902912622,
+    "pii_by_type": {
+      "NAME": 1594,
+      "SURNAME": 1559,
+      "VIN": 63,
+      "PLATE": 67,
+      "EMAIL": 41,
+      "ADDRESS": 3,
+      "ORDER_ID": 1
+    }
+  }
+}

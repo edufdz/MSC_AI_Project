@@ -1,0 +1,235 @@
+{
+  "source_file": "Chat de WhatsApp con +52 55 1956 1501_from_00000331-Chat de WhatsApp con +52 55 1956 1501.txt",
+  "conversation_index": 0,
+  "total_conversations_in_file": 1,
+  "raw_text": "16/7/2025, 7:30 a. m. - Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.\n16/7/2025, 7:30 a. m. - \n16/7/2025, 7:30 a. m. - +52 55 1956 1501: ¡Hola! Podrías darme más información de...\n16/7/2025, 7:30 a. m. - Chevrolet Calidad Tlahuac: ¡Bienvenido!! agradecemos tu preferencia, con la intención de atenderte con la Calidad y Calidez que te mereces nos podrías compartir tu nombre y ¿Cómo podemos apoyarle?\n16/7/2025, 7:30 a. m. - Chevrolet Calidad Tlahuac: Una disculpa en este momento no tenemos a un asesor disponible, pero en breve nos pondremos en contacto con usted, Recuerde nuestros horarios de atención son de Lunes a Viernes de 9:00 AM a 7:00 PM y Sábados de 9:00 AM a 2:00 PM\n16/7/2025, 7:31 a. m. - +52 55 1956 1501: Manuel\n16/7/2025, 9:23 a. m. - Chevrolet Calidad Tlahuac: Gracias Sr. Manuel, si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información.. Me podría brindar su apellido por favor\n16/7/2025, 9:27 a. m. - +52 55 1956 1501: Guevara\n16/7/2025, 9:46 a. m. - Chevrolet Calidad Tlahuac: Gracias sr. Guevara, cual seria el auto de su interés?\n16/7/2025, 5:16 p. m. - +52 55 1956 1501: Aveo hb black edition <Se editó este mensaje.>\n16/7/2025, 5:17 p. m. - Chevrolet Calidad Tlahuac: claro que si con gusto, en breve lo contacta un asesor\n16/7/2025, 5:18 p. m. - +52 55 1956 1501: Que sea por WhatsApp por favor\n16/7/2025, 5:19 p. m. - Chevrolet Calidad Tlahuac: claro, se lo hago saber al asesor\n16/7/2025, 6:03 p. m. - +52 55 1956 1501: Gracias",
+  "messages": [
+    {
+      "ts_raw": "16/7/2025, 7:30 a. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "idx": 0,
+      "text": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 7:30 a. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "-",
+      "idx": 1,
+      "text": "-",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 7:30 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1956 1501",
+      "text_raw": "¡Hola! Podrías darme más información de...",
+      "idx": 2,
+      "text": "¡Hola! Podrías darme más información de...",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 7:30 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "¡Bienvenido!! agradecemos tu preferencia, con la intención de atenderte con la Calidad y Calidez que te mereces nos podrías compartir tu nombre y ¿Cómo podemos apoyarle?",
+      "idx": 3,
+      "text": "¡Bienvenido!! agradecemos tu preferencia, con la intención de atenderte con la Calidad y Calidez que te mereces nos podrías compartir tu nombre y ¿Cómo podemos apoyarle?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 7:30 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Una disculpa en este momento no tenemos a un asesor disponible, pero en breve nos pondremos en contacto con usted, Recuerde nuestros horarios de atención son de Lunes a Viernes de 9:00 AM a 7:00 PM y Sábados de 9:00 AM a 2:00 PM",
+      "idx": 4,
+      "text": "Una disculpa en este momento no tenemos a un asesor disponible, pero en breve nos pondremos en contacto con usted, Recuerde nuestros horarios de atención son de Lunes a Viernes de 9:<PLATE> a 7:<PLATE> y Sábados de 9:<PLATE> a 2:<PLATE>",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": true,
+        "types": [
+          "PLATE"
+        ]
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 7:31 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1956 1501",
+      "text_raw": "Manuel",
+      "idx": 5,
+      "text": "Manuel",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 9:23 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Gracias Sr. Manuel, si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información.. Me podría brindar su apellido por favor",
+      "idx": 6,
+      "text": "Gracias Sr. Manuel, si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información.. Me podría brindar su apellido por favor",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 9:27 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1956 1501",
+      "text_raw": "Guevara",
+      "idx": 7,
+      "text": "Guevara",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 9:46 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Gracias sr. Guevara, cual seria el auto de su interés?",
+      "idx": 8,
+      "text": "Gracias sr. Guevara, cual seria el auto de su interés?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 5:16 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1956 1501",
+      "text_raw": "Aveo hb black edition <Se editó este mensaje.>",
+      "idx": 9,
+      "text": "Aveo hb black edition <Se editó este mensaje.>",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 5:17 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "claro que si con gusto, en breve lo contacta un asesor",
+      "idx": 10,
+      "text": "claro que si con gusto, en breve lo contacta un asesor",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 5:18 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1956 1501",
+      "text_raw": "Que sea por WhatsApp por favor",
+      "idx": 11,
+      "text": "Que sea por WhatsApp por favor",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 5:19 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "claro, se lo hago saber al asesor",
+      "idx": 12,
+      "text": "claro, se lo hago saber al asesor",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 6:03 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1956 1501",
+      "text_raw": "Gracias",
+      "idx": 13,
+      "text": "Gracias",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    }
+  ],
+  "message_count": 14
+}

@@ -1,0 +1,379 @@
+{
+  "source_file": "Chat de WhatsApp con +52 55 4089 7467_from_00000295-Chat de WhatsApp con +52 55 4089 7467.txt",
+  "conversation_index": 0,
+  "total_conversations_in_file": 1,
+  "raw_text": "17/7/2025, 10:30 a. m. - Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.\n17/7/2025, 10:30 a. m. - \n17/7/2025, 8:36 a. m. - Chevrolet Calidad Tlahuac: Anuncio de Facebook Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?\n17/7/2025, 8:36 a. m. - +52 55 4089 7467: ¡Hola! Podrías darme más información de...\n17/7/2025, 8:36 a. m. - +52 55 4089 7467: De los seminuevos por favor\n17/7/2025, 10:40 a. m. - Chevrolet Calidad Tlahuac: Buenos días, claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?\n17/7/2025, 10:54 a. m. - +52 55 4089 7467: Con Saúl Herrera\n17/7/2025, 10:55 a. m. - +52 55 4089 7467: Si sólo quería ver que seminuevos tienen por favor\n17/7/2025, 11:13 a. m. - Chevrolet Calidad Tlahuac: Claro le comparto el catálogo \nhttps://www.chevrolettlahuac.com/seminuevos\n17/7/2025, 12:16 p. m. - +52 55 4089 7467: Gracias\n17/7/2025, 6:54 p. m. - +52 55 4089 7467: Buena tarde\n17/7/2025, 6:54 p. m. - +52 55 4089 7467: Disculpe manejan remate de unidades demo\n18/7/2025, 10:01 a. m. - Chevrolet Calidad Tlahuac: ‎IMG-20250718-WA0000.jpg (archivo adjunto)\nBuenos días, claro le comparto el inventario de unidades demos que tenemos\n18/7/2025, 10:03 a. m. - +52 55 4089 7467: Muchas gracias\n18/7/2025, 10:03 a. m. - +52 55 4089 7467: Y toman a cuenta autos\n18/7/2025, 10:17 a. m. - Chevrolet Calidad Tlahuac: si también, si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?\n18/7/2025, 10:23 a. m. - +52 55 4089 7467: Con Daniel Herrera\n18/7/2025, 10:30 a. m. - Chevrolet Calidad Tlahuac: Gracias sr. Herrera en breve lo contacta un asesor\n18/7/2025, 10:30 a. m. - +52 55 4089 7467: Bueno puede ser por mensaje\n18/7/2025, 10:30 a. m. - +52 55 4089 7467: O marcarme a las 3:15\n18/7/2025, 10:31 a. m. - +52 55 4089 7467: Q salgo a comer por favor\n18/7/2025, 10:32 a. m. - Chevrolet Calidad Tlahuac: claro se lo hago saber al asesor\n18/7/2025, 10:33 a. m. - +52 55 4089 7467: Gracias",
+  "messages": [
+    {
+      "ts_raw": "17/7/2025, 10:30 a. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "idx": 0,
+      "text": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 10:30 a. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "-",
+      "idx": 1,
+      "text": "-",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 8:36 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Anuncio de Facebook Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?",
+      "idx": 2,
+      "text": "Anuncio de Facebook Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 8:36 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 4089 7467",
+      "text_raw": "¡Hola! Podrías darme más información de...",
+      "idx": 3,
+      "text": "¡Hola! Podrías darme más información de...",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 8:36 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 4089 7467",
+      "text_raw": "De los seminuevos por favor",
+      "idx": 4,
+      "text": "De los seminuevos por favor",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 10:40 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Buenos días, claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?",
+      "idx": 5,
+      "text": "Buenos días, claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 10:54 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 4089 7467",
+      "text_raw": "Con Saúl Herrera",
+      "idx": 6,
+      "text": "Con Saúl Herrera",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 10:55 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 4089 7467",
+      "text_raw": "Si sólo quería ver que seminuevos tienen por favor",
+      "idx": 7,
+      "text": "Si sólo quería ver que seminuevos tienen por favor",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 11:13 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Claro le comparto el catálogo\nhttps://www.chevrolettlahuac.com/seminuevos",
+      "idx": 8,
+      "text": "Claro le comparto el catálogo\nhttps://www.chevrolettlahuac.com/seminuevos",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 12:16 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 4089 7467",
+      "text_raw": "Gracias",
+      "idx": 9,
+      "text": "Gracias",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 6:54 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 4089 7467",
+      "text_raw": "Buena tarde",
+      "idx": 10,
+      "text": "Buena tarde",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 6:54 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 4089 7467",
+      "text_raw": "Disculpe manejan remate de unidades demo",
+      "idx": 11,
+      "text": "Disculpe manejan remate de unidades demo",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "18/7/2025, 10:01 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "‎IMG-20250718-WA0000.jpg (archivo adjunto)\nBuenos días, claro le comparto el inventario de unidades demos que tenemos",
+      "idx": 12,
+      "text": "‎IMG-20250718-<PLATE>.jpg (archivo adjunto)\nBuenos días, claro le comparto el inventario de unidades demos que tenemos",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": true,
+        "types": [
+          "PLATE"
+        ]
+      }
+    },
+    {
+      "ts_raw": "18/7/2025, 10:03 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 4089 7467",
+      "text_raw": "Muchas gracias",
+      "idx": 13,
+      "text": "Muchas gracias",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "18/7/2025, 10:03 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 4089 7467",
+      "text_raw": "Y toman a cuenta autos",
+      "idx": 14,
+      "text": "Y toman a cuenta autos",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "18/7/2025, 10:17 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "si también, si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?",
+      "idx": 15,
+      "text": "si también, si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "18/7/2025, 10:23 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 4089 7467",
+      "text_raw": "Con Daniel Herrera",
+      "idx": 16,
+      "text": "Con Daniel Herrera",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "18/7/2025, 10:30 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Gracias sr. Herrera en breve lo contacta un asesor",
+      "idx": 17,
+      "text": "Gracias sr. Herrera en breve lo contacta un asesor",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "18/7/2025, 10:30 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 4089 7467",
+      "text_raw": "Bueno puede ser por mensaje",
+      "idx": 18,
+      "text": "Bueno puede ser por mensaje",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "18/7/2025, 10:30 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 4089 7467",
+      "text_raw": "O marcarme a las 3:15",
+      "idx": 19,
+      "text": "O marcarme a las 3:15",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "18/7/2025, 10:31 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 4089 7467",
+      "text_raw": "Q salgo a comer por favor",
+      "idx": 20,
+      "text": "Q salgo a comer por favor",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "18/7/2025, 10:32 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "claro se lo hago saber al asesor",
+      "idx": 21,
+      "text": "claro se lo hago saber al asesor",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "18/7/2025, 10:33 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 4089 7467",
+      "text_raw": "Gracias",
+      "idx": 22,
+      "text": "Gracias",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    }
+  ],
+  "message_count": 23
+}

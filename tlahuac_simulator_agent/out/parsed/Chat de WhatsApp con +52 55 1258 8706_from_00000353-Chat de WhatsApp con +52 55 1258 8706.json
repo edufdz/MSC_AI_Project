@@ -1,0 +1,251 @@
+{
+  "source_file": "Chat de WhatsApp con +52 55 1258 8706_from_00000353-Chat de WhatsApp con +52 55 1258 8706.txt",
+  "conversation_index": 0,
+  "total_conversations_in_file": 1,
+  "raw_text": "16/7/2025, 8:25 a. m. - Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.\n16/7/2025, 8:25 a. m. - \n16/7/2025, 8:26 a. m. - +52 55 1258 8706: Hola buen día\n16/7/2025, 8:25 a. m. - Chevrolet Calidad Tlahuac: ¡Bienvenido!! agradecemos tu preferencia, con la intención de atenderte con la Calidad y Calidez que te mereces nos podrías compartir tu nombre y ¿Cómo podemos apoyarle?\n16/7/2025, 8:25 a. m. - Chevrolet Calidad Tlahuac: Una disculpa en este momento no tenemos a un asesor disponible, pero en breve nos pondremos en contacto con usted, Recuerde nuestros horarios de atención son de Lunes a Viernes de 9:00 AM a 7:00 PM y Sábados de 9:00 AM a 2:00 PM\n16/7/2025, 8:26 a. m. - +52 55 1258 8706: Buenos días soy Sergio\n16/7/2025, 8:27 a. m. - +52 55 1258 8706: Me gustaría saber acerca de la feria de crédito de seminuevos\n16/7/2025, 9:22 a. m. - Chevrolet Calidad Tlahuac: Claro con gusto, si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , me podría brindar su apellido porfavor\n16/7/2025, 10:22 a. m. - +52 55 1258 8706: Torres\n16/7/2025, 10:23 a. m. - +52 55 1258 8706: Claro que si. Para llamadas sería al 5641545466\n16/7/2025, 10:27 a. m. - Chevrolet Calidad Tlahuac: Gracias sr. Torres cual seria el auto de su interes?\n16/7/2025, 10:29 a. m. - +52 55 1258 8706: Me interesa un carro automático. Me podrá mandar la lista de seminuevos disponibles, por favor\n16/7/2025, 10:52 a. m. - Chevrolet Calidad Tlahuac: claro le comparto nuestro catalogo \nhttps://www.chevrolettlahuac.com/seminuevos\n16/7/2025, 10:57 a. m. - +52 55 1258 8706: Gracias\n16/7/2025, 11:31 a. m. - Chevrolet Calidad Tlahuac: para servirle, excelente dia",
+  "messages": [
+    {
+      "ts_raw": "16/7/2025, 8:25 a. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "idx": 0,
+      "text": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 8:25 a. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "-",
+      "idx": 1,
+      "text": "-",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 8:26 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1258 8706",
+      "text_raw": "Hola buen día",
+      "idx": 2,
+      "text": "Hola buen día",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 8:25 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "¡Bienvenido!! agradecemos tu preferencia, con la intención de atenderte con la Calidad y Calidez que te mereces nos podrías compartir tu nombre y ¿Cómo podemos apoyarle?",
+      "idx": 3,
+      "text": "¡Bienvenido!! agradecemos tu preferencia, con la intención de atenderte con la Calidad y Calidez que te mereces nos podrías compartir tu nombre y ¿Cómo podemos apoyarle?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 8:25 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Una disculpa en este momento no tenemos a un asesor disponible, pero en breve nos pondremos en contacto con usted, Recuerde nuestros horarios de atención son de Lunes a Viernes de 9:00 AM a 7:00 PM y Sábados de 9:00 AM a 2:00 PM",
+      "idx": 4,
+      "text": "Una disculpa en este momento no tenemos a un asesor disponible, pero en breve nos pondremos en contacto con usted, Recuerde nuestros horarios de atención son de Lunes a Viernes de 9:<PLATE> a 7:<PLATE> y Sábados de 9:<PLATE> a 2:<PLATE>",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": true,
+        "types": [
+          "PLATE"
+        ]
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 8:26 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1258 8706",
+      "text_raw": "Buenos días soy Sergio",
+      "idx": 5,
+      "text": "Buenos días soy Sergio",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 8:27 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1258 8706",
+      "text_raw": "Me gustaría saber acerca de la feria de crédito de seminuevos",
+      "idx": 6,
+      "text": "Me gustaría saber acerca de la feria de crédito de seminuevos",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 9:22 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Claro con gusto, si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , me podría brindar su apellido porfavor",
+      "idx": 7,
+      "text": "Claro con gusto, si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , me podría brindar su apellido porfavor",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 10:22 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1258 8706",
+      "text_raw": "Torres",
+      "idx": 8,
+      "text": "Torres",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 10:23 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1258 8706",
+      "text_raw": "Claro que si. Para llamadas sería al 5641545466",
+      "idx": 9,
+      "text": "Claro que si. Para llamadas sería al 5641545466",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 10:27 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Gracias sr. Torres cual seria el auto de su interes?",
+      "idx": 10,
+      "text": "Gracias sr. Torres cual seria el auto de su interes?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 10:29 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1258 8706",
+      "text_raw": "Me interesa un carro automático. Me podrá mandar la lista de seminuevos disponibles, por favor",
+      "idx": 11,
+      "text": "Me interesa un carro automático. Me podrá mandar la lista de seminuevos disponibles, por favor",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 10:52 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "claro le comparto nuestro catalogo\nhttps://www.chevrolettlahuac.com/seminuevos",
+      "idx": 12,
+      "text": "claro le comparto nuestro catalogo\nhttps://www.chevrolettlahuac.com/seminuevos",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 10:57 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1258 8706",
+      "text_raw": "Gracias",
+      "idx": 13,
+      "text": "Gracias",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 11:31 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "para servirle, excelente dia",
+      "idx": 14,
+      "text": "para servirle, excelente dia",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    }
+  ],
+  "message_count": 15
+}

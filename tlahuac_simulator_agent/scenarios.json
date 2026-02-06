@@ -1,0 +1,5519 @@
+{
+  "scenarios": {
+    "booking_service_appointment": {
+      "scenario_id": "booking_service_appointment",
+      "category": "booking/rescheduling/cancel",
+      "description": "Customer requesting service appointment",
+      "starter_openers": [
+        "Hola, quiero agendar una cita",
+        "Buen día, necesito programar servicio",
+        "Quiero agendar cita para mantenimiento",
+        "Necesito agendar una cita",
+        "Buenas, quiero programar servicio",
+        "Hola, puedo agendar una cita?",
+        "Quiero agendar para servicio",
+        "Necesito cita para mi auto",
+        "Buen día, quiero agendar",
+        "Hola, necesito agendar cita de servicio",
+        "Quiero agendar mantenimiento",
+        "Necesito programar una cita",
+        "Puedo agendar una cita?",
+        "Quiero agendar servicio",
+        "Necesito agendar",
+        "Buen día, quiero agendar cita",
+        "Hola, necesito cita",
+        "Quiero programar una cita",
+        "Necesito agendar para mantenimiento",
+        "Puedo programar una cita?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "preferred_date",
+        "time_preference",
+        "reason"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "add_details",
+        "reduce_request",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "rescheduling_appointment": {
+      "scenario_id": "rescheduling_appointment",
+      "category": "booking/rescheduling/cancel",
+      "description": "Customer needs to reschedule existing appointment",
+      "starter_openers": [
+        "Hola, quiero agendar una cita",
+        "Buen día, necesito programar servicio",
+        "Quiero agendar cita para mantenimiento",
+        "Necesito agendar una cita",
+        "Buenas, quiero programar servicio",
+        "Hola, puedo agendar una cita?",
+        "Quiero agendar para servicio",
+        "Necesito cita para mi auto",
+        "Buen día, quiero agendar",
+        "Hola, necesito agendar cita de servicio",
+        "Quiero agendar mantenimiento",
+        "Necesito programar una cita",
+        "Puedo agendar una cita?",
+        "Quiero agendar servicio",
+        "Necesito agendar",
+        "Buen día, quiero agendar cita",
+        "Hola, necesito cita",
+        "Quiero programar una cita",
+        "Necesito agendar para mantenimiento",
+        "Puedo programar una cita?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "preferred_date",
+        "time_preference",
+        "reason"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "add_details",
+        "reduce_request",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "cancel_appointment": {
+      "scenario_id": "cancel_appointment",
+      "category": "booking/rescheduling/cancel",
+      "description": "Customer wants to cancel appointment",
+      "starter_openers": [
+        "Hola, quiero agendar una cita",
+        "Buen día, necesito programar servicio",
+        "Quiero agendar cita para mantenimiento",
+        "Necesito agendar una cita",
+        "Buenas, quiero programar servicio",
+        "Hola, puedo agendar una cita?",
+        "Quiero agendar para servicio",
+        "Necesito cita para mi auto",
+        "Buen día, quiero agendar",
+        "Hola, necesito agendar cita de servicio",
+        "Quiero agendar mantenimiento",
+        "Necesito programar una cita",
+        "Puedo agendar una cita?",
+        "Quiero agendar servicio",
+        "Necesito agendar",
+        "Buen día, quiero agendar cita",
+        "Hola, necesito cita",
+        "Quiero programar una cita",
+        "Necesito agendar para mantenimiento",
+        "Puedo programar una cita?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "preferred_date",
+        "time_preference",
+        "reason"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "add_details",
+        "reduce_request",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "urgent_same_day_booking": {
+      "scenario_id": "urgent_same_day_booking",
+      "category": "booking/rescheduling/cancel",
+      "description": "Customer needs same-day urgent service",
+      "starter_openers": [
+        "Hola, quiero agendar una cita",
+        "Buen día, necesito programar servicio",
+        "Quiero agendar cita para mantenimiento",
+        "Necesito agendar una cita",
+        "Buenas, quiero programar servicio",
+        "Hola, puedo agendar una cita?",
+        "Quiero agendar para servicio",
+        "Necesito cita para mi auto",
+        "Buen día, quiero agendar",
+        "Hola, necesito agendar cita de servicio",
+        "Quiero agendar mantenimiento",
+        "Necesito programar una cita",
+        "Puedo agendar una cita?",
+        "Quiero agendar servicio",
+        "Necesito agendar",
+        "Buen día, quiero agendar cita",
+        "Hola, necesito cita",
+        "Quiero programar una cita",
+        "Necesito agendar para mantenimiento",
+        "Puedo programar una cita?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "preferred_date",
+        "time_preference",
+        "reason"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "add_details",
+        "reduce_request",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "booking_with_constraints": {
+      "scenario_id": "booking_with_constraints",
+      "category": "booking/rescheduling/cancel",
+      "description": "Customer booking with time/location constraints",
+      "starter_openers": [
+        "Hola, quiero agendar una cita",
+        "Buen día, necesito programar servicio",
+        "Quiero agendar cita para mantenimiento",
+        "Necesito agendar una cita",
+        "Buenas, quiero programar servicio",
+        "Hola, puedo agendar una cita?",
+        "Quiero agendar para servicio",
+        "Necesito cita para mi auto",
+        "Buen día, quiero agendar",
+        "Hola, necesito agendar cita de servicio",
+        "Quiero agendar mantenimiento",
+        "Necesito programar una cita",
+        "Puedo agendar una cita?",
+        "Quiero agendar servicio",
+        "Necesito agendar",
+        "Buen día, quiero agendar cita",
+        "Hola, necesito cita",
+        "Quiero programar una cita",
+        "Necesito agendar para mantenimiento",
+        "Puedo programar una cita?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "preferred_date",
+        "time_preference",
+        "reason"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "add_details",
+        "reduce_request",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "booking_multiple_services": {
+      "scenario_id": "booking_multiple_services",
+      "category": "booking/rescheduling/cancel",
+      "description": "Customer booking multiple services at once",
+      "starter_openers": [
+        "Hola, quiero agendar una cita",
+        "Buen día, necesito programar servicio",
+        "Quiero agendar cita para mantenimiento",
+        "Necesito agendar una cita",
+        "Buenas, quiero programar servicio",
+        "Hola, puedo agendar una cita?",
+        "Quiero agendar para servicio",
+        "Necesito cita para mi auto",
+        "Buen día, quiero agendar",
+        "Hola, necesito agendar cita de servicio",
+        "Quiero agendar mantenimiento",
+        "Necesito programar una cita",
+        "Puedo agendar una cita?",
+        "Quiero agendar servicio",
+        "Necesito agendar",
+        "Buen día, quiero agendar cita",
+        "Hola, necesito cita",
+        "Quiero programar una cita",
+        "Necesito agendar para mantenimiento",
+        "Puedo programar una cita?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "preferred_date",
+        "time_preference",
+        "reason"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "add_details",
+        "reduce_request",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "booking_with_discount_request": {
+      "scenario_id": "booking_with_discount_request",
+      "category": "booking/rescheduling/cancel",
+      "description": "Customer booking while asking for discount",
+      "starter_openers": [
+        "Hola, quiero agendar una cita",
+        "Buen día, necesito programar servicio",
+        "Quiero agendar cita para mantenimiento",
+        "Necesito agendar una cita",
+        "Buenas, quiero programar servicio",
+        "Hola, puedo agendar una cita?",
+        "Quiero agendar para servicio",
+        "Necesito cita para mi auto",
+        "Buen día, quiero agendar",
+        "Hola, necesito agendar cita de servicio",
+        "Quiero agendar mantenimiento",
+        "Necesito programar una cita",
+        "Puedo agendar una cita?",
+        "Quiero agendar servicio",
+        "Necesito agendar",
+        "Buen día, quiero agendar cita",
+        "Hola, necesito cita",
+        "Quiero programar una cita",
+        "Necesito agendar para mantenimiento",
+        "Puedo programar una cita?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "preferred_date",
+        "time_preference",
+        "reason"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "add_details",
+        "reduce_request",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "booking_after_hours": {
+      "scenario_id": "booking_after_hours",
+      "category": "booking/rescheduling/cancel",
+      "description": "Customer trying to book outside business hours",
+      "starter_openers": [
+        "Hola, quiero agendar una cita",
+        "Buen día, necesito programar servicio",
+        "Quiero agendar cita para mantenimiento",
+        "Necesito agendar una cita",
+        "Buenas, quiero programar servicio",
+        "Hola, puedo agendar una cita?",
+        "Quiero agendar para servicio",
+        "Necesito cita para mi auto",
+        "Buen día, quiero agendar",
+        "Hola, necesito agendar cita de servicio",
+        "Quiero agendar mantenimiento",
+        "Necesito programar una cita",
+        "Puedo agendar una cita?",
+        "Quiero agendar servicio",
+        "Necesito agendar",
+        "Buen día, quiero agendar cita",
+        "Hola, necesito cita",
+        "Quiero programar una cita",
+        "Necesito agendar para mantenimiento",
+        "Puedo programar una cita?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "preferred_date",
+        "time_preference",
+        "reason"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "add_details",
+        "reduce_request",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "booking_weekend_only": {
+      "scenario_id": "booking_weekend_only",
+      "category": "booking/rescheduling/cancel",
+      "description": "Customer only available on weekends",
+      "starter_openers": [
+        "Hola, quiero agendar una cita",
+        "Buen día, necesito programar servicio",
+        "Quiero agendar cita para mantenimiento",
+        "Necesito agendar una cita",
+        "Buenas, quiero programar servicio",
+        "Hola, puedo agendar una cita?",
+        "Quiero agendar para servicio",
+        "Necesito cita para mi auto",
+        "Buen día, quiero agendar",
+        "Hola, necesito agendar cita de servicio",
+        "Quiero agendar mantenimiento",
+        "Necesito programar una cita",
+        "Puedo agendar una cita?",
+        "Quiero agendar servicio",
+        "Necesito agendar",
+        "Buen día, quiero agendar cita",
+        "Hola, necesito cita",
+        "Quiero programar una cita",
+        "Necesito agendar para mantenimiento",
+        "Puedo programar una cita?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "preferred_date",
+        "time_preference",
+        "reason"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "add_details",
+        "reduce_request",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "booking_early_morning": {
+      "scenario_id": "booking_early_morning",
+      "category": "booking/rescheduling/cancel",
+      "description": "Customer requesting early morning appointment",
+      "starter_openers": [
+        "Hola, quiero agendar una cita",
+        "Buen día, necesito programar servicio",
+        "Quiero agendar cita para mantenimiento",
+        "Necesito agendar una cita",
+        "Buenas, quiero programar servicio",
+        "Hola, puedo agendar una cita?",
+        "Quiero agendar para servicio",
+        "Necesito cita para mi auto",
+        "Buen día, quiero agendar",
+        "Hola, necesito agendar cita de servicio",
+        "Quiero agendar mantenimiento",
+        "Necesito programar una cita",
+        "Puedo agendar una cita?",
+        "Quiero agendar servicio",
+        "Necesito agendar",
+        "Buen día, quiero agendar cita",
+        "Hola, necesito cita",
+        "Quiero programar una cita",
+        "Necesito agendar para mantenimiento",
+        "Puedo programar una cita?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "preferred_date",
+        "time_preference",
+        "reason"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "add_details",
+        "reduce_request",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "rescheduling_due_conflict": {
+      "scenario_id": "rescheduling_due_conflict",
+      "category": "booking/rescheduling/cancel",
+      "description": "Customer rescheduling due to schedule conflict",
+      "starter_openers": [
+        "Hola, quiero agendar una cita",
+        "Buen día, necesito programar servicio",
+        "Quiero agendar cita para mantenimiento",
+        "Necesito agendar una cita",
+        "Buenas, quiero programar servicio",
+        "Hola, puedo agendar una cita?",
+        "Quiero agendar para servicio",
+        "Necesito cita para mi auto",
+        "Buen día, quiero agendar",
+        "Hola, necesito agendar cita de servicio",
+        "Quiero agendar mantenimiento",
+        "Necesito programar una cita",
+        "Puedo agendar una cita?",
+        "Quiero agendar servicio",
+        "Necesito agendar",
+        "Buen día, quiero agendar cita",
+        "Hola, necesito cita",
+        "Quiero programar una cita",
+        "Necesito agendar para mantenimiento",
+        "Puedo programar una cita?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "preferred_date",
+        "time_preference",
+        "reason"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "add_details",
+        "reduce_request",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "rescheduling_due_emergency": {
+      "scenario_id": "rescheduling_due_emergency",
+      "category": "booking/rescheduling/cancel",
+      "description": "Customer rescheduling due to emergency",
+      "starter_openers": [
+        "Hola, quiero agendar una cita",
+        "Buen día, necesito programar servicio",
+        "Quiero agendar cita para mantenimiento",
+        "Necesito agendar una cita",
+        "Buenas, quiero programar servicio",
+        "Hola, puedo agendar una cita?",
+        "Quiero agendar para servicio",
+        "Necesito cita para mi auto",
+        "Buen día, quiero agendar",
+        "Hola, necesito agendar cita de servicio",
+        "Quiero agendar mantenimiento",
+        "Necesito programar una cita",
+        "Puedo agendar una cita?",
+        "Quiero agendar servicio",
+        "Necesito agendar",
+        "Buen día, quiero agendar cita",
+        "Hola, necesito cita",
+        "Quiero programar una cita",
+        "Necesito agendar para mantenimiento",
+        "Puedo programar una cita?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "preferred_date",
+        "time_preference",
+        "reason"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "add_details",
+        "reduce_request",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "cancel_due_emergency": {
+      "scenario_id": "cancel_due_emergency",
+      "category": "booking/rescheduling/cancel",
+      "description": "Customer canceling due to emergency",
+      "starter_openers": [
+        "Hola, quiero agendar una cita",
+        "Buen día, necesito programar servicio",
+        "Quiero agendar cita para mantenimiento",
+        "Necesito agendar una cita",
+        "Buenas, quiero programar servicio",
+        "Hola, puedo agendar una cita?",
+        "Quiero agendar para servicio",
+        "Necesito cita para mi auto",
+        "Buen día, quiero agendar",
+        "Hola, necesito agendar cita de servicio",
+        "Quiero agendar mantenimiento",
+        "Necesito programar una cita",
+        "Puedo agendar una cita?",
+        "Quiero agendar servicio",
+        "Necesito agendar",
+        "Buen día, quiero agendar cita",
+        "Hola, necesito cita",
+        "Quiero programar una cita",
+        "Necesito agendar para mantenimiento",
+        "Puedo programar una cita?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "preferred_date",
+        "time_preference",
+        "reason"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "add_details",
+        "reduce_request",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "cancel_due_price": {
+      "scenario_id": "cancel_due_price",
+      "category": "booking/rescheduling/cancel",
+      "description": "Customer canceling due to price concerns",
+      "starter_openers": [
+        "Hola, quiero agendar una cita",
+        "Buen día, necesito programar servicio",
+        "Quiero agendar cita para mantenimiento",
+        "Necesito agendar una cita",
+        "Buenas, quiero programar servicio",
+        "Hola, puedo agendar una cita?",
+        "Quiero agendar para servicio",
+        "Necesito cita para mi auto",
+        "Buen día, quiero agendar",
+        "Hola, necesito agendar cita de servicio",
+        "Quiero agendar mantenimiento",
+        "Necesito programar una cita",
+        "Puedo agendar una cita?",
+        "Quiero agendar servicio",
+        "Necesito agendar",
+        "Buen día, quiero agendar cita",
+        "Hola, necesito cita",
+        "Quiero programar una cita",
+        "Necesito agendar para mantenimiento",
+        "Puedo programar una cita?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "preferred_date",
+        "time_preference",
+        "reason"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "add_details",
+        "reduce_request",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "cancel_due_delay": {
+      "scenario_id": "cancel_due_delay",
+      "category": "booking/rescheduling/cancel",
+      "description": "Customer canceling due to previous delays",
+      "starter_openers": [
+        "Hola, quiero agendar una cita",
+        "Buen día, necesito programar servicio",
+        "Quiero agendar cita para mantenimiento",
+        "Necesito agendar una cita",
+        "Buenas, quiero programar servicio",
+        "Hola, puedo agendar una cita?",
+        "Quiero agendar para servicio",
+        "Necesito cita para mi auto",
+        "Buen día, quiero agendar",
+        "Hola, necesito agendar cita de servicio",
+        "Quiero agendar mantenimiento",
+        "Necesito programar una cita",
+        "Puedo agendar una cita?",
+        "Quiero agendar servicio",
+        "Necesito agendar",
+        "Buen día, quiero agendar cita",
+        "Hola, necesito cita",
+        "Quiero programar una cita",
+        "Necesito agendar para mantenimiento",
+        "Puedo programar una cita?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "preferred_date",
+        "time_preference",
+        "reason"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "add_details",
+        "reduce_request",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "status_update_general": {
+      "scenario_id": "status_update_general",
+      "category": "status updates & chasing",
+      "description": "General status check",
+      "starter_openers": [
+        "Hola, ya está listo?",
+        "Buen día, cuándo estará listo?",
+        "Ya quedó mi auto?",
+        "Para cuándo estará?",
+        "Cuándo puedo pasar?",
+        "Ya está listo mi vehículo?",
+        "Sigue en taller?",
+        "Cuándo estará listo?",
+        "Ya terminaron?",
+        "Para cuándo estará listo?",
+        "Hola, cuándo estará?",
+        "Ya está listo?",
+        "Cuándo puedo recoger?",
+        "Sigue en servicio?",
+        "Ya está?",
+        "Para cuándo?",
+        "Cuándo estará?",
+        "Ya quedó?",
+        "Está listo?",
+        "Cuándo puedo pasar por mi auto?"
+      ],
+      "required_slots": [],
+      "optional_slots": [
+        "service_date",
+        "promised_time",
+        "current_status"
+      ],
+      "common_customer_strategies": [
+        "ask_status",
+        "complain_escalate",
+        "change_channel"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "status_update_urgent": {
+      "scenario_id": "status_update_urgent",
+      "category": "status updates & chasing",
+      "description": "Urgent status check",
+      "starter_openers": [
+        "Hola, ya está listo?",
+        "Buen día, cuándo estará listo?",
+        "Ya quedó mi auto?",
+        "Para cuándo estará?",
+        "Cuándo puedo pasar?",
+        "Ya está listo mi vehículo?",
+        "Sigue en taller?",
+        "Cuándo estará listo?",
+        "Ya terminaron?",
+        "Para cuándo estará listo?",
+        "Hola, cuándo estará?",
+        "Ya está listo?",
+        "Cuándo puedo recoger?",
+        "Sigue en servicio?",
+        "Ya está?",
+        "Para cuándo?",
+        "Cuándo estará?",
+        "Ya quedó?",
+        "Está listo?",
+        "Cuándo puedo pasar por mi auto?"
+      ],
+      "required_slots": [],
+      "optional_slots": [
+        "service_date",
+        "promised_time",
+        "current_status"
+      ],
+      "common_customer_strategies": [
+        "ask_status",
+        "complain_escalate",
+        "change_channel"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "status_chase_delayed": {
+      "scenario_id": "status_chase_delayed",
+      "category": "status updates & chasing",
+      "description": "Following up on delayed service",
+      "starter_openers": [
+        "Hola, ya está listo?",
+        "Buen día, cuándo estará listo?",
+        "Ya quedó mi auto?",
+        "Para cuándo estará?",
+        "Cuándo puedo pasar?",
+        "Ya está listo mi vehículo?",
+        "Sigue en taller?",
+        "Cuándo estará listo?",
+        "Ya terminaron?",
+        "Para cuándo estará listo?",
+        "Hola, cuándo estará?",
+        "Ya está listo?",
+        "Cuándo puedo recoger?",
+        "Sigue en servicio?",
+        "Ya está?",
+        "Para cuándo?",
+        "Cuándo estará?",
+        "Ya quedó?",
+        "Está listo?",
+        "Cuándo puedo pasar por mi auto?"
+      ],
+      "required_slots": [],
+      "optional_slots": [
+        "service_date",
+        "promised_time",
+        "current_status"
+      ],
+      "common_customer_strategies": [
+        "ask_status",
+        "complain_escalate",
+        "change_channel"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "status_chase_no_update": {
+      "scenario_id": "status_chase_no_update",
+      "category": "status updates & chasing",
+      "description": "Asking for update when none provided",
+      "starter_openers": [
+        "Hola, ya está listo?",
+        "Buen día, cuándo estará listo?",
+        "Ya quedó mi auto?",
+        "Para cuándo estará?",
+        "Cuándo puedo pasar?",
+        "Ya está listo mi vehículo?",
+        "Sigue en taller?",
+        "Cuándo estará listo?",
+        "Ya terminaron?",
+        "Para cuándo estará listo?",
+        "Hola, cuándo estará?",
+        "Ya está listo?",
+        "Cuándo puedo recoger?",
+        "Sigue en servicio?",
+        "Ya está?",
+        "Para cuándo?",
+        "Cuándo estará?",
+        "Ya quedó?",
+        "Está listo?",
+        "Cuándo puedo pasar por mi auto?"
+      ],
+      "required_slots": [],
+      "optional_slots": [
+        "service_date",
+        "promised_time",
+        "current_status"
+      ],
+      "common_customer_strategies": [
+        "ask_status",
+        "complain_escalate",
+        "change_channel"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "status_chase_promised_time": {
+      "scenario_id": "status_chase_promised_time",
+      "category": "status updates & chasing",
+      "description": "Following up on promised completion time",
+      "starter_openers": [
+        "Hola, ya está listo?",
+        "Buen día, cuándo estará listo?",
+        "Ya quedó mi auto?",
+        "Para cuándo estará?",
+        "Cuándo puedo pasar?",
+        "Ya está listo mi vehículo?",
+        "Sigue en taller?",
+        "Cuándo estará listo?",
+        "Ya terminaron?",
+        "Para cuándo estará listo?",
+        "Hola, cuándo estará?",
+        "Ya está listo?",
+        "Cuándo puedo recoger?",
+        "Sigue en servicio?",
+        "Ya está?",
+        "Para cuándo?",
+        "Cuándo estará?",
+        "Ya quedó?",
+        "Está listo?",
+        "Cuándo puedo pasar por mi auto?"
+      ],
+      "required_slots": [],
+      "optional_slots": [
+        "service_date",
+        "promised_time",
+        "current_status"
+      ],
+      "common_customer_strategies": [
+        "ask_status",
+        "complain_escalate",
+        "change_channel"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "status_update_multiple_checks": {
+      "scenario_id": "status_update_multiple_checks",
+      "category": "status updates & chasing",
+      "description": "Multiple status checks in conversation",
+      "starter_openers": [
+        "Hola, ya está listo?",
+        "Buen día, cuándo estará listo?",
+        "Ya quedó mi auto?",
+        "Para cuándo estará?",
+        "Cuándo puedo pasar?",
+        "Ya está listo mi vehículo?",
+        "Sigue en taller?",
+        "Cuándo estará listo?",
+        "Ya terminaron?",
+        "Para cuándo estará listo?",
+        "Hola, cuándo estará?",
+        "Ya está listo?",
+        "Cuándo puedo recoger?",
+        "Sigue en servicio?",
+        "Ya está?",
+        "Para cuándo?",
+        "Cuándo estará?",
+        "Ya quedó?",
+        "Está listo?",
+        "Cuándo puedo pasar por mi auto?"
+      ],
+      "required_slots": [],
+      "optional_slots": [
+        "service_date",
+        "promised_time",
+        "current_status"
+      ],
+      "common_customer_strategies": [
+        "ask_status",
+        "complain_escalate",
+        "change_channel"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "status_update_after_promise": {
+      "scenario_id": "status_update_after_promise",
+      "category": "status updates & chasing",
+      "description": "Status check after promise was made",
+      "starter_openers": [
+        "Hola, ya está listo?",
+        "Buen día, cuándo estará listo?",
+        "Ya quedó mi auto?",
+        "Para cuándo estará?",
+        "Cuándo puedo pasar?",
+        "Ya está listo mi vehículo?",
+        "Sigue en taller?",
+        "Cuándo estará listo?",
+        "Ya terminaron?",
+        "Para cuándo estará listo?",
+        "Hola, cuándo estará?",
+        "Ya está listo?",
+        "Cuándo puedo recoger?",
+        "Sigue en servicio?",
+        "Ya está?",
+        "Para cuándo?",
+        "Cuándo estará?",
+        "Ya quedó?",
+        "Está listo?",
+        "Cuándo puedo pasar por mi auto?"
+      ],
+      "required_slots": [],
+      "optional_slots": [
+        "service_date",
+        "promised_time",
+        "current_status"
+      ],
+      "common_customer_strategies": [
+        "ask_status",
+        "complain_escalate",
+        "change_channel"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "status_chase_escalation": {
+      "scenario_id": "status_chase_escalation",
+      "category": "status updates & chasing",
+      "description": "Status check with escalation threat",
+      "starter_openers": [
+        "Hola, ya está listo?",
+        "Buen día, cuándo estará listo?",
+        "Ya quedó mi auto?",
+        "Para cuándo estará?",
+        "Cuándo puedo pasar?",
+        "Ya está listo mi vehículo?",
+        "Sigue en taller?",
+        "Cuándo estará listo?",
+        "Ya terminaron?",
+        "Para cuándo estará listo?",
+        "Hola, cuándo estará?",
+        "Ya está listo?",
+        "Cuándo puedo recoger?",
+        "Sigue en servicio?",
+        "Ya está?",
+        "Para cuándo?",
+        "Cuándo estará?",
+        "Ya quedó?",
+        "Está listo?",
+        "Cuándo puedo pasar por mi auto?"
+      ],
+      "required_slots": [],
+      "optional_slots": [
+        "service_date",
+        "promised_time",
+        "current_status"
+      ],
+      "common_customer_strategies": [
+        "ask_status",
+        "complain_escalate",
+        "change_channel"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "status_update_pickup_ready": {
+      "scenario_id": "status_update_pickup_ready",
+      "category": "status updates & chasing",
+      "description": "Checking if ready for pickup",
+      "starter_openers": [
+        "Hola, ya está listo?",
+        "Buen día, cuándo estará listo?",
+        "Ya quedó mi auto?",
+        "Para cuándo estará?",
+        "Cuándo puedo pasar?",
+        "Ya está listo mi vehículo?",
+        "Sigue en taller?",
+        "Cuándo estará listo?",
+        "Ya terminaron?",
+        "Para cuándo estará listo?",
+        "Hola, cuándo estará?",
+        "Ya está listo?",
+        "Cuándo puedo recoger?",
+        "Sigue en servicio?",
+        "Ya está?",
+        "Para cuándo?",
+        "Cuándo estará?",
+        "Ya quedó?",
+        "Está listo?",
+        "Cuándo puedo pasar por mi auto?"
+      ],
+      "required_slots": [],
+      "optional_slots": [
+        "service_date",
+        "promised_time",
+        "current_status"
+      ],
+      "common_customer_strategies": [
+        "ask_status",
+        "complain_escalate",
+        "change_channel"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "status_update_in_progress": {
+      "scenario_id": "status_update_in_progress",
+      "category": "status updates & chasing",
+      "description": "Asking about current progress",
+      "starter_openers": [
+        "Hola, ya está listo?",
+        "Buen día, cuándo estará listo?",
+        "Ya quedó mi auto?",
+        "Para cuándo estará?",
+        "Cuándo puedo pasar?",
+        "Ya está listo mi vehículo?",
+        "Sigue en taller?",
+        "Cuándo estará listo?",
+        "Ya terminaron?",
+        "Para cuándo estará listo?",
+        "Hola, cuándo estará?",
+        "Ya está listo?",
+        "Cuándo puedo recoger?",
+        "Sigue en servicio?",
+        "Ya está?",
+        "Para cuándo?",
+        "Cuándo estará?",
+        "Ya quedó?",
+        "Está listo?",
+        "Cuándo puedo pasar por mi auto?"
+      ],
+      "required_slots": [],
+      "optional_slots": [
+        "service_date",
+        "promised_time",
+        "current_status"
+      ],
+      "common_customer_strategies": [
+        "ask_status",
+        "complain_escalate",
+        "change_channel"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "status_update_waiting_parts": {
+      "scenario_id": "status_update_waiting_parts",
+      "category": "status updates & chasing",
+      "description": "Status check while waiting for parts",
+      "starter_openers": [
+        "Hola, ya está listo?",
+        "Buen día, cuándo estará listo?",
+        "Ya quedó mi auto?",
+        "Para cuándo estará?",
+        "Cuándo puedo pasar?",
+        "Ya está listo mi vehículo?",
+        "Sigue en taller?",
+        "Cuándo estará listo?",
+        "Ya terminaron?",
+        "Para cuándo estará listo?",
+        "Hola, cuándo estará?",
+        "Ya está listo?",
+        "Cuándo puedo recoger?",
+        "Sigue en servicio?",
+        "Ya está?",
+        "Para cuándo?",
+        "Cuándo estará?",
+        "Ya quedó?",
+        "Está listo?",
+        "Cuándo puedo pasar por mi auto?"
+      ],
+      "required_slots": [],
+      "optional_slots": [
+        "service_date",
+        "promised_time",
+        "current_status"
+      ],
+      "common_customer_strategies": [
+        "ask_status",
+        "complain_escalate",
+        "change_channel"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "status_update_diagnosis_complete": {
+      "scenario_id": "status_update_diagnosis_complete",
+      "category": "status updates & chasing",
+      "description": "Checking if diagnosis is complete",
+      "starter_openers": [
+        "Hola, ya está listo?",
+        "Buen día, cuándo estará listo?",
+        "Ya quedó mi auto?",
+        "Para cuándo estará?",
+        "Cuándo puedo pasar?",
+        "Ya está listo mi vehículo?",
+        "Sigue en taller?",
+        "Cuándo estará listo?",
+        "Ya terminaron?",
+        "Para cuándo estará listo?",
+        "Hola, cuándo estará?",
+        "Ya está listo?",
+        "Cuándo puedo recoger?",
+        "Sigue en servicio?",
+        "Ya está?",
+        "Para cuándo?",
+        "Cuándo estará?",
+        "Ya quedó?",
+        "Está listo?",
+        "Cuándo puedo pasar por mi auto?"
+      ],
+      "required_slots": [],
+      "optional_slots": [
+        "service_date",
+        "promised_time",
+        "current_status"
+      ],
+      "common_customer_strategies": [
+        "ask_status",
+        "complain_escalate",
+        "change_channel"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "status_update_quality_check": {
+      "scenario_id": "status_update_quality_check",
+      "category": "status updates & chasing",
+      "description": "Checking quality inspection status",
+      "starter_openers": [
+        "Hola, ya está listo?",
+        "Buen día, cuándo estará listo?",
+        "Ya quedó mi auto?",
+        "Para cuándo estará?",
+        "Cuándo puedo pasar?",
+        "Ya está listo mi vehículo?",
+        "Sigue en taller?",
+        "Cuándo estará listo?",
+        "Ya terminaron?",
+        "Para cuándo estará listo?",
+        "Hola, cuándo estará?",
+        "Ya está listo?",
+        "Cuándo puedo recoger?",
+        "Sigue en servicio?",
+        "Ya está?",
+        "Para cuándo?",
+        "Cuándo estará?",
+        "Ya quedó?",
+        "Está listo?",
+        "Cuándo puedo pasar por mi auto?"
+      ],
+      "required_slots": [],
+      "optional_slots": [
+        "service_date",
+        "promised_time",
+        "current_status"
+      ],
+      "common_customer_strategies": [
+        "ask_status",
+        "complain_escalate",
+        "change_channel"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "status_update_final_inspection": {
+      "scenario_id": "status_update_final_inspection",
+      "category": "status updates & chasing",
+      "description": "Checking final inspection status",
+      "starter_openers": [
+        "Hola, ya está listo?",
+        "Buen día, cuándo estará listo?",
+        "Ya quedó mi auto?",
+        "Para cuándo estará?",
+        "Cuándo puedo pasar?",
+        "Ya está listo mi vehículo?",
+        "Sigue en taller?",
+        "Cuándo estará listo?",
+        "Ya terminaron?",
+        "Para cuándo estará listo?",
+        "Hola, cuándo estará?",
+        "Ya está listo?",
+        "Cuándo puedo recoger?",
+        "Sigue en servicio?",
+        "Ya está?",
+        "Para cuándo?",
+        "Cuándo estará?",
+        "Ya quedó?",
+        "Está listo?",
+        "Cuándo puedo pasar por mi auto?"
+      ],
+      "required_slots": [],
+      "optional_slots": [
+        "service_date",
+        "promised_time",
+        "current_status"
+      ],
+      "common_customer_strategies": [
+        "ask_status",
+        "complain_escalate",
+        "change_channel"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "status_chase_frustrated": {
+      "scenario_id": "status_chase_frustrated",
+      "category": "status updates & chasing",
+      "description": "Frustrated status follow-up",
+      "starter_openers": [
+        "Hola, ya está listo?",
+        "Buen día, cuándo estará listo?",
+        "Ya quedó mi auto?",
+        "Para cuándo estará?",
+        "Cuándo puedo pasar?",
+        "Ya está listo mi vehículo?",
+        "Sigue en taller?",
+        "Cuándo estará listo?",
+        "Ya terminaron?",
+        "Para cuándo estará listo?",
+        "Hola, cuándo estará?",
+        "Ya está listo?",
+        "Cuándo puedo recoger?",
+        "Sigue en servicio?",
+        "Ya está?",
+        "Para cuándo?",
+        "Cuándo estará?",
+        "Ya quedó?",
+        "Está listo?",
+        "Cuándo puedo pasar por mi auto?"
+      ],
+      "required_slots": [],
+      "optional_slots": [
+        "service_date",
+        "promised_time",
+        "current_status"
+      ],
+      "common_customer_strategies": [
+        "ask_status",
+        "complain_escalate",
+        "change_channel"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "warranty_claim_general": {
+      "scenario_id": "warranty_claim_general",
+      "category": "warranty & policy confusion",
+      "description": "General warranty claim",
+      "starter_openers": [
+        "Hola, tengo una pregunta sobre la garantía",
+        "Mi auto está en garantía?",
+        "Esto cubre la garantía?",
+        "Tengo garantía?",
+        "Está cubierto por garantía?",
+        "La garantía cubre esto?",
+        "Tengo garantía todavía?",
+        "Está en garantía?",
+        "Cubre la garantía?",
+        "Tengo una duda sobre garantía",
+        "Mi garantía cubre esto?",
+        "Está en garantía mi auto?",
+        "Tengo garantía?",
+        "La garantía aplica?",
+        "Está cubierto?",
+        "Tengo garantía activa?",
+        "Cubre garantía?",
+        "Está en garantía?",
+        "Tengo garantía?",
+        "La garantía cubre?"
+      ],
+      "required_slots": [
+        "warranty_question_type"
+      ],
+      "optional_slots": [
+        "purchase_date",
+        "mileage",
+        "issue_description"
+      ],
+      "common_customer_strategies": [
+        "ask_clarification",
+        "add_details",
+        "complain_escalate"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "warranty_coverage_question": {
+      "scenario_id": "warranty_coverage_question",
+      "category": "warranty & policy confusion",
+      "description": "Question about warranty coverage",
+      "starter_openers": [
+        "Hola, tengo una pregunta sobre la garantía",
+        "Mi auto está en garantía?",
+        "Esto cubre la garantía?",
+        "Tengo garantía?",
+        "Está cubierto por garantía?",
+        "La garantía cubre esto?",
+        "Tengo garantía todavía?",
+        "Está en garantía?",
+        "Cubre la garantía?",
+        "Tengo una duda sobre garantía",
+        "Mi garantía cubre esto?",
+        "Está en garantía mi auto?",
+        "Tengo garantía?",
+        "La garantía aplica?",
+        "Está cubierto?",
+        "Tengo garantía activa?",
+        "Cubre garantía?",
+        "Está en garantía?",
+        "Tengo garantía?",
+        "La garantía cubre?"
+      ],
+      "required_slots": [
+        "warranty_question_type"
+      ],
+      "optional_slots": [
+        "purchase_date",
+        "mileage",
+        "issue_description"
+      ],
+      "common_customer_strategies": [
+        "ask_clarification",
+        "add_details",
+        "complain_escalate"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "warranty_denied_appeal": {
+      "scenario_id": "warranty_denied_appeal",
+      "category": "warranty & policy confusion",
+      "description": "Appealing denied warranty claim",
+      "starter_openers": [
+        "Hola, tengo una pregunta sobre la garantía",
+        "Mi auto está en garantía?",
+        "Esto cubre la garantía?",
+        "Tengo garantía?",
+        "Está cubierto por garantía?",
+        "La garantía cubre esto?",
+        "Tengo garantía todavía?",
+        "Está en garantía?",
+        "Cubre la garantía?",
+        "Tengo una duda sobre garantía",
+        "Mi garantía cubre esto?",
+        "Está en garantía mi auto?",
+        "Tengo garantía?",
+        "La garantía aplica?",
+        "Está cubierto?",
+        "Tengo garantía activa?",
+        "Cubre garantía?",
+        "Está en garantía?",
+        "Tengo garantía?",
+        "La garantía cubre?"
+      ],
+      "required_slots": [
+        "warranty_question_type"
+      ],
+      "optional_slots": [
+        "purchase_date",
+        "mileage",
+        "issue_description"
+      ],
+      "common_customer_strategies": [
+        "ask_clarification",
+        "add_details",
+        "complain_escalate"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "warranty_expired_question": {
+      "scenario_id": "warranty_expired_question",
+      "category": "warranty & policy confusion",
+      "description": "Question about expired warranty",
+      "starter_openers": [
+        "Hola, tengo una pregunta sobre la garantía",
+        "Mi auto está en garantía?",
+        "Esto cubre la garantía?",
+        "Tengo garantía?",
+        "Está cubierto por garantía?",
+        "La garantía cubre esto?",
+        "Tengo garantía todavía?",
+        "Está en garantía?",
+        "Cubre la garantía?",
+        "Tengo una duda sobre garantía",
+        "Mi garantía cubre esto?",
+        "Está en garantía mi auto?",
+        "Tengo garantía?",
+        "La garantía aplica?",
+        "Está cubierto?",
+        "Tengo garantía activa?",
+        "Cubre garantía?",
+        "Está en garantía?",
+        "Tengo garantía?",
+        "La garantía cubre?"
+      ],
+      "required_slots": [
+        "warranty_question_type"
+      ],
+      "optional_slots": [
+        "purchase_date",
+        "mileage",
+        "issue_description"
+      ],
+      "common_customer_strategies": [
+        "ask_clarification",
+        "add_details",
+        "complain_escalate"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "warranty_transfer_question": {
+      "scenario_id": "warranty_transfer_question",
+      "category": "warranty & policy confusion",
+      "description": "Question about warranty transfer",
+      "starter_openers": [
+        "Hola, tengo una pregunta sobre la garantía",
+        "Mi auto está en garantía?",
+        "Esto cubre la garantía?",
+        "Tengo garantía?",
+        "Está cubierto por garantía?",
+        "La garantía cubre esto?",
+        "Tengo garantía todavía?",
+        "Está en garantía?",
+        "Cubre la garantía?",
+        "Tengo una duda sobre garantía",
+        "Mi garantía cubre esto?",
+        "Está en garantía mi auto?",
+        "Tengo garantía?",
+        "La garantía aplica?",
+        "Está cubierto?",
+        "Tengo garantía activa?",
+        "Cubre garantía?",
+        "Está en garantía?",
+        "Tengo garantía?",
+        "La garantía cubre?"
+      ],
+      "required_slots": [
+        "warranty_question_type"
+      ],
+      "optional_slots": [
+        "purchase_date",
+        "mileage",
+        "issue_description"
+      ],
+      "common_customer_strategies": [
+        "ask_clarification",
+        "add_details",
+        "complain_escalate"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "warranty_documentation_needed": {
+      "scenario_id": "warranty_documentation_needed",
+      "category": "warranty & policy confusion",
+      "description": "Warranty claim needing documentation",
+      "starter_openers": [
+        "Hola, tengo una pregunta sobre la garantía",
+        "Mi auto está en garantía?",
+        "Esto cubre la garantía?",
+        "Tengo garantía?",
+        "Está cubierto por garantía?",
+        "La garantía cubre esto?",
+        "Tengo garantía todavía?",
+        "Está en garantía?",
+        "Cubre la garantía?",
+        "Tengo una duda sobre garantía",
+        "Mi garantía cubre esto?",
+        "Está en garantía mi auto?",
+        "Tengo garantía?",
+        "La garantía aplica?",
+        "Está cubierto?",
+        "Tengo garantía activa?",
+        "Cubre garantía?",
+        "Está en garantía?",
+        "Tengo garantía?",
+        "La garantía cubre?"
+      ],
+      "required_slots": [
+        "warranty_question_type"
+      ],
+      "optional_slots": [
+        "purchase_date",
+        "mileage",
+        "issue_description"
+      ],
+      "common_customer_strategies": [
+        "ask_clarification",
+        "add_details",
+        "complain_escalate"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "warranty_part_not_covered": {
+      "scenario_id": "warranty_part_not_covered",
+      "category": "warranty & policy confusion",
+      "description": "Part not covered by warranty",
+      "starter_openers": [
+        "Hola, tengo una pregunta sobre la garantía",
+        "Mi auto está en garantía?",
+        "Esto cubre la garantía?",
+        "Tengo garantía?",
+        "Está cubierto por garantía?",
+        "La garantía cubre esto?",
+        "Tengo garantía todavía?",
+        "Está en garantía?",
+        "Cubre la garantía?",
+        "Tengo una duda sobre garantía",
+        "Mi garantía cubre esto?",
+        "Está en garantía mi auto?",
+        "Tengo garantía?",
+        "La garantía aplica?",
+        "Está cubierto?",
+        "Tengo garantía activa?",
+        "Cubre garantía?",
+        "Está en garantía?",
+        "Tengo garantía?",
+        "La garantía cubre?"
+      ],
+      "required_slots": [
+        "warranty_question_type"
+      ],
+      "optional_slots": [
+        "purchase_date",
+        "mileage",
+        "issue_description"
+      ],
+      "common_customer_strategies": [
+        "ask_clarification",
+        "add_details",
+        "complain_escalate"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "warranty_labor_not_covered": {
+      "scenario_id": "warranty_labor_not_covered",
+      "category": "warranty & policy confusion",
+      "description": "Labor not covered by warranty",
+      "starter_openers": [
+        "Hola, tengo una pregunta sobre la garantía",
+        "Mi auto está en garantía?",
+        "Esto cubre la garantía?",
+        "Tengo garantía?",
+        "Está cubierto por garantía?",
+        "La garantía cubre esto?",
+        "Tengo garantía todavía?",
+        "Está en garantía?",
+        "Cubre la garantía?",
+        "Tengo una duda sobre garantía",
+        "Mi garantía cubre esto?",
+        "Está en garantía mi auto?",
+        "Tengo garantía?",
+        "La garantía aplica?",
+        "Está cubierto?",
+        "Tengo garantía activa?",
+        "Cubre garantía?",
+        "Está en garantía?",
+        "Tengo garantía?",
+        "La garantía cubre?"
+      ],
+      "required_slots": [
+        "warranty_question_type"
+      ],
+      "optional_slots": [
+        "purchase_date",
+        "mileage",
+        "issue_description"
+      ],
+      "common_customer_strategies": [
+        "ask_clarification",
+        "add_details",
+        "complain_escalate"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "warranty_misunderstanding": {
+      "scenario_id": "warranty_misunderstanding",
+      "category": "warranty & policy confusion",
+      "description": "Customer misunderstanding warranty terms",
+      "starter_openers": [
+        "Hola, tengo una pregunta sobre la garantía",
+        "Mi auto está en garantía?",
+        "Esto cubre la garantía?",
+        "Tengo garantía?",
+        "Está cubierto por garantía?",
+        "La garantía cubre esto?",
+        "Tengo garantía todavía?",
+        "Está en garantía?",
+        "Cubre la garantía?",
+        "Tengo una duda sobre garantía",
+        "Mi garantía cubre esto?",
+        "Está en garantía mi auto?",
+        "Tengo garantía?",
+        "La garantía aplica?",
+        "Está cubierto?",
+        "Tengo garantía activa?",
+        "Cubre garantía?",
+        "Está en garantía?",
+        "Tengo garantía?",
+        "La garantía cubre?"
+      ],
+      "required_slots": [
+        "warranty_question_type"
+      ],
+      "optional_slots": [
+        "purchase_date",
+        "mileage",
+        "issue_description"
+      ],
+      "common_customer_strategies": [
+        "ask_clarification",
+        "add_details",
+        "complain_escalate"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "warranty_third_party_question": {
+      "scenario_id": "warranty_third_party_question",
+      "category": "warranty & policy confusion",
+      "description": "Question about third-party warranty",
+      "starter_openers": [
+        "Hola, tengo una pregunta sobre la garantía",
+        "Mi auto está en garantía?",
+        "Esto cubre la garantía?",
+        "Tengo garantía?",
+        "Está cubierto por garantía?",
+        "La garantía cubre esto?",
+        "Tengo garantía todavía?",
+        "Está en garantía?",
+        "Cubre la garantía?",
+        "Tengo una duda sobre garantía",
+        "Mi garantía cubre esto?",
+        "Está en garantía mi auto?",
+        "Tengo garantía?",
+        "La garantía aplica?",
+        "Está cubierto?",
+        "Tengo garantía activa?",
+        "Cubre garantía?",
+        "Está en garantía?",
+        "Tengo garantía?",
+        "La garantía cubre?"
+      ],
+      "required_slots": [
+        "warranty_question_type"
+      ],
+      "optional_slots": [
+        "purchase_date",
+        "mileage",
+        "issue_description"
+      ],
+      "common_customer_strategies": [
+        "ask_clarification",
+        "add_details",
+        "complain_escalate"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "policy_refund_question": {
+      "scenario_id": "policy_refund_question",
+      "category": "warranty & policy confusion",
+      "description": "Question about refund policy",
+      "starter_openers": [
+        "Hola, tengo una pregunta sobre la garantía",
+        "Mi auto está en garantía?",
+        "Esto cubre la garantía?",
+        "Tengo garantía?",
+        "Está cubierto por garantía?",
+        "La garantía cubre esto?",
+        "Tengo garantía todavía?",
+        "Está en garantía?",
+        "Cubre la garantía?",
+        "Tengo una duda sobre garantía",
+        "Mi garantía cubre esto?",
+        "Está en garantía mi auto?",
+        "Tengo garantía?",
+        "La garantía aplica?",
+        "Está cubierto?",
+        "Tengo garantía activa?",
+        "Cubre garantía?",
+        "Está en garantía?",
+        "Tengo garantía?",
+        "La garantía cubre?"
+      ],
+      "required_slots": [
+        "warranty_question_type"
+      ],
+      "optional_slots": [
+        "purchase_date",
+        "mileage",
+        "issue_description"
+      ],
+      "common_customer_strategies": [
+        "ask_clarification",
+        "add_details",
+        "complain_escalate"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "policy_cancellation_fee": {
+      "scenario_id": "policy_cancellation_fee",
+      "category": "booking/rescheduling/cancel",
+      "description": "Question about cancellation fees",
+      "starter_openers": [
+        "Hola, quiero agendar una cita",
+        "Buen día, necesito programar servicio",
+        "Quiero agendar cita para mantenimiento",
+        "Necesito agendar una cita",
+        "Buenas, quiero programar servicio",
+        "Hola, puedo agendar una cita?",
+        "Quiero agendar para servicio",
+        "Necesito cita para mi auto",
+        "Buen día, quiero agendar",
+        "Hola, necesito agendar cita de servicio",
+        "Quiero agendar mantenimiento",
+        "Necesito programar una cita",
+        "Puedo agendar una cita?",
+        "Quiero agendar servicio",
+        "Necesito agendar",
+        "Buen día, quiero agendar cita",
+        "Hola, necesito cita",
+        "Quiero programar una cita",
+        "Necesito agendar para mantenimiento",
+        "Puedo programar una cita?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "preferred_date",
+        "time_preference",
+        "reason"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "add_details",
+        "reduce_request",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "policy_rescheduling_fee": {
+      "scenario_id": "policy_rescheduling_fee",
+      "category": "booking/rescheduling/cancel",
+      "description": "Question about rescheduling fees",
+      "starter_openers": [
+        "Hola, quiero agendar una cita",
+        "Buen día, necesito programar servicio",
+        "Quiero agendar cita para mantenimiento",
+        "Necesito agendar una cita",
+        "Buenas, quiero programar servicio",
+        "Hola, puedo agendar una cita?",
+        "Quiero agendar para servicio",
+        "Necesito cita para mi auto",
+        "Buen día, quiero agendar",
+        "Hola, necesito agendar cita de servicio",
+        "Quiero agendar mantenimiento",
+        "Necesito programar una cita",
+        "Puedo agendar una cita?",
+        "Quiero agendar servicio",
+        "Necesito agendar",
+        "Buen día, quiero agendar cita",
+        "Hola, necesito cita",
+        "Quiero programar una cita",
+        "Necesito agendar para mantenimiento",
+        "Puedo programar una cita?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "preferred_date",
+        "time_preference",
+        "reason"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "add_details",
+        "reduce_request",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "policy_warranty_extension": {
+      "scenario_id": "policy_warranty_extension",
+      "category": "warranty & policy confusion",
+      "description": "Question about warranty extension",
+      "starter_openers": [
+        "Hola, tengo una pregunta sobre la garantía",
+        "Mi auto está en garantía?",
+        "Esto cubre la garantía?",
+        "Tengo garantía?",
+        "Está cubierto por garantía?",
+        "La garantía cubre esto?",
+        "Tengo garantía todavía?",
+        "Está en garantía?",
+        "Cubre la garantía?",
+        "Tengo una duda sobre garantía",
+        "Mi garantía cubre esto?",
+        "Está en garantía mi auto?",
+        "Tengo garantía?",
+        "La garantía aplica?",
+        "Está cubierto?",
+        "Tengo garantía activa?",
+        "Cubre garantía?",
+        "Está en garantía?",
+        "Tengo garantía?",
+        "La garantía cubre?"
+      ],
+      "required_slots": [
+        "warranty_question_type"
+      ],
+      "optional_slots": [
+        "purchase_date",
+        "mileage",
+        "issue_description"
+      ],
+      "common_customer_strategies": [
+        "ask_clarification",
+        "add_details",
+        "complain_escalate"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "policy_service_guarantee": {
+      "scenario_id": "policy_service_guarantee",
+      "category": "warranty & policy confusion",
+      "description": "Question about service guarantee",
+      "starter_openers": [
+        "Hola, tengo una pregunta sobre la garantía",
+        "Mi auto está en garantía?",
+        "Esto cubre la garantía?",
+        "Tengo garantía?",
+        "Está cubierto por garantía?",
+        "La garantía cubre esto?",
+        "Tengo garantía todavía?",
+        "Está en garantía?",
+        "Cubre la garantía?",
+        "Tengo una duda sobre garantía",
+        "Mi garantía cubre esto?",
+        "Está en garantía mi auto?",
+        "Tengo garantía?",
+        "La garantía aplica?",
+        "Está cubierto?",
+        "Tengo garantía activa?",
+        "Cubre garantía?",
+        "Está en garantía?",
+        "Tengo garantía?",
+        "La garantía cubre?"
+      ],
+      "required_slots": [
+        "warranty_question_type"
+      ],
+      "optional_slots": [
+        "purchase_date",
+        "mileage",
+        "issue_description"
+      ],
+      "common_customer_strategies": [
+        "ask_clarification",
+        "add_details",
+        "complain_escalate"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "price_quote_general": {
+      "scenario_id": "price_quote_general",
+      "category": "pricing/payment/invoice disputes",
+      "description": "General price quote request",
+      "starter_openers": [
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale el mantenimiento?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio del servicio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "previous_quote",
+        "payment_method"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "reduce_request",
+        "compare_elsewhere"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "price_quote_breakdown": {
+      "scenario_id": "price_quote_breakdown",
+      "category": "pricing/payment/invoice disputes",
+      "description": "Requesting detailed price breakdown",
+      "starter_openers": [
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale el mantenimiento?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio del servicio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "previous_quote",
+        "payment_method"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "reduce_request",
+        "compare_elsewhere"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "price_quote_discount_request": {
+      "scenario_id": "price_quote_discount_request",
+      "category": "pricing/payment/invoice disputes",
+      "description": "Asking for discount",
+      "starter_openers": [
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale el mantenimiento?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio del servicio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "previous_quote",
+        "payment_method"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "reduce_request",
+        "compare_elsewhere"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "price_quote_comparison": {
+      "scenario_id": "price_quote_comparison",
+      "category": "pricing/payment/invoice disputes",
+      "description": "Comparing prices with other shops",
+      "starter_openers": [
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale el mantenimiento?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio del servicio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "previous_quote",
+        "payment_method"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "reduce_request",
+        "compare_elsewhere"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "price_quote_package_options": {
+      "scenario_id": "price_quote_package_options",
+      "category": "pricing/payment/invoice disputes",
+      "description": "Asking about package pricing",
+      "starter_openers": [
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale el mantenimiento?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio del servicio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "previous_quote",
+        "payment_method"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "reduce_request",
+        "compare_elsewhere"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "price_dispute_higher_than_quoted": {
+      "scenario_id": "price_dispute_higher_than_quoted",
+      "category": "pricing/payment/invoice disputes",
+      "description": "Price higher than quoted",
+      "starter_openers": [
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale el mantenimiento?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio del servicio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "previous_quote",
+        "payment_method"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "reduce_request",
+        "compare_elsewhere"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "price_dispute_unexpected_charges": {
+      "scenario_id": "price_dispute_unexpected_charges",
+      "category": "pricing/payment/invoice disputes",
+      "description": "Unexpected charges on invoice",
+      "starter_openers": [
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale el mantenimiento?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio del servicio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "previous_quote",
+        "payment_method"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "reduce_request",
+        "compare_elsewhere"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "price_dispute_labor_cost": {
+      "scenario_id": "price_dispute_labor_cost",
+      "category": "pricing/payment/invoice disputes",
+      "description": "Disputing labor cost",
+      "starter_openers": [
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale el mantenimiento?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio del servicio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "previous_quote",
+        "payment_method"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "reduce_request",
+        "compare_elsewhere"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "price_dispute_part_cost": {
+      "scenario_id": "price_dispute_part_cost",
+      "category": "pricing/payment/invoice disputes",
+      "description": "Disputing part cost",
+      "starter_openers": [
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale el mantenimiento?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio del servicio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "previous_quote",
+        "payment_method"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "reduce_request",
+        "compare_elsewhere"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "payment_methods_question": {
+      "scenario_id": "payment_methods_question",
+      "category": "pricing/payment/invoice disputes",
+      "description": "Question about payment methods",
+      "starter_openers": [
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale el mantenimiento?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio del servicio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "previous_quote",
+        "payment_method"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "reduce_request",
+        "compare_elsewhere"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "payment_installment_request": {
+      "scenario_id": "payment_installment_request",
+      "category": "pricing/payment/invoice disputes",
+      "description": "Requesting payment installments",
+      "starter_openers": [
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale el mantenimiento?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio del servicio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "previous_quote",
+        "payment_method"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "reduce_request",
+        "compare_elsewhere"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "invoice_error_correction": {
+      "scenario_id": "invoice_error_correction",
+      "category": "pricing/payment/invoice disputes",
+      "description": "Invoice error needs correction",
+      "starter_openers": [
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale el mantenimiento?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio del servicio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "previous_quote",
+        "payment_method"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "reduce_request",
+        "compare_elsewhere"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "invoice_missing_item": {
+      "scenario_id": "invoice_missing_item",
+      "category": "pricing/payment/invoice disputes",
+      "description": "Missing item on invoice",
+      "starter_openers": [
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale el mantenimiento?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio del servicio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "previous_quote",
+        "payment_method"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "reduce_request",
+        "compare_elsewhere"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "invoice_tax_question": {
+      "scenario_id": "invoice_tax_question",
+      "category": "pricing/payment/invoice disputes",
+      "description": "Question about tax on invoice",
+      "starter_openers": [
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale el mantenimiento?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio del servicio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "previous_quote",
+        "payment_method"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "reduce_request",
+        "compare_elsewhere"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "invoice_payment_confirmation": {
+      "scenario_id": "invoice_payment_confirmation",
+      "category": "pricing/payment/invoice disputes",
+      "description": "Confirming payment received",
+      "starter_openers": [
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale el mantenimiento?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio del servicio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "previous_quote",
+        "payment_method"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "reduce_request",
+        "compare_elsewhere"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "diagnostic_noise_issue": {
+      "scenario_id": "diagnostic_noise_issue",
+      "category": "diagnostics & my car is doing X",
+      "description": "Car making strange noise",
+      "starter_openers": [
+        "Hola, mi auto está haciendo un ruido",
+        "Mi carro tiene un problema",
+        "Mi auto no está funcionando bien",
+        "Tengo un problema con mi auto",
+        "Mi carro está fallando",
+        "Mi auto tiene un ruido raro",
+        "Mi carro no arranca bien",
+        "Mi auto tiene un problema",
+        "Tengo un ruido en mi auto",
+        "Mi carro está haciendo algo raro",
+        "Mi auto no funciona bien",
+        "Tengo un problema",
+        "Mi carro tiene un ruido",
+        "Mi auto está fallando",
+        "Tengo un problema con el auto",
+        "Mi carro no está bien",
+        "Mi auto tiene un ruido extraño",
+        "Mi carro está haciendo ruido",
+        "Tengo un problema",
+        "Mi auto no está funcionando"
+      ],
+      "required_slots": [
+        "symptom_description"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "when_started",
+        "frequency"
+      ],
+      "common_customer_strategies": [
+        "add_details",
+        "clarify_question",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "diagnostic_engine_light": {
+      "scenario_id": "diagnostic_engine_light",
+      "category": "diagnostics & my car is doing X",
+      "description": "Engine light is on",
+      "starter_openers": [
+        "Hola, mi auto está haciendo un ruido",
+        "Mi carro tiene un problema",
+        "Mi auto no está funcionando bien",
+        "Tengo un problema con mi auto",
+        "Mi carro está fallando",
+        "Mi auto tiene un ruido raro",
+        "Mi carro no arranca bien",
+        "Mi auto tiene un problema",
+        "Tengo un ruido en mi auto",
+        "Mi carro está haciendo algo raro",
+        "Mi auto no funciona bien",
+        "Tengo un problema",
+        "Mi carro tiene un ruido",
+        "Mi auto está fallando",
+        "Tengo un problema con el auto",
+        "Mi carro no está bien",
+        "Mi auto tiene un ruido extraño",
+        "Mi carro está haciendo ruido",
+        "Tengo un problema",
+        "Mi auto no está funcionando"
+      ],
+      "required_slots": [
+        "symptom_description"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "when_started",
+        "frequency"
+      ],
+      "common_customer_strategies": [
+        "add_details",
+        "clarify_question",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "diagnostic_starting_problem": {
+      "scenario_id": "diagnostic_starting_problem",
+      "category": "diagnostics & my car is doing X",
+      "description": "Car not starting",
+      "starter_openers": [
+        "Hola, mi auto está haciendo un ruido",
+        "Mi carro tiene un problema",
+        "Mi auto no está funcionando bien",
+        "Tengo un problema con mi auto",
+        "Mi carro está fallando",
+        "Mi auto tiene un ruido raro",
+        "Mi carro no arranca bien",
+        "Mi auto tiene un problema",
+        "Tengo un ruido en mi auto",
+        "Mi carro está haciendo algo raro",
+        "Mi auto no funciona bien",
+        "Tengo un problema",
+        "Mi carro tiene un ruido",
+        "Mi auto está fallando",
+        "Tengo un problema con el auto",
+        "Mi carro no está bien",
+        "Mi auto tiene un ruido extraño",
+        "Mi carro está haciendo ruido",
+        "Tengo un problema",
+        "Mi auto no está funcionando"
+      ],
+      "required_slots": [
+        "symptom_description"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "when_started",
+        "frequency"
+      ],
+      "common_customer_strategies": [
+        "add_details",
+        "clarify_question",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "diagnostic_brake_issue": {
+      "scenario_id": "diagnostic_brake_issue",
+      "category": "diagnostics & my car is doing X",
+      "description": "Brake problem",
+      "starter_openers": [
+        "Hola, mi auto está haciendo un ruido",
+        "Mi carro tiene un problema",
+        "Mi auto no está funcionando bien",
+        "Tengo un problema con mi auto",
+        "Mi carro está fallando",
+        "Mi auto tiene un ruido raro",
+        "Mi carro no arranca bien",
+        "Mi auto tiene un problema",
+        "Tengo un ruido en mi auto",
+        "Mi carro está haciendo algo raro",
+        "Mi auto no funciona bien",
+        "Tengo un problema",
+        "Mi carro tiene un ruido",
+        "Mi auto está fallando",
+        "Tengo un problema con el auto",
+        "Mi carro no está bien",
+        "Mi auto tiene un ruido extraño",
+        "Mi carro está haciendo ruido",
+        "Tengo un problema",
+        "Mi auto no está funcionando"
+      ],
+      "required_slots": [
+        "symptom_description"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "when_started",
+        "frequency"
+      ],
+      "common_customer_strategies": [
+        "add_details",
+        "clarify_question",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "diagnostic_transmission_issue": {
+      "scenario_id": "diagnostic_transmission_issue",
+      "category": "diagnostics & my car is doing X",
+      "description": "Transmission problem",
+      "starter_openers": [
+        "Hola, mi auto está haciendo un ruido",
+        "Mi carro tiene un problema",
+        "Mi auto no está funcionando bien",
+        "Tengo un problema con mi auto",
+        "Mi carro está fallando",
+        "Mi auto tiene un ruido raro",
+        "Mi carro no arranca bien",
+        "Mi auto tiene un problema",
+        "Tengo un ruido en mi auto",
+        "Mi carro está haciendo algo raro",
+        "Mi auto no funciona bien",
+        "Tengo un problema",
+        "Mi carro tiene un ruido",
+        "Mi auto está fallando",
+        "Tengo un problema con el auto",
+        "Mi carro no está bien",
+        "Mi auto tiene un ruido extraño",
+        "Mi carro está haciendo ruido",
+        "Tengo un problema",
+        "Mi auto no está funcionando"
+      ],
+      "required_slots": [
+        "symptom_description"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "when_started",
+        "frequency"
+      ],
+      "common_customer_strategies": [
+        "add_details",
+        "clarify_question",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "diagnostic_electrical_issue": {
+      "scenario_id": "diagnostic_electrical_issue",
+      "category": "diagnostics & my car is doing X",
+      "description": "Electrical problem",
+      "starter_openers": [
+        "Hola, mi auto está haciendo un ruido",
+        "Mi carro tiene un problema",
+        "Mi auto no está funcionando bien",
+        "Tengo un problema con mi auto",
+        "Mi carro está fallando",
+        "Mi auto tiene un ruido raro",
+        "Mi carro no arranca bien",
+        "Mi auto tiene un problema",
+        "Tengo un ruido en mi auto",
+        "Mi carro está haciendo algo raro",
+        "Mi auto no funciona bien",
+        "Tengo un problema",
+        "Mi carro tiene un ruido",
+        "Mi auto está fallando",
+        "Tengo un problema con el auto",
+        "Mi carro no está bien",
+        "Mi auto tiene un ruido extraño",
+        "Mi carro está haciendo ruido",
+        "Tengo un problema",
+        "Mi auto no está funcionando"
+      ],
+      "required_slots": [
+        "symptom_description"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "when_started",
+        "frequency"
+      ],
+      "common_customer_strategies": [
+        "add_details",
+        "clarify_question",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "diagnostic_ac_heating_issue": {
+      "scenario_id": "diagnostic_ac_heating_issue",
+      "category": "diagnostics & my car is doing X",
+      "description": "AC/heating not working",
+      "starter_openers": [
+        "Hola, mi auto está haciendo un ruido",
+        "Mi carro tiene un problema",
+        "Mi auto no está funcionando bien",
+        "Tengo un problema con mi auto",
+        "Mi carro está fallando",
+        "Mi auto tiene un ruido raro",
+        "Mi carro no arranca bien",
+        "Mi auto tiene un problema",
+        "Tengo un ruido en mi auto",
+        "Mi carro está haciendo algo raro",
+        "Mi auto no funciona bien",
+        "Tengo un problema",
+        "Mi carro tiene un ruido",
+        "Mi auto está fallando",
+        "Tengo un problema con el auto",
+        "Mi carro no está bien",
+        "Mi auto tiene un ruido extraño",
+        "Mi carro está haciendo ruido",
+        "Tengo un problema",
+        "Mi auto no está funcionando"
+      ],
+      "required_slots": [
+        "symptom_description"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "when_started",
+        "frequency"
+      ],
+      "common_customer_strategies": [
+        "add_details",
+        "clarify_question",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "diagnostic_suspension_issue": {
+      "scenario_id": "diagnostic_suspension_issue",
+      "category": "diagnostics & my car is doing X",
+      "description": "Suspension problem",
+      "starter_openers": [
+        "Hola, mi auto está haciendo un ruido",
+        "Mi carro tiene un problema",
+        "Mi auto no está funcionando bien",
+        "Tengo un problema con mi auto",
+        "Mi carro está fallando",
+        "Mi auto tiene un ruido raro",
+        "Mi carro no arranca bien",
+        "Mi auto tiene un problema",
+        "Tengo un ruido en mi auto",
+        "Mi carro está haciendo algo raro",
+        "Mi auto no funciona bien",
+        "Tengo un problema",
+        "Mi carro tiene un ruido",
+        "Mi auto está fallando",
+        "Tengo un problema con el auto",
+        "Mi carro no está bien",
+        "Mi auto tiene un ruido extraño",
+        "Mi carro está haciendo ruido",
+        "Tengo un problema",
+        "Mi auto no está funcionando"
+      ],
+      "required_slots": [
+        "symptom_description"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "when_started",
+        "frequency"
+      ],
+      "common_customer_strategies": [
+        "add_details",
+        "clarify_question",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "diagnostic_fuel_economy": {
+      "scenario_id": "diagnostic_fuel_economy",
+      "category": "diagnostics & my car is doing X",
+      "description": "Poor fuel economy",
+      "starter_openers": [
+        "Hola, mi auto está haciendo un ruido",
+        "Mi carro tiene un problema",
+        "Mi auto no está funcionando bien",
+        "Tengo un problema con mi auto",
+        "Mi carro está fallando",
+        "Mi auto tiene un ruido raro",
+        "Mi carro no arranca bien",
+        "Mi auto tiene un problema",
+        "Tengo un ruido en mi auto",
+        "Mi carro está haciendo algo raro",
+        "Mi auto no funciona bien",
+        "Tengo un problema",
+        "Mi carro tiene un ruido",
+        "Mi auto está fallando",
+        "Tengo un problema con el auto",
+        "Mi carro no está bien",
+        "Mi auto tiene un ruido extraño",
+        "Mi carro está haciendo ruido",
+        "Tengo un problema",
+        "Mi auto no está funcionando"
+      ],
+      "required_slots": [
+        "symptom_description"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "when_started",
+        "frequency"
+      ],
+      "common_customer_strategies": [
+        "add_details",
+        "clarify_question",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "diagnostic_smell_issue": {
+      "scenario_id": "diagnostic_smell_issue",
+      "category": "diagnostics & my car is doing X",
+      "description": "Strange smell",
+      "starter_openers": [
+        "Hola, mi auto está haciendo un ruido",
+        "Mi carro tiene un problema",
+        "Mi auto no está funcionando bien",
+        "Tengo un problema con mi auto",
+        "Mi carro está fallando",
+        "Mi auto tiene un ruido raro",
+        "Mi carro no arranca bien",
+        "Mi auto tiene un problema",
+        "Tengo un ruido en mi auto",
+        "Mi carro está haciendo algo raro",
+        "Mi auto no funciona bien",
+        "Tengo un problema",
+        "Mi carro tiene un ruido",
+        "Mi auto está fallando",
+        "Tengo un problema con el auto",
+        "Mi carro no está bien",
+        "Mi auto tiene un ruido extraño",
+        "Mi carro está haciendo ruido",
+        "Tengo un problema",
+        "Mi auto no está funcionando"
+      ],
+      "required_slots": [
+        "symptom_description"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "when_started",
+        "frequency"
+      ],
+      "common_customer_strategies": [
+        "add_details",
+        "clarify_question",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "diagnostic_vibration_issue": {
+      "scenario_id": "diagnostic_vibration_issue",
+      "category": "diagnostics & my car is doing X",
+      "description": "Car vibrating",
+      "starter_openers": [
+        "Hola, mi auto está haciendo un ruido",
+        "Mi carro tiene un problema",
+        "Mi auto no está funcionando bien",
+        "Tengo un problema con mi auto",
+        "Mi carro está fallando",
+        "Mi auto tiene un ruido raro",
+        "Mi carro no arranca bien",
+        "Mi auto tiene un problema",
+        "Tengo un ruido en mi auto",
+        "Mi carro está haciendo algo raro",
+        "Mi auto no funciona bien",
+        "Tengo un problema",
+        "Mi carro tiene un ruido",
+        "Mi auto está fallando",
+        "Tengo un problema con el auto",
+        "Mi carro no está bien",
+        "Mi auto tiene un ruido extraño",
+        "Mi carro está haciendo ruido",
+        "Tengo un problema",
+        "Mi auto no está funcionando"
+      ],
+      "required_slots": [
+        "symptom_description"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "when_started",
+        "frequency"
+      ],
+      "common_customer_strategies": [
+        "add_details",
+        "clarify_question",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "diagnostic_overheating": {
+      "scenario_id": "diagnostic_overheating",
+      "category": "diagnostics & my car is doing X",
+      "description": "Car overheating",
+      "starter_openers": [
+        "Hola, mi auto está haciendo un ruido",
+        "Mi carro tiene un problema",
+        "Mi auto no está funcionando bien",
+        "Tengo un problema con mi auto",
+        "Mi carro está fallando",
+        "Mi auto tiene un ruido raro",
+        "Mi carro no arranca bien",
+        "Mi auto tiene un problema",
+        "Tengo un ruido en mi auto",
+        "Mi carro está haciendo algo raro",
+        "Mi auto no funciona bien",
+        "Tengo un problema",
+        "Mi carro tiene un ruido",
+        "Mi auto está fallando",
+        "Tengo un problema con el auto",
+        "Mi carro no está bien",
+        "Mi auto tiene un ruido extraño",
+        "Mi carro está haciendo ruido",
+        "Tengo un problema",
+        "Mi auto no está funcionando"
+      ],
+      "required_slots": [
+        "symptom_description"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "when_started",
+        "frequency"
+      ],
+      "common_customer_strategies": [
+        "add_details",
+        "clarify_question",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "diagnostic_battery_issue": {
+      "scenario_id": "diagnostic_battery_issue",
+      "category": "diagnostics & my car is doing X",
+      "description": "Battery problem",
+      "starter_openers": [
+        "Hola, mi auto está haciendo un ruido",
+        "Mi carro tiene un problema",
+        "Mi auto no está funcionando bien",
+        "Tengo un problema con mi auto",
+        "Mi carro está fallando",
+        "Mi auto tiene un ruido raro",
+        "Mi carro no arranca bien",
+        "Mi auto tiene un problema",
+        "Tengo un ruido en mi auto",
+        "Mi carro está haciendo algo raro",
+        "Mi auto no funciona bien",
+        "Tengo un problema",
+        "Mi carro tiene un ruido",
+        "Mi auto está fallando",
+        "Tengo un problema con el auto",
+        "Mi carro no está bien",
+        "Mi auto tiene un ruido extraño",
+        "Mi carro está haciendo ruido",
+        "Tengo un problema",
+        "Mi auto no está funcionando"
+      ],
+      "required_slots": [
+        "symptom_description"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "when_started",
+        "frequency"
+      ],
+      "common_customer_strategies": [
+        "add_details",
+        "clarify_question",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "diagnostic_tire_issue": {
+      "scenario_id": "diagnostic_tire_issue",
+      "category": "diagnostics & my car is doing X",
+      "description": "Tire problem",
+      "starter_openers": [
+        "Hola, mi auto está haciendo un ruido",
+        "Mi carro tiene un problema",
+        "Mi auto no está funcionando bien",
+        "Tengo un problema con mi auto",
+        "Mi carro está fallando",
+        "Mi auto tiene un ruido raro",
+        "Mi carro no arranca bien",
+        "Mi auto tiene un problema",
+        "Tengo un ruido en mi auto",
+        "Mi carro está haciendo algo raro",
+        "Mi auto no funciona bien",
+        "Tengo un problema",
+        "Mi carro tiene un ruido",
+        "Mi auto está fallando",
+        "Tengo un problema con el auto",
+        "Mi carro no está bien",
+        "Mi auto tiene un ruido extraño",
+        "Mi carro está haciendo ruido",
+        "Tengo un problema",
+        "Mi auto no está funcionando"
+      ],
+      "required_slots": [
+        "symptom_description"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "when_started",
+        "frequency"
+      ],
+      "common_customer_strategies": [
+        "add_details",
+        "clarify_question",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "diagnostic_fluid_leak": {
+      "scenario_id": "diagnostic_fluid_leak",
+      "category": "diagnostics & my car is doing X",
+      "description": "Fluid leak",
+      "starter_openers": [
+        "Hola, mi auto está haciendo un ruido",
+        "Mi carro tiene un problema",
+        "Mi auto no está funcionando bien",
+        "Tengo un problema con mi auto",
+        "Mi carro está fallando",
+        "Mi auto tiene un ruido raro",
+        "Mi carro no arranca bien",
+        "Mi auto tiene un problema",
+        "Tengo un ruido en mi auto",
+        "Mi carro está haciendo algo raro",
+        "Mi auto no funciona bien",
+        "Tengo un problema",
+        "Mi carro tiene un ruido",
+        "Mi auto está fallando",
+        "Tengo un problema con el auto",
+        "Mi carro no está bien",
+        "Mi auto tiene un ruido extraño",
+        "Mi carro está haciendo ruido",
+        "Tengo un problema",
+        "Mi auto no está funcionando"
+      ],
+      "required_slots": [
+        "symptom_description"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "when_started",
+        "frequency"
+      ],
+      "common_customer_strategies": [
+        "add_details",
+        "clarify_question",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "diagnostic_warning_lights": {
+      "scenario_id": "diagnostic_warning_lights",
+      "category": "diagnostics & my car is doing X",
+      "description": "Warning lights on dashboard",
+      "starter_openers": [
+        "Hola, mi auto está haciendo un ruido",
+        "Mi carro tiene un problema",
+        "Mi auto no está funcionando bien",
+        "Tengo un problema con mi auto",
+        "Mi carro está fallando",
+        "Mi auto tiene un ruido raro",
+        "Mi carro no arranca bien",
+        "Mi auto tiene un problema",
+        "Tengo un ruido en mi auto",
+        "Mi carro está haciendo algo raro",
+        "Mi auto no funciona bien",
+        "Tengo un problema",
+        "Mi carro tiene un ruido",
+        "Mi auto está fallando",
+        "Tengo un problema con el auto",
+        "Mi carro no está bien",
+        "Mi auto tiene un ruido extraño",
+        "Mi carro está haciendo ruido",
+        "Tengo un problema",
+        "Mi auto no está funcionando"
+      ],
+      "required_slots": [
+        "symptom_description"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "when_started",
+        "frequency"
+      ],
+      "common_customer_strategies": [
+        "add_details",
+        "clarify_question",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "diagnostic_strange_sound": {
+      "scenario_id": "diagnostic_strange_sound",
+      "category": "diagnostics & my car is doing X",
+      "description": "Strange sound",
+      "starter_openers": [
+        "Hola, mi auto está haciendo un ruido",
+        "Mi carro tiene un problema",
+        "Mi auto no está funcionando bien",
+        "Tengo un problema con mi auto",
+        "Mi carro está fallando",
+        "Mi auto tiene un ruido raro",
+        "Mi carro no arranca bien",
+        "Mi auto tiene un problema",
+        "Tengo un ruido en mi auto",
+        "Mi carro está haciendo algo raro",
+        "Mi auto no funciona bien",
+        "Tengo un problema",
+        "Mi carro tiene un ruido",
+        "Mi auto está fallando",
+        "Tengo un problema con el auto",
+        "Mi carro no está bien",
+        "Mi auto tiene un ruido extraño",
+        "Mi carro está haciendo ruido",
+        "Tengo un problema",
+        "Mi auto no está funcionando"
+      ],
+      "required_slots": [
+        "symptom_description"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "when_started",
+        "frequency"
+      ],
+      "common_customer_strategies": [
+        "add_details",
+        "clarify_question",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "diagnostic_performance_issue": {
+      "scenario_id": "diagnostic_performance_issue",
+      "category": "diagnostics & my car is doing X",
+      "description": "Performance issue",
+      "starter_openers": [
+        "Hola, mi auto está haciendo un ruido",
+        "Mi carro tiene un problema",
+        "Mi auto no está funcionando bien",
+        "Tengo un problema con mi auto",
+        "Mi carro está fallando",
+        "Mi auto tiene un ruido raro",
+        "Mi carro no arranca bien",
+        "Mi auto tiene un problema",
+        "Tengo un ruido en mi auto",
+        "Mi carro está haciendo algo raro",
+        "Mi auto no funciona bien",
+        "Tengo un problema",
+        "Mi carro tiene un ruido",
+        "Mi auto está fallando",
+        "Tengo un problema con el auto",
+        "Mi carro no está bien",
+        "Mi auto tiene un ruido extraño",
+        "Mi carro está haciendo ruido",
+        "Tengo un problema",
+        "Mi auto no está funcionando"
+      ],
+      "required_slots": [
+        "symptom_description"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "when_started",
+        "frequency"
+      ],
+      "common_customer_strategies": [
+        "add_details",
+        "clarify_question",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "diagnostic_safety_concern": {
+      "scenario_id": "diagnostic_safety_concern",
+      "category": "diagnostics & my car is doing X",
+      "description": "Safety concern",
+      "starter_openers": [
+        "Hola, mi auto está haciendo un ruido",
+        "Mi carro tiene un problema",
+        "Mi auto no está funcionando bien",
+        "Tengo un problema con mi auto",
+        "Mi carro está fallando",
+        "Mi auto tiene un ruido raro",
+        "Mi carro no arranca bien",
+        "Mi auto tiene un problema",
+        "Tengo un ruido en mi auto",
+        "Mi carro está haciendo algo raro",
+        "Mi auto no funciona bien",
+        "Tengo un problema",
+        "Mi carro tiene un ruido",
+        "Mi auto está fallando",
+        "Tengo un problema con el auto",
+        "Mi carro no está bien",
+        "Mi auto tiene un ruido extraño",
+        "Mi carro está haciendo ruido",
+        "Tengo un problema",
+        "Mi auto no está funcionando"
+      ],
+      "required_slots": [
+        "symptom_description"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "when_started",
+        "frequency"
+      ],
+      "common_customer_strategies": [
+        "add_details",
+        "clarify_question",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "diagnostic_urgent_breakdown": {
+      "scenario_id": "diagnostic_urgent_breakdown",
+      "category": "diagnostics & my car is doing X",
+      "description": "Urgent breakdown",
+      "starter_openers": [
+        "Hola, mi auto está haciendo un ruido",
+        "Mi carro tiene un problema",
+        "Mi auto no está funcionando bien",
+        "Tengo un problema con mi auto",
+        "Mi carro está fallando",
+        "Mi auto tiene un ruido raro",
+        "Mi carro no arranca bien",
+        "Mi auto tiene un problema",
+        "Tengo un ruido en mi auto",
+        "Mi carro está haciendo algo raro",
+        "Mi auto no funciona bien",
+        "Tengo un problema",
+        "Mi carro tiene un ruido",
+        "Mi auto está fallando",
+        "Tengo un problema con el auto",
+        "Mi carro no está bien",
+        "Mi auto tiene un ruido extraño",
+        "Mi carro está haciendo ruido",
+        "Tengo un problema",
+        "Mi auto no está funcionando"
+      ],
+      "required_slots": [
+        "symptom_description"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "when_started",
+        "frequency"
+      ],
+      "common_customer_strategies": [
+        "add_details",
+        "clarify_question",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "diagnostic_second_opinion": {
+      "scenario_id": "diagnostic_second_opinion",
+      "category": "diagnostics & my car is doing X",
+      "description": "Seeking second opinion",
+      "starter_openers": [
+        "Hola, mi auto está haciendo un ruido",
+        "Mi carro tiene un problema",
+        "Mi auto no está funcionando bien",
+        "Tengo un problema con mi auto",
+        "Mi carro está fallando",
+        "Mi auto tiene un ruido raro",
+        "Mi carro no arranca bien",
+        "Mi auto tiene un problema",
+        "Tengo un ruido en mi auto",
+        "Mi carro está haciendo algo raro",
+        "Mi auto no funciona bien",
+        "Tengo un problema",
+        "Mi carro tiene un ruido",
+        "Mi auto está fallando",
+        "Tengo un problema con el auto",
+        "Mi carro no está bien",
+        "Mi auto tiene un ruido extraño",
+        "Mi carro está haciendo ruido",
+        "Tengo un problema",
+        "Mi auto no está funcionando"
+      ],
+      "required_slots": [
+        "symptom_description"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "when_started",
+        "frequency"
+      ],
+      "common_customer_strategies": [
+        "add_details",
+        "clarify_question",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "diagnostic_previous_repair_issue": {
+      "scenario_id": "diagnostic_previous_repair_issue",
+      "category": "diagnostics & my car is doing X",
+      "description": "Previous repair issue",
+      "starter_openers": [
+        "Hola, mi auto está haciendo un ruido",
+        "Mi carro tiene un problema",
+        "Mi auto no está funcionando bien",
+        "Tengo un problema con mi auto",
+        "Mi carro está fallando",
+        "Mi auto tiene un ruido raro",
+        "Mi carro no arranca bien",
+        "Mi auto tiene un problema",
+        "Tengo un ruido en mi auto",
+        "Mi carro está haciendo algo raro",
+        "Mi auto no funciona bien",
+        "Tengo un problema",
+        "Mi carro tiene un ruido",
+        "Mi auto está fallando",
+        "Tengo un problema con el auto",
+        "Mi carro no está bien",
+        "Mi auto tiene un ruido extraño",
+        "Mi carro está haciendo ruido",
+        "Tengo un problema",
+        "Mi auto no está funcionando"
+      ],
+      "required_slots": [
+        "symptom_description"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "when_started",
+        "frequency"
+      ],
+      "common_customer_strategies": [
+        "add_details",
+        "clarify_question",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "diagnostic_warranty_related": {
+      "scenario_id": "diagnostic_warranty_related",
+      "category": "warranty & policy confusion",
+      "description": "Diagnostic related to warranty",
+      "starter_openers": [
+        "Hola, tengo una pregunta sobre la garantía",
+        "Mi auto está en garantía?",
+        "Esto cubre la garantía?",
+        "Tengo garantía?",
+        "Está cubierto por garantía?",
+        "La garantía cubre esto?",
+        "Tengo garantía todavía?",
+        "Está en garantía?",
+        "Cubre la garantía?",
+        "Tengo una duda sobre garantía",
+        "Mi garantía cubre esto?",
+        "Está en garantía mi auto?",
+        "Tengo garantía?",
+        "La garantía aplica?",
+        "Está cubierto?",
+        "Tengo garantía activa?",
+        "Cubre garantía?",
+        "Está en garantía?",
+        "Tengo garantía?",
+        "La garantía cubre?"
+      ],
+      "required_slots": [
+        "warranty_question_type"
+      ],
+      "optional_slots": [
+        "purchase_date",
+        "mileage",
+        "issue_description"
+      ],
+      "common_customer_strategies": [
+        "ask_clarification",
+        "add_details",
+        "complain_escalate"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "diagnostic_maintenance_reminder": {
+      "scenario_id": "diagnostic_maintenance_reminder",
+      "category": "diagnostics & my car is doing X",
+      "description": "Maintenance reminder question",
+      "starter_openers": [
+        "Hola, mi auto está haciendo un ruido",
+        "Mi carro tiene un problema",
+        "Mi auto no está funcionando bien",
+        "Tengo un problema con mi auto",
+        "Mi carro está fallando",
+        "Mi auto tiene un ruido raro",
+        "Mi carro no arranca bien",
+        "Mi auto tiene un problema",
+        "Tengo un ruido en mi auto",
+        "Mi carro está haciendo algo raro",
+        "Mi auto no funciona bien",
+        "Tengo un problema",
+        "Mi carro tiene un ruido",
+        "Mi auto está fallando",
+        "Tengo un problema con el auto",
+        "Mi carro no está bien",
+        "Mi auto tiene un ruido extraño",
+        "Mi carro está haciendo ruido",
+        "Tengo un problema",
+        "Mi auto no está funcionando"
+      ],
+      "required_slots": [
+        "symptom_description"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "when_started",
+        "frequency"
+      ],
+      "common_customer_strategies": [
+        "add_details",
+        "clarify_question",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "diagnostic_general_checkup": {
+      "scenario_id": "diagnostic_general_checkup",
+      "category": "diagnostics & my car is doing X",
+      "description": "General checkup request",
+      "starter_openers": [
+        "Hola, mi auto está haciendo un ruido",
+        "Mi carro tiene un problema",
+        "Mi auto no está funcionando bien",
+        "Tengo un problema con mi auto",
+        "Mi carro está fallando",
+        "Mi auto tiene un ruido raro",
+        "Mi carro no arranca bien",
+        "Mi auto tiene un problema",
+        "Tengo un ruido en mi auto",
+        "Mi carro está haciendo algo raro",
+        "Mi auto no funciona bien",
+        "Tengo un problema",
+        "Mi carro tiene un ruido",
+        "Mi auto está fallando",
+        "Tengo un problema con el auto",
+        "Mi carro no está bien",
+        "Mi auto tiene un ruido extraño",
+        "Mi carro está haciendo ruido",
+        "Tengo un problema",
+        "Mi auto no está funcionando"
+      ],
+      "required_slots": [
+        "symptom_description"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "km",
+        "when_started",
+        "frequency"
+      ],
+      "common_customer_strategies": [
+        "add_details",
+        "clarify_question",
+        "provide_constraint"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "parts_availability_question": {
+      "scenario_id": "parts_availability_question",
+      "category": "parts & logistics & docs",
+      "description": "Question about parts availability",
+      "starter_openers": [
+        "Tienen la refacción?",
+        "Tienen disponible la pieza?",
+        "Cuándo llega la refacción?",
+        "Tienen la pieza?",
+        "Está disponible la refacción?",
+        "Cuándo llega?",
+        "Tienen la refacción disponible?",
+        "Cuándo llega la pieza?",
+        "Tienen la refacción?",
+        "Está disponible?",
+        "Cuándo llega la refacción?",
+        "Tienen la pieza disponible?",
+        "Cuándo llega?",
+        "Tienen la refacción?",
+        "Está disponible la pieza?",
+        "Cuándo llega la refacción?",
+        "Tienen disponible?",
+        "Cuándo llega?",
+        "Tienen la refacción?",
+        "Está disponible?"
+      ],
+      "required_slots": [
+        "part_name"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "urgency",
+        "delivery_address"
+      ],
+      "common_customer_strategies": [
+        "ask_clarification",
+        "add_details",
+        "change_channel"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "parts_ordering_request": {
+      "scenario_id": "parts_ordering_request",
+      "category": "parts & logistics & docs",
+      "description": "Requesting to order parts",
+      "starter_openers": [
+        "Tienen la refacción?",
+        "Tienen disponible la pieza?",
+        "Cuándo llega la refacción?",
+        "Tienen la pieza?",
+        "Está disponible la refacción?",
+        "Cuándo llega?",
+        "Tienen la refacción disponible?",
+        "Cuándo llega la pieza?",
+        "Tienen la refacción?",
+        "Está disponible?",
+        "Cuándo llega la refacción?",
+        "Tienen la pieza disponible?",
+        "Cuándo llega?",
+        "Tienen la refacción?",
+        "Está disponible la pieza?",
+        "Cuándo llega la refacción?",
+        "Tienen disponible?",
+        "Cuándo llega?",
+        "Tienen la refacción?",
+        "Está disponible?"
+      ],
+      "required_slots": [
+        "part_name"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "urgency",
+        "delivery_address"
+      ],
+      "common_customer_strategies": [
+        "ask_clarification",
+        "add_details",
+        "change_channel"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "parts_price_quote": {
+      "scenario_id": "parts_price_quote",
+      "category": "pricing/payment/invoice disputes",
+      "description": "Asking for parts price",
+      "starter_openers": [
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale el mantenimiento?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio del servicio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "previous_quote",
+        "payment_method"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "reduce_request",
+        "compare_elsewhere"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "parts_aftermarket_vs_oem": {
+      "scenario_id": "parts_aftermarket_vs_oem",
+      "category": "parts & logistics & docs",
+      "description": "Question about aftermarket vs OEM",
+      "starter_openers": [
+        "Tienen la refacción?",
+        "Tienen disponible la pieza?",
+        "Cuándo llega la refacción?",
+        "Tienen la pieza?",
+        "Está disponible la refacción?",
+        "Cuándo llega?",
+        "Tienen la refacción disponible?",
+        "Cuándo llega la pieza?",
+        "Tienen la refacción?",
+        "Está disponible?",
+        "Cuándo llega la refacción?",
+        "Tienen la pieza disponible?",
+        "Cuándo llega?",
+        "Tienen la refacción?",
+        "Está disponible la pieza?",
+        "Cuándo llega la refacción?",
+        "Tienen disponible?",
+        "Cuándo llega?",
+        "Tienen la refacción?",
+        "Está disponible?"
+      ],
+      "required_slots": [
+        "part_name"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "urgency",
+        "delivery_address"
+      ],
+      "common_customer_strategies": [
+        "ask_clarification",
+        "add_details",
+        "change_channel"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "parts_delivery_time": {
+      "scenario_id": "parts_delivery_time",
+      "category": "parts & logistics & docs",
+      "description": "Question about parts delivery time",
+      "starter_openers": [
+        "Tienen la refacción?",
+        "Tienen disponible la pieza?",
+        "Cuándo llega la refacción?",
+        "Tienen la pieza?",
+        "Está disponible la refacción?",
+        "Cuándo llega?",
+        "Tienen la refacción disponible?",
+        "Cuándo llega la pieza?",
+        "Tienen la refacción?",
+        "Está disponible?",
+        "Cuándo llega la refacción?",
+        "Tienen la pieza disponible?",
+        "Cuándo llega?",
+        "Tienen la refacción?",
+        "Está disponible la pieza?",
+        "Cuándo llega la refacción?",
+        "Tienen disponible?",
+        "Cuándo llega?",
+        "Tienen la refacción?",
+        "Está disponible?"
+      ],
+      "required_slots": [
+        "part_name"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "urgency",
+        "delivery_address"
+      ],
+      "common_customer_strategies": [
+        "ask_clarification",
+        "add_details",
+        "change_channel"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "parts_installation_question": {
+      "scenario_id": "parts_installation_question",
+      "category": "parts & logistics & docs",
+      "description": "Question about parts installation",
+      "starter_openers": [
+        "Tienen la refacción?",
+        "Tienen disponible la pieza?",
+        "Cuándo llega la refacción?",
+        "Tienen la pieza?",
+        "Está disponible la refacción?",
+        "Cuándo llega?",
+        "Tienen la refacción disponible?",
+        "Cuándo llega la pieza?",
+        "Tienen la refacción?",
+        "Está disponible?",
+        "Cuándo llega la refacción?",
+        "Tienen la pieza disponible?",
+        "Cuándo llega?",
+        "Tienen la refacción?",
+        "Está disponible la pieza?",
+        "Cuándo llega la refacción?",
+        "Tienen disponible?",
+        "Cuándo llega?",
+        "Tienen la refacción?",
+        "Está disponible?"
+      ],
+      "required_slots": [
+        "part_name"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "urgency",
+        "delivery_address"
+      ],
+      "common_customer_strategies": [
+        "ask_clarification",
+        "add_details",
+        "change_channel"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "logistics_pickup_arrangement": {
+      "scenario_id": "logistics_pickup_arrangement",
+      "category": "parts & logistics & docs",
+      "description": "Arranging vehicle pickup",
+      "starter_openers": [
+        "Tienen la refacción?",
+        "Tienen disponible la pieza?",
+        "Cuándo llega la refacción?",
+        "Tienen la pieza?",
+        "Está disponible la refacción?",
+        "Cuándo llega?",
+        "Tienen la refacción disponible?",
+        "Cuándo llega la pieza?",
+        "Tienen la refacción?",
+        "Está disponible?",
+        "Cuándo llega la refacción?",
+        "Tienen la pieza disponible?",
+        "Cuándo llega?",
+        "Tienen la refacción?",
+        "Está disponible la pieza?",
+        "Cuándo llega la refacción?",
+        "Tienen disponible?",
+        "Cuándo llega?",
+        "Tienen la refacción?",
+        "Está disponible?"
+      ],
+      "required_slots": [
+        "part_name"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "urgency",
+        "delivery_address"
+      ],
+      "common_customer_strategies": [
+        "ask_clarification",
+        "add_details",
+        "change_channel"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "logistics_delivery_request": {
+      "scenario_id": "logistics_delivery_request",
+      "category": "parts & logistics & docs",
+      "description": "Requesting delivery service",
+      "starter_openers": [
+        "Tienen la refacción?",
+        "Tienen disponible la pieza?",
+        "Cuándo llega la refacción?",
+        "Tienen la pieza?",
+        "Está disponible la refacción?",
+        "Cuándo llega?",
+        "Tienen la refacción disponible?",
+        "Cuándo llega la pieza?",
+        "Tienen la refacción?",
+        "Está disponible?",
+        "Cuándo llega la refacción?",
+        "Tienen la pieza disponible?",
+        "Cuándo llega?",
+        "Tienen la refacción?",
+        "Está disponible la pieza?",
+        "Cuándo llega la refacción?",
+        "Tienen disponible?",
+        "Cuándo llega?",
+        "Tienen la refacción?",
+        "Está disponible?"
+      ],
+      "required_slots": [
+        "part_name"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "urgency",
+        "delivery_address"
+      ],
+      "common_customer_strategies": [
+        "ask_clarification",
+        "add_details",
+        "change_channel"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "logistics_dropoff_time": {
+      "scenario_id": "logistics_dropoff_time",
+      "category": "parts & logistics & docs",
+      "description": "Question about dropoff time",
+      "starter_openers": [
+        "Tienen la refacción?",
+        "Tienen disponible la pieza?",
+        "Cuándo llega la refacción?",
+        "Tienen la pieza?",
+        "Está disponible la refacción?",
+        "Cuándo llega?",
+        "Tienen la refacción disponible?",
+        "Cuándo llega la pieza?",
+        "Tienen la refacción?",
+        "Está disponible?",
+        "Cuándo llega la refacción?",
+        "Tienen la pieza disponible?",
+        "Cuándo llega?",
+        "Tienen la refacción?",
+        "Está disponible la pieza?",
+        "Cuándo llega la refacción?",
+        "Tienen disponible?",
+        "Cuándo llega?",
+        "Tienen la refacción?",
+        "Está disponible?"
+      ],
+      "required_slots": [
+        "part_name"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "urgency",
+        "delivery_address"
+      ],
+      "common_customer_strategies": [
+        "ask_clarification",
+        "add_details",
+        "change_channel"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "logistics_loaner_vehicle": {
+      "scenario_id": "logistics_loaner_vehicle",
+      "category": "parts & logistics & docs",
+      "description": "Requesting loaner vehicle",
+      "starter_openers": [
+        "Tienen la refacción?",
+        "Tienen disponible la pieza?",
+        "Cuándo llega la refacción?",
+        "Tienen la pieza?",
+        "Está disponible la refacción?",
+        "Cuándo llega?",
+        "Tienen la refacción disponible?",
+        "Cuándo llega la pieza?",
+        "Tienen la refacción?",
+        "Está disponible?",
+        "Cuándo llega la refacción?",
+        "Tienen la pieza disponible?",
+        "Cuándo llega?",
+        "Tienen la refacción?",
+        "Está disponible la pieza?",
+        "Cuándo llega la refacción?",
+        "Tienen disponible?",
+        "Cuándo llega?",
+        "Tienen la refacción?",
+        "Está disponible?"
+      ],
+      "required_slots": [
+        "part_name"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "urgency",
+        "delivery_address"
+      ],
+      "common_customer_strategies": [
+        "ask_clarification",
+        "add_details",
+        "change_channel"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "logistics_shuttle_service": {
+      "scenario_id": "logistics_shuttle_service",
+      "category": "parts & logistics & docs",
+      "description": "Question about shuttle service",
+      "starter_openers": [
+        "Tienen la refacción?",
+        "Tienen disponible la pieza?",
+        "Cuándo llega la refacción?",
+        "Tienen la pieza?",
+        "Está disponible la refacción?",
+        "Cuándo llega?",
+        "Tienen la refacción disponible?",
+        "Cuándo llega la pieza?",
+        "Tienen la refacción?",
+        "Está disponible?",
+        "Cuándo llega la refacción?",
+        "Tienen la pieza disponible?",
+        "Cuándo llega?",
+        "Tienen la refacción?",
+        "Está disponible la pieza?",
+        "Cuándo llega la refacción?",
+        "Tienen disponible?",
+        "Cuándo llega?",
+        "Tienen la refacción?",
+        "Está disponible?"
+      ],
+      "required_slots": [
+        "part_name"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "urgency",
+        "delivery_address"
+      ],
+      "common_customer_strategies": [
+        "ask_clarification",
+        "add_details",
+        "change_channel"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "docs_invoice_request": {
+      "scenario_id": "docs_invoice_request",
+      "category": "pricing/payment/invoice disputes",
+      "description": "Requesting invoice",
+      "starter_openers": [
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale el mantenimiento?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio del servicio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?",
+        "Cuál es el precio?",
+        "Cuánto cuesta el servicio?",
+        "Cuánto sale?",
+        "Cuál es el costo?",
+        "Cuánto cuesta aproximadamente?",
+        "Cuánto sale más o menos?",
+        "Cuál es el precio?",
+        "Cuánto cuesta?",
+        "Cuánto sale?"
+      ],
+      "required_slots": [
+        "service_type"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "previous_quote",
+        "payment_method"
+      ],
+      "common_customer_strategies": [
+        "clarify_question",
+        "reduce_request",
+        "compare_elsewhere"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "docs_warranty_certificate": {
+      "scenario_id": "docs_warranty_certificate",
+      "category": "warranty & policy confusion",
+      "description": "Requesting warranty certificate",
+      "starter_openers": [
+        "Hola, tengo una pregunta sobre la garantía",
+        "Mi auto está en garantía?",
+        "Esto cubre la garantía?",
+        "Tengo garantía?",
+        "Está cubierto por garantía?",
+        "La garantía cubre esto?",
+        "Tengo garantía todavía?",
+        "Está en garantía?",
+        "Cubre la garantía?",
+        "Tengo una duda sobre garantía",
+        "Mi garantía cubre esto?",
+        "Está en garantía mi auto?",
+        "Tengo garantía?",
+        "La garantía aplica?",
+        "Está cubierto?",
+        "Tengo garantía activa?",
+        "Cubre garantía?",
+        "Está en garantía?",
+        "Tengo garantía?",
+        "La garantía cubre?"
+      ],
+      "required_slots": [
+        "warranty_question_type"
+      ],
+      "optional_slots": [
+        "purchase_date",
+        "mileage",
+        "issue_description"
+      ],
+      "common_customer_strategies": [
+        "ask_clarification",
+        "add_details",
+        "complain_escalate"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "docs_service_history": {
+      "scenario_id": "docs_service_history",
+      "category": "parts & logistics & docs",
+      "description": "Requesting service history",
+      "starter_openers": [
+        "Tienen la refacción?",
+        "Tienen disponible la pieza?",
+        "Cuándo llega la refacción?",
+        "Tienen la pieza?",
+        "Está disponible la refacción?",
+        "Cuándo llega?",
+        "Tienen la refacción disponible?",
+        "Cuándo llega la pieza?",
+        "Tienen la refacción?",
+        "Está disponible?",
+        "Cuándo llega la refacción?",
+        "Tienen la pieza disponible?",
+        "Cuándo llega?",
+        "Tienen la refacción?",
+        "Está disponible la pieza?",
+        "Cuándo llega la refacción?",
+        "Tienen disponible?",
+        "Cuándo llega?",
+        "Tienen la refacción?",
+        "Está disponible?"
+      ],
+      "required_slots": [
+        "part_name"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "urgency",
+        "delivery_address"
+      ],
+      "common_customer_strategies": [
+        "ask_clarification",
+        "add_details",
+        "change_channel"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    },
+    "docs_insurance_claim_docs": {
+      "scenario_id": "docs_insurance_claim_docs",
+      "category": "parts & logistics & docs",
+      "description": "Requesting insurance claim documents",
+      "starter_openers": [
+        "Tienen la refacción?",
+        "Tienen disponible la pieza?",
+        "Cuándo llega la refacción?",
+        "Tienen la pieza?",
+        "Está disponible la refacción?",
+        "Cuándo llega?",
+        "Tienen la refacción disponible?",
+        "Cuándo llega la pieza?",
+        "Tienen la refacción?",
+        "Está disponible?",
+        "Cuándo llega la refacción?",
+        "Tienen la pieza disponible?",
+        "Cuándo llega?",
+        "Tienen la refacción?",
+        "Está disponible la pieza?",
+        "Cuándo llega la refacción?",
+        "Tienen disponible?",
+        "Cuándo llega?",
+        "Tienen la refacción?",
+        "Está disponible?"
+      ],
+      "required_slots": [
+        "part_name"
+      ],
+      "optional_slots": [
+        "car_model",
+        "year",
+        "urgency",
+        "delivery_address"
+      ],
+      "common_customer_strategies": [
+        "ask_clarification",
+        "add_details",
+        "change_channel"
+      ],
+      "success_endings": [
+        "Perfecto, gracias",
+        "Listo, nos vemos entonces",
+        "Excelente, gracias",
+        "Perfecto, hasta entonces",
+        "Ok, gracias"
+      ],
+      "failure_endings": [
+        "Ok gracias",
+        "Bueno, luego les marco",
+        "Ok, luego veo",
+        "Gracias",
+        "Ok"
+      ]
+    }
+  }
+}

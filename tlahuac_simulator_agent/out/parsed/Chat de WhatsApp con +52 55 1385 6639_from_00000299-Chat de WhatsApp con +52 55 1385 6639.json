@@ -1,0 +1,219 @@
+{
+  "source_file": "Chat de WhatsApp con +52 55 1385 6639_from_00000299-Chat de WhatsApp con +52 55 1385 6639.txt",
+  "conversation_index": 0,
+  "total_conversations_in_file": 1,
+  "raw_text": "15/7/2025, 7:57 p. m. - Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.\n15/7/2025, 7:57 p. m. - \n15/7/2025, 7:57 p. m. - Chevrolet Calidad Tlahuac: Anuncio de Facebook Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?\n15/7/2025, 7:57 p. m. - +52 55 1385 6639: ¡Hola! Podrías darme más información de...\n16/7/2025, 9:36 a. m. - Chevrolet Calidad Tlahuac: Buenos días, si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información, ¿con quien tengo el gusto?\n16/7/2025, 5:40 p. m. - +52 55 1385 6639: ¡Hola! Podrías darme más información de...\n16/7/2025, 5:40 p. m. - +52 55 1385 6639: Hola con Mary castillo\n16/7/2025, 5:40 p. m. - +52 55 1385 6639: ‎IMG-20250717-WA0000.jpg (archivo adjunto)\n16/7/2025, 5:41 p. m. - +52 55 1385 6639: Que tan verdad es lo de esta camioneta\n16/7/2025, 5:44 p. m. - Chevrolet Calidad Tlahuac: Buena tarde, claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información\n16/7/2025, 5:50 p. m. - +52 55 1385 6639: Si por favor gracias\n18/7/2025, 8:46 a. m. - +52 55 1385 6639: ¡Hola! Podrías darme más información de...\n18/7/2025, 9:22 a. m. - Chevrolet Calidad Tlahuac: Buenos días, claro en breve le contacta un asesor",
+  "messages": [
+    {
+      "ts_raw": "15/7/2025, 7:57 p. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "idx": 0,
+      "text": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "15/7/2025, 7:57 p. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "-",
+      "idx": 1,
+      "text": "-",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "15/7/2025, 7:57 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Anuncio de Facebook Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?",
+      "idx": 2,
+      "text": "Anuncio de Facebook Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "15/7/2025, 7:57 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1385 6639",
+      "text_raw": "¡Hola! Podrías darme más información de...",
+      "idx": 3,
+      "text": "¡Hola! Podrías darme más información de...",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 9:36 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Buenos días, si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información, ¿con quien tengo el gusto?",
+      "idx": 4,
+      "text": "Buenos días, si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información, ¿con quien tengo el gusto?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 5:40 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1385 6639",
+      "text_raw": "¡Hola! Podrías darme más información de...",
+      "idx": 5,
+      "text": "¡Hola! Podrías darme más información de...",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 5:40 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1385 6639",
+      "text_raw": "Hola con Mary castillo",
+      "idx": 6,
+      "text": "Hola con Mary castillo",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 5:40 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1385 6639",
+      "text_raw": "‎IMG-20250717-WA0000.jpg (archivo adjunto)",
+      "idx": 7,
+      "text": "‎IMG-20250717-<PLATE>.jpg (archivo adjunto)",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": true,
+        "types": [
+          "PLATE"
+        ]
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 5:41 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1385 6639",
+      "text_raw": "Que tan verdad es lo de esta camioneta",
+      "idx": 8,
+      "text": "Que tan verdad es lo de esta camioneta",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 5:44 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Buena tarde, claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información",
+      "idx": 9,
+      "text": "Buena tarde, claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 5:50 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1385 6639",
+      "text_raw": "Si por favor gracias",
+      "idx": 10,
+      "text": "Si por favor gracias",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "18/7/2025, 8:46 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1385 6639",
+      "text_raw": "¡Hola! Podrías darme más información de...",
+      "idx": 11,
+      "text": "¡Hola! Podrías darme más información de...",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "18/7/2025, 9:22 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Buenos días, claro en breve le contacta un asesor",
+      "idx": 12,
+      "text": "Buenos días, claro en breve le contacta un asesor",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    }
+  ],
+  "message_count": 13
+}

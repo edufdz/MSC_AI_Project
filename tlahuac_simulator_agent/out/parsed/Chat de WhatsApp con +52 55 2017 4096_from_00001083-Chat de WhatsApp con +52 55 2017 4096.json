@@ -1,0 +1,381 @@
+{
+  "source_file": "Chat de WhatsApp con +52 55 2017 4096_from_00001083-Chat de WhatsApp con +52 55 2017 4096.txt",
+  "conversation_index": 0,
+  "total_conversations_in_file": 1,
+  "raw_text": "19/6/2025, 5:49 p. m. - Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.\n19/6/2025, 5:39 p. m. - Citas De Servicio Calidad Tlahuac: Buen día, estimado cliente GRISEL LIZBETH JUAN URRUTIA!!👋🏼\n\nRecordándole que ya nos encontramos en tiempo de realizar su próximo servicio.\nagende su cita para el día de mañana y reciba un cupon de $431 en refacciones ACDelco para este servicio de mantenimiento. ⚙🔧\n\n*Exclusivamente para su Chevrolet ONIX 2023 serie LSGEN5305PD002947*🚗\n\nUnicamente valido agendando por este medio.👌🏻\n*Hasta agotar existencias.\n\nLe atiende ROCIO VILLELA\n19/6/2025, 5:39 p. m. - Citas De Servicio Calidad Tlahuac: <Multimedia omitido>\n19/6/2025, 5:41 p. m. - Citas De Servicio Calidad Tlahuac: <Multimedia omitido>\n21/6/2025, 2:55 p. m. - +52 55 2017 4096: Buenas tardes podría agendarme el servicio los 36 mil Km \n\nPara este próximo martes 24 de junio 2025\n\nA las 7 de la mañana de ser posible\n21/6/2025, 2:55 p. m. - Citas De Servicio Calidad Tlahuac: Gracias por tu mensaje estimado cliente 😃 En este momento no me es posible atenderle, apoyeme indicándome en que puedo ayudarle y en breve me comunico con usted 😊\n23/6/2025, 9:17 a. m. - Citas De Servicio Calidad Tlahuac: Buenas tardes, estimado cliente☀️\nLe atiende Rocio Villela, 👋🏻del área de citas de servicio de Chevrolet Tláhuac. 👩🏻‍💻🚗\n23/6/2025, 9:44 a. m. - +52 55 2017 4096: Buenos días Srita Rocio me gustaría agendar la cita del servicio de mi carro para mañana a las 7 de la mañana\n23/6/2025, 9:44 a. m. - +52 55 2017 4096: De favor\n23/6/2025, 11:04 a. m. - Citas De Servicio Calidad Tlahuac: Si claro\n23/6/2025, 11:05 a. m. - Citas De Servicio Calidad Tlahuac: Que kilometraje tiene su unidad?\n23/6/2025, 1:08 p. m. - Citas De Servicio Calidad Tlahuac: Su correo griselangelito@gmail.com continua activo?\n23/6/2025, 2:26 p. m. - +52 55 2017 4096: 36000 Km\n23/6/2025, 2:27 p. m. - +52 55 2017 4096: Si es el mismo\n23/6/2025, 3:13 p. m. - Citas De Servicio Calidad Tlahuac: Perfecto en un momento comparto detalle de su cit\n23/6/2025, 3:16 p. m. - +52 55 2017 4096: Gracias\n23/6/2025, 3:37 p. m. - Citas De Servicio Calidad Tlahuac: <Multimedia omitido>\n23/6/2025, 3:37 p. m. - Citas De Servicio Calidad Tlahuac: <Multimedia omitido>\n23/6/2025, 3:38 p. m. - Citas De Servicio Calidad Tlahuac: El servicio de su unidad ONIX 2023 le incluye: \n\n*Cambio de aceite y filtro de motor \n*Cambio de bujias\n*Reemplazo filtro de aire de motor\n*Rotación de ruedas\n*Shampoo limpia parabrisas \n*Revisión de 25 puntos de seguridad:\n-Corrección de niveles (chisgueteros, anticongelante y presión de llantas)\n-Revisión de vida útil de balatas\n-Revisión de llantas\n\n\nTiene un costo de $4,149.00\n23/6/2025, 5:28 p. m. - +52 55 2017 4096: Ok muchas Gracias mañana temprano le llevo mi carrito\n23/6/2025, 5:28 p. m. - +52 55 2017 4096: Excelente tarde\n23/6/2025, 5:30 p. m. - Citas De Servicio Calidad Tlahuac: De nada, estamos para servirle\n23/6/2025, 5:30 p. m. - Citas De Servicio Calidad Tlahuac: Si claro aquí la esperamos 😉",
+  "messages": [
+    {
+      "ts_raw": "19/6/2025, 5:49 p. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "idx": 0,
+      "text": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "19/6/2025, 5:39 p. m.",
+      "ts": null,
+      "speaker_raw": "Citas De Servicio Calidad Tlahuac",
+      "text_raw": "Buen día, estimado cliente GRISEL LIZBETH JUAN URRUTIA!!👋🏼\n\nRecordándole que ya nos encontramos en tiempo de realizar su próximo servicio.\nagende su cita para el día de mañana y reciba un cupon de $431 en refacciones ACDelco para este servicio de mantenimiento. ⚙🔧\n\n*Exclusivamente para su Chevrolet ONIX 2023 serie LSGEN5305PD002947*🚗\n\nUnicamente valido agendando por este medio.👌🏻\n*Hasta agotar existencias.\n\nLe atiende ROCIO VILLELA",
+      "idx": 1,
+      "text": "Buen día, estimado cliente GRISEL LIZBETH JUAN URRUTIA!!👋🏼\n\nRecordándole que ya nos encontramos en tiempo de realizar su próximo servicio.\nagende su cita para el día de mañana y reciba un cupon de $431 en refacciones ACDelco para este servicio de mantenimiento. ⚙🔧\n\n*Exclusivamente para su Chevrolet ONIX 2023 serie <VIN>*🚗\n\nUnicamente valido agendando por este medio.👌🏻\n*Hasta agotar existencias.\n\nLe atiende ROCIO VILLELA",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": true,
+        "types": [
+          "VIN"
+        ]
+      }
+    },
+    {
+      "ts_raw": "19/6/2025, 5:39 p. m.",
+      "ts": null,
+      "speaker_raw": "Citas De Servicio Calidad Tlahuac",
+      "text_raw": "<Multimedia omitido>",
+      "idx": 2,
+      "text": "<Multimedia omitido>",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "19/6/2025, 5:41 p. m.",
+      "ts": null,
+      "speaker_raw": "Citas De Servicio Calidad Tlahuac",
+      "text_raw": "<Multimedia omitido>",
+      "idx": 3,
+      "text": "<Multimedia omitido>",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "21/6/2025, 2:55 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 2017 4096",
+      "text_raw": "Buenas tardes podría agendarme el servicio los 36 mil Km\n\nPara este próximo martes 24 de junio 2025\n\nA las 7 de la mañana de ser posible",
+      "idx": 4,
+      "text": "Buenas tardes podría agendarme el servicio los 36 mil Km\n\nPara este próximo martes 24 de junio 2025\n\nA las 7 de la mañana de ser posible",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "21/6/2025, 2:55 p. m.",
+      "ts": null,
+      "speaker_raw": "Citas De Servicio Calidad Tlahuac",
+      "text_raw": "Gracias por tu mensaje estimado cliente 😃 En este momento no me es posible atenderle, apoyeme indicándome en que puedo ayudarle y en breve me comunico con usted 😊",
+      "idx": 5,
+      "text": "Gracias por tu mensaje estimado cliente 😃 En este momento no me es posible atenderle, apoyeme indicándome en que puedo ayudarle y en breve me comunico con usted 😊",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "23/6/2025, 9:17 a. m.",
+      "ts": null,
+      "speaker_raw": "Citas De Servicio Calidad Tlahuac",
+      "text_raw": "Buenas tardes, estimado cliente☀️\nLe atiende Rocio Villela, 👋🏻del área de citas de servicio de Chevrolet Tláhuac. 👩🏻‍💻🚗",
+      "idx": 6,
+      "text": "Buenas tardes, estimado cliente☀️\nLe atiende Rocio Villela, 👋🏻del área de citas de servicio de Chevrolet Tláhuac. 👩🏻‍💻🚗",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "23/6/2025, 9:44 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 2017 4096",
+      "text_raw": "Buenos días Srita Rocio me gustaría agendar la cita del servicio de mi carro para mañana a las 7 de la mañana",
+      "idx": 7,
+      "text": "Buenos días Srita Rocio me gustaría agendar la cita del servicio de mi carro para mañana a las 7 de la mañana",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "23/6/2025, 9:44 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 2017 4096",
+      "text_raw": "De favor",
+      "idx": 8,
+      "text": "De favor",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "23/6/2025, 11:04 a. m.",
+      "ts": null,
+      "speaker_raw": "Citas De Servicio Calidad Tlahuac",
+      "text_raw": "Si claro",
+      "idx": 9,
+      "text": "Si claro",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "23/6/2025, 11:05 a. m.",
+      "ts": null,
+      "speaker_raw": "Citas De Servicio Calidad Tlahuac",
+      "text_raw": "Que kilometraje tiene su unidad?",
+      "idx": 10,
+      "text": "Que kilometraje tiene su unidad?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "23/6/2025, 1:08 p. m.",
+      "ts": null,
+      "speaker_raw": "Citas De Servicio Calidad Tlahuac",
+      "text_raw": "Su correo griselangelito@gmail.com continua activo?",
+      "idx": 11,
+      "text": "Su correo <EMAIL> continua activo?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": true,
+        "types": [
+          "EMAIL"
+        ]
+      }
+    },
+    {
+      "ts_raw": "23/6/2025, 2:26 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 2017 4096",
+      "text_raw": "36000 Km",
+      "idx": 12,
+      "text": "36000 Km",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "23/6/2025, 2:27 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 2017 4096",
+      "text_raw": "Si es el mismo",
+      "idx": 13,
+      "text": "Si es el mismo",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "23/6/2025, 3:13 p. m.",
+      "ts": null,
+      "speaker_raw": "Citas De Servicio Calidad Tlahuac",
+      "text_raw": "Perfecto en un momento comparto detalle de su cit",
+      "idx": 14,
+      "text": "Perfecto en un momento comparto detalle de su cit",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "23/6/2025, 3:16 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 2017 4096",
+      "text_raw": "Gracias",
+      "idx": 15,
+      "text": "Gracias",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "23/6/2025, 3:37 p. m.",
+      "ts": null,
+      "speaker_raw": "Citas De Servicio Calidad Tlahuac",
+      "text_raw": "<Multimedia omitido>",
+      "idx": 16,
+      "text": "<Multimedia omitido>",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "23/6/2025, 3:37 p. m.",
+      "ts": null,
+      "speaker_raw": "Citas De Servicio Calidad Tlahuac",
+      "text_raw": "<Multimedia omitido>",
+      "idx": 17,
+      "text": "<Multimedia omitido>",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "23/6/2025, 3:38 p. m.",
+      "ts": null,
+      "speaker_raw": "Citas De Servicio Calidad Tlahuac",
+      "text_raw": "El servicio de su unidad ONIX 2023 le incluye:\n\n*Cambio de aceite y filtro de motor \n*Cambio de bujias\n*Reemplazo filtro de aire de motor\n*Rotación de ruedas\n*Shampoo limpia parabrisas \n*Revisión de 25 puntos de seguridad:\n-Corrección de niveles (chisgueteros, anticongelante y presión de llantas)\n-Revisión de vida útil de balatas\n-Revisión de llantas\n\n\nTiene un costo de $4,149.00",
+      "idx": 18,
+      "text": "El servicio de su unidad ONIX 2023 le incluye:\n\n*Cambio de aceite y filtro de motor\n*Cambio de bujias\n*Reemplazo filtro de aire de motor\n*Rotación de ruedas\n*Shampoo limpia parabrisas\n*Revisión de 25 puntos de seguridad:\n-Corrección de niveles (chisgueteros, anticongelante y presión de llantas)\n-Revisión de vida útil de balatas\n-Revisión de llantas\n\nTiene un costo de $4,149.00",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "23/6/2025, 5:28 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 2017 4096",
+      "text_raw": "Ok muchas Gracias mañana temprano le llevo mi carrito",
+      "idx": 19,
+      "text": "Ok muchas Gracias mañana temprano le llevo mi carrito",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "23/6/2025, 5:28 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 2017 4096",
+      "text_raw": "Excelente tarde",
+      "idx": 20,
+      "text": "Excelente tarde",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "23/6/2025, 5:30 p. m.",
+      "ts": null,
+      "speaker_raw": "Citas De Servicio Calidad Tlahuac",
+      "text_raw": "De nada, estamos para servirle",
+      "idx": 21,
+      "text": "De nada, estamos para servirle",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "23/6/2025, 5:30 p. m.",
+      "ts": null,
+      "speaker_raw": "Citas De Servicio Calidad Tlahuac",
+      "text_raw": "Si claro aquí la esperamos 😉",
+      "idx": 22,
+      "text": "Si claro aquí la esperamos 😉",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    }
+  ],
+  "message_count": 23
+}

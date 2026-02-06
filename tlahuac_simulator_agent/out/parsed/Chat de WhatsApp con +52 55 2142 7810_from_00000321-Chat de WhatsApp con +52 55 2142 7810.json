@@ -1,0 +1,137 @@
+{
+  "source_file": "Chat de WhatsApp con +52 55 2142 7810_from_00000321-Chat de WhatsApp con +52 55 2142 7810.txt",
+  "conversation_index": 0,
+  "total_conversations_in_file": 1,
+  "raw_text": "17/7/2025, 12:18 p. m. - Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.\n17/7/2025, 12:18 p. m. - \n17/7/2025, 12:18 p. m. - +52 55 2142 7810: Buena tarde\n17/7/2025, 12:18 p. m. - Chevrolet Calidad Tlahuac: ¡Bienvenido!! agradecemos tu preferencia, con la intención de atenderte con la Calidad y Calidez que te mereces nos podrías compartir tu nombre y ¿Cómo podemos apoyarle?\n17/7/2025, 12:20 p. m. - +52 55 2142 7810: Saúl\nCuál es el coche más accesible que tienen en transmisión manual (seminuevo)\n17/7/2025, 12:32 p. m. - Chevrolet Calidad Tlahuac: Podría ser el ónix, de cualquier manera le comparto nuestro catálogo de unidades  para que  pueda verlas \nhttps://www.chevrolettlahuac.com/seminuevos\n17/7/2025, 12:36 p. m. - +52 55 2142 7810: Bien deje lo checo\n17/7/2025, 1:05 p. m. - Chevrolet Calidad Tlahuac: Claros quedo atento",
+  "messages": [
+    {
+      "ts_raw": "17/7/2025, 12:18 p. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "idx": 0,
+      "text": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 12:18 p. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "-",
+      "idx": 1,
+      "text": "-",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 12:18 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 2142 7810",
+      "text_raw": "Buena tarde",
+      "idx": 2,
+      "text": "Buena tarde",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 12:18 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "¡Bienvenido!! agradecemos tu preferencia, con la intención de atenderte con la Calidad y Calidez que te mereces nos podrías compartir tu nombre y ¿Cómo podemos apoyarle?",
+      "idx": 3,
+      "text": "¡Bienvenido!! agradecemos tu preferencia, con la intención de atenderte con la Calidad y Calidez que te mereces nos podrías compartir tu nombre y ¿Cómo podemos apoyarle?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 12:20 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 2142 7810",
+      "text_raw": "Saúl\nCuál es el coche más accesible que tienen en transmisión manual (seminuevo)",
+      "idx": 4,
+      "text": "Saúl\nCuál es el coche más accesible que tienen en transmisión manual (seminuevo)",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 12:32 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Podría ser el ónix, de cualquier manera le comparto nuestro catálogo de unidades  para que  pueda verlas\nhttps://www.chevrolettlahuac.com/seminuevos",
+      "idx": 5,
+      "text": "Podría ser el ónix, de cualquier manera le comparto nuestro catálogo de unidades  para que  pueda verlas\nhttps://www.chevrolettlahuac.com/seminuevos",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 12:36 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 2142 7810",
+      "text_raw": "Bien deje lo checo",
+      "idx": 6,
+      "text": "Bien deje lo checo",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 1:05 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Claros quedo atento",
+      "idx": 7,
+      "text": "Claros quedo atento",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    }
+  ],
+  "message_count": 8
+}

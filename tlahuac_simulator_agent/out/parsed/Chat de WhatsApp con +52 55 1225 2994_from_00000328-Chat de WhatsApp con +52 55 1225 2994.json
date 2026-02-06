@@ -1,0 +1,169 @@
+{
+  "source_file": "Chat de WhatsApp con +52 55 1225 2994_from_00000328-Chat de WhatsApp con +52 55 1225 2994.txt",
+  "conversation_index": 0,
+  "total_conversations_in_file": 1,
+  "raw_text": "24/2/2025, 4:02 p. m. - Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.\n24/2/2025, 4:02 p. m. - \n24/2/2025, 1:21 p. m. - ‎~ M🌹A🌹S🌹I🌹E🌹L 🌹 respondió a tu anuncio de Instagram. Toca para ver el anuncio.\n24/2/2025, 1:21 p. m. - +52 55 1225 2994: ¡Hola! Quiero más información.\n24/2/2025, 4:03 p. m. - Chevrolet Calidad Tlahuac: ¡Bienvenido!! agradecemos tu preferencia, con la intención de atenderte con la Calidad y Calidez que te mereces ¿Cómo podemos apoyarle?\n24/2/2025, 4:07 p. m. - Chevrolet Calidad Tlahuac: Buen día si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información\n24/2/2025, 4:07 p. m. - Chevrolet Calidad Tlahuac: ¿Con quien tengo el gusto?\n17/7/2025, 8:04 a. m. - Chevrolet Calidad Tlahuac: Anuncio de Facebook Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?\n17/7/2025, 8:04 a. m. - +52 55 1225 2994: ¡Hola! Me gustaría conseguir más información sobre esto.\n17/7/2025, 10:40 a. m. - Chevrolet Calidad Tlahuac: Buenos días, claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?",
+  "messages": [
+    {
+      "ts_raw": "24/2/2025, 4:02 p. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "idx": 0,
+      "text": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "24/2/2025, 4:02 p. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "-",
+      "idx": 1,
+      "text": "-",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "24/2/2025, 1:21 p. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "‎~ M🌹A🌹S🌹I🌹E🌹L 🌹 respondió a tu anuncio de Instagram. Toca para ver el anuncio.",
+      "idx": 2,
+      "text": "‎~ M🌹A🌹S🌹I🌹E🌹L 🌹 respondió a tu anuncio de Instagram. Toca para ver el anuncio.",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "24/2/2025, 1:21 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1225 2994",
+      "text_raw": "¡Hola! Quiero más información.",
+      "idx": 3,
+      "text": "¡Hola! Quiero más información.",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "24/2/2025, 4:03 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "¡Bienvenido!! agradecemos tu preferencia, con la intención de atenderte con la Calidad y Calidez que te mereces ¿Cómo podemos apoyarle?",
+      "idx": 4,
+      "text": "¡Bienvenido!! agradecemos tu preferencia, con la intención de atenderte con la Calidad y Calidez que te mereces ¿Cómo podemos apoyarle?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "24/2/2025, 4:07 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Buen día si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información",
+      "idx": 5,
+      "text": "Buen día si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "24/2/2025, 4:07 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "¿Con quien tengo el gusto?",
+      "idx": 6,
+      "text": "¿Con quien tengo el gusto?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 8:04 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Anuncio de Facebook Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?",
+      "idx": 7,
+      "text": "Anuncio de Facebook Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 8:04 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1225 2994",
+      "text_raw": "¡Hola! Me gustaría conseguir más información sobre esto.",
+      "idx": 8,
+      "text": "¡Hola! Me gustaría conseguir más información sobre esto.",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 10:40 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Buenos días, claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?",
+      "idx": 9,
+      "text": "Buenos días, claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    }
+  ],
+  "message_count": 10
+}

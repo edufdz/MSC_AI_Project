@@ -1,0 +1,89 @@
+{
+  "source_file": "Chat de WhatsApp con +52 56 4000 5603_from_00000319-Chat de WhatsApp con +52 56 4000 5603.txt",
+  "conversation_index": 0,
+  "total_conversations_in_file": 1,
+  "raw_text": "17/7/2025, 3:08 p. m. - Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.\n17/7/2025, 3:08 p. m. - \n17/7/2025, 3:07 p. m. - Chevrolet Calidad Tlahuac: Anuncio de Instagram Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?\n17/7/2025, 3:07 p. m. - +52 56 4000 5603: ¡Hola! Podrías darme más información de...\n17/7/2025, 4:14 p. m. - Chevrolet Calidad Tlahuac: Buenas tardes, claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?",
+  "messages": [
+    {
+      "ts_raw": "17/7/2025, 3:08 p. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "idx": 0,
+      "text": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 3:08 p. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "-",
+      "idx": 1,
+      "text": "-",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 3:07 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Anuncio de Instagram Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?",
+      "idx": 2,
+      "text": "Anuncio de Instagram Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 3:07 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 56 4000 5603",
+      "text_raw": "¡Hola! Podrías darme más información de...",
+      "idx": 3,
+      "text": "¡Hola! Podrías darme más información de...",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 4:14 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Buenas tardes, claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?",
+      "idx": 4,
+      "text": "Buenas tardes, claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    }
+  ],
+  "message_count": 5
+}

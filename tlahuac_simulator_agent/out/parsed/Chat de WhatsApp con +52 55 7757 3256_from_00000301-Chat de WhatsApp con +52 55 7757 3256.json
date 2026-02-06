@@ -1,0 +1,121 @@
+{
+  "source_file": "Chat de WhatsApp con +52 55 7757 3256_from_00000301-Chat de WhatsApp con +52 55 7757 3256.txt",
+  "conversation_index": 0,
+  "total_conversations_in_file": 1,
+  "raw_text": "17/7/2025, 2:01 p. m. - Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.\n17/7/2025, 2:01 p. m. - \n17/7/2025, 2:01 p. m. - Chevrolet Calidad Tlahuac: Anuncio de Facebook Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?\n17/7/2025, 2:01 p. m. - +52 55 7757 3256: ¡Hola! Podrías darme más información de autofinanciamiento\n17/7/2025, 2:03 p. m. - Chevrolet Calidad Tlahuac: Buenas tardes , claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?\n17/7/2025, 2:03 p. m. - +52 55 7757 3256: Hola buena tarde \nMi nombre es Guadalupe Jiménez\n17/7/2025, 2:30 p. m. - Chevrolet Calidad Tlahuac: Gracias señora Jiménez,  en breve la contacta un asesor",
+  "messages": [
+    {
+      "ts_raw": "17/7/2025, 2:01 p. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "idx": 0,
+      "text": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 2:01 p. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "-",
+      "idx": 1,
+      "text": "-",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 2:01 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Anuncio de Facebook Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?",
+      "idx": 2,
+      "text": "Anuncio de Facebook Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 2:01 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 7757 3256",
+      "text_raw": "¡Hola! Podrías darme más información de autofinanciamiento",
+      "idx": 3,
+      "text": "¡Hola! Podrías darme más información de autofinanciamiento",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 2:03 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Buenas tardes , claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?",
+      "idx": 4,
+      "text": "Buenas tardes , claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 2:03 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 7757 3256",
+      "text_raw": "Hola buena tarde\nMi nombre es Guadalupe Jiménez",
+      "idx": 5,
+      "text": "Hola buena tarde\nMi nombre es Guadalupe Jiménez",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 2:30 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Gracias señora Jiménez,  en breve la contacta un asesor",
+      "idx": 6,
+      "text": "Gracias señora Jiménez,  en breve la contacta un asesor",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    }
+  ],
+  "message_count": 7
+}

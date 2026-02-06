@@ -1,0 +1,201 @@
+{
+  "source_file": "Chat de WhatsApp con +52 55 6799 8763_from_00000334-Chat de WhatsApp con +52 55 6799 8763.txt",
+  "conversation_index": 0,
+  "total_conversations_in_file": 1,
+  "raw_text": "16/7/2025, 4:16 p. m. - Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.\n16/7/2025, 4:16 p. m. - \n16/7/2025, 2:18 p. m. - Se desactivaron los mensajes temporales. Toca para cambiar esta opción.\n16/7/2025, 2:18 p. m. - +52 55 6799 8763: buenas tardes\n16/7/2025, 4:08 p. m. - Chevrolet Calidad Tlahuac: ¡Bienvenido!! agradecemos tu preferencia, con la intención de atenderte con la Calidad y Calidez que te mereces nos podrías compartir tu nombre y ¿Cómo podemos apoyarle?\n16/7/2025, 4:09 p. m. - +52 55 6799 8763: Maria Isabel Millan\n16/7/2025, 4:09 p. m. - +52 55 6799 8763: quisiera saber si tienen financiamiento de coches\n16/7/2025, 4:10 p. m. - Chevrolet Calidad Tlahuac: Claro con gusto, si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿Cuál seria el auto de su interés?\n16/7/2025, 4:50 p. m. - +52 55 6799 8763: seria\n16/7/2025, 4:50 p. m. - +52 55 6799 8763: la linea ONIX\n16/7/2025, 4:50 p. m. - Chevrolet Calidad Tlahuac: claro con gusto\n16/7/2025, 4:51 p. m. - Chevrolet Calidad Tlahuac: en breve la contacta un asesor",
+  "messages": [
+    {
+      "ts_raw": "16/7/2025, 4:16 p. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "idx": 0,
+      "text": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 4:16 p. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "-",
+      "idx": 1,
+      "text": "-",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 2:18 p. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "Se desactivaron los mensajes temporales. Toca para cambiar esta opción.",
+      "idx": 2,
+      "text": "Se desactivaron los mensajes temporales. Toca para cambiar esta opción.",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 2:18 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 6799 8763",
+      "text_raw": "buenas tardes",
+      "idx": 3,
+      "text": "buenas tardes",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 4:08 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "¡Bienvenido!! agradecemos tu preferencia, con la intención de atenderte con la Calidad y Calidez que te mereces nos podrías compartir tu nombre y ¿Cómo podemos apoyarle?",
+      "idx": 4,
+      "text": "¡Bienvenido!! agradecemos tu preferencia, con la intención de atenderte con la Calidad y Calidez que te mereces nos podrías compartir tu nombre y ¿Cómo podemos apoyarle?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 4:09 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 6799 8763",
+      "text_raw": "Maria Isabel Millan",
+      "idx": 5,
+      "text": "Maria Isabel Millan",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 4:09 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 6799 8763",
+      "text_raw": "quisiera saber si tienen financiamiento de coches",
+      "idx": 6,
+      "text": "quisiera saber si tienen financiamiento de coches",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 4:10 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Claro con gusto, si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿Cuál seria el auto de su interés?",
+      "idx": 7,
+      "text": "Claro con gusto, si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿Cuál seria el auto de su interés?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 4:50 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 6799 8763",
+      "text_raw": "seria",
+      "idx": 8,
+      "text": "seria",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 4:50 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 6799 8763",
+      "text_raw": "la linea ONIX",
+      "idx": 9,
+      "text": "la linea ONIX",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 4:50 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "claro con gusto",
+      "idx": 10,
+      "text": "claro con gusto",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 4:51 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "en breve la contacta un asesor",
+      "idx": 11,
+      "text": "en breve la contacta un asesor",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    }
+  ],
+  "message_count": 12
+}

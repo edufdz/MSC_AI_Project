@@ -1,0 +1,139 @@
+{
+  "source_file": "Chat de WhatsApp con +52 55 4913 8225_from_00000320-Chat de WhatsApp con +52 55 4913 8225.txt",
+  "conversation_index": 0,
+  "total_conversations_in_file": 1,
+  "raw_text": "17/7/2025, 2:01 p. m. - Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.\n17/7/2025, 2:01 p. m. - \n17/7/2025, 2:00 p. m. - ‎+52 55 4913 8225 usa una duración predeterminada para los mensajes temporales en chats nuevos. Los mensajes nuevos desaparecerán de este chat después de ‎90 días de haber sido enviados, a menos que se use la opción para conservarlos. Toca para establecer la duración predeterminada que desees.\n17/7/2025, 2:00 p. m. - Chevrolet Calidad Tlahuac: Anuncio de Facebook Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?\n17/7/2025, 2:00 p. m. - +52 55 4913 8225: ¡Hola! Podrías darme más información de...\n17/7/2025, 2:02 p. m. - Chevrolet Calidad Tlahuac: Buenas tardes , claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?\n17/7/2025, 2:03 p. m. - +52 55 4913 8225: Con Ivonne Flores\n17/7/2025, 2:34 p. m. - Chevrolet Calidad Tlahuac: Gracias sra. Flores, cuál sería el auto de su interés?",
+  "messages": [
+    {
+      "ts_raw": "17/7/2025, 2:01 p. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "idx": 0,
+      "text": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 2:01 p. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "-",
+      "idx": 1,
+      "text": "-",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 2:00 p. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "‎+52 55 4913 8225 usa una duración predeterminada para los mensajes temporales en chats nuevos. Los mensajes nuevos desaparecerán de este chat después de ‎90 días de haber sido enviados, a menos que se use la opción para conservarlos. Toca para establecer la duración predeterminada que desees.",
+      "idx": 2,
+      "text": "‎<PHONE> usa una duración predeterminada para los mensajes temporales en chats nuevos. Los mensajes nuevos desaparecerán de este chat después de ‎90 días de haber sido enviados, a menos que se use la opción para conservarlos. Toca para establecer la duración predeterminada que desees.",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": true,
+        "types": [
+          "PHONE"
+        ]
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 2:00 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Anuncio de Facebook Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?",
+      "idx": 3,
+      "text": "Anuncio de Facebook Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 2:00 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 4913 8225",
+      "text_raw": "¡Hola! Podrías darme más información de...",
+      "idx": 4,
+      "text": "¡Hola! Podrías darme más información de...",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 2:02 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Buenas tardes , claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?",
+      "idx": 5,
+      "text": "Buenas tardes , claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 2:03 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 4913 8225",
+      "text_raw": "Con Ivonne Flores",
+      "idx": 6,
+      "text": "Con Ivonne Flores",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 2:34 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Gracias sra. Flores, cuál sería el auto de su interés?",
+      "idx": 7,
+      "text": "Gracias sra. Flores, cuál sería el auto de su interés?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    }
+  ],
+  "message_count": 8
+}

@@ -1,0 +1,105 @@
+{
+  "source_file": "Chat de WhatsApp con +52 55 7008 4657_from_00000307-Chat de WhatsApp con +52 55 7008 4657.txt",
+  "conversation_index": 0,
+  "total_conversations_in_file": 1,
+  "raw_text": "23/6/2025, 1:37 p. m. - Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.\n23/6/2025, 1:37 p. m. - \n23/6/2025, 1:37 p. m. - +52 55 7008 4657: Hola, tengo algunas preguntas sobre Chevrolet Groove 2023. https://auto.mercadolibre.com.mx/MLM-3767703546-chevrolet-groove-2023-_JM?u=NDYwMDUxNTg0\n23/6/2025, 1:37 p. m. - Chevrolet Calidad Tlahuac: ¡Bienvenido!! agradecemos tu preferencia, con la intención de atenderte con la Calidad y Calidez que te mereces nos podrías compartir tu nombre y ¿Cómo podemos apoyarle?\n23/6/2025, 1:38 p. m. - +52 55 7008 4657: Adan Torres\nCotizacion para su camioneta Groove\n23/6/2025, 1:49 p. m. - Chevrolet Calidad Tlahuac: gracia sr. Torres en breve un asesor lo contacta",
+  "messages": [
+    {
+      "ts_raw": "23/6/2025, 1:37 p. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "idx": 0,
+      "text": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "23/6/2025, 1:37 p. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "-",
+      "idx": 1,
+      "text": "-",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "23/6/2025, 1:37 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 7008 4657",
+      "text_raw": "Hola, tengo algunas preguntas sobre Chevrolet Groove 2023. https://auto.mercadolibre.com.mx/MLM-3767703546-chevrolet-groove-2023-_JM?u=NDYwMDUxNTg0",
+      "idx": 2,
+      "text": "Hola, tengo algunas preguntas sobre Chevrolet Groove 2023. https://auto.mercadolibre.com.mx/MLM-3767703546-chevrolet-groove-2023-_JM?u=NDYwMDUxNTg0",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "23/6/2025, 1:37 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "¡Bienvenido!! agradecemos tu preferencia, con la intención de atenderte con la Calidad y Calidez que te mereces nos podrías compartir tu nombre y ¿Cómo podemos apoyarle?",
+      "idx": 3,
+      "text": "¡Bienvenido!! agradecemos tu preferencia, con la intención de atenderte con la Calidad y Calidez que te mereces nos podrías compartir tu nombre y ¿Cómo podemos apoyarle?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "23/6/2025, 1:38 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 7008 4657",
+      "text_raw": "Adan Torres\nCotizacion para su camioneta Groove",
+      "idx": 4,
+      "text": "Adan Torres\nCotizacion para su camioneta Groove",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "23/6/2025, 1:49 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "gracia sr. Torres en breve un asesor lo contacta",
+      "idx": 5,
+      "text": "gracia sr. Torres en breve un asesor lo contacta",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    }
+  ],
+  "message_count": 6
+}

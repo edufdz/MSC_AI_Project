@@ -1,0 +1,219 @@
+{
+  "source_file": "Chat de WhatsApp con +52 55 4510 9340_from_00000374-Chat de WhatsApp con +52 55 4510 9340.txt",
+  "conversation_index": 0,
+  "total_conversations_in_file": 1,
+  "raw_text": "12/7/2025, 11:50 a. m. - Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.\n11/7/2025, 2:21 p. m. - Diana Anastasio: *ERASMO CUATOCHE TELLEZ‼* 🤩\n\n*CALIDAD TLAHUAC SA DE CV AGRADECE SU PREFERENCIA* \n\nLe recordamos que han transcurrido 6 meses del ultimo servicio de su Chevrolet *COLORADO 2024 serie 1GCPT9EK9R1105745*🚗\n\nPor lo cual ya es necesario realizarle su siguiente cambio de aceite y filtro de aceite 🔧\n*¿Contamos con su asistencia el día de mañana?* 👨🏻🔧\n\nQuedo atenta a su confirmación\n\nLe atiende MARIA RUBIO!👩🏻💻\n11/7/2025, 2:36 p. m. - +52 55 4510 9340: Qué tal buenas tardes me puede agendar para el día lunes\n11/7/2025, 2:36 p. m. - +52 55 4510 9340: A partir de las 9\n11/7/2025, 2:37 p. m. - Diana Anastasio: Claro, me podría indicar el kilometraje de su unidad para validar los servicios correspondientes\n11/7/2025, 2:41 p. m. - +52 55 4510 9340: Hijole no lo tengo de lo envío más tarde\n11/7/2025, 2:44 p. m. - Diana Anastasio: Claro, quedo en espera\n12/7/2025, 10:13 a. m. - Diana Anastasio: Buen día estimado ERASMO CUATOCHE, en seguimiento de su cita de servicio\n\n¿Contamos con su asistencia el día lunes?\n12/7/2025, 12:36 p. m. - +52 55 4510 9340: Buenas tardes si el día lunes por favor\n12/7/2025, 12:37 p. m. - +52 55 4510 9340: Trae 17515 km\n12/7/2025, 1:09 p. m. - Diana Anastasio: Perfecto, en breve le comparto los detalles\n12/7/2025, 3:19 p. m. - Diana Anastasio: <Multimedia omitido>\n14/7/2025, 12:19 p. m. - Diana Anastasio: HOLA  *ERASMO* *CUATOCHE* *TELLEZ* \n \nAgradecemos su preferencia y confirmamos su cita en el distribuidor:\n\nChevrolet Tlahuac \n\nFecha Cita: *14/07/2025 10:00*\nFolio Cita: *452610*\nUnidad: *COLORADO DOBLE CABINA 4X4 PAQ C Z71 2024*\nServicio: *LAVADO DE CARROCERIA* \n*Servicio de Mantenimiento de 6,000 Kms.* \n\nAsesor: *00 Martinez Cantera Luis Eduardo* \n\nConfiguración de notificaciones: *http://chtlahuac.ddns.net:116//CentroNotificaciones/CentroNotificaciones?strId=7d5bc12a-3d7f-4b0f-aeb7-7088bdf5b980*\nDetalle del asesor de servicio: *http://chtlahuac.ddns.net:116//CentroNotificaciones/CentroNotificaciones?strId=7d5bc12a-3d7f-4b0f-aeb7-7088bdf5b980*",
+  "messages": [
+    {
+      "ts_raw": "12/7/2025, 11:50 a. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "idx": 0,
+      "text": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "11/7/2025, 2:21 p. m.",
+      "ts": null,
+      "speaker_raw": "Diana Anastasio",
+      "text_raw": "*ERASMO CUATOCHE TELLEZ‼* 🤩\n\n*CALIDAD TLAHUAC SA DE CV AGRADECE SU PREFERENCIA* \n\nLe recordamos que han transcurrido 6 meses del ultimo servicio de su Chevrolet *COLORADO 2024 serie 1GCPT9EK9R1105745*🚗\n\nPor lo cual ya es necesario realizarle su siguiente cambio de aceite y filtro de aceite 🔧\n*¿Contamos con su asistencia el día de mañana?* 👨🏻🔧\n\nQuedo atenta a su confirmación\n\nLe atiende MARIA RUBIO!👩🏻💻",
+      "idx": 1,
+      "text": "*ERASMO CUATOCHE TELLEZ‼* 🤩\n\n*CALIDAD TLAHUAC SA DE CV AGRADECE SU PREFERENCIA*\n\nLe recordamos que han transcurrido 6 meses del ultimo servicio de su Chevrolet *COLORADO 2024 serie <VIN>*🚗\n\nPor lo cual ya es necesario realizarle su siguiente cambio de aceite y filtro de aceite 🔧\n*¿Contamos con su asistencia el día de mañana?* 👨🏻🔧\n\nQuedo atenta a su confirmación\n\nLe atiende MARIA RUBIO!👩🏻💻",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": true,
+        "types": [
+          "VIN"
+        ]
+      }
+    },
+    {
+      "ts_raw": "11/7/2025, 2:36 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 4510 9340",
+      "text_raw": "Qué tal buenas tardes me puede agendar para el día lunes",
+      "idx": 2,
+      "text": "Qué tal buenas tardes me puede agendar para el día lunes",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "11/7/2025, 2:36 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 4510 9340",
+      "text_raw": "A partir de las 9",
+      "idx": 3,
+      "text": "A partir de las 9",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "11/7/2025, 2:37 p. m.",
+      "ts": null,
+      "speaker_raw": "Diana Anastasio",
+      "text_raw": "Claro, me podría indicar el kilometraje de su unidad para validar los servicios correspondientes",
+      "idx": 4,
+      "text": "Claro, me podría indicar el kilometraje de su unidad para validar los servicios correspondientes",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "11/7/2025, 2:41 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 4510 9340",
+      "text_raw": "Hijole no lo tengo de lo envío más tarde",
+      "idx": 5,
+      "text": "Hijole no lo tengo de lo envío más tarde",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "11/7/2025, 2:44 p. m.",
+      "ts": null,
+      "speaker_raw": "Diana Anastasio",
+      "text_raw": "Claro, quedo en espera",
+      "idx": 6,
+      "text": "Claro, quedo en espera",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "12/7/2025, 10:13 a. m.",
+      "ts": null,
+      "speaker_raw": "Diana Anastasio",
+      "text_raw": "Buen día estimado ERASMO CUATOCHE, en seguimiento de su cita de servicio\n\n¿Contamos con su asistencia el día lunes?",
+      "idx": 7,
+      "text": "Buen día estimado ERASMO CUATOCHE, en seguimiento de su cita de servicio\n\n¿Contamos con su asistencia el día lunes?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "12/7/2025, 12:36 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 4510 9340",
+      "text_raw": "Buenas tardes si el día lunes por favor",
+      "idx": 8,
+      "text": "Buenas tardes si el día lunes por favor",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "12/7/2025, 12:37 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 4510 9340",
+      "text_raw": "Trae 17515 km",
+      "idx": 9,
+      "text": "Trae 17515 km",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "12/7/2025, 1:09 p. m.",
+      "ts": null,
+      "speaker_raw": "Diana Anastasio",
+      "text_raw": "Perfecto, en breve le comparto los detalles",
+      "idx": 10,
+      "text": "Perfecto, en breve le comparto los detalles",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "12/7/2025, 3:19 p. m.",
+      "ts": null,
+      "speaker_raw": "Diana Anastasio",
+      "text_raw": "<Multimedia omitido>",
+      "idx": 11,
+      "text": "<Multimedia omitido>",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "14/7/2025, 12:19 p. m.",
+      "ts": null,
+      "speaker_raw": "Diana Anastasio",
+      "text_raw": "HOLA  *ERASMO* *CUATOCHE* *TELLEZ*\n \nAgradecemos su preferencia y confirmamos su cita en el distribuidor:\n\nChevrolet Tlahuac \n\nFecha Cita: *14/07/2025 10:00*\nFolio Cita: *452610*\nUnidad: *COLORADO DOBLE CABINA 4X4 PAQ C Z71 2024*\nServicio: *LAVADO DE CARROCERIA* \n*Servicio de Mantenimiento de 6,000 Kms.* \n\nAsesor: *00 Martinez Cantera Luis Eduardo* \n\nConfiguración de notificaciones: *http://chtlahuac.ddns.net:116//CentroNotificaciones/CentroNotificaciones?strId=7d5bc12a-3d7f-4b0f-aeb7-7088bdf5b980*\nDetalle del asesor de servicio: *http://chtlahuac.ddns.net:116//CentroNotificaciones/CentroNotificaciones?strId=7d5bc12a-3d7f-4b0f-aeb7-7088bdf5b980*",
+      "idx": 12,
+      "text": "HOLA  *ERASMO* *CUATOCHE* *TELLEZ*\n\nAgradecemos su preferencia y confirmamos su cita en el distribuidor:\n\nChevrolet Tlahuac\n\nFecha Cita: *14/07/2025 10:00*\nFolio Cita: *452610*\nUnidad: *COLORADO DOBLE CABINA 4X4 PAQ C Z71 2024*\nServicio: *LAVADO DE CARROCERIA*\n*Servicio de Mantenimiento de 6,000 Kms.*\n\nAsesor: *00 Martinez Cantera Luis Eduardo*\n\nConfiguración de notificaciones: *http://chtlahuac.ddns.net:116//CentroNotificaciones/CentroNotificaciones?strId=7d5bc12a-3d7f-4b0f-aeb7-7088bdf5b980*\nDetalle del asesor de servicio: *http://chtlahuac.ddns.net:116//CentroNotificaciones/CentroNotificaciones?strId=7d5bc12a-3d7f-4b0f-aeb7-7088bdf5b980*",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    }
+  ],
+  "message_count": 13
+}

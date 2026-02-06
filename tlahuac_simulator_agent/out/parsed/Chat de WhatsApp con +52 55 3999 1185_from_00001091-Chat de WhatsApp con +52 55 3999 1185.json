@@ -1,0 +1,316 @@
+{
+  "source_file": "Chat de WhatsApp con +52 55 3999 1185_from_00001091-Chat de WhatsApp con +52 55 3999 1185.txt",
+  "conversation_index": 0,
+  "total_conversations_in_file": 1,
+  "raw_text": "31/5/2025, 11:57 a. m. - Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.\n31/5/2025, 11:50 a. m. - Citas De Servicio Calidad Tlahuac: Buen día, estimado cliente JOSE LUIS CRUZ OSORIO!!👋🏼\n\nRecordándole que ya nos encontramos en tiempo de realizar su próximo servicio, ya que su ultima visita fue hace 5 meses, *agende su cita para el día de mañana y obtenga un 10% de descuento en este servicio de mantenimiento*. ⚙🔧\n\nChevrolet TRACKER / HHR 2024 serie 93CEF76C7RB112672 🚗\n\nDescuento unicamente agendando por este medio.👌🏻\n\n*Le atiende Rocio Villela* 😊\n31/5/2025, 11:50 a. m. - Citas De Servicio Calidad Tlahuac: <Multimedia omitido>\n2/6/2025, 10:41 a. m. - Citas De Servicio Calidad Tlahuac: Buenos días estimado cliente\n2/6/2025, 10:41 a. m. - Citas De Servicio Calidad Tlahuac: Me comenta su asesor de ventas Oscar que el día de hoy viene a servicio\n2/6/2025, 10:41 a. m. - Citas De Servicio Calidad Tlahuac: Me ayuda con el kilometraje actual de su unidad\n2/6/2025, 11:01 a. m. - Citas De Servicio Calidad Tlahuac: HOLA  *JOSE LUIS* *CRUZ* *OSORIO* \n \nAgradecemos su preferencia y confirmamos su cita en el distribuidor:\n\nChevrolet Tlahuac \n\nFecha Cita: *02/06/2025 12:20*\nFolio Cita: *450583*\nUnidad: *TRACKER PAQ. C 2024*\nServicio: *LAVADO DE CARROCERIA* \n*Servicio de Mantenimiento de 6,000 Kms.* \n\nAsesor: *00 Palacios Morales Christian Alejandro* \n\nConfiguración de notificaciones: *http://chtlahuac.ddns.net:116//CentroNotificaciones/CentroNotificaciones?strId=cb032402-3814-4f93-a5d2-26339aa2abc9*\nDetalle del asesor de servicio: *http://chtlahuac.ddns.net:116//CentroNotificaciones/CentroNotificaciones?strId=cb032402-3814-4f93-a5d2-26339aa2abc9*\n2/6/2025, 11:06 a. m. - Citas De Servicio Calidad Tlahuac: <Multimedia omitido>\n2/6/2025, 11:09 a. m. - +52 55 3999 1185: Buen día no recuerdo el kilometraje \nPero estoy en el trabajo y no me da tiempo acudir el día de hoy se podrá mañana porfavor??\n2/6/2025, 11:10 a. m. - Citas De Servicio Calidad Tlahuac: Si claro\n2/6/2025, 11:10 a. m. - Citas De Servicio Calidad Tlahuac: En que horario seria?\n2/6/2025, 11:10 a. m. - +52 55 3999 1185: Igual 12:20 porfavor\n2/6/2025, 11:12 a. m. - Citas De Servicio Calidad Tlahuac: HORARIOS DE RECEPCIÓN:\n°Lunes a Viernes 7:00 a.m. - 12:00 p.m. \n°Sábados 7:00 a.m. - 11:00 a.m.\n°Domingos 8:00 a.m. - 10:00 a.m.\n\nMi recepción es cada 20 minutos, por ejemplo:\n7:00am, 7:20am, 7:40am, 8:00am, 8:20am, 8:40am, 9:00am, 9:20am, 9:40am,10:00am…. Así sucesivamente hasta las 12:00pm\n2/6/2025, 11:13 a. m. - +52 55 3999 1185: Mañana a las 12:00 porfavor\n2/6/2025, 11:15 a. m. - Citas De Servicio Calidad Tlahuac: Ok\n2/6/2025, 11:15 a. m. - +52 55 3999 1185: Gracias\n2/6/2025, 11:24 a. m. - Citas De Servicio Calidad Tlahuac: <Multimedia omitido>\n2/6/2025, 11:25 a. m. - +52 55 3999 1185: Oki \nMuchas gracias\n2/6/2025, 11:27 a. m. - Citas De Servicio Calidad Tlahuac: Si de nada estamos para servirle",
+  "messages": [
+    {
+      "ts_raw": "31/5/2025, 11:57 a. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "idx": 0,
+      "text": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "31/5/2025, 11:50 a. m.",
+      "ts": null,
+      "speaker_raw": "Citas De Servicio Calidad Tlahuac",
+      "text_raw": "Buen día, estimado cliente JOSE LUIS CRUZ OSORIO!!👋🏼\n\nRecordándole que ya nos encontramos en tiempo de realizar su próximo servicio, ya que su ultima visita fue hace 5 meses, *agende su cita para el día de mañana y obtenga un 10% de descuento en este servicio de mantenimiento*. ⚙🔧\n\nChevrolet TRACKER / HHR 2024 serie 93CEF76C7RB112672 🚗\n\nDescuento unicamente agendando por este medio.👌🏻\n\n*Le atiende Rocio Villela* 😊",
+      "idx": 1,
+      "text": "Buen día, estimado cliente JOSE LUIS CRUZ OSORIO!!👋🏼\n\nRecordándole que ya nos encontramos en tiempo de realizar su próximo servicio, ya que su ultima visita fue hace 5 meses, *agende su cita para el día de mañana y obtenga un 10% de descuento en este servicio de mantenimiento*. ⚙🔧\n\nChevrolet TRACKER / <PLATE> serie <VIN> 🚗\n\nDescuento unicamente agendando por este medio.👌🏻\n\n*Le atiende Rocio Villela* 😊",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": true,
+        "types": [
+          "PLATE",
+          "VIN"
+        ]
+      }
+    },
+    {
+      "ts_raw": "31/5/2025, 11:50 a. m.",
+      "ts": null,
+      "speaker_raw": "Citas De Servicio Calidad Tlahuac",
+      "text_raw": "<Multimedia omitido>",
+      "idx": 2,
+      "text": "<Multimedia omitido>",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "2/6/2025, 10:41 a. m.",
+      "ts": null,
+      "speaker_raw": "Citas De Servicio Calidad Tlahuac",
+      "text_raw": "Buenos días estimado cliente",
+      "idx": 3,
+      "text": "Buenos días estimado cliente",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "2/6/2025, 10:41 a. m.",
+      "ts": null,
+      "speaker_raw": "Citas De Servicio Calidad Tlahuac",
+      "text_raw": "Me comenta su asesor de ventas Oscar que el día de hoy viene a servicio",
+      "idx": 4,
+      "text": "Me comenta su asesor de ventas Oscar que el día de hoy viene a servicio",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "2/6/2025, 10:41 a. m.",
+      "ts": null,
+      "speaker_raw": "Citas De Servicio Calidad Tlahuac",
+      "text_raw": "Me ayuda con el kilometraje actual de su unidad",
+      "idx": 5,
+      "text": "Me ayuda con el kilometraje actual de su unidad",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "2/6/2025, 11:01 a. m.",
+      "ts": null,
+      "speaker_raw": "Citas De Servicio Calidad Tlahuac",
+      "text_raw": "HOLA  *JOSE LUIS* *CRUZ* *OSORIO*\n \nAgradecemos su preferencia y confirmamos su cita en el distribuidor:\n\nChevrolet Tlahuac \n\nFecha Cita: *02/06/2025 12:20*\nFolio Cita: *450583*\nUnidad: *TRACKER PAQ. C 2024*\nServicio: *LAVADO DE CARROCERIA* \n*Servicio de Mantenimiento de 6,000 Kms.* \n\nAsesor: *00 Palacios Morales Christian Alejandro* \n\nConfiguración de notificaciones: *http://chtlahuac.ddns.net:116//CentroNotificaciones/CentroNotificaciones?strId=cb032402-3814-4f93-a5d2-26339aa2abc9*\nDetalle del asesor de servicio: *http://chtlahuac.ddns.net:116//CentroNotificaciones/CentroNotificaciones?strId=cb032402-3814-4f93-a5d2-26339aa2abc9*",
+      "idx": 6,
+      "text": "HOLA  *JOSE LUIS* *CRUZ* *OSORIO*\n\nAgradecemos su preferencia y confirmamos su cita en el distribuidor:\n\nChevrolet Tlahuac\n\nFecha Cita: *02/06/2025 12:20*\nFolio Cita: *450583*\nUnidad: *TRACKER PAQ. C 2024*\nServicio: *LAVADO DE CARROCERIA*\n*Servicio de Mantenimiento de 6,000 Kms.*\n\nAsesor: *00 Palacios Morales Christian Alejandro*\n\nConfiguración de notificaciones: *http://chtlahuac.ddns.net:116//CentroNotificaciones/CentroNotificaciones?strId=cb032402-3814-4f93-a5d2-26339aa2abc9*\nDetalle del asesor de servicio: *http://chtlahuac.ddns.net:116//CentroNotificaciones/CentroNotificaciones?strId=cb032402-3814-4f93-a5d2-26339aa2abc9*",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "2/6/2025, 11:06 a. m.",
+      "ts": null,
+      "speaker_raw": "Citas De Servicio Calidad Tlahuac",
+      "text_raw": "<Multimedia omitido>",
+      "idx": 7,
+      "text": "<Multimedia omitido>",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "2/6/2025, 11:09 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 3999 1185",
+      "text_raw": "Buen día no recuerdo el kilometraje\nPero estoy en el trabajo y no me da tiempo acudir el día de hoy se podrá mañana porfavor??",
+      "idx": 8,
+      "text": "Buen día no recuerdo el kilometraje\nPero estoy en el trabajo y no me da tiempo acudir el día de hoy se podrá mañana porfavor??",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "2/6/2025, 11:10 a. m.",
+      "ts": null,
+      "speaker_raw": "Citas De Servicio Calidad Tlahuac",
+      "text_raw": "Si claro",
+      "idx": 9,
+      "text": "Si claro",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "2/6/2025, 11:10 a. m.",
+      "ts": null,
+      "speaker_raw": "Citas De Servicio Calidad Tlahuac",
+      "text_raw": "En que horario seria?",
+      "idx": 10,
+      "text": "En que horario seria?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "2/6/2025, 11:10 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 3999 1185",
+      "text_raw": "Igual 12:20 porfavor",
+      "idx": 11,
+      "text": "Igual 12:20 porfavor",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "2/6/2025, 11:12 a. m.",
+      "ts": null,
+      "speaker_raw": "Citas De Servicio Calidad Tlahuac",
+      "text_raw": "HORARIOS DE RECEPCIÓN:\n°Lunes a Viernes 7:00 a.m. - 12:00 p.m. \n°Sábados 7:00 a.m. - 11:00 a.m.\n°Domingos 8:00 a.m. - 10:00 a.m.\n\nMi recepción es cada 20 minutos, por ejemplo:\n7:00am, 7:20am, 7:40am, 8:00am, 8:20am, 8:40am, 9:00am, 9:20am, 9:40am,10:00am…. Así sucesivamente hasta las 12:00pm",
+      "idx": 12,
+      "text": "HORARIOS DE RECEPCIÓN:\n°Lunes a Viernes 7:00 a.m. - 12:00 p.m.\n°Sábados 7:00 a.m. - 11:00 a.m.\n°Domingos 8:00 a.m. - 10:00 a.m.\n\nMi recepción es cada 20 minutos, por ejemplo:\n7:00am, 7:20am, 7:40am, 8:00am, 8:20am, 8:40am, 9:00am, 9:20am, 9:40am,10:00am…. Así sucesivamente hasta las 12:00pm",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "2/6/2025, 11:13 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 3999 1185",
+      "text_raw": "Mañana a las 12:00 porfavor",
+      "idx": 13,
+      "text": "Mañana a las 12:00 porfavor",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "2/6/2025, 11:15 a. m.",
+      "ts": null,
+      "speaker_raw": "Citas De Servicio Calidad Tlahuac",
+      "text_raw": "Ok",
+      "idx": 14,
+      "text": "Ok",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "2/6/2025, 11:15 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 3999 1185",
+      "text_raw": "Gracias",
+      "idx": 15,
+      "text": "Gracias",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "2/6/2025, 11:24 a. m.",
+      "ts": null,
+      "speaker_raw": "Citas De Servicio Calidad Tlahuac",
+      "text_raw": "<Multimedia omitido>",
+      "idx": 16,
+      "text": "<Multimedia omitido>",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "2/6/2025, 11:25 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 3999 1185",
+      "text_raw": "Oki\nMuchas gracias",
+      "idx": 17,
+      "text": "Oki\nMuchas gracias",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "2/6/2025, 11:27 a. m.",
+      "ts": null,
+      "speaker_raw": "Citas De Servicio Calidad Tlahuac",
+      "text_raw": "Si de nada estamos para servirle",
+      "idx": 18,
+      "text": "Si de nada estamos para servirle",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    }
+  ],
+  "message_count": 19
+}

@@ -1,0 +1,121 @@
+{
+  "source_file": "Chat de WhatsApp con +52 55 3718 3682_from_00000338-Chat de WhatsApp con +52 55 3718 3682.txt",
+  "conversation_index": 0,
+  "total_conversations_in_file": 1,
+  "raw_text": "16/7/2025, 4:16 p. m. - Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.\n16/7/2025, 4:16 p. m. - \n16/7/2025, 1:33 p. m. - Chevrolet Calidad Tlahuac: Anuncio de Facebook Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?\n16/7/2025, 1:33 p. m. - +52 55 3718 3682: ¡Hola! Podrías darme más información de Aveo HB versión automática\n16/7/2025, 1:33 p. m. - Chevrolet Calidad Tlahuac: Buena tarde, si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?|\n16/7/2025, 1:34 p. m. - +52 55 3718 3682: Con Miguel Chavez\n16/7/2025, 1:34 p. m. - Chevrolet Calidad Tlahuac: gracias sr. Chavez en breve un asesor lo contacta",
+  "messages": [
+    {
+      "ts_raw": "16/7/2025, 4:16 p. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "idx": 0,
+      "text": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 4:16 p. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "-",
+      "idx": 1,
+      "text": "-",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 1:33 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Anuncio de Facebook Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?",
+      "idx": 2,
+      "text": "Anuncio de Facebook Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 1:33 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 3718 3682",
+      "text_raw": "¡Hola! Podrías darme más información de Aveo HB versión automática",
+      "idx": 3,
+      "text": "¡Hola! Podrías darme más información de Aveo HB versión automática",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 1:33 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Buena tarde, si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?|",
+      "idx": 4,
+      "text": "Buena tarde, si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?|",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 1:34 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 3718 3682",
+      "text_raw": "Con Miguel Chavez",
+      "idx": 5,
+      "text": "Con Miguel Chavez",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 1:34 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "gracias sr. Chavez en breve un asesor lo contacta",
+      "idx": 6,
+      "text": "gracias sr. Chavez en breve un asesor lo contacta",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    }
+  ],
+  "message_count": 7
+}

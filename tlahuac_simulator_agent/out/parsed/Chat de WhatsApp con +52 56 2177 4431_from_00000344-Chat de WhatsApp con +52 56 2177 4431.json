@@ -1,0 +1,297 @@
+{
+  "source_file": "Chat de WhatsApp con +52 56 2177 4431_from_00000344-Chat de WhatsApp con +52 56 2177 4431.txt",
+  "conversation_index": 0,
+  "total_conversations_in_file": 1,
+  "raw_text": "16/7/2025, 5:41 a. m. - Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.\n16/7/2025, 5:41 a. m. - \n16/7/2025, 5:41 a. m. - Chevrolet Calidad Tlahuac: Anuncio de Facebook Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?\n16/7/2025, 5:41 a. m. - +52 56 2177 4431: ¡Hola! Podrías darme más información de...\n16/7/2025, 9:28 a. m. - Chevrolet Calidad Tlahuac: buenos días, claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?\n16/7/2025, 9:39 a. m. - +52 56 2177 4431: Buen día puede ser por este medio\n16/7/2025, 9:39 a. m. - +52 56 2177 4431: Por favor\n16/7/2025, 10:27 a. m. - Chevrolet Calidad Tlahuac: Claro que si, con quien tengo el gusto?\n16/7/2025, 12:09 p. m. - +52 56 2177 4431: Israel\n16/7/2025, 12:09 p. m. - Chevrolet Calidad Tlahuac: gracias sr. Israel me podría brindar su apellido por favor\n16/7/2025, 12:10 p. m. - +52 56 2177 4431: Espronceda\n16/7/2025, 12:13 p. m. - Chevrolet Calidad Tlahuac: gracias sr. Espronceda, cual seria el auto de su interés?\n16/7/2025, 12:36 p. m. - +52 56 2177 4431: Pregunta tienes planes para personas con mal buró\n16/7/2025, 12:40 p. m. - Chevrolet Calidad Tlahuac: claro, deme un momento para que pueda solicitar un asesor profesional de ventas\n16/7/2025, 12:42 p. m. - +52 56 2177 4431: Si amigo muchas gracias\n16/7/2025, 12:43 p. m. - Chevrolet Calidad Tlahuac: claro en breve lo contactan\n16/7/2025, 12:45 p. m. - +52 56 2177 4431: Por este medio xfa\n16/7/2025, 12:51 p. m. - Chevrolet Calidad Tlahuac: claro que si con gusto",
+  "messages": [
+    {
+      "ts_raw": "16/7/2025, 5:41 a. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "idx": 0,
+      "text": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 5:41 a. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "-",
+      "idx": 1,
+      "text": "-",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 5:41 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Anuncio de Facebook Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?",
+      "idx": 2,
+      "text": "Anuncio de Facebook Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 5:41 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 56 2177 4431",
+      "text_raw": "¡Hola! Podrías darme más información de...",
+      "idx": 3,
+      "text": "¡Hola! Podrías darme más información de...",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 9:28 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "buenos días, claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?",
+      "idx": 4,
+      "text": "buenos días, claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 9:39 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 56 2177 4431",
+      "text_raw": "Buen día puede ser por este medio",
+      "idx": 5,
+      "text": "Buen día puede ser por este medio",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 9:39 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 56 2177 4431",
+      "text_raw": "Por favor",
+      "idx": 6,
+      "text": "Por favor",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 10:27 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Claro que si, con quien tengo el gusto?",
+      "idx": 7,
+      "text": "Claro que si, con quien tengo el gusto?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 12:09 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 56 2177 4431",
+      "text_raw": "Israel",
+      "idx": 8,
+      "text": "Israel",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 12:09 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "gracias sr. Israel me podría brindar su apellido por favor",
+      "idx": 9,
+      "text": "gracias sr. Israel me podría brindar su apellido por favor",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 12:10 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 56 2177 4431",
+      "text_raw": "Espronceda",
+      "idx": 10,
+      "text": "Espronceda",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 12:13 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "gracias sr. Espronceda, cual seria el auto de su interés?",
+      "idx": 11,
+      "text": "gracias sr. Espronceda, cual seria el auto de su interés?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 12:36 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 56 2177 4431",
+      "text_raw": "Pregunta tienes planes para personas con mal buró",
+      "idx": 12,
+      "text": "Pregunta tienes planes para personas con mal buró",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 12:40 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "claro, deme un momento para que pueda solicitar un asesor profesional de ventas",
+      "idx": 13,
+      "text": "claro, deme un momento para que pueda solicitar un asesor profesional de ventas",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 12:42 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 56 2177 4431",
+      "text_raw": "Si amigo muchas gracias",
+      "idx": 14,
+      "text": "Si amigo muchas gracias",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 12:43 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "claro en breve lo contactan",
+      "idx": 15,
+      "text": "claro en breve lo contactan",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 12:45 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 56 2177 4431",
+      "text_raw": "Por este medio xfa",
+      "idx": 16,
+      "text": "Por este medio xfa",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 12:51 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "claro que si con gusto",
+      "idx": 17,
+      "text": "claro que si con gusto",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    }
+  ],
+  "message_count": 18
+}

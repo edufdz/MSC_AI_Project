@@ -1,0 +1,7 @@
+{
+  "model": "text-embedding-3-small",
+  "dimensions": 1536,
+  "index_type": "IndexFlatL2",
+  "total_vectors": 350,
+  "batch_size": 100
+}

@@ -1,0 +1,281 @@
+{
+  "source_file": "Chat de WhatsApp con +52 55 2416 1247_from_00000308-Chat de WhatsApp con +52 55 2416 1247.txt",
+  "conversation_index": 0,
+  "total_conversations_in_file": 1,
+  "raw_text": "17/7/2025, 10:30 a. m. - Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.\n17/7/2025, 10:30 a. m. - \n17/7/2025, 9:52 a. m. - Chevrolet Calidad Tlahuac: Anuncio de Facebook Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?\n17/7/2025, 9:52 a. m. - +52 55 2416 1247: ¡Hola! Me gustaría conseguir  información sobre sus promociones\n17/7/2025, 9:52 a. m. - +52 55 2416 1247: Y sus catalogos de vehículos disponibles\n17/7/2025, 10:33 a. m. - Chevrolet Calidad Tlahuac: Buenos días,  claro con gusto le comparto el catálogo \nhttps://www.chevrolettlahuac.com/servicios-financieros <Se editó este mensaje.>\n17/7/2025, 10:39 a. m. - +52 55 2416 1247: Hola, quisiera saber mas acerca de este vehiculo https://seminuevos.chevrolettlahuac.com/auto/Renault+Stepway+1.6+Intense+At/6864812de6c235001ee3d771\n17/7/2025, 10:45 a. m. - Chevrolet Calidad Tlahuac: Buenos días, claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?\n17/7/2025, 10:46 a. m. - +52 55 2416 1247: Oscar Giovanni Hernandez Mora\n17/7/2025, 10:46 a. m. - +52 55 2416 1247: solo que en estos momentos no puedo atender llamadas seria por este medio\n17/7/2025, 10:46 a. m. - +52 55 2416 1247: por favor\n17/7/2025, 11:01 a. m. - Chevrolet Calidad Tlahuac: Claro sin problemas señor Óscar se lo hago saber al asesor\n17/7/2025, 12:02 p. m. - +52 55 2416 1247: Gracias\n18/7/2025, 10:37 a. m. - Chevrolet Calidad Tlahuac: Buenos días Sr. Mora, me comenta su asesor Minette Anaya que se ha intentado comunicar con usted y no ha tenido éxito <Se editó este mensaje.>\n18/7/2025, 12:48 p. m. - +52 55 2416 1247: Hola si una disculpa\n18/7/2025, 12:48 p. m. - +52 55 2416 1247: por motivos laborales no me encuentro en la ciudad\n18/7/2025, 12:49 p. m. - Chevrolet Calidad Tlahuac: entiendo caballero se lo hare saber al asesor para que lo tenga presente y siga atento <Se editó este mensaje.>",
+  "messages": [
+    {
+      "ts_raw": "17/7/2025, 10:30 a. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "idx": 0,
+      "text": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 10:30 a. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "-",
+      "idx": 1,
+      "text": "-",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 9:52 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Anuncio de Facebook Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?",
+      "idx": 2,
+      "text": "Anuncio de Facebook Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 9:52 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 2416 1247",
+      "text_raw": "¡Hola! Me gustaría conseguir  información sobre sus promociones",
+      "idx": 3,
+      "text": "¡Hola! Me gustaría conseguir  información sobre sus promociones",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 9:52 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 2416 1247",
+      "text_raw": "Y sus catalogos de vehículos disponibles",
+      "idx": 4,
+      "text": "Y sus catalogos de vehículos disponibles",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 10:33 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Buenos días,  claro con gusto le comparto el catálogo\nhttps://www.chevrolettlahuac.com/servicios-financieros <Se editó este mensaje.>",
+      "idx": 5,
+      "text": "Buenos días,  claro con gusto le comparto el catálogo\nhttps://www.chevrolettlahuac.com/servicios-financieros <Se editó este mensaje.>",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 10:39 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 2416 1247",
+      "text_raw": "Hola, quisiera saber mas acerca de este vehiculo https://seminuevos.chevrolettlahuac.com/auto/Renault+Stepway+1.6+Intense+At/6864812de6c235001ee3d771",
+      "idx": 6,
+      "text": "Hola, quisiera saber mas acerca de este vehiculo https://seminuevos.chevrolettlahuac.com/auto/Renault+Stepway+1.6+Intense+At/6864812de6c235001ee3d771",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 10:45 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Buenos días, claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?",
+      "idx": 7,
+      "text": "Buenos días, claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 10:46 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 2416 1247",
+      "text_raw": "Oscar Giovanni Hernandez Mora",
+      "idx": 8,
+      "text": "Oscar Giovanni Hernandez Mora",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 10:46 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 2416 1247",
+      "text_raw": "solo que en estos momentos no puedo atender llamadas seria por este medio",
+      "idx": 9,
+      "text": "solo que en estos momentos no puedo atender llamadas seria por este medio",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 10:46 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 2416 1247",
+      "text_raw": "por favor",
+      "idx": 10,
+      "text": "por favor",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 11:01 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Claro sin problemas señor Óscar se lo hago saber al asesor",
+      "idx": 11,
+      "text": "Claro sin problemas señor Óscar se lo hago saber al asesor",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 12:02 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 2416 1247",
+      "text_raw": "Gracias",
+      "idx": 12,
+      "text": "Gracias",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "18/7/2025, 10:37 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Buenos días Sr. Mora, me comenta su asesor Minette Anaya que se ha intentado comunicar con usted y no ha tenido éxito <Se editó este mensaje.>",
+      "idx": 13,
+      "text": "Buenos días Sr. Mora, me comenta su asesor Minette Anaya que se ha intentado comunicar con usted y no ha tenido éxito <Se editó este mensaje.>",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "18/7/2025, 12:48 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 2416 1247",
+      "text_raw": "Hola si una disculpa",
+      "idx": 14,
+      "text": "Hola si una disculpa",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "18/7/2025, 12:48 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 2416 1247",
+      "text_raw": "por motivos laborales no me encuentro en la ciudad",
+      "idx": 15,
+      "text": "por motivos laborales no me encuentro en la ciudad",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "18/7/2025, 12:49 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "entiendo caballero se lo hare saber al asesor para que lo tenga presente y siga atento <Se editó este mensaje.>",
+      "idx": 16,
+      "text": "entiendo caballero se lo hare saber al asesor para que lo tenga presente y siga atento <Se editó este mensaje.>",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    }
+  ],
+  "message_count": 17
+}

@@ -1,0 +1,203 @@
+{
+  "source_file": "Chat de WhatsApp con +52 55 3610 7927_from_00000352-Chat de WhatsApp con +52 55 3610 7927.txt",
+  "conversation_index": 0,
+  "total_conversations_in_file": 1,
+  "raw_text": "12/7/2025, 11:21 a. m. - Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.\n12/7/2025, 11:21 a. m. - \n11/7/2025, 5:26 p. m. - Chevrolet Calidad Tlahuac: Anuncio de Instagram Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?\n11/7/2025, 5:26 p. m. - +52 55 3610 7927: ¡Hola! buenas tardes\n11/7/2025, 5:27 p. m. - +52 55 3610 7927: Quisiera poder recibir alguna información sobre la feria de vehículos seminuevos\n12/7/2025, 11:00 a. m. - Chevrolet Calidad Tlahuac: Buenos días, si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?\n12/7/2025, 11:11 a. m. - +52 55 3610 7927: Muchas gracias! Con Berenice Morales\n12/7/2025, 11:12 a. m. - Chevrolet Calidad Tlahuac: Gracias Sra. Morales, ¿Cuál seria su auto de interés?\n15/7/2025, 9:26 p. m. - +52 55 3610 7927: Estoy interesada en un Aveo\n15/7/2025, 9:26 p. m. - Chevrolet Calidad Tlahuac: Una disculpa en este momento no tenemos a un asesor disponible, pero en breve nos pondremos en contacto con usted, Recuerde nuestros horarios de atención son de Lunes a Viernes de 9:00 AM a 7:00 PM y Sábados de 9:00 AM a 2:00 PM\n16/7/2025, 9:34 a. m. - Chevrolet Calidad Tlahuac: Buenos días, si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información\n16/7/2025, 11:39 a. m. - +52 55 3610 7927: Perfecto! Le agradecería mucho.",
+  "messages": [
+    {
+      "ts_raw": "12/7/2025, 11:21 a. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "idx": 0,
+      "text": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "12/7/2025, 11:21 a. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "-",
+      "idx": 1,
+      "text": "-",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "11/7/2025, 5:26 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Anuncio de Instagram Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?",
+      "idx": 2,
+      "text": "Anuncio de Instagram Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "11/7/2025, 5:26 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 3610 7927",
+      "text_raw": "¡Hola! buenas tardes",
+      "idx": 3,
+      "text": "¡Hola! buenas tardes",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "11/7/2025, 5:27 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 3610 7927",
+      "text_raw": "Quisiera poder recibir alguna información sobre la feria de vehículos seminuevos",
+      "idx": 4,
+      "text": "Quisiera poder recibir alguna información sobre la feria de vehículos seminuevos",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "12/7/2025, 11:00 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Buenos días, si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?",
+      "idx": 5,
+      "text": "Buenos días, si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "12/7/2025, 11:11 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 3610 7927",
+      "text_raw": "Muchas gracias! Con Berenice Morales",
+      "idx": 6,
+      "text": "Muchas gracias! Con Berenice Morales",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "12/7/2025, 11:12 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Gracias Sra. Morales, ¿Cuál seria su auto de interés?",
+      "idx": 7,
+      "text": "Gracias Sra. Morales, ¿Cuál seria su auto de interés?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "15/7/2025, 9:26 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 3610 7927",
+      "text_raw": "Estoy interesada en un Aveo",
+      "idx": 8,
+      "text": "Estoy interesada en un Aveo",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "15/7/2025, 9:26 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Una disculpa en este momento no tenemos a un asesor disponible, pero en breve nos pondremos en contacto con usted, Recuerde nuestros horarios de atención son de Lunes a Viernes de 9:00 AM a 7:00 PM y Sábados de 9:00 AM a 2:00 PM",
+      "idx": 9,
+      "text": "Una disculpa en este momento no tenemos a un asesor disponible, pero en breve nos pondremos en contacto con usted, Recuerde nuestros horarios de atención son de Lunes a Viernes de 9:<PLATE> a 7:<PLATE> y Sábados de 9:<PLATE> a 2:<PLATE>",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": true,
+        "types": [
+          "PLATE"
+        ]
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 9:34 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Buenos días, si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información",
+      "idx": 10,
+      "text": "Buenos días, si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 11:39 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 3610 7927",
+      "text_raw": "Perfecto! Le agradecería mucho.",
+      "idx": 11,
+      "text": "Perfecto! Le agradecería mucho.",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    }
+  ],
+  "message_count": 12
+}

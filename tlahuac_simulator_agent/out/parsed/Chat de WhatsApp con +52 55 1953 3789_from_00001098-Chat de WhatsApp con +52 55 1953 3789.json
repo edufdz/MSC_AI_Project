@@ -1,0 +1,553 @@
+{
+  "source_file": "Chat de WhatsApp con +52 55 1953 3789_from_00001098-Chat de WhatsApp con +52 55 1953 3789.txt",
+  "conversation_index": 0,
+  "total_conversations_in_file": 1,
+  "raw_text": "17/9/2024, 11:37 a. m. - Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.\n5/9/2024, 12:32 p. m. - Citas Chevrolet Tlahuac: Buena tarde estimada cliente Laura Ivon 😃✨\n\nMe presento mi nombre es María Lara, me comunico de Chevrolet Tláhuac, el motivo de mi mensaje es referente a que el día de ayer nos comunicamos para agendar el servicio para su Chevrolet Tracker 2024, para el día lunes, me apoyaría con el horario en el cual estaríamos agendando su cita y también me apoya con el kilometraje actual de la unidad 🚗\n\nLe puedo recibir de 7:40am a 12:00pm.\nEn que horario agendamos su cita? \nQuedo en espera de su confirmación 👩\n\nSaludos! 🙋🏻‍♀️\n5/9/2024, 5:24 p. m. - Citas Chevrolet Tlahuac: <Multimedia omitido>\n5/9/2024, 9:02 p. m. - +52 55 1953 3789: Gracias\n6/9/2024, 9:45 a. m. - Citas Chevrolet Tlahuac: A usted le agradezco su preferencia por su distribuidor líder Calidad Tláhuac 😃🚗\n8/7/2025, 7:15 p. m. - Citas Chevrolet Tlahuac: Buenas tardes!!!  estimada *LAURA IVONE GARRIDO* 🙋🏻‍♀️🤩 ya es momento de realizar el servicio de mantenimiento de tu unidad TRACKER 2024, recuerda que no te genera costo alguno, ya que esta prepagado por GMF, agenda por este medio para hacerlo valido 🚗 📣\n\nTu asesora de reservaciones de servicio  *Leticia Caracosa*, te dirá como 😃 <Se editó este mensaje.>\n8/7/2025, 10:43 p. m. - +52 55 1953 3789: Buenas noches\n8/7/2025, 10:43 p. m. - Citas Chevrolet Tlahuac: Gracias por tu mensaje. En este momento no podemos responder, pero lo haremos lo antes posible 😃🚗\n9/7/2025, 9:26 a. m. - Citas Chevrolet Tlahuac: Buenos  días!! Contamos con disponibilidad aún el día de hoy, le reservamos? <Se editó este mensaje.>\n9/7/2025, 9:57 a. m. - +52 55 1953 3789: Mañana a las 11 por favor\n9/7/2025, 9:58 a. m. - +52 55 1953 3789: O mañana a las 8 de la mañana por favor\n9/7/2025, 10:04 a. m. - Citas Chevrolet Tlahuac: Apoyeme por favor con el kilometraje de la unidad\n9/7/2025, 10:16 a. m. - +52 55 1953 3789: Permítame\n9/7/2025, 10:16 a. m. - +52 55 1953 3789: Puedo llevarla en 30\n9/7/2025, 10:16 a. m. - +52 55 1953 3789: Minutos\n9/7/2025, 10:17 a. m. - +52 55 1953 3789: 18124\n9/7/2025, 10:17 a. m. - +52 55 1953 3789: Km\n9/7/2025, 10:17 a. m. - +52 55 1953 3789: null\n9/7/2025, 10:21 a. m. - Citas Chevrolet Tlahuac: Tendrá copia de su contrato ?\n9/7/2025, 10:22 a. m. - +52 55 1953 3789: Contrato\n9/7/2025, 10:22 a. m. - +52 55 1953 3789: Ahorita a la mano no\n9/7/2025, 10:22 a. m. - +52 55 1953 3789: Pero sé que tengo los servicios\n9/7/2025, 10:22 a. m. - +52 55 1953 3789: Y ustedes me avisan cuando ya debo llevarla\n9/7/2025, 10:23 a. m. - Citas Chevrolet Tlahuac: Por su puesto le genero su cita, deme oportunidad de solicitar su contrato para poder aplicar el beneficio por favor\n9/7/2025, 10:24 a. m. - +52 55 1953 3789: Ok\n9/7/2025, 10:24 a. m. - +52 55 1953 3789: Entonces la llevo ahorita?\n9/7/2025, 10:24 a. m. - +52 55 1953 3789: En media hora\n9/7/2025, 10:25 a. m. - +52 55 1953 3789: O antes como esté el tráfico\n9/7/2025, 10:25 a. m. - +52 55 1953 3789: Me puede dar su nombre\n9/7/2025, 10:25 a. m. - +52 55 1953 3789: Por favor para preguntar\n9/7/2025, 10:36 a. m. - Citas Chevrolet Tlahuac: <Multimedia omitido>\n9/7/2025, 10:36 a. m. - +52 55 1953 3789: Gracias\n9/7/2025, 10:37 a. m. - +52 55 1953 3789: Ya va para allá\n9/7/2025, 10:40 a. m. - Citas Chevrolet Tlahuac: Me requieren una copia del contrato <Se editó este mensaje.>",
+  "messages": [
+    {
+      "ts_raw": "17/9/2024, 11:37 a. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "idx": 0,
+      "text": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "5/9/2024, 12:32 p. m.",
+      "ts": null,
+      "speaker_raw": "Citas Chevrolet Tlahuac",
+      "text_raw": "Buena tarde estimada cliente Laura Ivon 😃✨\n\nMe presento mi nombre es María Lara, me comunico de Chevrolet Tláhuac, el motivo de mi mensaje es referente a que el día de ayer nos comunicamos para agendar el servicio para su Chevrolet Tracker 2024, para el día lunes, me apoyaría con el horario en el cual estaríamos agendando su cita y también me apoya con el kilometraje actual de la unidad 🚗\n\nLe puedo recibir de 7:40am a 12:00pm.\nEn que horario agendamos su cita? \nQuedo en espera de su confirmación 👩\n\nSaludos! 🙋🏻‍♀️",
+      "idx": 1,
+      "text": "Buena tarde estimada cliente Laura Ivon 😃✨\n\nMe presento mi nombre es María Lara, me comunico de Chevrolet Tláhuac, el motivo de mi mensaje es referente a que el día de ayer nos comunicamos para agendar el servicio para su Chevrolet Tracker 2024, para el día lunes, me apoyaría con el horario en el cual estaríamos agendando su cita y también me apoya con el kilometraje actual de la unidad 🚗\n\nLe puedo recibir de 7:40am a 12:00pm.\nEn que horario agendamos su cita?\nQuedo en espera de su confirmación 👩\n\nSaludos! 🙋🏻‍♀️",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "5/9/2024, 5:24 p. m.",
+      "ts": null,
+      "speaker_raw": "Citas Chevrolet Tlahuac",
+      "text_raw": "<Multimedia omitido>",
+      "idx": 2,
+      "text": "<Multimedia omitido>",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "5/9/2024, 9:02 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1953 3789",
+      "text_raw": "Gracias",
+      "idx": 3,
+      "text": "Gracias",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "6/9/2024, 9:45 a. m.",
+      "ts": null,
+      "speaker_raw": "Citas Chevrolet Tlahuac",
+      "text_raw": "A usted le agradezco su preferencia por su distribuidor líder Calidad Tláhuac 😃🚗",
+      "idx": 4,
+      "text": "A usted le agradezco su preferencia por su distribuidor líder Calidad Tláhuac 😃🚗",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "8/7/2025, 7:15 p. m.",
+      "ts": null,
+      "speaker_raw": "Citas Chevrolet Tlahuac",
+      "text_raw": "Buenas tardes!!!  estimada *LAURA IVONE GARRIDO* 🙋🏻‍♀️🤩 ya es momento de realizar el servicio de mantenimiento de tu unidad TRACKER 2024, recuerda que no te genera costo alguno, ya que esta prepagado por GMF, agenda por este medio para hacerlo valido 🚗 📣\n\nTu asesora de reservaciones de servicio  *Leticia Caracosa*, te dirá como 😃 <Se editó este mensaje.>",
+      "idx": 5,
+      "text": "Buenas tardes!!!  estimada *LAURA IVONE GARRIDO* 🙋🏻‍♀️🤩 ya es momento de realizar el servicio de mantenimiento de tu unidad TRACKER 2024, recuerda que no te genera costo alguno, ya que esta prepagado por GMF, agenda por este medio para hacerlo valido 🚗 📣\n\nTu asesora de reservaciones de servicio  *Leticia Caracosa*, te dirá como 😃 <Se editó este mensaje.>",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "8/7/2025, 10:43 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1953 3789",
+      "text_raw": "Buenas noches",
+      "idx": 6,
+      "text": "Buenas noches",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "8/7/2025, 10:43 p. m.",
+      "ts": null,
+      "speaker_raw": "Citas Chevrolet Tlahuac",
+      "text_raw": "Gracias por tu mensaje. En este momento no podemos responder, pero lo haremos lo antes posible 😃🚗",
+      "idx": 7,
+      "text": "Gracias por tu mensaje. En este momento no podemos responder, pero lo haremos lo antes posible 😃🚗",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "9/7/2025, 9:26 a. m.",
+      "ts": null,
+      "speaker_raw": "Citas Chevrolet Tlahuac",
+      "text_raw": "Buenos  días!! Contamos con disponibilidad aún el día de hoy, le reservamos? <Se editó este mensaje.>",
+      "idx": 8,
+      "text": "Buenos  días!! Contamos con disponibilidad aún el día de hoy, le reservamos? <Se editó este mensaje.>",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "9/7/2025, 9:57 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1953 3789",
+      "text_raw": "Mañana a las 11 por favor",
+      "idx": 9,
+      "text": "Mañana a las 11 por favor",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "9/7/2025, 9:58 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1953 3789",
+      "text_raw": "O mañana a las 8 de la mañana por favor",
+      "idx": 10,
+      "text": "O mañana a las 8 de la mañana por favor",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "9/7/2025, 10:04 a. m.",
+      "ts": null,
+      "speaker_raw": "Citas Chevrolet Tlahuac",
+      "text_raw": "Apoyeme por favor con el kilometraje de la unidad",
+      "idx": 11,
+      "text": "Apoyeme por favor con el kilometraje de la unidad",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "9/7/2025, 10:16 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1953 3789",
+      "text_raw": "Permítame",
+      "idx": 12,
+      "text": "Permítame",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "9/7/2025, 10:16 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1953 3789",
+      "text_raw": "Puedo llevarla en 30",
+      "idx": 13,
+      "text": "Puedo llevarla en 30",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "9/7/2025, 10:16 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1953 3789",
+      "text_raw": "Minutos",
+      "idx": 14,
+      "text": "Minutos",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "9/7/2025, 10:17 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1953 3789",
+      "text_raw": "18124",
+      "idx": 15,
+      "text": "18124",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "9/7/2025, 10:17 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1953 3789",
+      "text_raw": "Km",
+      "idx": 16,
+      "text": "Km",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "9/7/2025, 10:17 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1953 3789",
+      "text_raw": "null",
+      "idx": 17,
+      "text": "null",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "9/7/2025, 10:21 a. m.",
+      "ts": null,
+      "speaker_raw": "Citas Chevrolet Tlahuac",
+      "text_raw": "Tendrá copia de su contrato ?",
+      "idx": 18,
+      "text": "Tendrá copia de su contrato ?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "9/7/2025, 10:22 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1953 3789",
+      "text_raw": "Contrato",
+      "idx": 19,
+      "text": "Contrato",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "9/7/2025, 10:22 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1953 3789",
+      "text_raw": "Ahorita a la mano no",
+      "idx": 20,
+      "text": "Ahorita a la mano no",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "9/7/2025, 10:22 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1953 3789",
+      "text_raw": "Pero sé que tengo los servicios",
+      "idx": 21,
+      "text": "Pero sé que tengo los servicios",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "9/7/2025, 10:22 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1953 3789",
+      "text_raw": "Y ustedes me avisan cuando ya debo llevarla",
+      "idx": 22,
+      "text": "Y ustedes me avisan cuando ya debo llevarla",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "9/7/2025, 10:23 a. m.",
+      "ts": null,
+      "speaker_raw": "Citas Chevrolet Tlahuac",
+      "text_raw": "Por su puesto le genero su cita, deme oportunidad de solicitar su contrato para poder aplicar el beneficio por favor",
+      "idx": 23,
+      "text": "Por su puesto le genero su cita, deme oportunidad de solicitar su contrato para poder aplicar el beneficio por favor",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "9/7/2025, 10:24 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1953 3789",
+      "text_raw": "Ok",
+      "idx": 24,
+      "text": "Ok",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "9/7/2025, 10:24 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1953 3789",
+      "text_raw": "Entonces la llevo ahorita?",
+      "idx": 25,
+      "text": "Entonces la llevo ahorita?",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "9/7/2025, 10:24 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1953 3789",
+      "text_raw": "En media hora",
+      "idx": 26,
+      "text": "En media hora",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "9/7/2025, 10:25 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1953 3789",
+      "text_raw": "O antes como esté el tráfico",
+      "idx": 27,
+      "text": "O antes como esté el tráfico",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "9/7/2025, 10:25 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1953 3789",
+      "text_raw": "Me puede dar su nombre",
+      "idx": 28,
+      "text": "Me puede dar su nombre",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "9/7/2025, 10:25 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1953 3789",
+      "text_raw": "Por favor para preguntar",
+      "idx": 29,
+      "text": "Por favor para preguntar",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "9/7/2025, 10:36 a. m.",
+      "ts": null,
+      "speaker_raw": "Citas Chevrolet Tlahuac",
+      "text_raw": "<Multimedia omitido>",
+      "idx": 30,
+      "text": "<Multimedia omitido>",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "9/7/2025, 10:36 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1953 3789",
+      "text_raw": "Gracias",
+      "idx": 31,
+      "text": "Gracias",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "9/7/2025, 10:37 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 1953 3789",
+      "text_raw": "Ya va para allá",
+      "idx": 32,
+      "text": "Ya va para allá",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "9/7/2025, 10:40 a. m.",
+      "ts": null,
+      "speaker_raw": "Citas Chevrolet Tlahuac",
+      "text_raw": "Me requieren una copia del contrato <Se editó este mensaje.>",
+      "idx": 33,
+      "text": "Me requieren una copia del contrato <Se editó este mensaje.>",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    }
+  ],
+  "message_count": 34
+}

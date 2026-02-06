@@ -1,0 +1,249 @@
+{
+  "source_file": "Chat de WhatsApp con +52 56 4628 1824_from_00000343-Chat de WhatsApp con +52 56 4628 1824.txt",
+  "conversation_index": 0,
+  "total_conversations_in_file": 1,
+  "raw_text": "16/7/2025, 1:45 a. m. - Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.\n16/7/2025, 1:45 a. m. - \n16/7/2025, 1:45 a. m. - Chevrolet Calidad Tlahuac: Anuncio de Facebook Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?\n16/7/2025, 1:45 a. m. - +52 56 4628 1824: ¡Hola! Me gustaría conseguir más información sobre esto.\n16/7/2025, 9:30 a. m. - Chevrolet Calidad Tlahuac: buenos días, claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?\n16/7/2025, 12:41 p. m. - +52 56 4628 1824: Yoreana Manriquez\n16/7/2025, 12:41 p. m. - +52 56 4628 1824: Buenas tardes\n16/7/2025, 12:44 p. m. - Chevrolet Calidad Tlahuac: gracias Sra. Manríquez, cual seria el auto de su interés?\n16/7/2025, 12:47 p. m. - +52 56 4628 1824: Busco pagar en efectivo y la verdad estoy en buro de crédito quisiera saber si hay opciones alguna oportunidad de adquirir un auto\n16/7/2025, 12:53 p. m. - Chevrolet Calidad Tlahuac: contamos con lo que seria Suauto que es para personas con temas de buro de crédito, pero solamente aplica para unidades nuevas\n16/7/2025, 12:54 p. m. - +52 56 4628 1824: Y con que opciónes cuenta\n16/7/2025, 12:54 p. m. - +52 56 4628 1824: Me podría mandar cotización\n16/7/2025, 12:54 p. m. - +52 56 4628 1824: La verdad me interesa porque quiero usarlo en plataforma de Didi o Uber\n16/7/2025, 12:55 p. m. - Chevrolet Calidad Tlahuac: claro si le interesa la opción de suato puedo ayudarle a que la contacte un asesor y le brinde mayor información\n16/7/2025, 12:55 p. m. - +52 56 4628 1824: Si gracias",
+  "messages": [
+    {
+      "ts_raw": "16/7/2025, 1:45 a. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "idx": 0,
+      "text": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 1:45 a. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "-",
+      "idx": 1,
+      "text": "-",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 1:45 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Anuncio de Facebook Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?",
+      "idx": 2,
+      "text": "Anuncio de Facebook Ver detalles ¡Hola,! ¿Cómo podemos ayudarte?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 1:45 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 56 4628 1824",
+      "text_raw": "¡Hola! Me gustaría conseguir más información sobre esto.",
+      "idx": 3,
+      "text": "¡Hola! Me gustaría conseguir más información sobre esto.",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 9:30 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "buenos días, claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?",
+      "idx": 4,
+      "text": "buenos días, claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 12:41 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 56 4628 1824",
+      "text_raw": "Yoreana Manriquez",
+      "idx": 5,
+      "text": "Yoreana Manriquez",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 12:41 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 56 4628 1824",
+      "text_raw": "Buenas tardes",
+      "idx": 6,
+      "text": "Buenas tardes",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 12:44 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "gracias Sra. Manríquez, cual seria el auto de su interés?",
+      "idx": 7,
+      "text": "gracias Sra. Manríquez, cual seria el auto de su interés?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 12:47 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 56 4628 1824",
+      "text_raw": "Busco pagar en efectivo y la verdad estoy en buro de crédito quisiera saber si hay opciones alguna oportunidad de adquirir un auto",
+      "idx": 8,
+      "text": "Busco pagar en efectivo y la verdad estoy en buro de crédito quisiera saber si hay opciones alguna oportunidad de adquirir un auto",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 12:53 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "contamos con lo que seria Suauto que es para personas con temas de buro de crédito, pero solamente aplica para unidades nuevas",
+      "idx": 9,
+      "text": "contamos con lo que seria Suauto que es para personas con temas de buro de crédito, pero solamente aplica para unidades nuevas",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 12:54 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 56 4628 1824",
+      "text_raw": "Y con que opciónes cuenta",
+      "idx": 10,
+      "text": "Y con que opciónes cuenta",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 12:54 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 56 4628 1824",
+      "text_raw": "Me podría mandar cotización",
+      "idx": 11,
+      "text": "Me podría mandar cotización",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 12:54 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 56 4628 1824",
+      "text_raw": "La verdad me interesa porque quiero usarlo en plataforma de Didi o Uber",
+      "idx": 12,
+      "text": "La verdad me interesa porque quiero usarlo en plataforma de Didi o Uber",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 12:55 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "claro si le interesa la opción de suato puedo ayudarle a que la contacte un asesor y le brinde mayor información",
+      "idx": 13,
+      "text": "claro si le interesa la opción de suato puedo ayudarle a que la contacte un asesor y le brinde mayor información",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "16/7/2025, 12:55 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 56 4628 1824",
+      "text_raw": "Si gracias",
+      "idx": 14,
+      "text": "Si gracias",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    }
+  ],
+  "message_count": 15
+}

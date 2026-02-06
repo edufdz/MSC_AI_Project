@@ -1,0 +1,217 @@
+{
+  "source_file": "Chat de WhatsApp con +52 55 2092 9060_from_00000294-Chat de WhatsApp con +52 55 2092 9060.txt",
+  "conversation_index": 0,
+  "total_conversations_in_file": 1,
+  "raw_text": "17/7/2025, 1:02 p. m. - Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.\n17/7/2025, 1:02 p. m. - \n17/7/2025, 1:00 p. m. - +52 55 2092 9060: ¡Hola! Podrías darme más información de...\n17/7/2025, 1:02 p. m. - Chevrolet Calidad Tlahuac: ¡Bienvenido!! agradecemos tu preferencia, con la intención de atenderte con la Calidad y Calidez que te mereces nos podrías compartir tu nombre y ¿Cómo podemos apoyarle?\n17/7/2025, 1:05 p. m. - Chevrolet Calidad Tlahuac: ¡Bienvenido!! agradecemos tu preferencia, con la intención de atenderte con la Calidad y Calidez que te mereces nos podrías compartir tu nombre y ¿Cómo podemos apoyarle?\n17/7/2025, 1:06 p. m. - +52 55 2092 9060: Ivonne\n17/7/2025, 1:10 p. m. - Chevrolet Calidad Tlahuac: Gracias Ivonne, a sus órdenes, en que podemos serle de utilidad?\n17/7/2025, 1:10 p. m. - +52 55 2092 9060: Me interesa comprar un carro\n17/7/2025, 1:40 p. m. - Chevrolet Calidad Tlahuac: Claro con gusto,  cuál sería el auto de su interés?\n17/7/2025, 1:41 p. m. - +52 55 2092 9060: Camioneta droove\n17/7/2025, 2:02 p. m. - Chevrolet Calidad Tlahuac: Me podría proporcionar su apellido por favor\n18/7/2025, 12:20 p. m. - +52 55 2092 9060: Olivares\n18/7/2025, 12:24 p. m. - Chevrolet Calidad Tlahuac: Gracias Sra. Olivares en breve la contacta un asesor",
+  "messages": [
+    {
+      "ts_raw": "17/7/2025, 1:02 p. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "idx": 0,
+      "text": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 1:02 p. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "-",
+      "idx": 1,
+      "text": "-",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 1:00 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 2092 9060",
+      "text_raw": "¡Hola! Podrías darme más información de...",
+      "idx": 2,
+      "text": "¡Hola! Podrías darme más información de...",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 1:02 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "¡Bienvenido!! agradecemos tu preferencia, con la intención de atenderte con la Calidad y Calidez que te mereces nos podrías compartir tu nombre y ¿Cómo podemos apoyarle?",
+      "idx": 3,
+      "text": "¡Bienvenido!! agradecemos tu preferencia, con la intención de atenderte con la Calidad y Calidez que te mereces nos podrías compartir tu nombre y ¿Cómo podemos apoyarle?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 1:05 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "¡Bienvenido!! agradecemos tu preferencia, con la intención de atenderte con la Calidad y Calidez que te mereces nos podrías compartir tu nombre y ¿Cómo podemos apoyarle?",
+      "idx": 4,
+      "text": "¡Bienvenido!! agradecemos tu preferencia, con la intención de atenderte con la Calidad y Calidez que te mereces nos podrías compartir tu nombre y ¿Cómo podemos apoyarle?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 1:06 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 2092 9060",
+      "text_raw": "Ivonne",
+      "idx": 5,
+      "text": "Ivonne",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 1:10 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Gracias Ivonne, a sus órdenes, en que podemos serle de utilidad?",
+      "idx": 6,
+      "text": "Gracias Ivonne, a sus órdenes, en que podemos serle de utilidad?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 1:10 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 2092 9060",
+      "text_raw": "Me interesa comprar un carro",
+      "idx": 7,
+      "text": "Me interesa comprar un carro",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 1:40 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Claro con gusto,  cuál sería el auto de su interés?",
+      "idx": 8,
+      "text": "Claro con gusto,  cuál sería el auto de su interés?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 1:41 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 2092 9060",
+      "text_raw": "Camioneta droove",
+      "idx": 9,
+      "text": "Camioneta droove",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 2:02 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Me podría proporcionar su apellido por favor",
+      "idx": 10,
+      "text": "Me podría proporcionar su apellido por favor",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "18/7/2025, 12:20 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 2092 9060",
+      "text_raw": "Olivares",
+      "idx": 11,
+      "text": "Olivares",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "18/7/2025, 12:24 p. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Gracias Sra. Olivares en breve la contacta un asesor",
+      "idx": 12,
+      "text": "Gracias Sra. Olivares en breve la contacta un asesor",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    }
+  ],
+  "message_count": 13
+}

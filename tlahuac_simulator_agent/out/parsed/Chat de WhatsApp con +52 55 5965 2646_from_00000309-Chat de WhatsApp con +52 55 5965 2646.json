@@ -1,0 +1,137 @@
+{
+  "source_file": "Chat de WhatsApp con +52 55 5965 2646_from_00000309-Chat de WhatsApp con +52 55 5965 2646.txt",
+  "conversation_index": 0,
+  "total_conversations_in_file": 1,
+  "raw_text": "18/7/2025, 9:17 a. m. - Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.\n18/7/2025, 9:17 a. m. - \n17/7/2025, 6:48 p. m. - +52 55 5965 2646: Esperando este mensaje\n17/7/2025, 6:48 p. m. - +52 55 5965 2646: Esperando este mensaje\n17/7/2025, 6:48 p. m. - +52 55 5965 2646: Esperando este mensaje\n18/7/2025, 9:44 a. m. - Chevrolet Calidad Tlahuac: Buenos días, claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?\n18/7/2025, 10:29 a. m. - +52 55 5965 2646: Osvaldo cruz\n18/7/2025, 10:33 a. m. - Chevrolet Calidad Tlahuac: gracias sr. Cruz en breve lo contacta un asesor",
+  "messages": [
+    {
+      "ts_raw": "18/7/2025, 9:17 a. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "idx": 0,
+      "text": "Los mensajes y las llamadas están cifrados de extremo a extremo. Solo las personas en este chat pueden leerlos, escucharlos o compartirlos. Obtén más información.",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "18/7/2025, 9:17 a. m.",
+      "ts": null,
+      "speaker_raw": "system",
+      "text_raw": "-",
+      "idx": 1,
+      "text": "-",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 6:48 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 5965 2646",
+      "text_raw": "Esperando este mensaje",
+      "idx": 2,
+      "text": "Esperando este mensaje",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 6:48 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 5965 2646",
+      "text_raw": "Esperando este mensaje",
+      "idx": 3,
+      "text": "Esperando este mensaje",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "17/7/2025, 6:48 p. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 5965 2646",
+      "text_raw": "Esperando este mensaje",
+      "idx": 4,
+      "text": "Esperando este mensaje",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "18/7/2025, 9:44 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "Buenos días, claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?",
+      "idx": 5,
+      "text": "Buenos días, claro si me lo permite puedo solicitar a un asesor que se comunique con usted y le brinde mayor información , ¿con quien tengo el gusto?",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "18/7/2025, 10:29 a. m.",
+      "ts": null,
+      "speaker_raw": "+52 55 5965 2646",
+      "text_raw": "Osvaldo cruz",
+      "idx": 6,
+      "text": "Osvaldo cruz",
+      "role": "customer",
+      "confidence": {
+        "role": 0.9
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    },
+    {
+      "ts_raw": "18/7/2025, 10:33 a. m.",
+      "ts": null,
+      "speaker_raw": "Chevrolet Calidad Tlahuac",
+      "text_raw": "gracias sr. Cruz en breve lo contacta un asesor",
+      "idx": 7,
+      "text": "gracias sr. Cruz en breve lo contacta un asesor",
+      "role": "dealership",
+      "confidence": {
+        "role": 0.95
+      },
+      "pii": {
+        "has_pii": false,
+        "types": []
+      }
+    }
+  ],
+  "message_count": 8
+}
