@@ -384,10 +384,111 @@ def parse_python_file(file_path: str) -> FileSymbols:
     return symbols
 
 
+def parse_typescript_file(file_path: str) -> FileSymbols:
+    """
+    Parse a TypeScript/JavaScript source file and extract basic symbols.
+    Uses regex-based parsing for basic extraction.
+    """
+    symbols = FileSymbols(file_path=file_path, language="typescript")
+    
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            source = f.read()
+    except (OSError, IOError) as e:
+        symbols.parse_errors.append(f"Could not read file: {e}")
+        return symbols
+    
+    import re
+    
+    # Extract imports
+    import_pattern = r'import\s+(?:(?:\{[^}]*\}|\*\s+as\s+\w+|\w+)(?:\s*,\s*(?:\{[^}]*\}|\*\s+as\s+\w+|\w+))*\s+from\s+)?["\']([^"\']+)["\']'
+    for match in re.finditer(import_pattern, source):
+        module = match.group(1)
+        line = source[:match.start()].count('\n') + 1
+        symbols.imports.append(ImportInfo(
+            module=module,
+            names=[],
+            alias=None,
+            location=Location(file=file_path, line=line),
+        ))
+    
+    # Extract function declarations (function name(...) and const name = (...) =>)
+    func_patterns = [
+        r'(?:export\s+)?(?:async\s+)?function\s+(\w+)\s*\(',
+        r'(?:export\s+)?const\s+(\w+)\s*=\s*(?:async\s*)?\([^)]*\)\s*=>',
+        r'(?:export\s+)?(?:async\s+)?(\w+)\s*:\s*\([^)]*\)\s*=>',
+    ]
+    
+    for pattern in func_patterns:
+        for match in re.finditer(pattern, source):
+            name = match.group(1)
+            line = source[:match.start()].count('\n') + 1
+            # Extract function body (simplified)
+            start_pos = match.end()
+            brace_count = 0
+            body_start = None
+            for i, char in enumerate(source[start_pos:], start_pos):
+                if char == '{':
+                    if brace_count == 0:
+                        body_start = i + 1
+                    brace_count += 1
+                elif char == '}':
+                    brace_count -= 1
+                    if brace_count == 0 and body_start:
+                        body_text = source[body_start:i]
+                        break
+            else:
+                body_text = ""
+            
+            symbols.functions.append(FunctionInfo(
+                name=name,
+                params=[],
+                docstring=None,
+                decorators=[],
+                body_text=body_text[:500],
+                location=Location(file=file_path, line=line),
+                is_async="async" in match.group(0),
+                calls=[],
+            ))
+    
+    # Extract class declarations
+    class_pattern = r'(?:export\s+)?class\s+(\w+)'
+    for match in re.finditer(class_pattern, source):
+        name = match.group(1)
+        line = source[:match.start()].count('\n') + 1
+        symbols.classes.append(ClassInfo(
+            name=name,
+            bases=[],
+            docstring=None,
+            methods=[],
+            decorators=[],
+            location=Location(file=file_path, line=line),
+            class_variables=[],
+        ))
+    
+    # Extract exported constants/variables (for config, tools, etc.)
+    export_pattern = r'export\s+(?:const|let|var)\s+(\w+)'
+    for match in re.finditer(export_pattern, source):
+        name = match.group(1)
+        line = source[:match.start()].count('\n') + 1
+        # Try to extract value
+        value_match = re.search(rf'{name}\s*=\s*([^;]+)', source[match.end():match.end()+500])
+        value_text = value_match.group(1) if value_match else None
+        symbols.variables.append(VariableInfo(
+            name=name,
+            value_text=value_text[:500] if value_text else None,
+            location=Location(file=file_path, line=line),
+        ))
+    
+    return symbols
+
+
 def analyze_files(file_paths: list[str]) -> list[FileSymbols]:
-    """Parse multiple Python files and return their symbols."""
+    """Parse multiple source files and return their symbols."""
     results = []
     for fp in file_paths:
         if fp.endswith(".py"):
             results.append(parse_python_file(fp))
+        elif fp.endswith((".ts", ".tsx", ".js", ".jsx")):
+            results.append(parse_typescript_file(fp))
     return results

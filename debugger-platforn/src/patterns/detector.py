@@ -211,27 +211,39 @@ def _extract_custom_tools(
     tools = []
 
     for symbols in all_symbols:
+        # Check if this is a route file (TypeScript/JavaScript API routes)
+        is_route_file = "route" in symbols.file_path.lower() or "api" in symbols.file_path.lower()
+        
         for func in symbols.functions:
             if func.name in known_tool_names:
                 continue
-            if func.name.startswith("_"):
+            if func.name.startswith("_") and not is_route_file:
                 continue
 
             score = 0
 
             # Functions making HTTP/API calls
-            http_indicators = ("requests.", "httpx.", "aiohttp.", "urllib.", "fetch(")
-            if any(call for call in func.calls if any(h in call for h in http_indicators)):
+            http_indicators = ("requests.", "httpx.", "aiohttp.", "urllib.", "fetch(", "axios", "http", "https")
+            body_lower = (func.body_text or "").lower()
+            if any(h in body_lower for h in http_indicators):
                 score += 3
 
             # Database calls
-            db_indicators = ("execute", "query", "cursor.", "session.")
-            if any(call for call in func.calls if any(d in call for d in db_indicators)):
+            db_indicators = ("execute", "query", "cursor.", "session.", "db.", "database", "sql", "mssql", "postgres")
+            if any(d in body_lower for d in db_indicators):
                 score += 2
+
+            # API route handlers (TypeScript/JavaScript)
+            if is_route_file:
+                score += 3
+                # Common route handler patterns
+                route_patterns = ("get", "post", "put", "delete", "patch", "handler", "route")
+                if any(p in func.name.lower() for p in route_patterns):
+                    score += 2
 
             # Naming patterns
             name_lower = func.name.lower()
-            if any(kw in name_lower for kw in ("tool", "action", "execute", "run_")):
+            if any(kw in name_lower for kw in ("tool", "action", "execute", "run_", "handler", "endpoint")):
                 score += 2
 
             # Has a descriptive docstring (tools usually do)
@@ -241,8 +253,18 @@ def _extract_custom_tools(
             # Has typed parameters (more tool-like)
             if any(p.type_annotation for p in func.params):
                 score += 1
+            elif symbols.language in ("typescript", "javascript") and func.params:
+                # TypeScript functions often have params even without explicit types
+                score += 0.5
 
-            if score >= 4:
+            # Exported functions are more likely to be tools
+            if symbols.language in ("typescript", "javascript"):
+                # Check if function is exported (simplified check)
+                file_content = func.body_text or ""
+                if "export" in file_content[:200] or func.name in [v.name for v in symbols.variables]:
+                    score += 1
+
+            if score >= 3:  # Lowered threshold for TypeScript
                 tools.append(ToolDefinition(
                     id=_generate_id(func.name),
                     name=func.name,
@@ -253,7 +275,7 @@ def _extract_custom_tools(
                     ],
                     source="custom_heuristic",
                     location={"file": func.location.file, "line": func.location.line},
-                    confidence=min(score / 7.0, 1.0),
+                    confidence=min(score / 8.0, 1.0),
                     code_snippet=func.body_text[:500] if func.body_text else None,
                 ))
 
