@@ -125,6 +125,15 @@
       "ended_at": "2026-02-03T00:17:50Z",
       "total_turns": 0,
       "total_cost_usd": 0
+    },
+    {
+      "run_id": "run_20260206_225050",
+      "scenario": "booking_service_appointment",
+      "persona": "need_it_today",
+      "started_at": "2026-02-06T22:50:59Z",
+      "ended_at": "2026-02-06T22:51:32Z",
+      "total_turns": 3,
+      "total_cost_usd": 0.00030000000000000003
     }
   ]
 }
