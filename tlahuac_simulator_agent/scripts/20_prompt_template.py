@@ -10,13 +10,13 @@ from pathlib import Path
 from typing import Dict, List, Optional
 
 try:
-    from dotenv import load_dotenv
+    from dotenv import load_dotenv  # type: ignore
     load_dotenv()
 except ImportError:
     pass
 
 try:
-    from openai import OpenAI
+    from openai import OpenAI  # type: ignore
     OPENAI_AVAILABLE = True
 except ImportError:
     OPENAI_AVAILABLE = False
