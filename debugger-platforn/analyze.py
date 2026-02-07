@@ -127,9 +127,9 @@ def _print_ai_summary(ai_result):
 @click.argument("repo_path", type=click.Path(exists=True))
 @click.option("--output", "-o", default=None, help="Output JSON file path")
 @click.option("--skip-ai", is_flag=True, help="Skip AI semantic analysis (offline mode)")
-@click.option("--language", "-l", default="python", help="Language filter (default: python)")
+@click.option("--language", "-l", default=None, help="Language filter (default: None = scan all languages)")
 @click.option("--verbose", "-v", is_flag=True, help="Verbose output")
-def main(repo_path: str, output: str | None, skip_ai: bool, language: str, verbose: bool):
+def main(repo_path: str, output: str | None, skip_ai: bool, language: str | None, verbose: bool):
     """Analyze an agent codebase and generate an Agent Map."""
     start_time = time.time()
 
@@ -205,6 +205,7 @@ def main(repo_path: str, output: str | None, skip_ai: bool, language: str, verbo
     # ── Output ──
     elapsed = time.time() - start_time
     output_path = output or "agent_map.json"
+    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, "w") as f:
         json.dump(agent_map, f, indent=2, default=str)
 

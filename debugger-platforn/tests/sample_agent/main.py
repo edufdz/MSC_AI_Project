@@ -23,7 +23,7 @@ prompt = ChatPromptTemplate.from_messages([
     ("placeholder", "{agent_scratchpad}"),
 ])
 
-llm = ChatOpenAI(model="gpt-4", temperature=0)
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)  # Switched to gpt-4o-mini for cost savings
 memory = ConversationBufferMemory(return_messages=True)
 
 tools = [track_order, initiate_refund, search_knowledge_base, escalate_to_human]
