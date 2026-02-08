@@ -51,6 +51,17 @@ _MOCK_RESPONSES = [
     "Thank you for your patience. The request has been processed.",
 ]
 
+_MOCK_RESPONSES_ES = [
+    "Con gusto te ayudo con eso. Déjame revisarlo.",
+    "Claro, déjame verificar esa información de inmediato.",
+    "Encontré los detalles que buscas. Aquí está lo que tengo:",
+    "Déjame procesar esa solicitud. Un momento por favor.",
+    "Entiendo tu inquietud. Esto es lo que puedo hacer por ti.",
+    "¡Buena pregunta! Según nuestros registros, aquí está la información:",
+    "He completado esa acción por ti. ¿Hay algo más en lo que pueda ayudarte?",
+    "Gracias por tu paciencia. La solicitud ha sido procesada.",
+]
+
 _MOCK_TOOL_NAMES = [
     "executeToolCall",
     "createClientsRoutes",
@@ -69,6 +80,10 @@ class MockAgentConnector(AgentConnector):
     - ``tool_call_rate``: probability a response includes mock tool calls.
     - ``latency_range``: (min_ms, max_ms) simulated network latency.
     - ``available_tools``: tool names the mock agent can "call".
+
+    When the agent_map contains ``tool_chains``, the mock simulates
+    realistic multi-turn tool chains: it calls one tool per turn in
+    sequence, and emits a confirmation message when the chain completes.
     """
 
     def __init__(
@@ -78,13 +93,16 @@ class MockAgentConnector(AgentConnector):
         tool_call_rate: float = 0.4,
         latency_range: tuple[int, int] = (50, 300),
         available_tools: List[str] | None = None,
+        language: str = "English",
     ):
         self.agent_map = agent_map
         self.fail_rate = fail_rate
         self.tool_call_rate = tool_call_rate
         self.latency_range = latency_range
+        self.language = language
         self.session_id: str | None = None
         self.turn_count = 0
+        self._responses = _MOCK_RESPONSES_ES if language == "Spanish" else _MOCK_RESPONSES
 
         self.available_tools = available_tools or [
             t["name"]
@@ -92,6 +110,20 @@ class MockAgentConnector(AgentConnector):
         ]
         # Dedupe
         self.available_tools = list(dict.fromkeys(self.available_tools))
+
+        # Tool chain simulation state
+        self._tool_chains: List[Dict] = agent_map.get("tool_chains", [])
+        self._current_chain: List[str] = []
+        self._chain_index: int = 0
+
+        # Configurable confirmation messages (from agent_map or defaults)
+        self._confirmation_msgs = agent_map.get("mock_confirmation_messages", {})
+        self._confirm_en = self._confirmation_msgs.get(
+            "en", "I've completed that for you. Everything has been confirmed and booked."
+        )
+        self._confirm_es = self._confirmation_msgs.get(
+            "es", "He completado eso por ti. Todo ha sido confirmado y reservado."
+        )
 
     async def send_message(self, message: str, context: Dict | None = None) -> Dict[str, Any]:
         # Simulate latency
@@ -110,18 +142,43 @@ class MockAgentConnector(AgentConnector):
             }
 
         # Pick a response
-        response_text = random.choice(_MOCK_RESPONSES)
+        response_text = random.choice(self._responses)
 
-        # Optionally simulate tool calls
+        # --- Tool chain simulation ---
         tool_calls: List[Dict] = []
-        if random.random() < self.tool_call_rate and self.available_tools:
+
+        if self._current_chain and self._chain_index < len(self._current_chain):
+            # Continue current chain: call next tool in sequence
+            tool_name = self._current_chain[self._chain_index]
+            self._chain_index += 1
+            tool_calls.append(self._make_tool_call(tool_name, message))
+
+            # If chain is now complete, emit confirmation
+            if self._chain_index >= len(self._current_chain):
+                response_text = self._confirm_en if self.language != "Spanish" else self._confirm_es
+                self._current_chain = []
+                self._chain_index = 0
+
+        elif self._tool_chains and self.turn_count == 1:
+            # First turn: pick a chain to simulate and call its first tool
+            chain = random.choice(self._tool_chains)
+            self._current_chain = list(chain.get("sequence", []))
+            self._chain_index = 0
+
+            if self._current_chain:
+                tool_name = self._current_chain[self._chain_index]
+                self._chain_index += 1
+                tool_calls.append(self._make_tool_call(tool_name, message))
+
+                if self._chain_index >= len(self._current_chain):
+                    response_text = self._confirm_en if self.language != "Spanish" else self._confirm_es
+                    self._current_chain = []
+                    self._chain_index = 0
+
+        elif random.random() < self.tool_call_rate and self.available_tools:
+            # Fallback: random single tool call (original behavior)
             tool_name = random.choice(self.available_tools)
-            tool_calls.append({
-                "tool_name": tool_name,
-                "tool_id": str(uuid.uuid4())[:8],
-                "arguments": {"query": message[:50]},
-                "result": {"status": "ok", "data": "mock_result"},
-            })
+            tool_calls.append(self._make_tool_call(tool_name, message))
 
         return {
             "success": True,
@@ -130,9 +187,24 @@ class MockAgentConnector(AgentConnector):
             "error": None,
         }
 
+    def _make_tool_call(self, tool_name: str, message: str) -> Dict[str, Any]:
+        """Build a mock tool call dict with realistic result data."""
+        return {
+            "tool_name": tool_name,
+            "tool_id": str(uuid.uuid4())[:8],
+            "arguments": {"query": message[:50]},
+            "result": {
+                "status": "ok",
+                "data": f"mock_result_for_{tool_name}",
+                "tool": tool_name,
+            },
+        }
+
     async def reset(self) -> None:
         self.session_id = str(uuid.uuid4())
         self.turn_count = 0
+        self._current_chain = []
+        self._chain_index = 0
 
 
 # ──────────────────────────────────────────────────────────────────
@@ -194,3 +266,173 @@ class APIAgentConnector(AgentConnector):
 
     async def reset(self) -> None:
         self.session_id = str(uuid.uuid4())
+
+
+# ──────────────────────────────────────────────────────────────────
+# Victoria connector (for Victoria agent's debug conversation API)
+# ──────────────────────────────────────────────────────────────────
+
+
+class VictoriaConnector(AgentConnector):
+    """Connect to Victoria agent via its authenticated debug conversation API.
+    
+    Victoria uses session cookie authentication:
+    1. Create debug conversation: POST /conversations/debug
+    2. Send messages: POST /conversations/:id/debug-message
+    
+    Requires a session cookie from Pulpoo authentication.
+    You can get this by:
+    - Logging into Victoria in your browser
+    - Opening DevTools > Application > Cookies
+    - Copy the 'session' cookie value
+    - Set it in agent_map.json as "session_cookie" in metadata
+    """
+
+    def __init__(self, agent_map: Dict):
+        import os
+        
+        # Extract endpoint from environment variable (preferred), then agent_map
+        base_endpoint = (
+            os.getenv("VICTORIA_API_ENDPOINT") or
+            agent_map.get("api_endpoint") or 
+            agent_map.get("metadata", {}).get("api_endpoint", "")
+        )
+        
+        if not base_endpoint:
+            # Try to construct from app_id or use default
+            app_id = agent_map.get("metadata", {}).get("app_id", "victoria-tlahuac")
+            base_endpoint = f"http://localhost:3200/api/{app_id}"
+        
+        self.base_endpoint = base_endpoint.rstrip("/")
+        self.api_key: str = agent_map.get("api_key", "")
+        
+        # Get session cookie from environment variable (preferred) or agent_map
+        self.session_cookie: str = (
+            os.getenv("VICTORIA_SESSION_COOKIE") or
+            agent_map.get("session_cookie") or 
+            agent_map.get("metadata", {}).get("session_cookie", "")
+        )
+        
+        if not self.session_cookie:
+            raise ValueError(
+                "VictoriaConnector requires 'VICTORIA_SESSION_COOKIE' environment variable or "
+                "'session_cookie' in agent_map. "
+                "Get it from your browser DevTools > Application > Cookies after logging into Victoria."
+            )
+        
+        self.conversation_id: str | None = None
+        self.timeout_sec: int = agent_map.get("success_criteria", {}).get(
+            "max_latency_ms", 30_000
+        ) // 1000
+
+    async def reset(self) -> None:
+        """Create a new debug conversation."""
+        import aiohttp
+
+        headers: Dict[str, str] = {
+            "Content-Type": "application/json",
+            "Cookie": f"session={self.session_cookie}",
+        }
+        if self.api_key:
+            headers["Authorization"] = f"Bearer {self.api_key}"
+
+        # Create debug conversation
+        payload = {
+            "clientPhone": f"DEBUG-{uuid.uuid4()}",
+            "clientName": "Test User",
+        }
+
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.post(
+                    f"{self.base_endpoint}/conversations/debug",
+                    json=payload,
+                    headers=headers,
+                    timeout=aiohttp.ClientTimeout(total=self.timeout_sec),
+                ) as resp:
+                    if resp.status == 200:
+                        data = await resp.json()
+                        self.conversation_id = data.get("conversationId") or data.get("conversation", {}).get("id")
+                        if not self.conversation_id:
+                            raise ValueError("Failed to get conversation ID from Victoria API")
+                    elif resp.status == 401:
+                        raise Exception(
+                            "Authentication failed. Session cookie may be invalid or expired. "
+                            "Please get a fresh session cookie from your browser."
+                        )
+                    else:
+                        body = await resp.text()
+                        raise Exception(f"Failed to create debug conversation: HTTP {resp.status}: {body[:200]}")
+        except Exception as e:
+            raise Exception(f"Victoria connector reset failed: {e}")
+
+    async def send_message(self, message: str, context: Dict | None = None) -> Dict[str, Any]:
+        """Send message to Victoria debug conversation."""
+        import aiohttp
+
+        if not self.conversation_id:
+            await self.reset()
+
+        headers: Dict[str, str] = {
+            "Content-Type": "application/json",
+            "Cookie": f"session={self.session_cookie}",
+        }
+        if self.api_key:
+            headers["Authorization"] = f"Bearer {self.api_key}"
+
+        payload = {"message": message}
+
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.post(
+                    f"{self.base_endpoint}/conversations/{self.conversation_id}/debug-message",
+                    json=payload,
+                    headers=headers,
+                    timeout=aiohttp.ClientTimeout(total=self.timeout_sec),
+                ) as resp:
+                    if resp.status == 200:
+                        data = await resp.json()
+                        
+                        # Extract response text
+                        response_text = data.get("response", "") or data.get("aiResponse", "")
+                        
+                        # Extract tool calls from actions
+                        tool_calls = []
+                        actions = data.get("actions", [])
+                        for action in actions:
+                            if isinstance(action, dict):
+                                action_type = action.get("actionType", "")
+                                action_data = action.get("actionData", {})
+                                if action_type and action_type != "ai_process_message":
+                                    tool_calls.append({
+                                        "tool_name": action_type,
+                                        "tool_id": str(action.get("id", uuid.uuid4())),
+                                        "arguments": action_data,
+                                        "result": action.get("result"),
+                                    })
+                        
+                        return {
+                            "success": True,
+                            "response": response_text,
+                            "tool_calls": tool_calls,
+                            "error": None,
+                        }
+                    elif resp.status == 401:
+                        return {
+                            "success": False,
+                            "response": "",
+                            "tool_calls": [],
+                            "error": "Authentication failed. Session cookie may be invalid or expired.",
+                        }
+                    else:
+                        body = await resp.text()
+                        return {
+                            "success": False,
+                            "response": "",
+                            "tool_calls": [],
+                            "error": f"HTTP {resp.status}: {body[:200]}",
+                        }
+        except asyncio.TimeoutError:
+            return {"success": False, "response": "", "tool_calls": [], "error": "Request timed out"}
+        except Exception as e:
+            return {"success": False, "response": "", "tool_calls": [], "error": str(e)}

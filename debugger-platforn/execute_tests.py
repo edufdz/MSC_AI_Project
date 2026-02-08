@@ -31,13 +31,17 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import click
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from src.execution.agent_connector import APIAgentConnector, MockAgentConnector
+from src.execution.agent_connector import APIAgentConnector, MockAgentConnector, VictoriaConnector
 from src.execution.aggregator import ResultsAggregator
 from src.execution.monitor import RealTimeMonitor
 from src.execution.runner import TestExecutionEngine
@@ -213,9 +217,16 @@ def main(
         detected_language = "English"
 
     # Limit test count (keep full suite for Phase E)
+    # Ensure test_cases exists in the loaded file
+    if "test_cases" not in test_suite_full:
+        raise ValueError(f"test_suite.json missing 'test_cases' key. Found keys: {list(test_suite_full.keys())}")
+    
     test_suite = dict(test_suite_full)
     if count > 0:
         test_suite["test_cases"] = test_suite_full["test_cases"][:count]
+    # test_cases should already be in test_suite from dict() copy, but ensure it's there
+    if "test_cases" not in test_suite:
+        test_suite["test_cases"] = test_suite_full["test_cases"]
 
     # Output dir
     output_dir = Path(output)
@@ -228,11 +239,28 @@ def main(
             agent_map,
             fail_rate=fail_rate,
             tool_call_rate=0.4,
+            language=detected_language,
         )
         connector_label = f"mock (fail_rate={fail_rate})"
     else:
-        connector = APIAgentConnector(agent_map)
-        connector_label = f"API ({agent_map.get('api_endpoint', 'N/A')})"
+        # Check if this is a Victoria agent (custom framework)
+        framework = agent_map.get("metadata", {}).get("framework", "")
+        agent_type = agent_map.get("metadata", {}).get("type", "")
+        
+        # Use Victoria connector if it's Victoria or if api_endpoint contains "victoria"
+        api_endpoint = agent_map.get("api_endpoint") or agent_map.get("metadata", {}).get("api_endpoint", "")
+        is_victoria = (
+            "victoria" in api_endpoint.lower() or
+            (framework == "custom" and agent_type == "sales") or
+            "victoria" in str(agent_map.get("metadata", {}).get("name", "")).lower()
+        )
+        
+        if is_victoria:
+            connector = VictoriaConnector(agent_map)
+            connector_label = f"Victoria ({connector.base_endpoint})"
+        else:
+            connector = APIAgentConnector(agent_map)
+            connector_label = f"API ({agent_map.get('api_endpoint', 'N/A')})"
 
     opts = {
         "workers": workers,
@@ -301,6 +329,10 @@ async def _run_async(
 ):
     started_at = datetime.now(timezone.utc)
 
+    # Conversation log file for real-time viewing — truncate so only current run shows
+    conversation_log_file = str(output_dir / "conversations.log")
+    Path(conversation_log_file).write_text("")
+    
     engine = TestExecutionEngine(
         test_suite=test_suite,
         agent_connector=connector,
@@ -308,6 +340,8 @@ async def _run_async(
         use_ai_personas=ai_personas,
         traces_dir=traces_dir,
         language=language,
+        conversation_log_file=conversation_log_file,
+        agent_map=agent_map,
     )
 
     # Monitor task

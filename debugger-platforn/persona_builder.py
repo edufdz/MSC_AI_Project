@@ -68,12 +68,20 @@ def _print_persona_table(personas, title="Persona Library"):
               help="Number of AI-generated personas to add (requires ANTHROPIC_API_KEY)")
 @click.option("--sample-messages", "-s", default=0, type=int,
               help="Number of sample messages to generate per persona")
+@click.option("--use-tlahuac", is_flag=True, help="Load personas from tlahuac data (auto-detects sibling directory)")
+@click.option("--tlahuac-dir", default=None, type=click.Path(exists=True), help="Path to tlahuac persona pack directory")
+@click.option("--tlahuac-endpoint", default="http://localhost:8000", help="Tlahuac API endpoint (fallback)")
+@click.option("--tlahuac-personas", multiple=True, help="Specific tlahuac persona IDs to load")
 def main(
     agent_map_file: str,
     output: str | None,
     skip_ai: bool,
     generate: int,
     sample_messages: int,
+    use_tlahuac: bool,
+    tlahuac_dir: str | None,
+    tlahuac_endpoint: str,
+    tlahuac_personas: tuple,
 ):
     """Build a persona library from an Agent Map JSON."""
     start = time.time()
@@ -94,10 +102,45 @@ def main(
 
     builder = PersonaBuilder(agent_map)
 
-    # Step 1: Load templates
-    with console.status("[bold green]Loading persona templates..."):
-        templates = builder.load_templates()
-    console.print(f"Loaded [green]{len(templates)}[/green] template personas")
+    # Step 1: Load templates (skip when using tlahuac-only mode)
+    if not use_tlahuac:
+        with console.status("[bold green]Loading persona templates..."):
+            templates = builder.load_templates()
+        console.print(f"Loaded [green]{len(templates)}[/green] template personas")
+
+    # Step 1b: Tlahuac persona loading
+    if use_tlahuac:
+        # Resolve data directory
+        data_dir = tlahuac_dir
+        if not data_dir:
+            from pathlib import Path as _P
+            auto_dir = _P(__file__).parent.parent / "tlahuac_simulator_agent"
+            if auto_dir.exists():
+                data_dir = str(auto_dir)
+
+        if data_dir:
+            try:
+                with console.status("[bold green]Loading tlahuac personas from disk..."):
+                    tlahuac_list = builder.load_from_external(
+                        data_dir=data_dir,
+                        selected_ids=list(tlahuac_personas) or None,
+                    )
+                console.print(f"Loaded [green]{len(tlahuac_list)}[/green] tlahuac personas from [cyan]{data_dir}[/cyan]")
+            except Exception as e:
+                console.print(f"[red]Failed to load tlahuac personas: {e}[/red]")
+                console.print("[yellow]Continuing with template personas only[/yellow]")
+        else:
+            try:
+                with console.status("[bold green]Loading tlahuac personas from API..."):
+                    tlahuac_list = builder.load_from_provider(
+                        endpoint=tlahuac_endpoint,
+                        provider_name="tlahuac",
+                        selected_ids=list(tlahuac_personas) or None,
+                    )
+                console.print(f"Loaded [green]{len(tlahuac_list)}[/green] tlahuac personas from API")
+            except Exception as e:
+                console.print(f"[red]Failed to load tlahuac personas: {e}[/red]")
+                console.print("[yellow]Continuing with template personas only[/yellow]")
 
     # Step 2: AI-generated personas
     has_api_key = bool(os.environ.get("ANTHROPIC_API_KEY"))

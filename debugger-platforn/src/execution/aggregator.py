@@ -119,6 +119,9 @@ class ResultsAggregator:
                     "total_turns": f.total_turns,
                     "duration_sec": f.duration_sec,
                     "cost_usd": f.cost_usd,
+                    "outcome": f.outcome,
+                    "tools_called_sequence": f.tools_called_sequence,
+                    "tool_results": f.tool_results,
                     "chaos_events": [e.model_dump() for e in f.chaos_events],
                     "trace_file": f.trace_file,
                 }

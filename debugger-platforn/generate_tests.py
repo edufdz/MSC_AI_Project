@@ -60,6 +60,10 @@ def _run_phase_b(
     variants: int,
     seed: int | None,
     language: str | None,
+    use_tlahuac: bool = False,
+    tlahuac_endpoint: str = "http://localhost:8000",
+    tlahuac_personas: list[str] | None = None,
+    tlahuac_dir: str | None = None,
 ) -> str:
     """Run all four Phase B sub-steps. Returns path to test_suite.json."""
     import random as _random
@@ -68,6 +72,17 @@ def _run_phase_b(
 
     output_dir.mkdir(parents=True, exist_ok=True)
     has_api_key = bool(os.environ.get("ANTHROPIC_API_KEY"))
+
+    # Resolve language: explicit flag > agent_map metadata > default English
+    if language:
+        detected_language = language
+    else:
+        detected_language = agent_map.get("metadata", {}).get("conversation_language", "English")
+    # Normalize
+    if detected_language.lower() in ("spanish", "español", "espanol", "es"):
+        detected_language = "Spanish"
+    elif detected_language.lower() in ("english", "en"):
+        detected_language = "English"
 
     # ── B3: Coverage goals & sandbox config ──
     console.print(Panel(
@@ -98,12 +113,62 @@ def _run_phase_b(
         style="blue",
     ))
 
-    builder = PersonaBuilder(agent_map)
-    with console.status("[bold green]Loading persona templates..."):
-        builder.load_templates()
+    builder = PersonaBuilder(agent_map, language=detected_language)
 
-    # AI-generated personas
-    if persona_count > 0 and not skip_ai and has_api_key:
+    # Resolve tlahuac data directory (used for both personas and scenarios)
+    data_dir = tlahuac_dir
+    if use_tlahuac and not data_dir:
+        auto_dir = Path(__file__).parent.parent / "tlahuac_simulator_agent"
+        if auto_dir.exists():
+            data_dir = str(auto_dir)
+
+    # When using tlahuac, skip template personas (use only tlahuac personas)
+    if not use_tlahuac:
+        with console.status("[bold green]Loading persona templates..."):
+            builder.load_templates()
+
+    # External persona pack (tlahuac or custom directory)
+    if use_tlahuac:
+        if data_dir:
+            try:
+                with console.status("[bold green]Loading tlahuac personas from disk..."):
+                    tlahuac_list = builder.load_from_external(
+                        data_dir=data_dir,
+                        selected_ids=tlahuac_personas,
+                    )
+                console.print(f"  Loaded [green]{len(tlahuac_list)}[/green] tlahuac personas from [cyan]{data_dir}[/cyan]")
+            except Exception as e:
+                console.print(f"  [red]Failed to load tlahuac personas: {e}[/red]")
+                console.print("  [yellow]Continuing with template personas only[/yellow]")
+        else:
+            # Fallback: try API endpoint
+            try:
+                with console.status("[bold green]Loading tlahuac personas from API..."):
+                    tlahuac_list = builder.load_from_provider(
+                        endpoint=tlahuac_endpoint,
+                        provider_name="tlahuac",
+                        selected_ids=tlahuac_personas,
+                    )
+                console.print(f"  Loaded [green]{len(tlahuac_list)}[/green] tlahuac personas from API")
+            except Exception as e:
+                console.print(f"  [red]Failed to load tlahuac personas: {e}[/red]")
+                console.print("  [yellow]Continuing with template personas only[/yellow]")
+
+    # Tool-attack personas (one per tool from agent_map)
+    tool_attack_personas = builder.generate_tool_attack_personas()
+    if tool_attack_personas:
+        console.print(f"  Generated [green]{len(tool_attack_personas)}[/green] tool-attack personas")
+
+    # Flow-attack personas (one per tool chain from agent_map)
+    tool_chains = agent_map.get("tool_chains", [])
+    if tool_chains:
+        flow_attack_personas = builder.generate_flow_attack_personas(tool_chains)
+        console.print(f"  Generated [green]{len(flow_attack_personas)}[/green] flow-attack personas")
+
+    # AI-generated personas (skip when using tlahuac-only mode)
+    if use_tlahuac:
+        console.print("  [dim]AI persona generation skipped (tlahuac-only mode)[/dim]")
+    elif persona_count > 0 and not skip_ai and has_api_key:
         with console.status(f"[bold green]Generating {persona_count} AI personas..."):
             builder.generate_personas(count=persona_count)
         console.print(f"  Generated [green]{persona_count}[/green] AI personas")
@@ -128,9 +193,18 @@ def _run_phase_b(
         style="blue",
     ))
 
-    scenario_lib = ScenarioLibrary(agent_map)
+    scenario_lib = ScenarioLibrary(agent_map, language=detected_language)
     with console.status("[bold green]Loading scenario templates..."):
         scenario_lib.load_templates()
+
+    # External scenario loading (tlahuac)
+    if use_tlahuac and data_dir:
+        try:
+            with console.status("[bold green]Loading tlahuac scenarios..."):
+                tlahuac_scenarios = scenario_lib.load_from_external(data_dir=data_dir)
+            console.print(f"  Loaded [green]{len(tlahuac_scenarios)}[/green] tlahuac scenarios with Spanish openers")
+        except Exception as e:
+            console.print(f"  [yellow]Could not load tlahuac scenarios: {e}[/yellow]")
 
     # AI-generated scenarios
     if scenario_count > 0 and not skip_ai and has_api_key:
@@ -204,6 +278,10 @@ def _run_phase_b(
 @click.option("--variants", default=3, type=int, help="Variants per base scenario (default 3)")
 @click.option("--seed", default=None, type=int, help="Random seed for reproducibility")
 @click.option("--language", "-l", default=None, help="Language for generated content")
+@click.option("--use-tlahuac", is_flag=True, help="Load personas and scenarios from tlahuac data (auto-detects sibling directory or uses --tlahuac-dir)")
+@click.option("--tlahuac-dir", default=None, type=click.Path(exists=True), help="Path to tlahuac persona pack directory (default: auto-detect ../tlahuac_simulator_agent)")
+@click.option("--tlahuac-endpoint", default="http://localhost:8000", help="Tlahuac API endpoint (fallback if no directory found)")
+@click.option("--tlahuac-personas", multiple=True, help="Specific tlahuac persona IDs to load (repeatable)")
 def main(
     agent_map_file: str,
     output_dir: str,
@@ -214,6 +292,10 @@ def main(
     variants: int,
     seed: int | None,
     language: str | None,
+    use_tlahuac: bool,
+    tlahuac_dir: str | None,
+    tlahuac_endpoint: str,
+    tlahuac_personas: tuple,
 ):
     """Run unified Phase B: generate test suite from agent map (B1→B2→B3→B4)."""
     start = time.time()
@@ -245,6 +327,10 @@ def main(
         variants=variants,
         seed=seed,
         language=language,
+        use_tlahuac=use_tlahuac,
+        tlahuac_endpoint=tlahuac_endpoint,
+        tlahuac_personas=list(tlahuac_personas) if tlahuac_personas else None,
+        tlahuac_dir=tlahuac_dir,
     )
 
     elapsed = time.time() - start

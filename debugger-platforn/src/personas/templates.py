@@ -317,12 +317,67 @@ GENERIC_PERSONAS: List[Dict] = [
 ]
 
 
-def load_persona_templates(agent_type: str) -> List[Dict]:
+# ── Spanish translations ──────────────────────────────────────────
+# Only persona names are translated; numeric traits/style/edge_behaviors stay identical.
+
+_ES_NAME_MAP = {
+    # support
+    "Frustrated Customer": "Cliente Frustrado",
+    "Confused First-Timer": "Primerizo Confundido",
+    "Power User": "Usuario Experto",
+    "Angry Escalator": "Escalador Enojado",
+    "Polite Elderly User": "Usuario Mayor Amable",
+    # scheduling
+    "Last-Minute Booker": "Reservador de Último Minuto",
+    "Meticulous Planner": "Planificador Meticuloso",
+    "Group Coordinator": "Coordinador de Grupo",
+    # sales
+    "Budget-Conscious Researcher": "Investigador Consciente del Presupuesto",
+    "Impulsive Buyer": "Comprador Impulsivo",
+    "Skeptical Evaluator": "Evaluador Escéptico",
+    # research
+    "Focused Analyst": "Analista Enfocado",
+    "Exploratory Thinker": "Pensador Exploratorio",
+    # coding
+    "Junior Developer": "Desarrollador Junior",
+    "Senior Engineer": "Ingeniero Senior",
+    # generic
+    "Happy Path User": "Usuario Camino Feliz",
+    "Edge-Case Explorer": "Explorador de Casos Límite",
+    "Adversarial Tester": "Probador Adversario",
+}
+
+
+def _translate_personas(templates: List[Dict]) -> List[Dict]:
+    """Return a copy of *templates* with names translated to Spanish."""
+    translated = []
+    for tpl in templates:
+        t = dict(tpl)
+        t["name"] = _ES_NAME_MAP.get(t["name"], t["name"])
+        translated.append(t)
+    return translated
+
+
+PERSONA_TEMPLATES_ES: Dict[str, List[Dict]] = {
+    domain: _translate_personas(personas)
+    for domain, personas in PERSONA_TEMPLATES.items()
+}
+
+GENERIC_PERSONAS_ES: List[Dict] = _translate_personas(GENERIC_PERSONAS)
+
+
+def load_persona_templates(agent_type: str, language: str = "English") -> List[Dict]:
     """
     Load pre-built persona templates for an agent type.
     Falls back to generic personas if the type isn't recognised.
+    When *language* is ``"Spanish"`` the translated templates are returned.
     """
-    templates = PERSONA_TEMPLATES.get(agent_type, [])
-    if not templates:
-        templates = GENERIC_PERSONAS
+    if language == "Spanish":
+        templates = PERSONA_TEMPLATES_ES.get(agent_type, [])
+        if not templates:
+            templates = GENERIC_PERSONAS_ES
+    else:
+        templates = PERSONA_TEMPLATES.get(agent_type, [])
+        if not templates:
+            templates = GENERIC_PERSONAS
     return templates

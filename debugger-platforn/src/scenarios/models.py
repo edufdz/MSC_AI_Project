@@ -45,9 +45,10 @@ class Scenario(BaseModel):
     chaos_config: ChaosConfig = Field(default_factory=ChaosConfig)
     tags: List[str] = []
     estimated_turns: int = 5
-    source: str = "template"  # template|ai_generated|variant
+    source: str = "template"  # template|ai_generated|variant|tlahuac
     base_scenario_id: Optional[str] = None
     variant_type: Optional[str] = None  # ambiguity|missing_info|interruption|constraint|error
+    starter_openers: List[str] = []  # Pre-written first messages (e.g. from tlahuac scenarios)
     created_at: datetime
 
 

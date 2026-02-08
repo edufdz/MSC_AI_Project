@@ -54,6 +54,18 @@ class TestSuiteGenerator:
             for t in s.required_tools:
                 self._scenarios_by_tool[t].append(s)
 
+        # Pre-index personas by target_tool for tool-attack pairing
+        self._personas_by_target_tool: Dict[str, List[Persona]] = defaultdict(list)
+        for p in personas:
+            if p.target_tool:
+                self._personas_by_target_tool[p.target_tool].append(p)
+
+        # Pre-index personas by target_flow for flow-attack pairing
+        self._personas_by_target_flow: Dict[str, List[Persona]] = defaultdict(list)
+        for p in personas:
+            if p.target_flow:
+                self._personas_by_target_flow[p.target_flow].append(p)
+
         # Pre-index scenarios by variant type
         self._scenarios_by_variant: Dict[str, List[Scenario]] = defaultdict(list)
         for s in scenarios:
@@ -116,9 +128,11 @@ class TestSuiteGenerator:
 
         for tool_name, min_calls in min_invocations.items():
             pool = self._scenarios_by_tool.get(tool_name, [])
+            # Prefer tool-attack personas when available
+            attack_personas = self._personas_by_target_tool.get(tool_name, [])
             for _ in range(min_calls):
                 scenario = random.choice(pool) if pool else random.choice(self.scenarios)
-                persona = random.choice(self.personas)
+                persona = random.choice(attack_personas) if attack_personas else random.choice(self.personas)
                 tests.append(self._make_test_case(
                     scenario=scenario,
                     persona=persona,
