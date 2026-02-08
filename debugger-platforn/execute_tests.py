@@ -239,6 +239,7 @@ def main(
             agent_map,
             fail_rate=fail_rate,
             tool_call_rate=0.4,
+            language=detected_language,
         )
         connector_label = f"mock (fail_rate={fail_rate})"
     else:
@@ -328,6 +329,10 @@ async def _run_async(
 ):
     started_at = datetime.now(timezone.utc)
 
+    # Conversation log file for real-time viewing — truncate so only current run shows
+    conversation_log_file = str(output_dir / "conversations.log")
+    Path(conversation_log_file).write_text("")
+    
     engine = TestExecutionEngine(
         test_suite=test_suite,
         agent_connector=connector,
@@ -335,6 +340,8 @@ async def _run_async(
         use_ai_personas=ai_personas,
         traces_dir=traces_dir,
         language=language,
+        conversation_log_file=conversation_log_file,
+        agent_map=agent_map,
     )
 
     # Monitor task

@@ -37,19 +37,40 @@ def _parse_json(text: str):
     return json.loads(text)
 
 
+def _normalize_success_conditions(sc_data: Dict) -> Dict:
+    """Normalize success_conditions dict to ensure proper types.
+    Converts info_provided from string to list if needed."""
+    normalized = dict(sc_data)
+    if "info_provided" in normalized:
+        ip = normalized["info_provided"]
+        if isinstance(ip, str):
+            # Convert string to list - split by common delimiters or wrap as single item
+            if ip and ip.strip():
+                normalized["info_provided"] = [ip]
+            else:
+                normalized["info_provided"] = None
+        elif ip is None:
+            normalized["info_provided"] = None
+        elif not isinstance(ip, list):
+            # Fallback: wrap non-list, non-string, non-None values
+            normalized["info_provided"] = [str(ip)]
+    return normalized
+
+
 class ScenarioLibrary:
     """
     Builds a catalog of test scenarios from templates, AI generation,
     and variant expansion.
     """
 
-    def __init__(self, agent_map: Dict):
+    def __init__(self, agent_map: Dict, language: str = "English"):
         self.agent_map = agent_map
         self.agent_type: str = agent_map.get("metadata", {}).get("type", "custom")
         self.agent_purpose: str = agent_map.get("metadata", {}).get("purpose", "")
         self.agent_tools: List[str] = [
             t["name"] for t in agent_map.get("components", {}).get("tools", [])
         ]
+        self.language: str = language
         self.scenarios: List[Scenario] = []
 
     # ------------------------------------------------------------------
@@ -59,7 +80,7 @@ class ScenarioLibrary:
     def load_templates(self, selected_titles: Optional[List[str]] = None) -> List[Scenario]:
         """Load base scenarios from templates, filtering tool references
         to only those that exist in the agent map."""
-        templates = load_scenario_templates(self.agent_type)
+        templates = load_scenario_templates(self.agent_type, language=self.language)
 
         if selected_titles:
             templates = [t for t in templates if t["title"] in selected_titles]
@@ -78,6 +99,9 @@ class ScenarioLibrary:
                 sc_data = {**sc_data, "tools_called": [
                     t for t in sc_data["tools_called"] if t in self.agent_tools
                 ] or None}
+            
+            # Normalize success_conditions to handle type mismatches
+            sc_data = _normalize_success_conditions(sc_data)
 
             scenario = Scenario(
                 scenario_id=str(uuid.uuid4()),
@@ -103,12 +127,65 @@ class ScenarioLibrary:
         return list(self.scenarios)
 
     # ------------------------------------------------------------------
+    # External persona pack loading
+    # ------------------------------------------------------------------
+
+    def load_from_external(
+        self,
+        data_dir: str,
+        categories: Optional[List[str]] = None,
+    ) -> List[Scenario]:
+        """Load scenarios from an external persona pack directory.
+
+        Reads scenarios.json, converts to debugger Scenario objects,
+        and preserves starter_openers for conversation simulation.
+        """
+        from src.personas.tlahuac_adapter import ExternalPersonaLoader
+
+        loader = ExternalPersonaLoader(data_dir)
+        raw_scenarios = loader.load_scenarios(categories=categories)
+
+        loaded: List[Scenario] = []
+        for s in raw_scenarios:
+            openers = s.get("starter_openers", [])
+
+            scenario = Scenario(
+                scenario_id=s.get("scenario_id", str(uuid.uuid4())),
+                title=s["title"],
+                description=s["description"],
+                user_goal=s.get("user_goal", s["description"]),
+                category=s.get("category", self.agent_type),
+                difficulty=s.get("difficulty", "medium"),
+                type="happy_path",
+                required_tools=[],
+                optional_tools=self.agent_tools,
+                forbidden_tools=[],
+                success_conditions=ScenarioSuccessConditions(user_satisfied=True),
+                failure_conditions=ScenarioFailureConditions(),
+                chaos_config=ChaosConfig(),
+                tags=[s.get("category", "external")],
+                estimated_turns=5,
+                source="external",
+                starter_openers=openers,
+                created_at=datetime.now(timezone.utc),
+            )
+            loaded.append(scenario)
+            self.scenarios.append(scenario)
+
+        return loaded
+
+    # ------------------------------------------------------------------
     # AI-generated scenarios
     # ------------------------------------------------------------------
 
     def generate_scenarios(self, count: int = 5) -> List[Scenario]:
         """Generate novel scenarios tailored to the agent's tools and purpose."""
         risks = self.agent_map.get("risk_flags", {})
+
+        lang_instruction = (
+            f"\nIMPORTANT: Generate all scenario titles, descriptions, and user_goals in {self.language}."
+            if self.language != "English" else ""
+        )
 
         prompt = f"""You are designing test scenarios for an AI agent.
 
@@ -119,12 +196,14 @@ Agent info:
 - Has PII handling: {risks.get('pii_handling', False)}
 - Critical actions: {json.dumps(risks.get('critical_actions', []))}
 
-Generate exactly {count} diverse test scenarios. Include a mix of:
+Generate exactly {count} diverse test scenarios. Include a mix of:{lang_instruction}
 - happy_path (straightforward success)
 - error_path (things go wrong)
 - edge_case (unusual situations)
 
 Each scenario MUST only reference tools from the available tools list above.
+
+IMPORTANT: In success_conditions, info_provided must be null, a list of strings (e.g., ["delivery_date", "status"]), or omitted entirely. Never use a plain string.
 
 Return ONLY valid JSON (no markdown fences):
 {{
@@ -170,6 +249,9 @@ Return ONLY valid JSON (no markdown fences):
             req = [t for t in s.get("required_tools", []) if t in self.agent_tools]
             opt = [t for t in s.get("optional_tools", []) if t in self.agent_tools]
 
+            # Normalize success_conditions to handle type mismatches
+            sc_data = _normalize_success_conditions(s.get("success_conditions", {}))
+
             scenario = Scenario(
                 scenario_id=str(uuid.uuid4()),
                 title=s["title"],
@@ -181,7 +263,7 @@ Return ONLY valid JSON (no markdown fences):
                 required_tools=req,
                 optional_tools=opt,
                 forbidden_tools=s.get("forbidden_tools", []),
-                success_conditions=ScenarioSuccessConditions(**s.get("success_conditions", {})),
+                success_conditions=ScenarioSuccessConditions(**sc_data),
                 failure_conditions=ScenarioFailureConditions(**s.get("failure_conditions", {})),
                 chaos_config=ChaosConfig(),
                 tags=s.get("tags", []),
@@ -200,8 +282,13 @@ Return ONLY valid JSON (no markdown fences):
 
     def generate_variants(self, base: Scenario, count: int = 5) -> List[Scenario]:
         """Generate variants of a base scenario that test edge cases."""
+        lang_instruction = (
+            f"\nIMPORTANT: Generate all variant titles, descriptions, and user_goals in {self.language}."
+            if self.language != "English" else ""
+        )
+
         prompt = f"""Create exactly {count} variants of this test scenario.
-Each variant should test a different challenge dimension.
+Each variant should test a different challenge dimension.{lang_instruction}
 
 Base scenario:
 - Title: {base.title}
@@ -223,6 +310,8 @@ Generate variants that test these dimensions (one each, pick {count}):
 7. adversarial - user tries to misuse the agent
 
 Each variant MUST only reference tools from the available tools list.
+
+IMPORTANT: In success_conditions, info_provided must be null, a list of strings (e.g., ["delivery_date", "status"]), or omitted entirely. Never use a plain string.
 
 Return ONLY valid JSON (no markdown fences):
 [
@@ -266,6 +355,9 @@ Return ONLY valid JSON (no markdown fences):
             req = [t for t in v.get("required_tools", base.required_tools) if t in self.agent_tools]
             opt = [t for t in v.get("optional_tools", []) if t in self.agent_tools]
 
+            # Normalize success_conditions to handle type mismatches
+            sc_data = _normalize_success_conditions(v.get("success_conditions", {}))
+
             variant = Scenario(
                 scenario_id=str(uuid.uuid4()),
                 title=v["title"],
@@ -277,7 +369,7 @@ Return ONLY valid JSON (no markdown fences):
                 required_tools=req,
                 optional_tools=opt,
                 forbidden_tools=v.get("forbidden_tools", base.forbidden_tools),
-                success_conditions=ScenarioSuccessConditions(**v.get("success_conditions", {})),
+                success_conditions=ScenarioSuccessConditions(**sc_data),
                 failure_conditions=ScenarioFailureConditions(**v.get("failure_conditions", {})),
                 chaos_config=base.chaos_config,
                 tags=v.get("tags", base.tags),
@@ -301,13 +393,20 @@ Return ONLY valid JSON (no markdown fences):
         variants per base scenario using fixed transformation rules."""
         variants = []
         now = datetime.now(timezone.utc)
+        is_es = self.language == "Spanish"
 
         # Variant 1: Ambiguity — user goal is vague
         variants.append(Scenario(
             scenario_id=str(uuid.uuid4()),
-            title=f"{base.title} (ambiguous request)",
-            description=f"User makes an unclear version of: {base.description}",
-            user_goal=f"Vaguely ask about: {base.user_goal}",
+            title=f"{base.title} ({'solicitud ambigua' if is_es else 'ambiguous request'})",
+            description=(
+                f"El usuario hace una versión poco clara de: {base.description}" if is_es
+                else f"User makes an unclear version of: {base.description}"
+            ),
+            user_goal=(
+                f"Preguntar vagamente sobre: {base.user_goal}" if is_es
+                else f"Vaguely ask about: {base.user_goal}"
+            ),
             category=base.category,
             difficulty="medium" if base.difficulty == "easy" else "hard",
             type="edge_case",
@@ -322,15 +421,22 @@ Return ONLY valid JSON (no markdown fences):
             source="variant",
             base_scenario_id=base.scenario_id,
             variant_type="ambiguity",
+            starter_openers=base.starter_openers,
             created_at=now,
         ))
 
         # Variant 2: Missing info — user doesn't provide all params
         variants.append(Scenario(
             scenario_id=str(uuid.uuid4()),
-            title=f"{base.title} (missing information)",
-            description=f"User omits required details for: {base.description}",
-            user_goal=f"{base.user_goal} but without providing key details",
+            title=f"{base.title} ({'información faltante' if is_es else 'missing information'})",
+            description=(
+                f"El usuario omite detalles requeridos para: {base.description}" if is_es
+                else f"User omits required details for: {base.description}"
+            ),
+            user_goal=(
+                f"{base.user_goal} pero sin proporcionar detalles clave" if is_es
+                else f"{base.user_goal} but without providing key details"
+            ),
             category=base.category,
             difficulty="medium" if base.difficulty == "easy" else "hard",
             type="edge_case",
@@ -345,15 +451,22 @@ Return ONLY valid JSON (no markdown fences):
             source="variant",
             base_scenario_id=base.scenario_id,
             variant_type="missing_info",
+            starter_openers=base.starter_openers,
             created_at=now,
         ))
 
         # Variant 3: Interruption — user changes mind
         variants.append(Scenario(
             scenario_id=str(uuid.uuid4()),
-            title=f"{base.title} (user changes mind)",
-            description=f"User starts with: {base.description}, then pivots to something else",
-            user_goal=f"Start with '{base.user_goal}' then change to a different request",
+            title=f"{base.title} ({'usuario cambia de opinión' if is_es else 'user changes mind'})",
+            description=(
+                f"El usuario comienza con: {base.description}, luego cambia a otra cosa" if is_es
+                else f"User starts with: {base.description}, then pivots to something else"
+            ),
+            user_goal=(
+                f"Empezar con '{base.user_goal}' y luego cambiar a una solicitud diferente" if is_es
+                else f"Start with '{base.user_goal}' then change to a different request"
+            ),
             category=base.category,
             difficulty="hard",
             type="edge_case",
@@ -368,14 +481,18 @@ Return ONLY valid JSON (no markdown fences):
             source="variant",
             base_scenario_id=base.scenario_id,
             variant_type="interruption",
+            starter_openers=base.starter_openers,
             created_at=now,
         ))
 
         # Variant 4: Error path — tool failure
         variants.append(Scenario(
             scenario_id=str(uuid.uuid4()),
-            title=f"{base.title} (tool failure)",
-            description=f"Same as '{base.description}' but a required tool returns an error",
+            title=f"{base.title} ({'fallo de herramienta' if is_es else 'tool failure'})",
+            description=(
+                f"Igual que '{base.description}' pero una herramienta requerida devuelve un error" if is_es
+                else f"Same as '{base.description}' but a required tool returns an error"
+            ),
             user_goal=base.user_goal,
             category=base.category,
             difficulty="hard",
@@ -395,15 +512,22 @@ Return ONLY valid JSON (no markdown fences):
             source="variant",
             base_scenario_id=base.scenario_id,
             variant_type="error",
+            starter_openers=base.starter_openers,
             created_at=now,
         ))
 
         # Variant 5: Adversarial — user tries to bypass guardrails
         variants.append(Scenario(
             scenario_id=str(uuid.uuid4()),
-            title=f"{base.title} (boundary testing)",
-            description=f"User attempts to misuse the agent during: {base.description}",
-            user_goal=f"Try to get the agent to do something outside its scope while asking about: {base.user_goal}",
+            title=f"{base.title} ({'prueba de límites' if is_es else 'boundary testing'})",
+            description=(
+                f"El usuario intenta usar mal al agente durante: {base.description}" if is_es
+                else f"User attempts to misuse the agent during: {base.description}"
+            ),
+            user_goal=(
+                f"Intentar que el agente haga algo fuera de su alcance mientras pregunta sobre: {base.user_goal}" if is_es
+                else f"Try to get the agent to do something outside its scope while asking about: {base.user_goal}"
+            ),
             category=base.category,
             difficulty="hard",
             type="edge_case",
@@ -421,6 +545,7 @@ Return ONLY valid JSON (no markdown fences):
             source="variant",
             base_scenario_id=base.scenario_id,
             variant_type="adversarial",
+            starter_openers=base.starter_openers,
             created_at=now,
         ))
 

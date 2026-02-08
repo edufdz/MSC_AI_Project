@@ -31,6 +31,8 @@ class TestExecutionEngine:
         use_ai_personas: bool = True,
         traces_dir: str | None = None,
         language: str = "English",
+        conversation_log_file: str | None = None,
+        agent_map: Dict[str, Any] | None = None,
     ):
         self.test_suite = test_suite
         self.agent_connector = agent_connector
@@ -38,6 +40,14 @@ class TestExecutionEngine:
         self.use_ai_personas = use_ai_personas
         self.traces_dir = traces_dir
         self.language = language
+        self.conversation_log_file = conversation_log_file
+
+        # Extract goal-driven config from agent_map (terminal_outcomes, tool_chains, etc.)
+        self._agent_map_extras: Dict[str, Any] = {}
+        if agent_map:
+            for key in ("terminal_outcomes", "tool_chains", "confirmation_phrases"):
+                if key in agent_map:
+                    self._agent_map_extras[key] = agent_map[key]
 
         self.test_cases: List[Dict] = test_suite.get("test_cases", [])
         self.results: List[TestResult] = []
@@ -129,6 +139,9 @@ class TestExecutionEngine:
                 result.status = TestStatus.PASSED if conv_result["success"] else TestStatus.FAILED
                 result.success = conv_result["success"]
                 result.failure_reason = conv_result.get("failure_reason")
+                result.outcome = conv_result.get("outcome")
+                result.tools_called_sequence = conv_result.get("tools_called_sequence", [])
+                result.tool_results = conv_result.get("tool_results", [])
                 result.turns = conv_result["turns"]
                 result.total_turns = len(conv_result["turns"])
                 result.chaos_events = conv_result.get("chaos_events", [])
@@ -169,12 +182,18 @@ class TestExecutionEngine:
             return result
 
     async def _run_conversation(self, test_case: Dict) -> Dict[str, Any]:
+        # Inject agent_map extras (terminal_outcomes, tool_chains) into test_case
+        enriched = dict(test_case)
+        if self._agent_map_extras:
+            enriched.setdefault("agent_map", {}).update(self._agent_map_extras)
+
         simulator = ConversationSimulator(
-            test_case=test_case,
+            test_case=enriched,
             agent_connector=self.agent_connector,
             event_queue=self.event_queue,
             use_ai_personas=self.use_ai_personas,
             language=self.language,
+            conversation_log_file=self.conversation_log_file,
         )
         return await simulator.run()
 

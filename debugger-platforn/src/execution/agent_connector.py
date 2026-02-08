@@ -51,6 +51,17 @@ _MOCK_RESPONSES = [
     "Thank you for your patience. The request has been processed.",
 ]
 
+_MOCK_RESPONSES_ES = [
+    "Con gusto te ayudo con eso. Déjame revisarlo.",
+    "Claro, déjame verificar esa información de inmediato.",
+    "Encontré los detalles que buscas. Aquí está lo que tengo:",
+    "Déjame procesar esa solicitud. Un momento por favor.",
+    "Entiendo tu inquietud. Esto es lo que puedo hacer por ti.",
+    "¡Buena pregunta! Según nuestros registros, aquí está la información:",
+    "He completado esa acción por ti. ¿Hay algo más en lo que pueda ayudarte?",
+    "Gracias por tu paciencia. La solicitud ha sido procesada.",
+]
+
 _MOCK_TOOL_NAMES = [
     "executeToolCall",
     "createClientsRoutes",
@@ -69,6 +80,10 @@ class MockAgentConnector(AgentConnector):
     - ``tool_call_rate``: probability a response includes mock tool calls.
     - ``latency_range``: (min_ms, max_ms) simulated network latency.
     - ``available_tools``: tool names the mock agent can "call".
+
+    When the agent_map contains ``tool_chains``, the mock simulates
+    realistic multi-turn tool chains: it calls one tool per turn in
+    sequence, and emits a confirmation message when the chain completes.
     """
 
     def __init__(
@@ -78,13 +93,16 @@ class MockAgentConnector(AgentConnector):
         tool_call_rate: float = 0.4,
         latency_range: tuple[int, int] = (50, 300),
         available_tools: List[str] | None = None,
+        language: str = "English",
     ):
         self.agent_map = agent_map
         self.fail_rate = fail_rate
         self.tool_call_rate = tool_call_rate
         self.latency_range = latency_range
+        self.language = language
         self.session_id: str | None = None
         self.turn_count = 0
+        self._responses = _MOCK_RESPONSES_ES if language == "Spanish" else _MOCK_RESPONSES
 
         self.available_tools = available_tools or [
             t["name"]
@@ -92,6 +110,20 @@ class MockAgentConnector(AgentConnector):
         ]
         # Dedupe
         self.available_tools = list(dict.fromkeys(self.available_tools))
+
+        # Tool chain simulation state
+        self._tool_chains: List[Dict] = agent_map.get("tool_chains", [])
+        self._current_chain: List[str] = []
+        self._chain_index: int = 0
+
+        # Configurable confirmation messages (from agent_map or defaults)
+        self._confirmation_msgs = agent_map.get("mock_confirmation_messages", {})
+        self._confirm_en = self._confirmation_msgs.get(
+            "en", "I've completed that for you. Everything has been confirmed and booked."
+        )
+        self._confirm_es = self._confirmation_msgs.get(
+            "es", "He completado eso por ti. Todo ha sido confirmado y reservado."
+        )
 
     async def send_message(self, message: str, context: Dict | None = None) -> Dict[str, Any]:
         # Simulate latency
@@ -110,18 +142,43 @@ class MockAgentConnector(AgentConnector):
             }
 
         # Pick a response
-        response_text = random.choice(_MOCK_RESPONSES)
+        response_text = random.choice(self._responses)
 
-        # Optionally simulate tool calls
+        # --- Tool chain simulation ---
         tool_calls: List[Dict] = []
-        if random.random() < self.tool_call_rate and self.available_tools:
+
+        if self._current_chain and self._chain_index < len(self._current_chain):
+            # Continue current chain: call next tool in sequence
+            tool_name = self._current_chain[self._chain_index]
+            self._chain_index += 1
+            tool_calls.append(self._make_tool_call(tool_name, message))
+
+            # If chain is now complete, emit confirmation
+            if self._chain_index >= len(self._current_chain):
+                response_text = self._confirm_en if self.language != "Spanish" else self._confirm_es
+                self._current_chain = []
+                self._chain_index = 0
+
+        elif self._tool_chains and self.turn_count == 1:
+            # First turn: pick a chain to simulate and call its first tool
+            chain = random.choice(self._tool_chains)
+            self._current_chain = list(chain.get("sequence", []))
+            self._chain_index = 0
+
+            if self._current_chain:
+                tool_name = self._current_chain[self._chain_index]
+                self._chain_index += 1
+                tool_calls.append(self._make_tool_call(tool_name, message))
+
+                if self._chain_index >= len(self._current_chain):
+                    response_text = self._confirm_en if self.language != "Spanish" else self._confirm_es
+                    self._current_chain = []
+                    self._chain_index = 0
+
+        elif random.random() < self.tool_call_rate and self.available_tools:
+            # Fallback: random single tool call (original behavior)
             tool_name = random.choice(self.available_tools)
-            tool_calls.append({
-                "tool_name": tool_name,
-                "tool_id": str(uuid.uuid4())[:8],
-                "arguments": {"query": message[:50]},
-                "result": {"status": "ok", "data": "mock_result"},
-            })
+            tool_calls.append(self._make_tool_call(tool_name, message))
 
         return {
             "success": True,
@@ -130,9 +187,24 @@ class MockAgentConnector(AgentConnector):
             "error": None,
         }
 
+    def _make_tool_call(self, tool_name: str, message: str) -> Dict[str, Any]:
+        """Build a mock tool call dict with realistic result data."""
+        return {
+            "tool_name": tool_name,
+            "tool_id": str(uuid.uuid4())[:8],
+            "arguments": {"query": message[:50]},
+            "result": {
+                "status": "ok",
+                "data": f"mock_result_for_{tool_name}",
+                "tool": tool_name,
+            },
+        }
+
     async def reset(self) -> None:
         self.session_id = str(uuid.uuid4())
         self.turn_count = 0
+        self._current_chain = []
+        self._chain_index = 0
 
 
 # ──────────────────────────────────────────────────────────────────

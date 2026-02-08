@@ -6,7 +6,7 @@ Defines persona traits, style, edge behaviors, and the persona library.
 from __future__ import annotations
 
 from datetime import datetime
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel, Field
 
@@ -39,12 +39,15 @@ class Persona(BaseModel):
     persona_id: str
     name: str
     agent_type: str  # support|sales|scheduling|etc
-    source: str  # template|ai_generated|custom
+    source: str  # template|ai_generated|custom|tlahuac|tool_attack|flow_attack
     traits: PersonaTraits
     style: PersonaStyle
     edge_behaviors: PersonaEdgeBehaviors
     sample_messages: List[str] = []
     created_at: datetime
+    tlahuac_data: Optional[Dict[str, Any]] = None  # Extra tlahuac persona data (common_phrases, action_weights, etc.)
+    target_tool: Optional[str] = None  # tool name this persona is designed to stress-test
+    target_flow: Optional[str] = None  # tool chain name this persona is designed to test
 
 
 class PersonaLibrary(BaseModel):

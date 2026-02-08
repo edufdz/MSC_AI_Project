@@ -58,6 +58,9 @@ class TestResult(BaseModel):
     # Outcome
     success: bool = False
     failure_reason: Optional[str] = None
+    outcome: Optional[str] = None  # "appointment_booked", "escalated_to_human", etc.
+    tools_called_sequence: List[str] = []  # ordered list of all tools called
+    tool_results: List[Dict[str, Any]] = []  # tool name + result data for each call
 
     # Chaos
     chaos_events: List[ChaosEvent] = []
