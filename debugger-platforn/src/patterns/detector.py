@@ -174,7 +174,9 @@ def _extract_langchain_tools(all_symbols: list[FileSymbols]) -> list[ToolDefinit
 
 
 def _extract_openai_tools(all_symbols: list[FileSymbols]) -> list[ToolDefinition]:
-    """Extract tools from OpenAI-style function calling patterns."""
+    """Extract tools from OpenAI-style function calling patterns.
+    Supports both JSON-style double quotes and JS/TS-style single quotes / unquoted keys.
+    """
     tools = []
 
     for symbols in all_symbols:
@@ -182,11 +184,19 @@ def _extract_openai_tools(all_symbols: list[FileSymbols]) -> list[ToolDefinition
         for var in symbols.variables:
             name_lower = var.name.lower()
             if var.value_text and any(kw in name_lower for kw in ("tools", "functions", "function_definitions")):
-                # Try to detect dict patterns with "name" and "description"
                 val = var.value_text
-                # Simple heuristic: look for "name": and "description": patterns
-                name_matches = re.findall(r'"name"\s*:\s*"([^"]+)"', val)
-                desc_matches = re.findall(r'"description"\s*:\s*"([^"]+)"', val)
+                # Double-quoted (JSON): "name": "tool_name"
+                name_double = re.findall(r'"name"\s*:\s*"([^"]+)"', val)
+                desc_double = re.findall(r'"description"\s*:\s*"([^"]+)"', val)
+                # Single-quoted or unquoted key (TS/JS): name: 'tool_name' or 'name': 'tool_name'
+                name_single = re.findall(r"['\"]?name['\"]?\s*:\s*['\"]([^'\"]+)['\"]", val)
+                desc_single = re.findall(
+                    r"['\"]?description['\"]?\s*:\s*['\"]([^'\"]+)['\"]",
+                    val,
+                )
+
+                name_matches = name_double if name_double else name_single
+                desc_matches = desc_double if desc_double else desc_single
 
                 for i, tool_name in enumerate(name_matches):
                     desc = desc_matches[i] if i < len(desc_matches) else None
@@ -201,6 +211,16 @@ def _extract_openai_tools(all_symbols: list[FileSymbols]) -> list[ToolDefinition
                     ))
 
     return tools
+
+
+# Function names that are tool *executors* or graph *nodes*, not tool definitions.
+# These should not be reported as tools for the agent.
+_EXECUTOR_NODE_PATTERNS = (
+    "executetool", "execute_tool", "runtool", "run_tool",
+    "createtoolsnode", "create_tools_node", "toolsnode", "tools_node",
+    "handletool", "process_tool", "tool_executor", "tool_execution",
+    "invoketool", "dispatch_tool",
+)
 
 
 def _extract_custom_tools(
@@ -222,6 +242,9 @@ def _extract_custom_tools(
             if func.name.startswith("_") and not is_route_file:
                 continue
             name_lower = func.name.lower()
+            # Skip executors/nodes: they run tools, they are not tools the agent chooses.
+            if any(pat in name_lower for pat in _EXECUTOR_NODE_PATTERNS):
+                continue
             doc_lower = (func.docstring or "").lower()
             if is_ts_js:
                 if "tool" not in name_lower and "tool" not in doc_lower and "tools" not in file_path_lower:
