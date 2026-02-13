@@ -9,7 +9,7 @@ import os
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 import anthropic
 from dotenv import load_dotenv
@@ -33,12 +33,18 @@ class PersonaBuilder:
     AI generation, or manual input.
     """
 
-    def __init__(self, agent_map: Dict, language: str = "English"):
+    def __init__(
+        self,
+        agent_map: Dict,
+        language: str = "English",
+        usage_tracker: Any = None,
+    ):
         self.agent_map = agent_map
         self.agent_type: str = agent_map.get("metadata", {}).get("type", "custom")
         self.agent_purpose: str = agent_map.get("metadata", {}).get("purpose", "")
         self.language: str = language
         self.personas: List[Persona] = []
+        self._usage_tracker = usage_tracker
 
     # ------------------------------------------------------------------
     # Template loading
@@ -220,11 +226,14 @@ Return ONLY valid JSON (no markdown fences):
                     {"role": "user", "content": "The previous response was not valid JSON. Please fix it and return ONLY valid JSON, no explanation."},
                 ]
 
+            # Use enough tokens for N personas (each ~400–600 tokens); 8192 covers 10+
             response = client.messages.create(
                 model=MODEL,
-                max_tokens=2048,
+                max_tokens=8192,
                 messages=messages,
             )
+            if self._usage_tracker and getattr(response, "usage", None):
+                self._usage_tracker.add(response.usage)
 
             raw = response.content[0].text.strip()
             if raw.startswith("```"):
@@ -376,6 +385,8 @@ Return ONLY a JSON array of strings (no markdown fences):
             max_tokens=1024,
             messages=[{"role": "user", "content": prompt}],
         )
+        if self._usage_tracker and getattr(response, "usage", None):
+            self._usage_tracker.add(response.usage)
 
         import json, re
         raw = response.content[0].text.strip()

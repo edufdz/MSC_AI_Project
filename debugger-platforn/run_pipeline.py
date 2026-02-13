@@ -269,10 +269,15 @@ def main(
         _transition_panel("Phase A", "Phase B", "agent_map.json", agent_map_path)
         _phase_banner("Phase B: Test Generation", "Coverage → Personas → Scenarios → Test Suite")
 
-        from generate_tests import _run_phase_b
+        from generate_tests import _run_phase_b, PhaseBUsageTracker
 
         b_start = time.time()
         gen_dir = out / "generated"
+        phase_b_usage = (
+            PhaseBUsageTracker()
+            if not skip_ai and os.environ.get("ANTHROPIC_API_KEY")
+            else None
+        )
 
         test_suite_path = _run_phase_b(
             agent_map=agent_map_data,
@@ -284,6 +289,7 @@ def main(
             variants=3,
             seed=seed,
             language=language,
+            usage_tracker=phase_b_usage,
         )
 
         with open(test_suite_path) as f:
