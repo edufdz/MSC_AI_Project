@@ -49,6 +49,32 @@ from src.generator.test_suite import TestSuiteGenerator
 
 console = Console()
 
+# Pricing per 1M tokens (Claude Haiku 4.5, approximate as of 2025)
+_PHASE_B_PRICING = {"claude-haiku-4-5": {"input": 1.00, "output": 5.00}}
+
+
+class PhaseBUsageTracker:
+    """Tracks token usage and cost for Phase B AI calls."""
+
+    def __init__(self, model: str = "claude-haiku-4-5"):
+        self.model = model
+        self.input_tokens = 0
+        self.output_tokens = 0
+
+    def add(self, usage) -> None:
+        """Record one API response usage (object with input_tokens, output_tokens)."""
+        self.input_tokens += getattr(usage, "input_tokens", 0) or 0
+        self.output_tokens += getattr(usage, "output_tokens", 0) or 0
+
+    def total_tokens(self) -> int:
+        return self.input_tokens + self.output_tokens
+
+    def cost_usd(self) -> float:
+        prices = _PHASE_B_PRICING.get(self.model, _PHASE_B_PRICING["claude-haiku-4-5"])
+        return (self.input_tokens / 1_000_000 * prices["input"]) + (
+            self.output_tokens / 1_000_000 * prices["output"]
+        )
+
 
 def _run_phase_b(
     agent_map: dict,
@@ -64,6 +90,7 @@ def _run_phase_b(
     tlahuac_endpoint: str = "http://localhost:8000",
     tlahuac_personas: list[str] | None = None,
     tlahuac_dir: str | None = None,
+    usage_tracker: PhaseBUsageTracker | None = None,
 ) -> str:
     """Run all four Phase B sub-steps. Returns path to test_suite.json."""
     import random as _random
@@ -113,7 +140,9 @@ def _run_phase_b(
         style="blue",
     ))
 
-    builder = PersonaBuilder(agent_map, language=detected_language)
+    builder = PersonaBuilder(
+        agent_map, language=detected_language, usage_tracker=usage_tracker
+    )
 
     # Resolve tlahuac data directory (used for both personas and scenarios)
     data_dir = tlahuac_dir
@@ -193,7 +222,9 @@ def _run_phase_b(
         style="blue",
     ))
 
-    scenario_lib = ScenarioLibrary(agent_map, language=detected_language)
+    scenario_lib = ScenarioLibrary(
+        agent_map, language=detected_language, usage_tracker=usage_tracker
+    )
     with console.status("[bold green]Loading scenario templates..."):
         scenario_lib.load_templates()
 
@@ -265,6 +296,18 @@ def _run_phase_b(
         f"  [green]Done[/green] — {suite.summary.total_tests} test cases → [cyan]{suite_path}[/cyan]"
     )
 
+    # Phase B token/cost summary (when AI was used)
+    if usage_tracker and usage_tracker.total_tokens() > 0:
+        tbl = Table(title="Phase B API usage (tokens & cost)")
+        tbl.add_column("Metric", style="cyan")
+        tbl.add_column("Value", justify="right")
+        tbl.add_row("Input tokens", f"{usage_tracker.input_tokens:,}")
+        tbl.add_row("Output tokens", f"{usage_tracker.output_tokens:,}")
+        tbl.add_row("Total tokens", f"{usage_tracker.total_tokens():,}")
+        tbl.add_row("Estimated cost (USD)", f"${usage_tracker.cost_usd():.4f}")
+        console.print()
+        console.print(tbl)
+
     return str(suite_path)
 
 
@@ -317,6 +360,9 @@ def main(
     console.print(f"  AI mode:       [bold]{'off' if skip_ai else 'on'}[/bold]")
     console.print()
 
+    usage_tracker = (
+        PhaseBUsageTracker() if not skip_ai and os.environ.get("ANTHROPIC_API_KEY") else None
+    )
     suite_path = _run_phase_b(
         agent_map=agent_map,
         output_dir=Path(output_dir),
@@ -331,6 +377,7 @@ def main(
         tlahuac_endpoint=tlahuac_endpoint,
         tlahuac_personas=list(tlahuac_personas) if tlahuac_personas else None,
         tlahuac_dir=tlahuac_dir,
+        usage_tracker=usage_tracker,
     )
 
     elapsed = time.time() - start

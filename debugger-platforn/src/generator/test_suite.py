@@ -12,6 +12,7 @@ from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
 from src.coverage.models import CoverageGoals, SandboxConfig
+from src.personas.affinity import select_persona_weighted
 from src.personas.models import Persona
 from src.scenarios.models import Scenario
 
@@ -132,7 +133,7 @@ class TestSuiteGenerator:
             attack_personas = self._personas_by_target_tool.get(tool_name, [])
             for _ in range(min_calls):
                 scenario = random.choice(pool) if pool else random.choice(self.scenarios)
-                persona = random.choice(attack_personas) if attack_personas else random.choice(self.personas)
+                persona = random.choice(attack_personas) if attack_personas else select_persona_weighted(self.personas, scenario)
                 tests.append(self._make_test_case(
                     scenario=scenario,
                     persona=persona,
@@ -148,7 +149,7 @@ class TestSuiteGenerator:
                 if all(t in s.required_tools for t in combo)
             ]
             scenario = random.choice(matching) if matching else random.choice(self.scenarios)
-            persona = random.choice(self.personas)
+            persona = select_persona_weighted(self.personas, scenario)
             tests.append(self._make_test_case(
                 scenario=scenario,
                 persona=persona,
@@ -180,7 +181,7 @@ class TestSuiteGenerator:
                 pool = self._scenarios_by_type.get("edge_case", self.scenarios)
             for _ in range(count):
                 scenario = random.choice(pool)
-                persona = random.choice(self.personas)
+                persona = select_persona_weighted(self.personas, scenario)
                 tests.append(self._make_test_case(
                     scenario=scenario,
                     persona=persona,
@@ -210,7 +211,7 @@ class TestSuiteGenerator:
             pool = error_pool if error_pool else self.scenarios
             for _ in range(count):
                 scenario = random.choice(pool)
-                persona = random.choice(self.personas)
+                persona = select_persona_weighted(self.personas, scenario)
                 tests.append(self._make_test_case(
                     scenario=scenario,
                     persona=persona,
@@ -228,7 +229,7 @@ class TestSuiteGenerator:
         tests: List[TestCase] = []
         for _ in range(count):
             scenario = random.choice(self.scenarios)
-            persona = random.choice(self.personas)
+            persona = select_persona_weighted(self.personas, scenario)
             tests.append(self._make_test_case(
                 scenario=scenario,
                 persona=persona,

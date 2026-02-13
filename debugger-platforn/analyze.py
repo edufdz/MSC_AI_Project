@@ -128,8 +128,16 @@ def _print_ai_summary(ai_result):
 @click.option("--output", "-o", default=None, help="Output JSON file path")
 @click.option("--skip-ai", is_flag=True, help="Skip AI semantic analysis (offline mode)")
 @click.option("--language", "-l", default=None, help="Language filter (default: None = scan all languages)")
+@click.option("--prompt-encoding", default="utf-8", help="Encoding for prompt files (default: utf-8)")
 @click.option("--verbose", "-v", is_flag=True, help="Verbose output")
-def main(repo_path: str, output: str | None, skip_ai: bool, language: str | None, verbose: bool):
+def main(
+    repo_path: str,
+    output: str | None,
+    skip_ai: bool,
+    language: str | None,
+    prompt_encoding: str,
+    verbose: bool,
+):
     """Analyze an agent codebase and generate an Agent Map."""
     start_time = time.time()
 
@@ -164,7 +172,11 @@ def main(repo_path: str, output: str | None, skip_ai: bool, language: str | None
 
     # ── Step 3: Pattern Detection ──
     with console.status("[bold green]Detecting agent patterns..."):
-        pattern_result = detect_patterns(all_symbols, ingestion.prompt_files)
+        pattern_result = detect_patterns(
+            all_symbols,
+            ingestion.prompt_files,
+            prompt_encoding=prompt_encoding,
+        )
     _print_pattern_summary(pattern_result)
 
     # ── Step 4: Risk Analysis ──
@@ -210,6 +222,22 @@ def main(repo_path: str, output: str | None, skip_ai: bool, language: str | None
         json.dump(agent_map, f, indent=2, default=str)
 
     console.print(f"\n[bold green]Agent Map written to {output_path}[/bold green]")
+
+    # Generate graph visualizations
+    try:
+        from src.graph.visualizer import visualize_agent_map
+        png_path, mmd_path = visualize_agent_map(agent_map, str(Path(output_path).parent))
+        console.print(f"[bold green]Graph saved to {png_path}[/bold green]")
+        console.print(f"[bold green]Mermaid saved to {mmd_path}[/bold green]")
+    except ModuleNotFoundError as e:
+        if "matplotlib" in str(e):
+            console.print("[yellow]Graph generation skipped: matplotlib not installed.[/yellow]")
+            console.print("[dim]Install with: uv sync  (or pip install matplotlib)[/dim]")
+        else:
+            console.print(f"[yellow]Graph generation skipped: {e}[/yellow]")
+    except Exception as e:
+        console.print(f"[yellow]Graph generation skipped: {e}[/yellow]")
+
     console.print(f"[dim]Analysis completed in {elapsed:.1f}s[/dim]")
 
     # Quick summary

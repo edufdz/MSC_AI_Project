@@ -173,34 +173,149 @@ def _extract_langchain_tools(all_symbols: list[FileSymbols]) -> list[ToolDefinit
     return tools
 
 
+def _is_tool_array_variable(name_lower: str, value_text: str | None) -> bool:
+    """True if this variable is likely a list of tool definitions (OpenAI, Claude, or Python)."""
+    if not value_text or len(value_text) < 50:
+        return False
+    # Explicit list names (JS/TS and Python: TOOLS, tools, tool_list, etc.)
+    if any(kw in name_lower for kw in (
+        "tools", "functions", "function_definitions", "tool_definitions",
+        "tool_list", "tool_defs", "agent_tools",
+    )):
+        return True
+    # Name ends with 'tools': victoriaTools (TS), agent_tools (Python), etc.
+    if name_lower.endswith("tools") and len(name_lower) > 4:
+        return True
+    # Avoid executor/helper names
+    if any(no in name_lower for no in ("execute", "handler", "node", "runner")):
+        return False
+    return False
+
+
 def _extract_openai_tools(all_symbols: list[FileSymbols]) -> list[ToolDefinition]:
-    """Extract tools from OpenAI-style function calling patterns."""
+    """Extract tools from OpenAI- or Claude-style tool arrays.
+    Works for TypeScript, JavaScript, and Python. Parses name/description from variable
+    value (double or single quotes, unquoted keys). Detects tools, functions, victoriaTools,
+    agent_tools, tool_list, etc.
+    """
     tools = []
 
     for symbols in all_symbols:
         # Look for variables that look like tool/function schemas
         for var in symbols.variables:
             name_lower = var.name.lower()
-            if var.value_text and any(kw in name_lower for kw in ("tools", "functions", "function_definitions")):
-                # Try to detect dict patterns with "name" and "description"
-                val = var.value_text
-                # Simple heuristic: look for "name": and "description": patterns
-                name_matches = re.findall(r'"name"\s*:\s*"([^"]+)"', val)
-                desc_matches = re.findall(r'"description"\s*:\s*"([^"]+)"', val)
+            if not _is_tool_array_variable(name_lower, var.value_text):
+                continue
+            val = var.value_text or ""
+            # Double-quoted (JSON): "name": "tool_name"
+            name_double = re.findall(r'"name"\s*:\s*"([^"]+)"', val)
+            desc_double = re.findall(r'"description"\s*:\s*"([^"]+)"', val)
+            # Single-quoted or unquoted key (TS/JS): name: 'tool_name' or 'name': 'tool_name'
+            name_single = re.findall(r"['\"]?name['\"]?\s*:\s*['\"]([^'\"]+)['\"]", val)
+            desc_single = re.findall(
+                r"['\"]?description['\"]?\s*:\s*['\"]([^'\"]+)['\"]",
+                val,
+            )
 
-                for i, tool_name in enumerate(name_matches):
-                    desc = desc_matches[i] if i < len(desc_matches) else None
-                    tools.append(ToolDefinition(
-                        id=_generate_id(tool_name),
-                        name=tool_name,
-                        description=desc,
-                        parameters=[],
-                        source="openai_function_calling",
-                        location={"file": var.location.file, "line": var.location.line},
-                        confidence=0.8,
-                    ))
+            name_matches = name_double if name_double else name_single
+            desc_matches = desc_double if desc_double else desc_single
+
+            for i, tool_name in enumerate(name_matches):
+                desc = desc_matches[i] if i < len(desc_matches) else None
+                tools.append(ToolDefinition(
+                    id=_generate_id(tool_name),
+                    name=tool_name,
+                    description=desc,
+                    parameters=[],
+                    source="openai_function_calling",
+                    location={"file": var.location.file, "line": var.location.line},
+                    confidence=0.8,
+                ))
 
     return tools
+
+
+def _path_looks_like_tool_definitions(path_lower: str) -> bool:
+    """True if path suggests tool definition modules (OpenAI or Claude layout)."""
+    if "/tools/" in path_lower or "tools" in path_lower:
+        return True
+    # Claude/agent layouts: agent/tools, services/agent, skills, definitions
+    if "agent" in path_lower and ("tool" in path_lower or "definition" in path_lower or "skill" in path_lower):
+        return True
+    if "/skills/" in path_lower or "skill" in path_lower:
+        return True
+    return False
+
+
+def _extract_openai_tools_from_tool_files(all_symbols: list[FileSymbols]) -> list[ToolDefinition]:
+    """Extract tools from one-tool-per-file modules. Supports TypeScript, JavaScript, and Python.
+    Scans paths like tools/, agent/tools, skills/. Parses first name/description in file
+    (OpenAI function: { name, description } or Python/Claude dict with name/description).
+    """
+    tools = []
+    seen_names: set[str] = set()
+
+    for symbols in all_symbols:
+        path_lower = symbols.file_path.lower().replace("\\", "/")
+        if "node_modules" in path_lower or "__pycache__" in path_lower:
+            continue
+        if symbols.language not in ("typescript", "javascript", "python"):
+            continue
+        # Scan paths that look like tool modules (tools/, agent/tools, skills/, etc.)
+        if not _path_looks_like_tool_definitions(path_lower):
+            continue
+        if not os.path.isfile(symbols.file_path):
+            continue
+
+        try:
+            with open(symbols.file_path, encoding="utf-8", errors="replace") as f:
+                content = f.read()
+        except OSError:
+            continue
+
+        # OpenAI: function: { name, description }; Claude: top-level name/description or same shape
+        name_matches = re.findall(
+            r"\bname\s*:\s*[\"']([^\"']+)[\"']",
+            content,
+        )
+        desc_matches = re.findall(
+            r"\bdescription\s*:\s*[\"']([^\"']+)[\"']",
+            content,
+        )
+
+        # First name in file is the tool name; rest can be param names
+        if not name_matches:
+            continue
+        tool_name = name_matches[0]
+        if tool_name in seen_names:
+            continue
+        if " " in tool_name or len(tool_name) > 60 or len(tool_name) < 2:
+            continue
+        if tool_name in ("string", "object", "array", "number", "boolean"):
+            continue
+        desc = desc_matches[0] if desc_matches else None
+        tools.append(ToolDefinition(
+            id=_generate_id(tool_name),
+            name=tool_name,
+            description=desc,
+            parameters=[],
+            source="openai_tool_file",
+            location={"file": symbols.file_path, "line": 0},
+            confidence=0.85,
+        ))
+        seen_names.add(tool_name)
+
+    return tools
+
+
+# Function names that are tool *executors* or graph *nodes*, not tool definitions.
+# These should not be reported as tools for the agent.
+_EXECUTOR_NODE_PATTERNS = (
+    "executetool", "execute_tool", "runtool", "run_tool",
+    "createtoolsnode", "create_tools_node", "toolsnode", "tools_node",
+    "handletool", "process_tool", "tool_executor", "tool_execution",
+    "invoketool", "dispatch_tool",
+)
 
 
 def _extract_custom_tools(
@@ -212,13 +327,27 @@ def _extract_custom_tools(
 
     for symbols in all_symbols:
         # Check if this is a route file (TypeScript/JavaScript API routes)
-        is_route_file = "route" in symbols.file_path.lower() or "api" in symbols.file_path.lower()
+        file_path_lower = symbols.file_path.lower()
+        is_route_file = "route" in file_path_lower or "api" in file_path_lower
+        is_ts_js = symbols.language in ("typescript", "javascript")
         
         for func in symbols.functions:
             if func.name in known_tool_names:
                 continue
             if func.name.startswith("_") and not is_route_file:
                 continue
+            name_lower = func.name.lower()
+            # Skip executors/nodes: they run tools, they are not tools the agent chooses.
+            if any(pat in name_lower for pat in _EXECUTOR_NODE_PATTERNS):
+                continue
+            doc_lower = (func.docstring or "").lower()
+            if is_ts_js:
+                if "tool" not in name_lower and "tool" not in doc_lower and "tools" not in file_path_lower:
+                    continue
+            if symbols.language == "python":
+                decorator_text = " ".join(func.decorators).lower()
+                if "tool" not in name_lower and "tool" not in doc_lower and "tool" not in decorator_text:
+                    continue
 
             score = 0
 
@@ -242,7 +371,6 @@ def _extract_custom_tools(
                     score += 2
 
             # Naming patterns
-            name_lower = func.name.lower()
             if any(kw in name_lower for kw in ("tool", "action", "execute", "run_", "handler", "endpoint")):
                 score += 2
 
@@ -290,9 +418,19 @@ def extract_all_tools(all_symbols: list[FileSymbols], framework: str) -> list[To
         tools.extend(_extract_langchain_tools(all_symbols))
 
     tools.extend(_extract_openai_tools(all_symbols))
+    # Per-file tool definitions (e.g. tools/lookup-vehicle.ts with function: { name, description })
+    tools.extend(_extract_openai_tools_from_tool_files(all_symbols))
 
     known_names = {t.name for t in tools}
     tools.extend(_extract_custom_tools(all_symbols, known_names))
+
+    # Deduplicate: keep highest confidence per name
+    seen: dict[str, ToolDefinition] = {}
+    for t in tools:
+        key = t.name.lower()
+        if key not in seen or t.confidence > seen[key].confidence:
+            seen[key] = t
+    tools = list(seen.values())
 
     return tools
 
@@ -304,6 +442,7 @@ def extract_all_tools(all_symbols: list[FileSymbols], framework: str) -> list[To
 def extract_prompts(
     all_symbols: list[FileSymbols],
     prompt_files: list[str],
+    prompt_encoding: str = "utf-8",
 ) -> list[PromptDefinition]:
     """Find system prompts, templates, and instruction strings."""
     prompts = []
@@ -348,7 +487,7 @@ def extract_prompts(
     # Pattern 3: Prompt files
     for file_path in prompt_files:
         try:
-            with open(file_path) as f:
+            with open(file_path, encoding=prompt_encoding, errors="replace") as f:
                 content = f.read()
             template_vars = re.findall(r"\{(\w+)\}", content)
             prompts.append(PromptDefinition(
@@ -440,6 +579,7 @@ def detect_memory_systems(all_symbols: list[FileSymbols]) -> list[MemorySystem]:
 def detect_patterns(
     all_symbols: list[FileSymbols],
     prompt_files: list[str] | None = None,
+    prompt_encoding: str = "utf-8",
 ) -> PatternResult:
     """
     Run all pattern detection on parsed symbols.
@@ -447,7 +587,7 @@ def detect_patterns(
     """
     framework, fw_confidence = detect_framework(all_symbols)
     tools = extract_all_tools(all_symbols, framework)
-    prompts = extract_prompts(all_symbols, prompt_files or [])
+    prompts = extract_prompts(all_symbols, prompt_files or [], prompt_encoding=prompt_encoding)
     memory = detect_memory_systems(all_symbols)
 
     return PatternResult(

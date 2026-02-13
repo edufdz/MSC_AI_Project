@@ -177,6 +177,7 @@ class TestExecutionEngine:
                 "scenario": result.scenario_title,
                 "persona": result.persona_name,
                 "failure_reason": result.failure_reason,
+                "tools_called": result.tools_called_sequence or [],
             })
 
             return result

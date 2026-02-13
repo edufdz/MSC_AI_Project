@@ -9,7 +9,7 @@ import os
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 import anthropic
 from dotenv import load_dotenv
@@ -33,12 +33,18 @@ class PersonaBuilder:
     AI generation, or manual input.
     """
 
-    def __init__(self, agent_map: Dict, language: str = "English"):
+    def __init__(
+        self,
+        agent_map: Dict,
+        language: str = "English",
+        usage_tracker: Any = None,
+    ):
         self.agent_map = agent_map
         self.agent_type: str = agent_map.get("metadata", {}).get("type", "custom")
         self.agent_purpose: str = agent_map.get("metadata", {}).get("purpose", "")
         self.language: str = language
         self.personas: List[Persona] = []
+        self._usage_tracker = usage_tracker
 
     # ------------------------------------------------------------------
     # Template loading
@@ -141,14 +147,21 @@ class PersonaBuilder:
     def generate_personas(self, count: int = 3) -> List[Persona]:
         """
         Use Claude to generate novel personas tailored to the agent's
-        purpose and tool set.
+        purpose and tool set.  Includes diversity hints and duplicate filtering.
         """
+        import json, re
+
         tool_names = [t["name"] for t in self.agent_map.get("components", {}).get("tools", [])]
         risks = self.agent_map.get("risk_flags", {})
 
         lang_instruction = (
             f"\nIMPORTANT: Generate all persona names in {self.language}."
             if self.language != "English" else ""
+        )
+
+        # Analyze existing trait distribution for diversity hints
+        diversity_hint = self._build_diversity_hint(
+            self._analyze_trait_distribution(), count,
         )
 
         prompt = f"""You are designing synthetic user personas to test an AI agent.
@@ -162,6 +175,7 @@ Agent info:
 
 Generate exactly {count} diverse personas. Each persona should test a different
 aspect of the agent (happy path, edge cases, adversarial, etc.).{lang_instruction}
+{diversity_hint}
 
 Return ONLY valid JSON (no markdown fences):
 {{
@@ -173,7 +187,12 @@ Return ONLY valid JSON (no markdown fences):
         "clarity": 5,
         "tech_savviness": 5,
         "politeness": 5,
-        "verbosity": 5
+        "verbosity": 5,
+        "emotional_volatility": 5,
+        "trust_level": 5,
+        "detail_orientation": 5,
+        "decision_speed": 5,
+        "language_proficiency": 8
       }},
       "style": {{
         "tone": "neutral",
@@ -195,19 +214,39 @@ Return ONLY valid JSON (no markdown fences):
 }}"""
 
         client = anthropic.Anthropic()
-        response = client.messages.create(
-            model=MODEL,
-            max_tokens=2048,
-            messages=[{"role": "user", "content": prompt}],
-        )
 
-        import json, re
-        raw = response.content[0].text.strip()
-        if raw.startswith("```"):
-            raw = re.sub(r"^```\w*\n?", "", raw)
-            raw = re.sub(r"\n?```$", "", raw)
+        # Attempt with 1 retry on JSON parse failure
+        for attempt in range(2):
+            if attempt == 0:
+                messages = [{"role": "user", "content": prompt}]
+            else:
+                messages = [
+                    {"role": "user", "content": prompt},
+                    {"role": "assistant", "content": raw},
+                    {"role": "user", "content": "The previous response was not valid JSON. Please fix it and return ONLY valid JSON, no explanation."},
+                ]
 
-        data = json.loads(raw)
+            # Use enough tokens for N personas (each ~400–600 tokens); 8192 covers 10+
+            response = client.messages.create(
+                model=MODEL,
+                max_tokens=8192,
+                messages=messages,
+            )
+            if self._usage_tracker and getattr(response, "usage", None):
+                self._usage_tracker.add(response.usage)
+
+            raw = response.content[0].text.strip()
+            if raw.startswith("```"):
+                raw = re.sub(r"^```\w*\n?", "", raw)
+                raw = re.sub(r"\n?```$", "", raw)
+
+            try:
+                data = json.loads(raw)
+                break
+            except json.JSONDecodeError:
+                if attempt == 1:
+                    raise
+
         generated = []
 
         for p in data.get("personas", []):
@@ -222,10 +261,81 @@ Return ONLY valid JSON (no markdown fences):
                 sample_messages=[],
                 created_at=datetime.now(timezone.utc),
             )
+            # Skip duplicates
+            if self._is_duplicate(persona):
+                continue
             generated.append(persona)
             self.personas.append(persona)
 
         return generated
+
+    # ------------------------------------------------------------------
+    # Diversity helpers for AI generation
+    # ------------------------------------------------------------------
+
+    def _analyze_trait_distribution(self) -> Dict[str, List[int]]:
+        """Map each trait name to the list of existing values across all personas."""
+        dist: Dict[str, List[int]] = {}
+        trait_names = [
+            "patience", "clarity", "tech_savviness", "politeness", "verbosity",
+            "emotional_volatility", "trust_level", "detail_orientation",
+            "decision_speed", "language_proficiency",
+        ]
+        for name in trait_names:
+            dist[name] = [getattr(p.traits, name, 5) for p in self.personas]
+        return dist
+
+    @staticmethod
+    def _build_diversity_hint(dist: Dict[str, List[int]], count: int) -> str:
+        """Identify under-represented trait ranges and build a hint string."""
+        if not dist or not any(dist.values()):
+            return ""
+
+        gaps: List[str] = []
+        for trait, values in dist.items():
+            if not values:
+                continue
+            low = sum(1 for v in values if v <= 3)
+            high = sum(1 for v in values if v >= 8)
+            if low == 0:
+                gaps.append(f"low {trait} (1-3)")
+            if high == 0:
+                gaps.append(f"high {trait} (8-10)")
+
+        if not gaps:
+            return ""
+
+        sampled = gaps[:6]  # cap hint length
+        return (
+            f"\nDIVERSITY REQUIREMENTS: The current persona set is missing coverage for: "
+            f"{', '.join(sampled)}. "
+            f"Please ensure at least one generated persona covers each gap."
+        )
+
+    def _is_duplicate(self, new_persona: Persona, threshold: float = 0.85) -> bool:
+        """Check if new_persona is too similar to any existing persona.
+
+        Uses a cosine-like similarity on the 10 core numeric traits.
+        """
+        trait_names = [
+            "patience", "clarity", "tech_savviness", "politeness", "verbosity",
+            "emotional_volatility", "trust_level", "detail_orientation",
+            "decision_speed", "language_proficiency",
+        ]
+        new_vec = [getattr(new_persona.traits, t, 5) for t in trait_names]
+
+        for existing in self.personas:
+            existing_vec = [getattr(existing.traits, t, 5) for t in trait_names]
+            # Cosine similarity
+            dot = sum(a * b for a, b in zip(new_vec, existing_vec))
+            mag_new = sum(a ** 2 for a in new_vec) ** 0.5
+            mag_existing = sum(a ** 2 for a in existing_vec) ** 0.5
+            if mag_new == 0 or mag_existing == 0:
+                continue
+            similarity = dot / (mag_new * mag_existing)
+            if similarity >= threshold and new_persona.name == existing.name:
+                return True
+        return False
 
     # ------------------------------------------------------------------
     # Sample message generation
@@ -275,6 +385,8 @@ Return ONLY a JSON array of strings (no markdown fences):
             max_tokens=1024,
             messages=[{"role": "user", "content": prompt}],
         )
+        if self._usage_tracker and getattr(response, "usage", None):
+            self._usage_tracker.add(response.usage)
 
         import json, re
         raw = response.content[0].text.strip()
@@ -325,6 +437,9 @@ Return ONLY a JSON array of strings (no markdown fences):
         # Allow agent_map to override persona trait profiles
         custom_profiles = self.agent_map.get("persona_profiles", {})
 
+        # Build tool chain index for position detection
+        tool_chains = self.agent_map.get("tool_chains", [])
+
         generated: List[Persona] = []
         for tool in unique_tools:
             tool_name = tool.get("name", "unknown")
@@ -332,8 +447,31 @@ Return ONLY a JSON array of strings (no markdown fences):
             read_only = tool.get("read_only", True)
             sensitive = tool.get("handles_sensitive_data", False)
 
+            # Extract parameter metadata (supports list or dict formats)
+            params = tool.get("parameters", [])
+            if isinstance(params, list):
+                param_count = len(params)
+                required_count = sum(
+                    1 for p in params
+                    if isinstance(p, dict) and p.get("required")
+                )
+            elif isinstance(params, dict):
+                param_count = len(params)
+                required_count = sum(
+                    1 for v in params.values()
+                    if isinstance(v, dict) and v.get("required")
+                )
+            else:
+                param_count = 0
+                required_count = 0
+
+            chain_position = self._get_chain_position(tool_name, tool_chains)
+
             traits, style, edge, persona_name = self._derive_tool_persona(
                 tool_name, risk, custom_profiles,
+                param_count=param_count,
+                required_param_count=required_count,
+                chain_position=chain_position,
             )
 
             # Mutate for write tools — user changes mind
@@ -362,16 +500,49 @@ Return ONLY a JSON array of strings (no markdown fences):
         return generated
 
     @staticmethod
+    def _get_chain_position(tool_name: str, tool_chains: List[Dict]) -> str:
+        """Determine where a tool sits in any defined chain.
+
+        Returns "start", "middle", "end", or "standalone".
+        """
+        positions: set[str] = set()
+        for chain in tool_chains:
+            seq = chain.get("sequence", [])
+            if tool_name not in seq:
+                continue
+            idx = seq.index(tool_name)
+            if len(seq) == 1:
+                positions.add("standalone")
+            elif idx == 0:
+                positions.add("start")
+            elif idx == len(seq) - 1:
+                positions.add("end")
+            else:
+                positions.add("middle")
+        if not positions:
+            return "standalone"
+        # Prioritize: if it appears at multiple positions, pick most constraining
+        for p in ("end", "start", "middle"):
+            if p in positions:
+                return p
+        return "standalone"
+
+    @staticmethod
     def _derive_tool_persona(
         tool_name: str,
         risk: str,
         custom_profiles: Dict,
+        *,
+        param_count: int = 0,
+        required_param_count: int = 0,
+        chain_position: str = "standalone",
     ) -> tuple:
-        """Derive persona traits from risk level, using custom_profiles if available.
+        """Derive persona traits from risk level and tool metadata.
 
-        The algorithm adapts to the tool's risk level and any custom
-        profiles provided in the agent_map — nothing is hardcoded to a
-        specific agent.
+        Adapts traits based on:
+        - Risk level (high/low/default)
+        - Parameter complexity (many required params → incomplete info persona)
+        - Chain position (start → low clarity, end → high patience + changes_mind)
         """
 
         def _profile_to_traits(profile: Dict) -> PersonaTraits:
@@ -381,24 +552,41 @@ Return ONLY a JSON array of strings (no markdown fences):
                 tech_savviness=profile.get("tech_savviness", 5),
                 politeness=profile.get("politeness", 5),
                 verbosity=profile.get("verbosity", 5),
+                emotional_volatility=profile.get("emotional_volatility", 5),
+                trust_level=profile.get("trust_level", 5),
+                detail_orientation=profile.get("detail_orientation", 5),
+                decision_speed=profile.get("decision_speed", 5),
+                language_proficiency=profile.get("language_proficiency", 8),
             )
 
         # Default trait profiles keyed by risk category
         _RISK_PROFILES: Dict[str, Dict] = {
             "high_risk": {
-                "defaults": {"patience": 2, "clarity": 7, "tech_savviness": 8, "politeness": 3, "verbosity": 6},
+                "defaults": {
+                    "patience": 2, "clarity": 7, "tech_savviness": 8, "politeness": 3, "verbosity": 6,
+                    "emotional_volatility": 8, "trust_level": 2, "detail_orientation": 7,
+                    "decision_speed": 7, "language_proficiency": 8,
+                },
                 "style": {"tone": "frustrated", "formality": "casual", "typo_rate": 0.1, "abbreviation_use": "medium", "emoji_use": "none"},
                 "edge": {"tests_boundaries": True, "rage_quits": True, "provides_incomplete_info": False},
                 "suffix": "Boundary Tester",
             },
             "low_risk": {
-                "defaults": {"patience": 8, "clarity": 9, "tech_savviness": 6, "politeness": 8, "verbosity": 4},
+                "defaults": {
+                    "patience": 8, "clarity": 9, "tech_savviness": 6, "politeness": 8, "verbosity": 4,
+                    "emotional_volatility": 2, "trust_level": 8, "detail_orientation": 6,
+                    "decision_speed": 5, "language_proficiency": 9,
+                },
                 "style": {"tone": "polite", "formality": "formal", "typo_rate": 0.0, "abbreviation_use": "low", "emoji_use": "none"},
                 "edge": {"tests_boundaries": False, "rage_quits": False, "provides_incomplete_info": False},
                 "suffix": "Happy Path",
             },
             "default": {
-                "defaults": {"patience": 5, "clarity": 5, "tech_savviness": 5, "politeness": 5, "verbosity": 5},
+                "defaults": {
+                    "patience": 5, "clarity": 5, "tech_savviness": 5, "politeness": 5, "verbosity": 5,
+                    "emotional_volatility": 5, "trust_level": 5, "detail_orientation": 5,
+                    "decision_speed": 5, "language_proficiency": 8,
+                },
                 "style": {"tone": "neutral", "formality": "casual", "typo_rate": 0.05, "abbreviation_use": "low", "emoji_use": "none"},
                 "edge": {"tests_boundaries": False, "rage_quits": False, "provides_incomplete_info": True},
                 "suffix": "Stress Tester",
@@ -417,9 +605,26 @@ Return ONLY a JSON array of strings (no markdown fences):
 
         # Merge custom profile over defaults
         profile = {**base["defaults"], **(custom_profiles.get(profile_key, {}))}
+        edge_dict = dict(base["edge"])
+
+        # Tools with 5+ required params → incomplete info persona, reduce clarity
+        if required_param_count >= 5:
+            edge_dict["provides_incomplete_info"] = True
+            profile["clarity"] = min(profile.get("clarity", 5), 4)
+            profile["detail_orientation"] = max(profile.get("detail_orientation", 5), 3)
+
+        # End-of-chain tools → increase patience (need to wait for flow), add changes_mind
+        if chain_position == "end":
+            profile["patience"] = max(profile.get("patience", 5), 7)
+            edge_dict["changes_mind"] = True
+
+        # Start-of-chain tools → reduce clarity (test info gathering ability)
+        if chain_position == "start":
+            profile["clarity"] = min(profile.get("clarity", 5), 4)
+
         traits = _profile_to_traits(profile)
         style = PersonaStyle(**base["style"])
-        edge = PersonaEdgeBehaviors(**base["edge"])
+        edge = PersonaEdgeBehaviors(**edge_dict)
         suffix = base["suffix"]
 
         return traits, style, edge, f"{tool_name} {suffix}"
@@ -531,3 +736,12 @@ Return ONLY a JSON array of strings (no markdown fences):
             personas=self.personas,
             created_at=datetime.now(timezone.utc),
         )
+
+    # ------------------------------------------------------------------
+    # Diversity reporting
+    # ------------------------------------------------------------------
+
+    def report_diversity(self) -> Dict:
+        """Return a diversity coverage report for the current persona set."""
+        from src.personas.metrics import trait_coverage_report
+        return trait_coverage_report(self.personas)

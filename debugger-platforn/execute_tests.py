@@ -41,6 +41,7 @@ from rich.table import Table
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+from src.endpoints_config import apply_endpoints_to_agent_map
 from src.execution.agent_connector import APIAgentConnector, MockAgentConnector, VictoriaConnector
 from src.execution.aggregator import ResultsAggregator
 from src.execution.monitor import RealTimeMonitor
@@ -139,7 +140,9 @@ def _print_final_report(report, inbox, output_dir):
 @click.option("--mock", is_flag=True, help="Use mock agent connector (no real agent needed)")
 @click.option("--ai-personas", is_flag=True, help="Use AI for persona messages (costs $)")
 @click.option("--traces/--no-traces", default=True, help="Save per-test trace files")
-@click.option("--no-monitor", is_flag=True, help="Disable live dashboard")
+@click.option("--no-monitor", is_flag=True, help="Disable live Rich terminal dashboard")
+@click.option("--ui", is_flag=True, help="Launch browser-based live dashboard at http://localhost:8080")
+@click.option("--ui-port", default=8080, type=int, help="Port for web dashboard (default: 8080)")
 @click.option("--fail-rate", default=0.05, type=float, help="Mock agent failure rate")
 @click.option("--seed", default=None, type=int, help="Random seed for reproducibility")
 @click.option("--language", "-l", default=None, help="Language for persona messages (English, Spanish, etc.). Auto-detects from agent_map if not specified.")
@@ -166,6 +169,8 @@ def main(
     ai_personas: bool,
     traces: bool,
     no_monitor: bool,
+    ui: bool,
+    ui_port: int,
     fail_rate: float,
     seed: int | None,
     language: str | None,
@@ -203,6 +208,9 @@ def main(
         test_suite_full = json.load(f)
     with open(agent_map_file) as f:
         agent_map = json.load(f)
+
+    # Resolve api_endpoint from agent_endpoints.json if not in agent_map
+    apply_endpoints_to_agent_map(agent_map, agent_map_file)
 
     # Detect language: CLI flag > agent_map > default English
     if language:
@@ -285,6 +293,8 @@ def main(
         traces_dir=traces_dir,
         output_dir=output_dir,
         show_monitor=not no_monitor,
+        show_ui=ui,
+        ui_port=ui_port,
         language=detected_language,
         diagnose=diagnose,
         skip_ai=skip_ai,
@@ -312,6 +322,8 @@ async def _run_async(
     traces_dir: str | None,
     output_dir: Path,
     show_monitor: bool,
+    show_ui: bool = False,
+    ui_port: int = 8080,
     language: str = "English",
     diagnose: bool = False,
     skip_ai: bool = False,
@@ -344,14 +356,35 @@ async def _run_async(
         agent_map=agent_map,
     )
 
-    # Monitor task
+    # Monitor task (Rich terminal)
     monitor_task = None
-    if show_monitor:
+    if show_monitor and not show_ui:
         monitor = RealTimeMonitor(
             total_tests=len(test_suite["test_cases"]),
             console=console,
         )
         monitor_task = asyncio.create_task(monitor.monitor(engine.event_queue))
+
+    # Web UI task
+    ui_task = None
+    if show_ui:
+        from src.monitor_ui.server import MonitorUIServer
+
+        tool_names = [t.get("name", "") for t in agent_map.get("components", {}).get("tools", [])]
+        agent_name = agent_map.get("metadata", {}).get("name", agent_map.get("agent_id", ""))
+
+        ui_server = MonitorUIServer(
+            port=ui_port,
+            report_file=str(output_dir / "test_run_report.json"),
+        )
+        console.print(f"[bold cyan]Dashboard running at http://localhost:{ui_port}[/bold cyan]")
+        ui_task = asyncio.create_task(
+            ui_server.start_integrated(
+                engine_queue=engine.event_queue,
+                agent_name=agent_name,
+                tools=tool_names,
+            )
+        )
 
     # Execute
     results = await engine.run_all()
@@ -359,6 +392,13 @@ async def _run_async(
     # Wait for monitor to finish
     if monitor_task:
         await monitor_task
+
+    # Wait briefly for UI to broadcast final events, but don't block
+    if ui_task:
+        try:
+            await asyncio.wait_for(ui_task, timeout=3.0)
+        except (asyncio.TimeoutError, Exception):
+            pass
 
     # Aggregate
     console.print("\n[bold]Generating reports...[/bold]")

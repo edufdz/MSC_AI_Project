@@ -467,16 +467,19 @@ def parse_typescript_file(file_path: str) -> FileSymbols:
         ))
     
     # Extract exported constants/variables (for config, tools, etc.)
+    # Value is after "export const Name" so we look for " = value" in the next stretch of source
     export_pattern = r'export\s+(?:const|let|var)\s+(\w+)'
     for match in re.finditer(export_pattern, source):
         name = match.group(1)
         line = source[:match.start()].count('\n') + 1
-        # Try to extract value
-        value_match = re.search(rf'{name}\s*=\s*([^;]+)', source[match.end():match.end()+500])
-        value_text = value_match.group(1) if value_match else None
+        # Capture value: after export we have optional whitespace then "= ... ;"
+        window = source[match.end() : match.end() + 8000]
+        value_match = re.search(r'\s*=\s*([^;]+)', window)
+        value_text = value_match.group(1).strip() if value_match else None
+        # Keep enough to parse tool arrays (e.g. first 6000 chars of value)
         symbols.variables.append(VariableInfo(
             name=name,
-            value_text=value_text[:500] if value_text else None,
+            value_text=value_text[:6000] if value_text else None,
             location=Location(file=file_path, line=line),
         ))
     

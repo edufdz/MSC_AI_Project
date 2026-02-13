@@ -11,7 +11,7 @@ import re
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 import anthropic
 from dotenv import load_dotenv
@@ -63,7 +63,12 @@ class ScenarioLibrary:
     and variant expansion.
     """
 
-    def __init__(self, agent_map: Dict, language: str = "English"):
+    def __init__(
+        self,
+        agent_map: Dict,
+        language: str = "English",
+        usage_tracker: Any = None,
+    ):
         self.agent_map = agent_map
         self.agent_type: str = agent_map.get("metadata", {}).get("type", "custom")
         self.agent_purpose: str = agent_map.get("metadata", {}).get("purpose", "")
@@ -72,6 +77,7 @@ class ScenarioLibrary:
         ]
         self.language: str = language
         self.scenarios: List[Scenario] = []
+        self._usage_tracker = usage_tracker
 
     # ------------------------------------------------------------------
     # Template loading
@@ -240,6 +246,8 @@ Return ONLY valid JSON (no markdown fences):
             max_tokens=4096,
             messages=[{"role": "user", "content": prompt}],
         )
+        if self._usage_tracker and getattr(response, "usage", None):
+            self._usage_tracker.add(response.usage)
 
         data = _parse_json(response.content[0].text)
         generated = []
@@ -345,6 +353,8 @@ Return ONLY valid JSON (no markdown fences):
             max_tokens=4096,
             messages=[{"role": "user", "content": prompt}],
         )
+        if self._usage_tracker and getattr(response, "usage", None):
+            self._usage_tracker.add(response.usage)
 
         variants_data = _parse_json(response.content[0].text)
         if isinstance(variants_data, dict):
