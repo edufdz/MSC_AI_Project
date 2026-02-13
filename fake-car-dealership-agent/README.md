@@ -15,15 +15,40 @@ bun install
 # Set your OpenAI API key
 echo "OPENAI_API_KEY=sk-your-key-here" > .env
 
-# Run the agent
+# Run the agent (interactive CLI)
 bun index.ts
 ```
+
+### Phase C (Agent Debugger) — HTTP API
+
+To run Phase C tests **against this real agent** (instead of `--mock`), start the HTTP API server. The debugger’s Phase C connector calls `POST /chat` with `{ "message", "session_id" }` and expects `{ "response", "tool_calls" }`.
+
+```bash
+# From fake-car-dealership-agent/
+bun run api
+# Server listens on http://localhost:3099 (override with PORT=3000 bun run api)
+```
+
+Then from the debugger platform (no `--mock`):
+
+```bash
+cd debugger-platforn
+python execute_tests.py generated/test_suite.json agent_map.json --count 10 -o results
+```
+
+The `agent_map.json` in `debugger-platforn/` already has `"api_endpoint": "http://localhost:3099"`. Keep the API server running in one terminal while Phase C runs in another.
+
+| Endpoint       | Method | Body / response |
+|----------------|--------|------------------|
+| `/chat`        | POST   | Body: `{ "message": "user text", "session_id": "optional" }` → `{ "response": "...", "tool_calls": [...] }` |
+| `/health`      | GET    | `{ "status": "ok", "service": "autoserve-ai" }` |
 
 ## Architecture
 
 ```
 fake-car-dealership-agent/
 ├── index.ts                  # CLI conversation loop
+├── server.ts                 # HTTP API for Phase C (POST /chat)
 ├── agent.ts                  # Core agent: OpenAI chat + tool-call loop
 ├── tools/
 │   ├── index.ts              # Barrel export of all tool definitions & handlers

@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "start": "bun index.ts",
-    "dev": "bun --watch index.ts"
+    "dev": "bun --watch index.ts",
+    "api": "bun server.ts"
   },
   "dependencies": {
     "openai": "^4.73.0",

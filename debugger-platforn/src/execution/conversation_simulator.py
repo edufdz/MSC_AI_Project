@@ -158,18 +158,50 @@ class ConversationSimulator:
             )
             self.turns.append(user_turn)
             self._log_conversation_turn(user_turn)
+            await self.event_queue.put({
+                "type": "turn_completed",
+                "test_id": self.test_id,
+                "turn": turn_count,
+                "role": "user",
+                "message": user_message,
+                "duration_ms": 0,
+            })
 
             # Record agent turn
+            agent_tool_calls = agent_response.get("tool_calls", [])
             agent_turn = ConversationTurn(
                 turn_number=turn_count,
                 role="agent",
                 message=agent_response["response"],
-                tool_calls=agent_response.get("tool_calls", []),
+                tool_calls=agent_tool_calls,
                 timestamp=turn_end,
                 duration_ms=duration_ms,
             )
             self.turns.append(agent_turn)
-            self._log_conversation_turn(agent_turn, tool_calls=agent_response.get("tool_calls", []))
+            self._log_conversation_turn(agent_turn, tool_calls=agent_tool_calls)
+            await self.event_queue.put({
+                "type": "turn_completed",
+                "test_id": self.test_id,
+                "turn": turn_count,
+                "role": "agent",
+                "message": agent_response["response"],
+                "duration_ms": duration_ms,
+            })
+
+            # Emit tool_called events
+            for tc in agent_tool_calls:
+                tc_result = tc.get("result", {})
+                tc_status = "success"
+                if isinstance(tc_result, dict) and tc_result.get("status") != "ok":
+                    tc_status = "error"
+                await self.event_queue.put({
+                    "type": "tool_called",
+                    "test_id": self.test_id,
+                    "tool_name": tc.get("tool_name", "unknown"),
+                    "status": tc_status,
+                    "input": tc.get("arguments", {}),
+                    "output": tc_result,
+                })
 
             # Capture tool call results for chain validation
             for tc in agent_response.get("tool_calls", []):
