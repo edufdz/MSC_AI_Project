@@ -54,6 +54,7 @@ FRAMEWORK_SIGNATURES = {
         "imports": [
             "from anthropic import",
             "import anthropic",
+            "anthropic",  # matches TS/JS: @anthropic-ai/sdk, from 'anthropic', etc.
         ],
         "decorators": [],
         "classes": ["Anthropic", "AsyncAnthropic"],

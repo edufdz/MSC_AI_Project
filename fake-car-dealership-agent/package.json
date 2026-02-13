@@ -1,0 +1,20 @@
+{
+  "name": "fake-car-dealership-agent",
+  "version": "1.0.0",
+  "description": "AutoServe AI — A mock car dealership service scheduling agent for testing and development",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "bun index.ts",
+    "dev": "bun --watch index.ts"
+  },
+  "dependencies": {
+    "openai": "^4.73.0",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.0"
+  }
+}
