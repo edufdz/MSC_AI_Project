@@ -194,7 +194,27 @@ cd debugger-platforn
 python execute_tests.py generated/test_suite.json agent_map.json --count 10 -o results
 ```
 
-The `agent_map.json` already has `api_endpoint: http://localhost:3099`. To use another port, set `PORT=3000 bun run api` and update `api_endpoint` in `agent_map.json`.
+The API URL is **not** stored in `agent_map.json` (the map is generated from code and has no endpoint). It is read from **`agent_endpoints.json`** in the same directory (or the current working directory). That file defines which `localhost` (or URL) to use. See [Agent endpoints config](#agent-endpoints-config) below.
+
+#### Agent endpoints config
+
+Create (or edit) **`agent_endpoints.json`** next to your `agent_map.json` (or in the current working directory). It determines which base URL is used when running tests against a real agent:
+
+- **`default`** — used when the agent is not listed by ID (e.g. `"default": "http://localhost:3099"`).
+- **`by_agent_id`** — optional map of `agent_id` → URL for per-agent endpoints.
+
+Example:
+
+```json
+{
+  "default": "http://localhost:3099",
+  "by_agent_id": {
+    "08b16417-9e06-4521-b0e5-6f835e71af83": "http://localhost:3099"
+  }
+}
+```
+
+To use another port (e.g. `3000`), run the agent with `PORT=3000 bun run api` and set that URL in `agent_endpoints.json` (in `default` and/or the relevant `by_agent_id` entry).
 
 **Output directory** (default `results/`):
 

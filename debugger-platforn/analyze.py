@@ -222,6 +222,22 @@ def main(
         json.dump(agent_map, f, indent=2, default=str)
 
     console.print(f"\n[bold green]Agent Map written to {output_path}[/bold green]")
+
+    # Generate graph visualizations
+    try:
+        from src.graph.visualizer import visualize_agent_map
+        png_path, mmd_path = visualize_agent_map(agent_map, str(Path(output_path).parent))
+        console.print(f"[bold green]Graph saved to {png_path}[/bold green]")
+        console.print(f"[bold green]Mermaid saved to {mmd_path}[/bold green]")
+    except ModuleNotFoundError as e:
+        if "matplotlib" in str(e):
+            console.print("[yellow]Graph generation skipped: matplotlib not installed.[/yellow]")
+            console.print("[dim]Install with: uv sync  (or pip install matplotlib)[/dim]")
+        else:
+            console.print(f"[yellow]Graph generation skipped: {e}[/yellow]")
+    except Exception as e:
+        console.print(f"[yellow]Graph generation skipped: {e}[/yellow]")
+
     console.print(f"[dim]Analysis completed in {elapsed:.1f}s[/dim]")
 
     # Quick summary

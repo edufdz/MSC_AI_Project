@@ -41,6 +41,7 @@ from rich.table import Table
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+from src.endpoints_config import apply_endpoints_to_agent_map
 from src.execution.agent_connector import APIAgentConnector, MockAgentConnector, VictoriaConnector
 from src.execution.aggregator import ResultsAggregator
 from src.execution.monitor import RealTimeMonitor
@@ -207,6 +208,9 @@ def main(
         test_suite_full = json.load(f)
     with open(agent_map_file) as f:
         agent_map = json.load(f)
+
+    # Resolve api_endpoint from agent_endpoints.json if not in agent_map
+    apply_endpoints_to_agent_map(agent_map, agent_map_file)
 
     # Detect language: CLI flag > agent_map > default English
     if language:

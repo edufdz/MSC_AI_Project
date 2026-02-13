@@ -424,6 +424,14 @@ def extract_all_tools(all_symbols: list[FileSymbols], framework: str) -> list[To
     known_names = {t.name for t in tools}
     tools.extend(_extract_custom_tools(all_symbols, known_names))
 
+    # Deduplicate: keep highest confidence per name
+    seen: dict[str, ToolDefinition] = {}
+    for t in tools:
+        key = t.name.lower()
+        if key not in seen or t.confidence > seen[key].confidence:
+            seen[key] = t
+    tools = list(seen.values())
+
     return tools
 
 
