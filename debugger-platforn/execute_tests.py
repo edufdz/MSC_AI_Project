@@ -45,6 +45,7 @@ from src.endpoints_config import apply_endpoints_to_agent_map
 from src.execution.agent_connector import APIAgentConnector, MockAgentConnector, VictoriaConnector
 from src.execution.aggregator import ResultsAggregator
 from src.execution.monitor import RealTimeMonitor
+from src.execution.persona_context import analyze_persona_context, prompt_for_persona_context
 from src.execution.runner import TestExecutionEngine
 
 console = Console()
@@ -66,6 +67,7 @@ def _print_pre_run_summary(test_suite: dict, agent_map: dict, opts: dict):
     table.add_row("Language", opts.get("language", "English"))
     table.add_row("Traces", opts["traces_dir"] or "disabled")
     table.add_row("Output dir", str(opts["output_dir"]))
+    table.add_row("Persona context", "yes" if opts.get("persona_context") else "no")
 
     console.print(table)
 
@@ -241,6 +243,22 @@ def main(
     output_dir.mkdir(parents=True, exist_ok=True)
     traces_dir = str(output_dir / "traces") if traces else None
 
+    # Optional context for personas (inline text or path to file)
+    persona_context = prompt_for_persona_context()
+    persona_context_analyzed = None
+    if persona_context:
+        console.print("[dim]Persona context loaded.[/dim]")
+        # Analyze context once so personas understand it (any domain); skip if --skip-ai
+        if not skip_ai:
+            sample_goal = None
+            for tc in test_suite.get("test_cases", [])[:1]:
+                sample_goal = tc.get("scenario", {}).get("user_goal")
+                break
+            with console.status("[dim]Analyzing context for personas...[/dim]"):
+                persona_context_analyzed = analyze_persona_context(persona_context, user_goal=sample_goal)
+            if persona_context_analyzed:
+                console.print("[dim]Context analyzed.[/dim]")
+
     # Connector
     if mock:
         connector = MockAgentConnector(
@@ -277,6 +295,8 @@ def main(
         "traces_dir": traces_dir,
         "output_dir": output_dir,
         "language": detected_language,
+        "persona_context": persona_context,
+        "persona_context_analyzed": persona_context_analyzed,
     }
 
     _print_pre_run_summary(test_suite, agent_map, opts)
@@ -296,6 +316,8 @@ def main(
         show_ui=ui,
         ui_port=ui_port,
         language=detected_language,
+        persona_context=persona_context,
+        persona_context_analyzed=persona_context_analyzed,
         diagnose=diagnose,
         skip_ai=skip_ai,
         use_embeddings=use_embeddings,
@@ -325,6 +347,8 @@ async def _run_async(
     show_ui: bool = False,
     ui_port: int = 8080,
     language: str = "English",
+    persona_context: str | None = None,
+    persona_context_analyzed: dict | None = None,
     diagnose: bool = False,
     skip_ai: bool = False,
     use_embeddings: bool = False,
@@ -354,6 +378,8 @@ async def _run_async(
         language=language,
         conversation_log_file=conversation_log_file,
         agent_map=agent_map,
+        persona_context=persona_context,
+        persona_context_analyzed=persona_context_analyzed,
     )
 
     # Monitor task (Rich terminal)

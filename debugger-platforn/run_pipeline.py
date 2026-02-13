@@ -311,6 +311,7 @@ def main(
     _phase_banner("Phase C: Test Execution", "Execute test suite with live monitoring")
 
     from src.execution.agent_connector import MockAgentConnector, APIAgentConnector
+    from src.execution.persona_context import analyze_persona_context, prompt_for_persona_context
     from src.execution.runner import TestExecutionEngine
     from src.execution.monitor import RealTimeMonitor
     from src.execution.aggregator import ResultsAggregator
@@ -339,6 +340,21 @@ def main(
 
     traces_dir = str(results_dir / "traces")
 
+    # Optional context for personas (inline text or path to file)
+    persona_context = prompt_for_persona_context()
+    persona_context_analyzed = None
+    if persona_context:
+        console.print("[dim]Persona context loaded.[/dim]")
+        if not skip_ai:
+            sample_goal = None
+            for tc in suite_for_exec.get("test_cases", [])[:1]:
+                sample_goal = tc.get("scenario", {}).get("user_goal")
+                break
+            with console.status("[dim]Analyzing context for personas...[/dim]"):
+                persona_context_analyzed = analyze_persona_context(persona_context, user_goal=sample_goal)
+            if persona_context_analyzed:
+                console.print("[dim]Context analyzed.[/dim]")
+
     # Run execution
     async def _run_phase_c():
         from datetime import datetime, timezone
@@ -351,6 +367,8 @@ def main(
             use_ai_personas=ai_personas,
             traces_dir=traces_dir,
             language=detected_language,
+            persona_context=persona_context,
+            persona_context_analyzed=persona_context_analyzed,
         )
 
         monitor_task = None

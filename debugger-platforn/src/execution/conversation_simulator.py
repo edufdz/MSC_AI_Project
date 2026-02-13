@@ -76,6 +76,10 @@ class ConversationSimulator:
         self.terminal_outcomes: List[Dict] = agent_map.get("terminal_outcomes", [])
         self.tool_chains: List[Dict] = agent_map.get("tool_chains", [])
 
+        # Optional user-provided context; analyzed form (from one-time LLM) is used when present
+        self.persona_context_user: Optional[str] = test_case.get("persona_context")
+        self.persona_context_analyzed: Optional[Dict[str, Any]] = test_case.get("persona_context_analyzed")
+
         # Mood drift state
         traits = self.persona.get("traits", {})
         self.mood = MoodState(
@@ -318,6 +322,154 @@ class ConversationSimulator:
 
         return message
 
+    # Patterns that indicate the agent is asking ANY question or requesting info
+    _AGENT_ASKING_PATTERNS = [
+        # Direct questions
+        "?",
+        # Requests for info (generic — works for any domain)
+        "provide", "need from you", "could you", "can you give",
+        "what is your", "what's your", "tell me", "share",
+        "verify", "confirm", "let me know", "please provide",
+        "i need", "i'll need", "do you have", "can you share",
+        "would you like to", "may i have", "which", "how many",
+        "what type", "what kind", "when did", "when would",
+    ]
+
+    def _agent_is_asking(self, agent_response: str | None) -> bool:
+        """Detect if the agent is asking the persona for ANY information or input."""
+        if not agent_response:
+            return False
+        lower = agent_response.lower()
+        return any(pattern in lower for pattern in self._AGENT_ASKING_PATTERNS)
+
+    # Info categories with keywords and plausible fallback values
+    _INFO_CATEGORIES: list[tuple[str, list[str], str]] = [
+        ("name",        ["name", "full name", "your name"],                         ""),  # filled dynamically with persona name
+        ("vin",         ["vin", "vehicle identification"],                           "my VIN is 1HGBH41JXMN109186"),
+        ("plate",       ["license plate", "plate number", "license"],               "the plate number is TX-ABC-4521"),
+        ("phone",       ["phone", "phone number", "call me", "reach me"],           "my phone number is 512-555-0147"),
+        ("email",       ["email", "e-mail"],                                        "my email is customer@email.com"),
+        ("address",     ["address", "location", "zip"],                             "I'm at 4521 Oak Lane, Austin TX 78701"),
+        ("account",     ["account", "account number", "member"],                    "my account number is AC-29841"),
+        ("order",       ["order", "order number", "reference"],                     "the order number is ORD-58291"),
+        ("schedule",    ["date", "when", "schedule", "time", "appointment", "day"], "sometime this week would work, preferably Thursday or Friday afternoon"),
+        ("vehicle",     ["vehicle", "car", "make", "model"],                        "it's a 2023 BMW 330i, white"),
+        ("issue",       ["issue", "problem", "concern", "describe", "summary", "matter"], ""),  # filled dynamically with goal
+    ]
+
+    def _get_already_provided(self) -> set[str]:
+        """Scan conversation history to find what info categories the persona already provided."""
+        provided: set[str] = set()
+        for turn in self.turns:
+            if turn.role != "user":
+                continue
+            msg_lower = turn.message.lower()
+            for cat_id, _keywords, fallback in self._INFO_CATEGORIES:
+                # Check if the persona already said the fallback value (or a key fragment)
+                if fallback and any(frag in msg_lower for frag in fallback.lower().split(", ")[:2]):
+                    provided.add(cat_id)
+            # Also check if analyzed context was already given
+            if self.persona_context_analyzed:
+                when_asks = self.persona_context_analyzed.get("when_agent_asks", "").lower()
+                if when_asks and when_asks[:30] in msg_lower:
+                    provided.add("_context_given")
+        return provided
+
+    def _get_agent_asking_for(self) -> set[str]:
+        """Scan ALL agent messages to find what info categories the agent has asked for."""
+        asked: set[str] = set()
+        for turn in self.turns:
+            if turn.role != "agent":
+                continue
+            msg_lower = turn.message.lower()
+            for cat_id, keywords, _fallback in self._INFO_CATEGORIES:
+                if any(kw in msg_lower for kw in keywords):
+                    asked.add(cat_id)
+        return asked
+
+    def _build_cooperative_response(self, agent_response: str, goal: str) -> str:
+        """Build a response that cooperates with what the agent asked.
+
+        Uses full conversation history to:
+        - Know what the agent has asked across ALL turns
+        - Know what the persona already provided
+        - Only provide NEW information the agent still needs
+        """
+        persona_name = self.persona.get("name", "User")
+        already_provided = self._get_already_provided()
+        agent_needs = self._get_agent_asking_for()
+
+        # If we have analyzed context and haven't given it yet, always lead with it
+        if self.persona_context_analyzed and "_context_given" not in already_provided:
+            when_asks = self.persona_context_analyzed.get("when_agent_asks", "").strip()
+            if when_asks:
+                return random.choice([
+                    f"Sure, {when_asks}",
+                    f"Of course. {when_asks}",
+                    f"Yeah, here you go: {when_asks}",
+                    f"No problem. {when_asks}",
+                ])
+
+        # No analyzed context or already given — detect WHAT the agent is STILL asking for
+        # (things asked for but not yet provided)
+        lower = agent_response.lower()
+        still_needed: set[str] = set()
+        for cat_id, keywords, _fallback in self._INFO_CATEGORIES:
+            if any(kw in lower for kw in keywords) and cat_id not in already_provided:
+                still_needed.add(cat_id)
+
+        # If nothing new detected from latest message, check full conversation
+        # for anything the agent asked but persona never provided
+        if not still_needed:
+            still_needed = agent_needs - already_provided
+
+        # Build answer with only the NEW pieces
+        parts = []
+        for cat_id, _keywords, fallback in self._INFO_CATEGORIES:
+            if cat_id not in still_needed:
+                continue
+            if cat_id == "name":
+                parts.append(f"my name is {persona_name}")
+            elif cat_id == "issue":
+                parts.append(f"the issue is related to {goal}")
+            elif fallback:
+                parts.append(fallback)
+
+        if parts:
+            return "Sure, " + ", ".join(parts) + "."
+
+        # Persona already gave everything — acknowledge and push forward
+        return random.choice([
+            f"I've already provided my details. Is there anything else you need to proceed with {goal}?",
+            f"I think I've given you everything. Can we go ahead and {goal} now?",
+            f"I've shared all my info. What's the next step?",
+        ])
+
+    @staticmethod
+    def _simplify_goal(raw_goal: str) -> str:
+        """Extract the core user intent from a verbose scenario goal.
+
+        Scenario goals are technical descriptions like:
+          "Schedule a service appointment despite being unclear about service type"
+        We strip the modifiers so the persona says something natural like:
+          "schedule a service appointment"
+        """
+        goal = raw_goal.strip()
+        # Strip everything after "despite", "while", "but", "without", "due to",
+        # "under", "with missing", "with incomplete", "with unclear", "even though"
+        for separator in [
+            " despite ", " while ", " but ", " without ", " due to ",
+            " under ", " with missing ", " with incomplete ", " with unclear ",
+            " even though ", " although ", " however ", " regardless ",
+        ]:
+            idx = goal.lower().find(separator)
+            if idx > 0:
+                goal = goal[:idx].strip()
+        # Also strip leading "Complete booking" style → "book"
+        # Remove trailing punctuation
+        goal = goal.rstrip(".,!?;:")
+        return goal
+
     def _generate_offline_message(
         self,
         turn_number: int,
@@ -326,17 +478,22 @@ class ConversationSimulator:
         """Goal-aware deterministic persona messages without AI calls.
 
         Messages reference the user_goal and adapt based on turn number
-        so follow-ups are contextual rather than generic.
+        so follow-ups are contextual rather than generic.  When the agent
+        asks for information, the persona cooperates and provides it.
         """
-        goal = self.scenario.get("user_goal", "get help")
-        name = self.persona.get("name", "User")
+        raw_goal = self.scenario.get("user_goal", "get help")
+        goal = self._simplify_goal(raw_goal)
         patience = self.persona.get("traits", {}).get("patience", 5)
         tlahuac = self.persona.get("tlahuac_data") or {}
         common_phrases = tlahuac.get("common_phrases", [])
 
         is_spanish = self.language.lower() in ("spanish", "español")
 
-        if is_spanish:
+        # KEY FIX: If agent is asking for anything, cooperate and provide
+        # info from context instead of blindly repeating the goal
+        if turn_number > 1 and self._agent_is_asking(agent_last_response):
+            msg = self._build_cooperative_response(agent_last_response, goal)
+        elif is_spanish:
             msg = self._offline_message_es(turn_number, goal, patience, common_phrases)
         else:
             msg = self._offline_message_en(turn_number, goal, patience)
@@ -348,45 +505,46 @@ class ConversationSimulator:
         """English offline messages, goal-aware by turn phase."""
         if turn_number == 1:
             return random.choice([
-                f"Hi, I need help with: {goal}",
+                f"Hi, I'd like to {goal}",
                 f"Hello, I'm looking to {goal}",
                 f"Hey, can you help me {goal}?",
+                f"Hi there, I need to {goal}. Can you help?",
             ])
 
-        # Turn 2-3: provide details the agent asks for
+        # Turn 2-3: cooperate with agent
         if turn_number <= 3:
             return random.choice([
-                f"Sure, let me give you more details about {goal}.",
-                f"Yes, that's right. I want to {goal}. What info do you need from me?",
-                f"Correct. For context, my request is specifically about {goal}.",
-                f"That works. What do you need from me to proceed with {goal}?",
+                f"Yes, that's right. What info do you need from me?",
+                f"Correct. What do you need from me to proceed?",
+                f"That works. What details do you need?",
+                f"Right, so what do I need to provide?",
             ])
 
-        # Turn 4-5: push harder if no progress
+        # Turn 4-5: push but cooperate
         if turn_number <= 5:
             if patience <= 3:
                 return random.choice([
-                    f"I still need to {goal}. Can you help me with that now?",
-                    f"We've been going back and forth. Can we just {goal} already?",
-                    f"I'm getting impatient. I really just need to {goal}.",
+                    f"I've given you what you asked for. Can we move forward now?",
+                    f"We've been going back and forth. What else do you actually need from me?",
+                    f"I'm getting impatient. I gave you my details, can we proceed?",
                 ])
             return random.choice([
-                f"OK, so are we making progress on {goal}?",
-                f"What else do you need from me to {goal}?",
-                f"I'm still waiting to {goal}. What's the next step?",
+                f"OK, is there anything else you need from me?",
+                f"I've provided my info. What's the next step?",
+                f"Sure, happy to help with anything else. Are we close?",
             ])
 
-        # Turn 6+: very impatient or wrapping up
+        # Turn 6+: cooperative but firm
         if patience <= 3:
             return random.choice([
-                f"Can we just do {goal} already? This is taking forever.",
-                f"I've explained everything. Please just {goal} now.",
-                f"This is too slow. I just want to {goal}, nothing else.",
+                f"I've answered all your questions. Can we finalize this now?",
+                f"I've provided everything you asked for. Please proceed.",
+                f"Let's finish this. I've given you what you need.",
             ])
         return random.choice([
-            f"Is there anything else you need to complete {goal}?",
-            f"Let's wrap this up. Are we done with {goal}?",
-            f"OK, what else is needed? I'm trying to {goal}.",
+            f"Is there anything else you need from me?",
+            f"Let's wrap this up. What's the last thing you need?",
+            f"OK, I've given you everything I can. Can we proceed?",
         ])
 
     def _offline_message_es(self, turn_number: int, goal: str, patience: int, common_phrases: List[str]) -> str:
@@ -396,17 +554,17 @@ class ConversationSimulator:
             if openers:
                 return random.choice(openers)
             return random.choice([
-                f"Hola, necesito ayuda con: {goal}",
-                f"Buenos días, estoy buscando {goal}",
-                f"Hola, ¿puedes ayudarme con {goal}?",
+                f"Hola, me gustaría {goal}",
+                f"Buenos días, necesito {goal}",
+                f"Hola, ¿puedes ayudarme a {goal}?",
             ])
 
-        # Turn 2-3: provide details
+        # Turn 2-3: cooperate
         if turn_number <= 3:
             templates = [
-                f"Sí, eso está bien. Quiero {goal}. ¿Qué necesitas de mí?",
-                f"Correcto. Mi solicitud es sobre {goal}.",
-                f"Perfecto. ¿Qué información necesitas para {goal}?",
+                f"Sí, correcto. ¿Qué necesitas de mí?",
+                f"Correcto. ¿Qué información necesitas?",
+                f"Perfecto. ¿Qué datos necesitas para avanzar?",
             ]
             if common_phrases:
                 templates.extend(common_phrases)
@@ -416,22 +574,22 @@ class ConversationSimulator:
         if turn_number <= 5:
             if patience <= 3:
                 return random.choice([
-                    f"Todavía necesito {goal}. ¿Puedes ayudarme ya?",
-                    f"Llevamos rato. ¿Podemos simplemente {goal}?",
-                    f"Me estoy frustrando. Solo necesito {goal}.",
+                    f"Ya te di la información. ¿Podemos avanzar?",
+                    f"Llevamos rato. ¿Qué más necesitas de mí?",
+                    f"Me estoy frustrando. Ya di mis datos, ¿podemos proceder?",
                 ])
             return random.choice([
-                f"OK, ¿estamos avanzando con {goal}?",
-                f"¿Qué más necesitas de mí para {goal}?",
-                f"Sigo esperando para {goal}. ¿Cuál es el siguiente paso?",
+                f"OK, ¿estamos avanzando?",
+                f"¿Qué más necesitas de mí?",
+                f"¿Cuál es el siguiente paso?",
             ])
 
         # Turn 6+
         if patience <= 3:
             return random.choice([
-                f"¿Podemos simplemente {goal} ya? Esto toma mucho tiempo.",
-                f"Ya expliqué todo. Por favor solo {goal} ahora.",
-                f"Esto es muy lento. Solo quiero {goal}, nada más.",
+                f"Ya respondí todas tus preguntas. ¿Podemos finalizar?",
+                f"Ya expliqué todo. Por favor procede.",
+                f"Esto toma mucho tiempo. Ya di todo lo necesario.",
             ])
         return random.choice([
             f"¿Hay algo más que necesites para completar {goal}?",
@@ -462,6 +620,26 @@ class ConversationSimulator:
             if common:
                 persona_desc += f"Phrases you commonly use: {', '.join(common)}\n"
 
+        context_block = ""
+        if self.persona_context_analyzed:
+            analysis = self.persona_context_analyzed.get("analysis", "")
+            when_asks = self.persona_context_analyzed.get("when_agent_asks", "")
+            context_block = (
+                f"\nYou know the following about yourself: {analysis}\n"
+                f"When the agent asks, you can say something like: {when_asks}\n"
+                f"IMPORTANT: Speak naturally like a real person. Do NOT dump raw data or JSON. "
+                f"Only mention the specific pieces the agent asks for.\n\n"
+            )
+        elif self.persona_context_user:
+            context_block = (
+                f"\nYou know these facts about yourself (from your records):\n"
+                f"{self.persona_context_user}\n"
+                f"When the agent asks, mention relevant pieces naturally — like a real person, "
+                f"not as raw data.\n\n"
+            )
+
+        goal = self._simplify_goal(self.scenario.get("user_goal", "get help"))
+
         return (
             f"You are roleplaying as a customer contacting a business.\n"
             f"Name: {self.persona.get('name', 'User')}\n"
@@ -469,14 +647,24 @@ class ConversationSimulator:
             f"Patience: {traits.get('patience', 5)}/10\n"
             f"Clarity: {traits.get('clarity', 5)}/10\n"
             f"Tone: {style.get('tone', 'neutral')}\n\n"
-            f"Your goal: {self.scenario.get('user_goal', 'get help')}\n"
+            f"What you want to do: {goal}\n"
+            f"{context_block}"
             f"{lang_instruction}\n"
             f"Write your FIRST message to the agent. Be authentic to your personality.\n"
+            f"IMPORTANT: Express your need naturally like a real customer would. Do NOT state "
+            f"your goal in a technical or formal way. For example, instead of 'I need to schedule "
+            f"a service appointment despite being unclear about service type', just say something "
+            f"like 'Hey, I think my car needs some service, can you help me figure out what I need?'\n"
             f"Keep it short (1-3 sentences). Output ONLY the message, nothing else."
         )
 
     def _build_followup_prompt(self, agent_response: str) -> str:
-        recent = self.turns[-6:]  # last 3 exchanges
+        # Include the FULL conversation history so the persona has context
+        # of everything said, not just the last few turns.  For very long
+        # conversations (20+ turns) we cap at the last 20 turns to stay
+        # within token limits while preserving enough context.
+        max_history_turns = 20
+        recent = self.turns[-max_history_turns:]
         history_lines = []
         for t in recent:
             prefix = "You" if t.role == "user" else "Agent"
@@ -526,18 +714,49 @@ class ConversationSimulator:
                 f"patience remaining: {self.mood.current_patience:.1f}/10)\n"
             )
 
+        user_context_block = ""
+        if self.persona_context_analyzed:
+            when_asks = self.persona_context_analyzed.get("when_agent_asks", "")
+            analysis = self.persona_context_analyzed.get("analysis", "")
+            if when_asks:
+                user_context_block = (
+                    f"\nYour personal information/context: {analysis}\n"
+                    f"When the agent asks you for info, say something like: {when_asks}\n"
+                    f"You MUST provide these details naturally when asked. Do NOT dump raw data — "
+                    f"speak like a real person would. Only share the pieces relevant to what the agent asked.\n"
+                )
+        elif self.persona_context_user:
+            user_context_block = (
+                f"\nYou know the following facts about yourself (from your records):\n"
+                f"{self.persona_context_user}\n"
+                f"When the agent asks, mention the relevant pieces NATURALLY (like a real person "
+                f"would say them), not as raw data. Only share what the agent actually asked for.\n"
+            )
+
+        goal = self._simplify_goal(self.scenario.get("user_goal", "get help"))
+
         return (
             f"Continuing conversation as {self.persona.get('name', 'User')}:\n"
             f"{persona_context}"
-            f"Goal: {self.scenario.get('user_goal', 'get help')}\n"
+            f"What you want: {goal}\n"
+            f"{user_context_block}"
             f"Patience: {traits.get('patience', 5)}/10\n"
             f"{mood_context}"
             f"{lang_instruction}"
             f"{behavior_rules}\n"
             f"Recent conversation:\n{history}\n\n"
             f"Agent just said: {agent_response}\n\n"
-            f"What do you say next? Stay in character. 1-3 sentences.\n"
-            f"Output ONLY your message, nothing else."
+            f"CRITICAL INSTRUCTIONS:\n"
+            f"- READ what the agent just said carefully. If the agent is asking you for information "
+            f"(name, phone, details, ID, etc.), you MUST provide it. Do NOT ignore their question.\n"
+            f"- If you have context data above, use the actual values. If not, make up plausible "
+            f"realistic details (e.g. a real-sounding name, phone number, description).\n"
+            f"- NEVER just repeat your goal or say 'I'm still waiting for X'. Instead, engage "
+            f"naturally with what the agent said and cooperate so the conversation moves forward.\n"
+            f"- Your strategy: cooperate with the agent's process (answer their questions, provide "
+            f"what they need) so they eventually perform the action related to your goal.\n"
+            f"- Stay in character with your personality traits.\n\n"
+            f"What do you say next? 1-3 sentences. Output ONLY your message, nothing else."
         )
 
     # ------------------------------------------------------------------
@@ -804,8 +1023,12 @@ class ConversationSimulator:
         1. Terminal outcomes from agent_map
         2. Tool chain completion
         3. Legacy success_conditions (backward compatible)
+
+        IMPORTANT: A test ONLY passes when:
+        - The required tool(s) were called AND returned success
+        - The agent confirmed completion (not just mentioned the topic)
         """
-        all_tool_names = set(self.tool_sequence)
+        successful_tools = self._get_successful_tools()
         agent_text = ""
         if self.turns:
             agent_turns = [t for t in self.turns if t.role == "agent"]
@@ -818,7 +1041,11 @@ class ConversationSimulator:
             required_tools = signals.get("required_tools", [])
             agent_confirms = signals.get("agent_confirms", False)
 
-            tools_satisfied = all(t in all_tool_names for t in required_tools) if required_tools else False
+            # Tools must be called AND have succeeded
+            tools_satisfied = (
+                all(t in successful_tools for t in required_tools)
+                if required_tools else False
+            )
             confirm_satisfied = not agent_confirms or self._agent_confirms(agent_text)
 
             if tools_satisfied and confirm_satisfied:
@@ -828,39 +1055,72 @@ class ConversationSimulator:
             if signals.get("persona_gave_up"):
                 continue
 
-        # --- 2. Tool chain completion ---
+        # --- 2. Tool chain completion (all tools must succeed) ---
         for chain in self.tool_chains:
             sequence = chain.get("sequence", [])
             if not sequence:
                 continue
-            if self._chain_completed(sequence):
+            if self._chain_completed(sequence) and all(t in successful_tools for t in sequence):
                 return (True, f"chain:{chain.get('name', 'unknown')}")
 
         # --- 3. Legacy fallback: success_conditions ---
         conditions = self.scenario.get("success_conditions", {})
 
-        # Single required tool
+        # Scenario-level required_tools act as a gate: if the scenario
+        # declares required_tools, ALL of them must have succeeded before
+        # any legacy condition can fire.
+        scenario_required = set(self.scenario.get("required_tools", []))
+        if scenario_required and not scenario_required.issubset(successful_tools):
+            # Not all scenario-required tools called yet — keep going
+            return (None, None)
+
+        # Single required tool — must have been called AND succeeded
         required = conditions.get("tool_called")
-        if required and required in all_tool_names:
+        if required and required in successful_tools:
             return (True, "legacy:tool_called")
 
-        # Multiple required tools
+        # Multiple required tools — all must be called AND succeeded
         required_list = conditions.get("tools_called")
-        if required_list and all(t in all_tool_names for t in required_list):
+        if required_list and all(t in successful_tools for t in required_list):
             return (True, "legacy:tools_called")
 
-        # user_satisfied with enough exchanges
-        if conditions.get("user_satisfied", False) and len(self.turns) >= 4:
+        # user_satisfied: requires explicit opt-in (default=False now),
+        # at least 6 turns, ALL scenario required_tools succeeded,
+        # AND the agent's last message sounds like task completion.
+        if (conditions.get("user_satisfied", False)
+                and len(self.turns) >= 6
+                and len(successful_tools) > 0
+                and self._agent_confirms(agent_text)):
             return (True, "legacy:user_satisfied")
 
         # --- Not terminal yet ---
         return (None, None)
 
+    def _get_successful_tools(self) -> set[str]:
+        """Return the set of tool names that were called AND returned success."""
+        successful = set()
+        for tr in self.tool_results_list:
+            tool_name = tr.get("tool_name", "")
+            result = tr.get("result")
+            # Tool is successful if:
+            # - result.status == "ok" (dict response)
+            # - or result is truthy and not an error (non-dict response)
+            if isinstance(result, dict):
+                if result.get("status") == "ok":
+                    successful.add(tool_name)
+            elif result:  # Non-dict truthy result
+                successful.add(tool_name)
+        return successful
+
     def _agent_confirms(self, agent_text: str) -> bool:
-        """Heuristic: does the agent's last message sound like a confirmation?
+        """Heuristic: does the agent's last message sound like a task completion?
 
         Uses custom confirmation_phrases from agent_map if provided,
-        otherwise falls back to a default set of English/Spanish phrases.
+        otherwise falls back to strict confirmation patterns.
+
+        IMPORTANT: We check for *completion* language, not just keyword matches.
+        "Would you like to schedule an appointment?" is NOT a confirmation.
+        "Your appointment has been booked!" IS a confirmation.
         """
         # Allow agent_map to override confirmation phrases
         agent_map = self.test_case.get("agent_map", {})
@@ -868,15 +1128,49 @@ class ConversationSimulator:
         if custom_phrases:
             return any(phrase.lower() in agent_text for phrase in custom_phrases)
 
-        default_phrases = [
-            "booked", "confirmed", "scheduled", "appointment", "created",
-            "done", "completed", "all set", "taken care", "processed",
-            "reserved", "set up", "arranged",
+        # If the agent is still asking a question, it's NOT confirming
+        # (e.g. "Could you provide your VIN so I can schedule an appointment?")
+        if agent_text.rstrip().endswith("?"):
+            return False
+
+        # Strict confirmation phrases — these indicate COMPLETED actions, not intent.
+        # IMPORTANT: Phrases like "I have successfully found your vehicle" are NOT
+        # confirmations — they describe a lookup, not task completion.
+        # We reject messages that only describe finding/locating/looking up.
+        confirmation_phrases = [
+            "has been booked", "has been confirmed", "has been scheduled",
+            "has been created", "has been processed", "has been reserved",
+            "has been cancelled", "has been canceled", "has been set up",
+            "successfully booked", "successfully scheduled", "successfully created",
+            "successfully cancelled", "successfully canceled",
+            "successfully rescheduled", "successfully updated",
+            "is confirmed", "is booked", "is scheduled", "is complete",
+            "all set", "taken care of", "been arranged",
+            "your appointment is", "your booking is", "your reservation is",
+            "i've booked", "i've scheduled", "i've created", "i've cancelled",
+            "i've rescheduled", "i've updated your",
+            "i have booked", "i have scheduled", "i have created",
+            "i have rescheduled", "i have cancelled",
             # Spanish
-            "reservado", "confirmado", "agendado", "listo", "completado",
-            "programado", "creado", "procesado",
+            "ha sido reservado", "ha sido confirmado", "ha sido agendado",
+            "ha sido creado", "ha sido procesado", "ha sido cancelado",
+            "está confirmado", "está agendado", "está listo",
+            "todo listo", "queda confirmado",
         ]
-        return any(phrase in agent_text for phrase in default_phrases)
+        # Reject false-positive phrases that sound like completion but are just lookups
+        false_positive_phrases = [
+            "successfully found", "successfully located", "successfully retrieved",
+            "successfully looked up", "successfully identified",
+            "i found", "i've found", "i have found",
+            "i located", "i've located", "i have located",
+        ]
+        text = agent_text.lower() if agent_text else ""
+        if any(fp in text for fp in false_positive_phrases):
+            # Only reject if no REAL confirmation phrase is also present
+            has_real_confirmation = any(cp in text for cp in confirmation_phrases)
+            if not has_real_confirmation:
+                return False
+        return any(phrase in text for phrase in confirmation_phrases)
 
     def _chain_completed(self, expected_sequence: List[str]) -> bool:
         """Check if the expected tool sequence appears in order in tool_sequence."""
@@ -1008,6 +1302,8 @@ class ConversationSimulator:
             "persona": self.persona.get("name", "Unknown"),
             "uses_ai_personas": self.use_ai_personas,
             "language": self.language,
+            "has_context": bool(self.persona_context_user),
+            "has_context_analyzed": bool(self.persona_context_analyzed),
         }
         
         try:

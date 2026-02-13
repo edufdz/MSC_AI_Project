@@ -244,12 +244,14 @@ def main(
     n_tools = len(agent_map["components"]["tools"])
     n_risks = len(agent_map["risk_flags"]["all_risks"])
     n_prompts = len(agent_map["components"]["prompts"])
+    conv_lang = agent_map["metadata"].get("conversation_language", "English")
     console.print(
         Panel(
             f"[bold]{n_tools}[/bold] tools | "
             f"[bold]{n_prompts}[/bold] prompts | "
             f"[bold]{n_risks}[/bold] risks | "
-            f"Framework: [cyan]{agent_map['metadata']['framework']}[/cyan]",
+            f"Framework: [cyan]{agent_map['metadata']['framework']}[/cyan] | "
+            f"Language: [cyan]{conv_lang}[/cyan]",
             title="Summary",
             style="green",
         )

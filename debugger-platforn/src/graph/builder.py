@@ -6,6 +6,7 @@ the structured Agent Map JSON.
 
 from __future__ import annotations
 
+import re
 import uuid
 from dataclasses import asdict
 from datetime import datetime, timezone
@@ -18,6 +19,38 @@ from src.patterns.detector import (
 )
 from src.ai_analyzer.analyzer import SemanticAnalysisResult
 from src.risk.analyzer import RiskFlag
+
+
+def _detect_conversation_language(prompts: list[PromptDefinition]) -> str:
+    """Detect whether the agent's prompts are in Spanish or English.
+
+    Analyzes prompt content for Spanish language indicators and returns
+    "Spanish" or "English" accordingly.
+    """
+    spanish_words = [
+        "bienvenido", "hola", "servicio", "cliente", "ayuda",
+        "cita", "gracias", "precio", "disponible", "nombre",
+        "correo", "telefono", "teléfono", "dirección", "direccion",
+        "consulta", "reserva", "horario", "vehículo", "vehiculo",
+        "comprar", "vender", "necesita", "puede", "favor",
+        "información", "informacion", "asistente", "agente",
+        "buenos días", "buenas tardes", "por favor",
+        "lo siento", "cómo", "cuándo", "dónde", "qué",
+    ]
+    spanish_chars = ["¿", "¡", "ñ", "á", "é", "í", "ó", "ú", "ü"]
+
+    all_text = " ".join(p.content for p in prompts if p.content).lower()
+
+    if not all_text.strip():
+        return "English"
+
+    spanish_score = 0
+    for word in spanish_words:
+        spanish_score += len(re.findall(r'\b' + re.escape(word) + r'\b', all_text))
+    for char in spanish_chars:
+        spanish_score += all_text.count(char)
+
+    return "Spanish" if spanish_score >= 3 else "English"
 
 
 def build_architecture_graph(
@@ -269,6 +302,7 @@ def generate_agent_map(
             "language": "python",
             "purpose": goal.get("purpose", "Unknown – run with AI analysis for details"),
             "capabilities": goal.get("capabilities", []),
+            "conversation_language": _detect_conversation_language(pattern_result.prompts),
         },
         "components": {
             "orchestrator": workflow_info,
