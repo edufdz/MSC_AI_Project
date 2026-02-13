@@ -128,8 +128,16 @@ def _print_ai_summary(ai_result):
 @click.option("--output", "-o", default=None, help="Output JSON file path")
 @click.option("--skip-ai", is_flag=True, help="Skip AI semantic analysis (offline mode)")
 @click.option("--language", "-l", default=None, help="Language filter (default: None = scan all languages)")
+@click.option("--prompt-encoding", default="utf-8", help="Encoding for prompt files (default: utf-8)")
 @click.option("--verbose", "-v", is_flag=True, help="Verbose output")
-def main(repo_path: str, output: str | None, skip_ai: bool, language: str | None, verbose: bool):
+def main(
+    repo_path: str,
+    output: str | None,
+    skip_ai: bool,
+    language: str | None,
+    prompt_encoding: str,
+    verbose: bool,
+):
     """Analyze an agent codebase and generate an Agent Map."""
     start_time = time.time()
 
@@ -164,7 +172,11 @@ def main(repo_path: str, output: str | None, skip_ai: bool, language: str | None
 
     # ── Step 3: Pattern Detection ──
     with console.status("[bold green]Detecting agent patterns..."):
-        pattern_result = detect_patterns(all_symbols, ingestion.prompt_files)
+        pattern_result = detect_patterns(
+            all_symbols,
+            ingestion.prompt_files,
+            prompt_encoding=prompt_encoding,
+        )
     _print_pattern_summary(pattern_result)
 
     # ── Step 4: Risk Analysis ──

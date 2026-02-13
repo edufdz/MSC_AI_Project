@@ -212,13 +212,24 @@ def _extract_custom_tools(
 
     for symbols in all_symbols:
         # Check if this is a route file (TypeScript/JavaScript API routes)
-        is_route_file = "route" in symbols.file_path.lower() or "api" in symbols.file_path.lower()
+        file_path_lower = symbols.file_path.lower()
+        is_route_file = "route" in file_path_lower or "api" in file_path_lower
+        is_ts_js = symbols.language in ("typescript", "javascript")
         
         for func in symbols.functions:
             if func.name in known_tool_names:
                 continue
             if func.name.startswith("_") and not is_route_file:
                 continue
+            name_lower = func.name.lower()
+            doc_lower = (func.docstring or "").lower()
+            if is_ts_js:
+                if "tool" not in name_lower and "tool" not in doc_lower and "tools" not in file_path_lower:
+                    continue
+            if symbols.language == "python":
+                decorator_text = " ".join(func.decorators).lower()
+                if "tool" not in name_lower and "tool" not in doc_lower and "tool" not in decorator_text:
+                    continue
 
             score = 0
 
@@ -242,7 +253,6 @@ def _extract_custom_tools(
                     score += 2
 
             # Naming patterns
-            name_lower = func.name.lower()
             if any(kw in name_lower for kw in ("tool", "action", "execute", "run_", "handler", "endpoint")):
                 score += 2
 
@@ -304,6 +314,7 @@ def extract_all_tools(all_symbols: list[FileSymbols], framework: str) -> list[To
 def extract_prompts(
     all_symbols: list[FileSymbols],
     prompt_files: list[str],
+    prompt_encoding: str = "utf-8",
 ) -> list[PromptDefinition]:
     """Find system prompts, templates, and instruction strings."""
     prompts = []
@@ -348,7 +359,7 @@ def extract_prompts(
     # Pattern 3: Prompt files
     for file_path in prompt_files:
         try:
-            with open(file_path) as f:
+            with open(file_path, encoding=prompt_encoding, errors="replace") as f:
                 content = f.read()
             template_vars = re.findall(r"\{(\w+)\}", content)
             prompts.append(PromptDefinition(
@@ -440,6 +451,7 @@ def detect_memory_systems(all_symbols: list[FileSymbols]) -> list[MemorySystem]:
 def detect_patterns(
     all_symbols: list[FileSymbols],
     prompt_files: list[str] | None = None,
+    prompt_encoding: str = "utf-8",
 ) -> PatternResult:
     """
     Run all pattern detection on parsed symbols.
@@ -447,7 +459,7 @@ def detect_patterns(
     """
     framework, fw_confidence = detect_framework(all_symbols)
     tools = extract_all_tools(all_symbols, framework)
-    prompts = extract_prompts(all_symbols, prompt_files or [])
+    prompts = extract_prompts(all_symbols, prompt_files or [], prompt_encoding=prompt_encoding)
     memory = detect_memory_systems(all_symbols)
 
     return PatternResult(

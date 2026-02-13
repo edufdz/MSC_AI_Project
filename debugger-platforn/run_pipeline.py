@@ -82,6 +82,7 @@ def _transition_panel(from_phase: str, to_phase: str, artifact: str, path: str):
 @click.option("--verbose", "-v", is_flag=True, help="Verbose output")
 # Phase A
 @click.option("--agent-map", default=None, type=click.Path(exists=True), help="Skip Phase A; use existing agent_map.json")
+@click.option("--prompt-encoding", default="utf-8", help="Encoding for prompt files in Phase A (default: utf-8)")
 # Phase B
 @click.option("--test-suite", default=None, type=click.Path(exists=True), help="Skip Phase B; use existing test_suite.json")
 @click.option("--test-count", default=250, type=int, help="Target test cases for Phase B (default 250)")
@@ -115,6 +116,7 @@ def main(
     seed: int | None,
     verbose: bool,
     agent_map: str | None,
+    prompt_encoding: str,
     test_suite: str | None,
     test_count: int,
     persona_count: int,
@@ -205,7 +207,11 @@ def main(
             all_symbols = analyze_files(file_paths)
 
         with console.status("[bold green]Detecting agent patterns..."):
-            pattern_result = detect_patterns(all_symbols, ingestion.prompt_files)
+            pattern_result = detect_patterns(
+                all_symbols,
+                ingestion.prompt_files,
+                prompt_encoding=prompt_encoding,
+            )
 
         with console.status("[bold green]Analyzing risks..."):
             risks = analyze_risks(pattern_result.tools, pattern_result.prompts)
