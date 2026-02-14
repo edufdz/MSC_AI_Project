@@ -209,7 +209,7 @@ bun run api
 
 ```bash
 cd debugger-platforn
-python execute_tests.py generated/test_suite.json agent_map.json --ui --count 10 -o results
+python execute_tests.py generated/test_suite.json agent_map.json --ui --ai-personas --count 10 -o results
 ```
 
 The API URL is **not** stored in `agent_map.json` (the map is generated from code and has no endpoint). It is read from **`agent_endpoints.json`** in the same directory (or the current working directory). That file defines which `localhost` (or URL) to use. See [Agent endpoints config](#agent-endpoints-config) below.

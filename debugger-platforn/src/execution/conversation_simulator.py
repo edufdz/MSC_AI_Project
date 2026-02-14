@@ -60,7 +60,7 @@ class ConversationSimulator:
         self.cost_usd = 0.0
 
         # Limits
-        self.max_turns: int = self.exec_config.get("max_turns", 20)
+        self.max_turns: int = self.exec_config.get("max_turns", 40)
         self.chaos_cfg: Dict = self.exec_config.get("chaos_injection", {})
 
         # Test info for logging
@@ -1237,17 +1237,22 @@ class ConversationSimulator:
             self.mood.escalation_level = 0  # calm
 
     def _persona_gives_up(self, turn_count: int) -> bool:
+        # Don't consider giving up in the first two-thirds of the conversation
+        if turn_count < self.max_turns * 0.66:
+            return False
+
         edge = self.persona.get("edge_behaviors", {})
         rage_quits = edge.get("rage_quits", False)
 
         if rage_quits:
-            # Use dynamic mood patience instead of static trait
-            quit_prob = (turn_count / self.max_turns) * (1 - self.mood.current_patience / 10)
+            # Scale quit probability only in the final third of the conversation
+            progress_in_final_third = (turn_count - self.max_turns * 0.66) / (self.max_turns * 0.34)
+            quit_prob = progress_in_final_third * (1 - self.mood.current_patience / 10) * 0.5
             return random.random() < quit_prob
 
         # Non-rage-quit personas can also give up at extreme frustration
         if self.mood.escalation_level >= 3 and self.mood.current_patience <= 1.0:
-            return random.random() < 0.5
+            return random.random() < 0.3
 
         return False
 

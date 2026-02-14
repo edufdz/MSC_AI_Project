@@ -1,6 +1,7 @@
 """
 ResultsAggregator: generates the final test-run report and failure inbox
-from collected TestResult objects.
+from collected TestResult objects.  Includes optional post-execution
+validation to filter fake failures and catch fake successes.
 """
 
 from __future__ import annotations
@@ -10,7 +11,7 @@ import uuid
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Callable, Dict, List, Optional
 
 from .models import TestResult, TestRunReport
 
@@ -130,6 +131,33 @@ class ResultsAggregator:
         }
 
     # ------------------------------------------------------------------
+    # Passed inbox (for validation step)
+    # ------------------------------------------------------------------
+
+    def generate_passed_inbox(self) -> Dict[str, Any]:
+        """Return passed tests with enough data for false-success detection."""
+        passed = [r for r in self.results if r.status.value == "passed"]
+        return {
+            "total_passed": len(passed),
+            "results": [
+                {
+                    "test_id": r.test_id,
+                    "test_number": r.test_number,
+                    "scenario": r.scenario_title,
+                    "persona": r.persona_name,
+                    "difficulty": r.difficulty,
+                    "coverage_goal": r.coverage_goal,
+                    "total_turns": r.total_turns,
+                    "tools_called_sequence": r.tools_called_sequence,
+                    "tool_results": r.tool_results,
+                    "outcome": r.outcome,
+                    "trace_file": r.trace_file,
+                }
+                for r in passed
+            ],
+        }
+
+    # ------------------------------------------------------------------
     # Save helpers
     # ------------------------------------------------------------------
 
@@ -144,3 +172,87 @@ class ResultsAggregator:
         with open(filepath, "w") as f:
             json.dump(inbox, f, indent=2, default=str)
         return inbox
+
+    def save_passed_inbox(self, filepath: str | Path) -> Dict:
+        passed_inbox = self.generate_passed_inbox()
+        with open(filepath, "w") as f:
+            json.dump(passed_inbox, f, indent=2, default=str)
+        return passed_inbox
+
+    # ------------------------------------------------------------------
+    # Validation (filter fake failures, catch fake successes)
+    # ------------------------------------------------------------------
+
+    def validate_and_save(
+        self,
+        results_dir: str | Path,
+        agent_map: Dict[str, Any],
+        use_ai: bool = True,
+        retry_config: Optional[Dict] = None,
+        on_progress: Optional[Callable[[str], None]] = None,
+        event_queue: Optional[Any] = None,
+    ) -> tuple[Dict, Dict, "ValidationResult"]:
+        """Run validation on failure inbox + passed results, save all artifacts.
+
+        Returns (validated_inbox, validation_report_dict, validation_result).
+        """
+        from src.validation.conversation_validator import ConversationValidator, ValidationResult
+
+        results_dir = Path(results_dir)
+
+        # Generate raw inboxes
+        failure_inbox = self.generate_failure_inbox()
+        passed_inbox = self.generate_passed_inbox()
+
+        # Save raw inboxes
+        with open(results_dir / "failure_inbox.json", "w") as f:
+            json.dump(failure_inbox, f, indent=2, default=str)
+        with open(results_dir / "passed_inbox.json", "w") as f:
+            json.dump(passed_inbox, f, indent=2, default=str)
+
+        # Validate
+        validator = ConversationValidator(use_ai=use_ai, retry_config=retry_config)
+        validation = validator.validate_results(
+            failure_inbox=failure_inbox,
+            passed_results=passed_inbox.get("results", []),
+            agent_map=agent_map,
+            on_progress=on_progress,
+        )
+
+        # Build validated inbox
+        validated_failures = validation.genuine_failures + validation.false_successes
+        validated_inbox = {
+            "total_failures": len(validated_failures),
+            "by_status": {
+                "failed": sum(1 for f in validated_failures if f.get("status") == "failed"),
+                "error": sum(1 for f in validated_failures if f.get("status") == "error"),
+                "timeout": sum(1 for f in validated_failures if f.get("status") == "timeout"),
+            },
+            "failures": validated_failures,
+        }
+
+        # Save validated inbox
+        with open(results_dir / "validated_failure_inbox.json", "w") as f:
+            json.dump(validated_inbox, f, indent=2, default=str)
+
+        # Save validation report
+        validation_report = {
+            "summary": validation.summary,
+            "persona_failures": validation.persona_failures,
+            "chaos_failures": validation.chaos_failures,
+            "false_successes": validation.false_successes,
+        }
+        with open(results_dir / "validation_report.json", "w") as f:
+            json.dump(validation_report, f, indent=2, default=str)
+
+        # Push validation event to UI if event queue is available
+        if event_queue is not None:
+            try:
+                event_queue.put_nowait({
+                    "type": "validation_completed",
+                    "summary": validation.summary,
+                })
+            except Exception:
+                pass
+
+        return validated_inbox, validation_report, validation

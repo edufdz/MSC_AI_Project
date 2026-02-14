@@ -91,6 +91,38 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 .meta-row { display: flex; justify-content: space-between; font-size: 12px; padding: 4px 0; color: var(--text-dim); }
 .meta-row .meta-val { color: var(--text); font-family: var(--font-mono); }
 
+/* ── Validation Section ────────────────────────── */
+.validation-section { margin-top: 16px; display: none; }
+.validation-section.visible { display: block; }
+.validation-header {
+  display: flex; align-items: center; gap: 6px; margin-bottom: 10px;
+}
+.validation-header .section-title { margin-bottom: 0; }
+.validation-badge {
+  font-size: 9px; font-weight: 600; padding: 1px 6px; border-radius: 4px;
+  background: #1a3a2a; color: var(--green); text-transform: uppercase;
+}
+.validation-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 10px; }
+.validation-card {
+  background: var(--bg-card); border-radius: 6px; padding: 8px 10px;
+  border: 1px solid var(--border); text-align: center;
+}
+.validation-card .v-value { font-size: 18px; font-weight: 700; font-family: var(--font-mono); line-height: 1.2; }
+.validation-card .v-label { font-size: 10px; color: var(--text-dim); margin-top: 2px; }
+.validation-card.genuine .v-value { color: var(--green); }
+.validation-card.persona .v-value { color: var(--orange); }
+.validation-card.chaos .v-value { color: var(--purple); }
+.validation-card.false-success .v-value { color: var(--red); }
+.validation-bar {
+  height: 6px; border-radius: 3px; overflow: hidden; display: flex; gap: 1px;
+  background: var(--border); margin-bottom: 6px;
+}
+.validation-bar > div { height: 100%; transition: width 0.4s ease; }
+.vbar-genuine { background: var(--green); }
+.vbar-persona { background: var(--orange); }
+.vbar-chaos { background: var(--purple); }
+.vbar-false { background: var(--red); }
+
 /* ── Center Panel Tabs ─────────────────────────── */
 .center-tabs { display: flex; gap: 0; margin-bottom: 12px; border-bottom: 1px solid var(--border); }
 .center-tab {
@@ -386,6 +418,23 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
         <div class="meta-row"><span>Avg latency</span><span class="meta-val" id="meta-latency">--</span></div>
         <div class="meta-row"><span>Speed</span><span class="meta-val" id="meta-speed">-- tests/min</span></div>
       </div>
+
+      <div class="validation-section" id="validation-section">
+        <div class="validation-header">
+          <div class="section-title">Validation</div>
+          <span class="validation-badge" id="validation-badge">Done</span>
+        </div>
+        <div class="validation-bar" id="validation-bar"></div>
+        <div class="validation-grid">
+          <div class="validation-card genuine"><div class="v-value" id="v-genuine">0</div><div class="v-label">Genuine</div></div>
+          <div class="validation-card false-success"><div class="v-value" id="v-false-success">0</div><div class="v-label">False Success</div></div>
+          <div class="validation-card persona"><div class="v-value" id="v-persona">0</div><div class="v-label">Persona Issues</div></div>
+          <div class="validation-card chaos"><div class="v-value" id="v-chaos">0</div><div class="v-label">Chaos Induced</div></div>
+        </div>
+        <div class="meta-row"><span>Failures reviewed</span><span class="meta-val" id="v-failures-reviewed">0</span></div>
+        <div class="meta-row"><span>Passes reviewed</span><span class="meta-val" id="v-passes-reviewed">0</span></div>
+        <div class="meta-row"><span>Net failures</span><span class="meta-val" id="v-net-failures">0</span></div>
+      </div>
     </div>
 
     <!-- CENTER PANEL -->
@@ -449,6 +498,7 @@ const S = {
   failures: [],
   startedAt: null,
   runCompleted: false,
+  validation: null,
 };
 let ws = null;
 let paused = false;
@@ -509,6 +559,7 @@ function handleEvent(ev) {
   else if (t === 'chaos_injected') { onChaosInjected(ev); }
   else if (t === 'test_completed') { onTestCompleted(ev); }
   else if (t === 'run_completed') { onRunCompleted(ev); }
+  else if (t === 'validation_completed') { onValidationCompleted(ev); }
 
   // Add to event log (turn_completed events only added for agent turns to reduce noise)
   if (t !== 'state_snapshot') {
@@ -553,6 +604,9 @@ function restoreState(snap) {
     }
   });
 
+  // Restore validation
+  S.validation = snap.validation || null;
+
   // Full UI refresh
   updateRunId();
   updateProgress();
@@ -564,6 +618,7 @@ function restoreState(snap) {
   renderFailureInbox();
   renderConvList();
   updateConvTabCount();
+  if (S.validation) updateValidationUI(S.validation);
 }
 
 // ── Event Handlers ─────────────────────────────────
@@ -695,6 +750,44 @@ function onRunCompleted(ev) {
   S.runCompleted = true;
   updateProgress();
   updateStats();
+}
+
+function onValidationCompleted(ev) {
+  const summary = ev.summary || {};
+  S.validation = summary;
+  updateValidationUI(summary);
+}
+
+function updateValidationUI(summary) {
+  const section = document.getElementById('validation-section');
+  section.classList.add('visible');
+
+  const genuine = summary.genuine_failures || 0;
+  const persona = summary.persona_incompetence_filtered || 0;
+  const chaos = summary.chaos_induced_filtered || 0;
+  const falseSuc = summary.false_successes_caught || 0;
+
+  document.getElementById('v-genuine').textContent = genuine;
+  document.getElementById('v-persona').textContent = persona;
+  document.getElementById('v-chaos').textContent = chaos;
+  document.getElementById('v-false-success').textContent = falseSuc;
+  document.getElementById('v-failures-reviewed').textContent = summary.total_failures_reviewed || 0;
+  document.getElementById('v-passes-reviewed').textContent = summary.total_passes_reviewed || 0;
+  document.getElementById('v-net-failures').textContent = genuine + falseSuc;
+
+  // Build proportional bar
+  const total = genuine + persona + chaos + falseSuc;
+  const bar = document.getElementById('validation-bar');
+  if (total > 0) {
+    bar.innerHTML = `
+      <div class="vbar-genuine" style="width:${genuine/total*100}%"></div>
+      <div class="vbar-persona" style="width:${persona/total*100}%"></div>
+      <div class="vbar-chaos" style="width:${chaos/total*100}%"></div>
+      <div class="vbar-false" style="width:${falseSuc/total*100}%"></div>
+    `;
+  } else {
+    bar.innerHTML = '<div class="vbar-genuine" style="width:100%"></div>';
+  }
 }
 
 // ── UI Updates ─────────────────────────────────────

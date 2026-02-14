@@ -38,11 +38,13 @@ class MonitorUIServer:
         host: str = "0.0.0.0",
         log_file: Optional[str] = None,
         report_file: Optional[str] = None,
+        results_dir: Optional[str] = None,
     ):
         self.port = port
         self.host = host
         self.log_file = log_file
         self.report_file = report_file
+        self.results_dir = results_dir
 
         # Connected WebSocket clients
         self._clients: Set[websockets.WebSocketServerProtocol] = set()
@@ -66,6 +68,7 @@ class MonitorUIServer:
             "failures": [],       # failure inbox entries
             "started_at": None,
             "run_completed": False,
+            "validation": None,
         }
 
         # Internal event queue (fed by engine or log tailer)
@@ -105,6 +108,10 @@ class MonitorUIServer:
             self._tail_log_file(),
             self._process_events(),
         )
+
+    async def push_event(self, event: Dict[str, Any]) -> None:
+        """Push an external event into the server (e.g. validation results)."""
+        await self._event_queue.put(event)
 
     # ------------------------------------------------------------------
     # WebSocket server
@@ -322,10 +329,15 @@ class MonitorUIServer:
 
     async def _process_events(self) -> None:
         """Process internal events: update state, broadcast to clients."""
+        check_counter = 0
         while True:
             try:
                 event = await asyncio.wait_for(self._event_queue.get(), timeout=0.5)
             except asyncio.TimeoutError:
+                # Periodically check for validation report on disk
+                check_counter += 1
+                if check_counter % 10 == 0:  # Every ~5 seconds
+                    self._check_validation_report()
                 continue
 
             self._update_state(event)
@@ -447,6 +459,9 @@ class MonitorUIServer:
                     "tool_calls": test["tool_calls"] if test else [],
                 })
 
+        elif etype == "validation_completed":
+            s["validation"] = event.get("summary", {})
+
         elif etype == "run_completed":
             s["run_completed"] = True
 
@@ -480,6 +495,12 @@ class MonitorUIServer:
             color = "green" if status == "passed" else "red"
             reason = f" \u2014 {event.get('failure_reason', '')[:40]}" if status != "passed" else ""
             return {"ts": ts, "icon": "pass" if status == "passed" else "fail", "text": f"{event.get('test_id', '')[:10]} {status}{reason}", "color": color}
+        if etype == "validation_completed":
+            s = event.get("summary", {})
+            genuine = s.get("genuine_failures", 0)
+            filtered = s.get("persona_incompetence_filtered", 0) + s.get("chaos_induced_filtered", 0)
+            false_suc = s.get("false_successes_caught", 0)
+            return {"ts": ts, "icon": "finish", "text": f"Validation: {genuine} genuine, {filtered} filtered, {false_suc} false successes", "color": "blue"}
         if etype == "run_completed":
             return {"ts": ts, "icon": "finish", "text": "Run completed", "color": "green"}
 
@@ -549,6 +570,7 @@ class MonitorUIServer:
             "failures": s["failures"],
             "started_at": s["started_at"],
             "run_completed": s["run_completed"],
+            "validation": s["validation"],
             "pass_rate": round(s["passed"] / s["completed"] * 100, 1) if s["completed"] else 0,
         }
 
@@ -558,6 +580,33 @@ class MonitorUIServer:
             with open(self.report_file, "r") as f:
                 return json.load(f)
         return {"error": "Report not available yet"}
+
+    def _check_validation_report(self) -> None:
+        """Check for validation_report.json and update state if found."""
+        if self._state["validation"]:
+            return  # Already loaded
+        search_dirs = []
+        if self.results_dir:
+            search_dirs.append(Path(self.results_dir))
+        if self.report_file:
+            search_dirs.append(Path(self.report_file).parent)
+        for d in search_dirs:
+            vpath = d / "validation_report.json"
+            if vpath.exists():
+                try:
+                    with open(vpath, "r") as f:
+                        data = json.load(f)
+                    summary = data.get("summary", {})
+                    self._state["validation"] = summary
+                    # Push event to clients
+                    event = {"type": "validation_completed", "summary": summary}
+                    self._update_state(event)
+                    asyncio.get_event_loop().call_soon(
+                        lambda ev=event: asyncio.ensure_future(self._broadcast(ev))
+                    )
+                except (json.JSONDecodeError, OSError):
+                    pass
+                return
 
     async def _broadcast(self, event: Dict) -> None:
         """Send event to all connected WebSocket clients."""

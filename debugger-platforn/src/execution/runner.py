@@ -131,9 +131,12 @@ class TestExecutionEngine:
             })
 
             try:
-                timeout_sec = test_case.get("execution_config", {}).get(
-                    "timeout_per_tool_call_sec", 10
-                ) * test_case.get("scenario", {}).get("estimated_turns", 5) + 30
+                timeout_per_tool = test_case.get("execution_config", {}).get(
+                    "timeout_per_tool_call_sec", 30
+                )
+                estimated_turns = test_case.get("scenario", {}).get("estimated_turns", 10)
+                max_turns = test_case.get("execution_config", {}).get("max_turns", 40)
+                timeout_sec = timeout_per_tool * max(estimated_turns, max_turns) + 60
 
                 conv_result = await asyncio.wait_for(
                     self._run_conversation(test_case),
