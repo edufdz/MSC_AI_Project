@@ -80,8 +80,6 @@ Creates personas, scenarios, coverage goals, and combines them into an executabl
 # Offline with template personas (fast, no API cost)
 python generate_tests.py agent_map.json --skip-ai --count 20
 
-# Offline with tlahuac personas (richer personas for Victoria-type agents)
-python generate_tests.py agent_map.json --use-tlahuac --skip-ai --count 20
 
 # With AI enrichment (generates additional personas + scenarios via Claude)
 python generate_tests.py agent_map.json --count 250 --persona-count 8 --scenario-count 10
@@ -105,7 +103,7 @@ python generate_tests.py agent_map.json --skip-ai --count 20 -o my_tests/
 | `--skip-ai` | off | Skip all AI generation |
 | `--count, -c` | 250 | Target number of test cases |
 | `--persona-count` | 8 | AI-generated personas to add |
-| `--scenario-count` | 10 | AI-generated scenarios to add |
+| `--scenario-count` | 10 | AI-generated scenarios to add |z
 | `--variants` | 3 | Variants per base scenario |
 | `--seed` | random | Random seed |
 | `--language, -l` | auto | Language for generated content |

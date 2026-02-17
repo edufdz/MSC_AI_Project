@@ -1,0 +1,63 @@
+// REST API client for the FastAPI backend
+
+const BASE = ''  // Vite proxy handles /api -> localhost:8000
+
+async function request<T>(path: string, options?: RequestInit): Promise<T> {
+  const res = await fetch(`${BASE}${path}`, {
+    headers: { 'Content-Type': 'application/json' },
+    ...options,
+  })
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({ detail: res.statusText }))
+    throw new Error(body.detail || `HTTP ${res.status}`)
+  }
+  return res.json()
+}
+
+// Sessions
+export const createSession = () =>
+  request<{ session_id: string; output_dir: string; created_at: string }>('/api/sessions', { method: 'POST' })
+
+export const listSessions = () =>
+  request<{ sessions: Array<{ session_id: string; output_dir: string; created_at: string; phases_completed: string[] }> }>('/api/sessions')
+
+export const getSession = (id: string) =>
+  request<{ session_id: string; output_dir: string; created_at: string; phases_completed: string[] }>(`/api/sessions/${id}`)
+
+// Filesystem
+export const resolveDirectory = (name: string, files: string[]) =>
+  request<{ path: string | null }>('/api/fs/resolve-directory', {
+    method: 'POST',
+    body: JSON.stringify({ name, files }),
+  })
+
+export const browseDirectory = (path: string, showHidden = false) =>
+  request<{ current_path: string; parent_path: string | null; entries: Array<{ name: string; type: string; path: string; size: number | null }> }>(
+    '/api/fs/browse',
+    { method: 'POST', body: JSON.stringify({ path, show_hidden: showHidden }) },
+  )
+
+// Phase A
+export const runPhaseA = (body: { session_id: string; repo_path: string; skip_ai: boolean; language: string | null; prompt_encoding: string }) =>
+  request<{ status: string; session_id: string }>('/api/phase-a/run', { method: 'POST', body: JSON.stringify(body) })
+
+export const getPhaseAStatus = (sessionId: string) =>
+  request<{ session_id: string; phase: string; status: string; progress_pct?: number; message?: string; result: Record<string, unknown> | null }>(`/api/phase-a/status/${sessionId}`)
+
+// Phase B
+export const runPhaseB = (body: { session_id: string; skip_ai: boolean; count: number; persona_count: number; scenario_count: number; variants: number; seed: number | null; language: string | null; use_tlahuac: boolean; tlahuac_dir: string | null }) =>
+  request<{ status: string; session_id: string }>('/api/phase-b/run', { method: 'POST', body: JSON.stringify(body) })
+
+export const getPhaseBStatus = (sessionId: string) =>
+  request<{ session_id: string; phase: string; status: string; progress_pct?: number; message?: string; result: Record<string, unknown> | null }>(`/api/phase-b/status/${sessionId}`)
+
+// Phase C
+export const runPhaseC = (body: { session_id: string; mock: boolean; workers: number; count: number; ai_personas: boolean; traces: boolean; fail_rate: number; seed: number | null; language: string | null; persona_context: string | null }) =>
+  request<{ status: string; session_id: string }>('/api/phase-c/run', { method: 'POST', body: JSON.stringify(body) })
+
+export const getPhaseCStatus = (sessionId: string) =>
+  request<{ session_id: string; phase: string; status: string; progress_pct?: number; message?: string; result: Record<string, unknown> | null }>(`/api/phase-c/status/${sessionId}`)
+
+// Artifacts
+export const getArtifact = (sessionId: string, type: string) =>
+  request<unknown>(`/api/artifacts/${sessionId}/${type}`)
