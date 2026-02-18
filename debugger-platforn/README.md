@@ -131,6 +131,20 @@ python execute_tests.py test_suite.json agent_map.json --mock --ai-personas --ga
 | `--critic-model` | `claude-haiku-4-5` | Model for the Critic agent |
 | `--max-restarts` | `2` | Max times Critic can restart a conversation |
 | `--quality-threshold` | `3.0` | Min quality score (0-10) to avoid restart |
+| `--evaluate-every` | `2` | Critic evaluates every N agent turns (lower = more accurate but costlier) |
+
+### Cost Impact
+
+In GAN mode, each test makes **~2x the LLM calls** (Generator + Critic).
+With `--max-restarts=2`, worst case is **~6x** for a single test.
+
+| Scenario | LLM calls vs standard |
+|----------|-----------------------|
+| No restarts | ~2x |
+| 1 restart | ~4x |
+| 2 restarts (max) | ~6x |
+
+Use `--evaluate-every 4` or higher to reduce Critic calls at the cost of less frequent intervention.
 
 ## Phase D — Diagnose Failures
 

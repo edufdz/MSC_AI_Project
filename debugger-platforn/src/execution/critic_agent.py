@@ -111,6 +111,14 @@ class CriticAgent:
         self.max_restarts = max_restarts
         self.quality_threshold = quality_threshold
         self.metrics = CriticMetrics()
+        self._client = None  # lazy-init, reused across calls
+
+    def _get_client(self):
+        """Return a shared AsyncAnthropic client (created once)."""
+        if self._client is None:
+            from anthropic import AsyncAnthropic
+            self._client = AsyncAnthropic()
+        return self._client
 
     def should_evaluate(self, turn_number: int) -> bool:
         """Decide if the Critic should evaluate at this turn."""
@@ -124,7 +132,7 @@ class CriticAgent:
         current_failure_reason: Optional[str] = None,
     ) -> CriticVerdict:
         """
-        Evaluate the conversation so far.
+        Evaluate the conversation so far (mid-conversation check).
 
         Parameters
         ----------
@@ -248,7 +256,7 @@ Evaluation criteria:
   - "restart" = conversation is off-track, wasting turns, or the persona is not testing the right thing. Score < {self.quality_threshold} should trigger restart.
   - "flag" = found a confirmed real bug in the agent
 - **coaching**: What should the simulated user say/do differently to make this a better test?
-- **is_false_positive**: If the test engine says FAILED, but the agent actually responded appropriately, mark as true.
+- **is_false_positive**: If the test engine says FAILED, but the agent actually responded appropriately, mark as true. Be CONSERVATIVE — only mark as false positive if you are very confident (confidence >= 0.8) the agent handled it correctly.
 """
 
     def _build_final_prompt(
@@ -278,6 +286,10 @@ Evaluation criteria:
 
 The test engine marked this conversation as {result_text}.
 Evaluate whether this result is CORRECT or a false positive/negative.
+
+Be CONSERVATIVE with false positive detection — only mark is_false_positive=true
+if you are very confident (confidence >= 0.8) the agent genuinely handled the
+scenario correctly despite the test engine marking it as failed.
 
 Respond with ONLY valid JSON:
 
@@ -312,11 +324,9 @@ Respond with ONLY valid JSON:
     # ------------------------------------------------------------------
 
     async def _call_llm(self, prompt: str) -> CriticVerdict:
-        from anthropic import Anthropic
+        client = self._get_client()
 
-        client = Anthropic()
-
-        response = client.messages.create(
+        response = await client.messages.create(
             model=self.model,
             max_tokens=300,
             temperature=0.3,  # Low temp for consistent judgments
@@ -338,7 +348,7 @@ Respond with ONLY valid JSON:
             data = {
                 "action": "continue",
                 "quality_score": 5.0,
-                "reasoning": f"Failed to parse critic response",
+                "reasoning": "Failed to parse critic response",
                 "coaching": "",
                 "is_false_positive": False,
                 "false_positive_reason": "",
@@ -377,14 +387,19 @@ class OfflineCriticAgent(CriticAgent):
     ) -> CriticVerdict:
         score, reasoning, coaching = self._heuristic_eval(conversation, scenario)
 
+        # FP detection: require BOTH high score AND high confidence signals
         is_fp = False
         fp_reason = ""
-        if current_failure_reason and score >= 7.0:
-            is_fp = True
-            fp_reason = (
-                f"High quality score ({score}) suggests the conversation is "
-                f"productive despite reported failure: {current_failure_reason}"
-            )
+        if current_failure_reason and score >= 8.0:
+            # Only flag FP if the failure is specifically about tool coverage
+            # (not timeouts, errors, or agent misbehavior)
+            benign_failures = ("max turns exceeded", "persona gave up")
+            if any(f in current_failure_reason.lower() for f in benign_failures):
+                is_fp = True
+                fp_reason = (
+                    f"Quality score ({score}/10) with benign failure type "
+                    f"suggests false positive: {current_failure_reason}"
+                )
 
         action = "continue"
         if score < self.quality_threshold:
@@ -412,14 +427,17 @@ class OfflineCriticAgent(CriticAgent):
     ) -> CriticVerdict:
         score, reasoning, coaching = self._heuristic_eval(conversation, scenario)
 
+        # Conservative FP: require high score + benign failure pattern
         is_fp = False
         fp_reason = ""
-        if not test_success and score >= 6.0:
-            is_fp = True
-            fp_reason = (
-                f"Conversation quality ({score}/10) suggests agent performed "
-                f"adequately despite failure: {failure_reason}"
-            )
+        if not test_success and failure_reason and score >= 8.0:
+            benign_failures = ("max turns exceeded", "persona gave up")
+            if any(f in failure_reason.lower() for f in benign_failures):
+                is_fp = True
+                fp_reason = (
+                    f"Quality score ({score}/10) with benign failure "
+                    f"({failure_reason}) suggests false positive"
+                )
 
         verdict = CriticVerdict(
             action="continue",
@@ -461,24 +479,24 @@ class OfflineCriticAgent(CriticAgent):
 
         if required_tools:
             coverage = len(called_tools & required_tools) / len(required_tools)
-            score += coverage * 3.0  # up to +3 for full coverage
+            score += coverage * 2.0  # up to +2 (reduced from +3 to avoid inflated scores)
             if coverage < 0.5:
                 reasons.append(f"Only {coverage:.0%} of required tools called")
                 coaching_tips.append("Steer conversation toward using required tools")
         elif called_tools:
             score += 1.0  # some tools called even if none required
 
-        # 3. Goal mention check
+        # 3. Goal mention check — use keyword extraction instead of prefix truncation
         goal = scenario.get("user_goal", "").lower()
-        goal_mentioned = any(
-            goal[:20] in t.get("message", "").lower()
-            for t in user_turns
-        ) if goal else False
-        if goal_mentioned:
-            score += 1.0
-        else:
-            reasons.append("User goal not clearly referenced")
-            coaching_tips.append("Reference the goal more explicitly")
+        if goal:
+            goal_words = [w for w in goal.split() if len(w) > 3]  # meaningful words
+            user_text = " ".join(t.get("message", "").lower() for t in user_turns)
+            matched = sum(1 for w in goal_words if w in user_text)
+            if goal_words and matched / len(goal_words) >= 0.3:
+                score += 1.0
+            else:
+                reasons.append("User goal not clearly referenced")
+                coaching_tips.append("Reference the goal more explicitly")
 
         # 4. Repetition penalty
         messages = [t.get("message", "") for t in user_turns]

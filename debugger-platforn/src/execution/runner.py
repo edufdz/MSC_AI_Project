@@ -40,6 +40,7 @@ class TestExecutionEngine:
         critic_model: str = "claude-haiku-4-5",
         max_restarts: int = 2,
         quality_threshold: float = 3.0,
+        evaluate_every: int = 2,
     ):
         self.test_suite = test_suite
         self.agent_connector = agent_connector
@@ -54,6 +55,7 @@ class TestExecutionEngine:
         self.critic_model = critic_model
         self.max_restarts = max_restarts
         self.quality_threshold = quality_threshold
+        self.evaluate_every = evaluate_every
 
         # Extract goal-driven config from agent_map (terminal_outcomes, tool_chains, etc.)
         self._agent_map_extras: Dict[str, Any] = {}
@@ -236,7 +238,7 @@ class TestExecutionEngine:
                 event_queue=self.event_queue,
                 use_ai=self.use_ai_personas,
                 critic_model=self.critic_model,
-                evaluate_every=2,
+                evaluate_every=self.evaluate_every,
                 max_restarts=self.max_restarts,
                 quality_threshold=self.quality_threshold,
                 language=self.language,

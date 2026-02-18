@@ -40,6 +40,8 @@ class ConversationSimulator:
         use_ai_personas: bool = True,
         language: str = "English",
         conversation_log_file: str | None = None,
+        on_agent_turn: Optional[Any] = None,
+        initial_coaching: str = "",
     ):
         self.test_case = test_case
         self.scenario: Dict = test_case["scenario"]
@@ -50,6 +52,16 @@ class ConversationSimulator:
         self.use_ai_personas = use_ai_personas
         self.language = language
         self.conversation_log_file = conversation_log_file
+
+        # Optional callback invoked after each agent turn (used by GAN mode).
+        # Signature: async (turns, agent_turn_count) -> Optional[dict]
+        #   Return None to continue normally.
+        #   Return {"action": "restart", "reason": "..."} to abort conversation.
+        #   Return {"action": "continue", "coaching": "..."} to inject coaching.
+        self._on_agent_turn = on_agent_turn
+
+        # Coaching text from Critic (set via constructor or callback during run)
+        self._coaching: str = initial_coaching
 
         self.turns: List[ConversationTurn] = []
         self.chaos_events: List[ChaosEvent] = []
@@ -79,6 +91,9 @@ class ConversationSimulator:
         # Optional user-provided context; analyzed form (from one-time LLM) is used when present
         self.persona_context_user: Optional[str] = test_case.get("persona_context")
         self.persona_context_analyzed: Optional[Dict[str, Any]] = test_case.get("persona_context_analyzed")
+
+        # Lazy-init async LLM client (reused across calls)
+        self._ai_client = None
 
         # Mood drift state
         traits = self.persona.get("traits", {})
@@ -135,6 +150,7 @@ class ConversationSimulator:
             }
 
         turn_count = 0
+        agent_turn_count = 0
         success = False
         failure_reason: Optional[str] = None
         outcome: Optional[str] = None
@@ -252,6 +268,17 @@ class ConversationSimulator:
             # Update mood based on agent response
             self._update_mood(agent_response, turn_count)
 
+            # --- Callback hook (used by GAN mode for Critic checks) ---
+            agent_turn_count += 1
+            if self._on_agent_turn:
+                signal = await self._on_agent_turn(self.turns, agent_turn_count)
+                if signal:
+                    if signal.get("action") == "restart":
+                        failure_reason = signal.get("reason", "Callback requested restart")
+                        break
+                    if signal.get("coaching"):
+                        self._coaching = signal["coaching"]
+
             # Check for terminal outcome (goal-driven)
             is_success, outcome_name = self._check_outcome()
             if is_success is not None:
@@ -321,22 +348,27 @@ class ConversationSimulator:
             return await self._generate_ai_message(turn_number, agent_last_response)
         return self._generate_offline_message(turn_number, agent_last_response)
 
+    def _get_ai_client(self):
+        """Lazy-init async Anthropic client, reused across calls."""
+        if self._ai_client is None:
+            from anthropic import AsyncAnthropic
+            self._ai_client = AsyncAnthropic()
+        return self._ai_client
+
     async def _generate_ai_message(
         self,
         turn_number: int,
         agent_last_response: str | None,
     ) -> str:
-        from anthropic import Anthropic
-
-        client = Anthropic()
+        client = self._get_ai_client()
 
         if turn_number == 1:
             prompt = self._build_first_message_prompt()
         else:
             prompt = self._build_followup_prompt(agent_last_response or "")
 
-        response = client.messages.create(
-            model="claude-haiku-4-5",  # Switched to Haiku for cost savings (~67% cheaper)
+        response = await client.messages.create(
+            model="claude-haiku-4-5",
             max_tokens=200,
             temperature=0.8,
             messages=[{"role": "user", "content": prompt}],
@@ -516,6 +548,10 @@ class ConversationSimulator:
         patience = self.persona.get("traits", {}).get("patience", 5)
         tlahuac = self.persona.get("tlahuac_data") or {}
         common_phrases = tlahuac.get("common_phrases", [])
+
+        # Coaching-aware follow-up (GAN mode)
+        if self._coaching and turn_number <= 4:
+            return f"Let me be more specific about {goal}. {self._coaching}"
 
         is_spanish = self.language.lower() in ("spanish", "español")
 
@@ -765,6 +801,13 @@ class ConversationSimulator:
 
         goal = self._simplify_goal(self.scenario.get("user_goal", "get help"))
 
+        # Coaching from Critic (GAN mode)
+        coaching_block = ""
+        if self._coaching:
+            coaching_block = (
+                f"\nCOACHING from your supervisor: {self._coaching}\n"
+                f"Apply this feedback in your next message.\n"
+            )
         return (
             f"Continuing conversation as {self.persona.get('name', 'User')}:\n"
             f"{persona_context}"
@@ -772,6 +815,7 @@ class ConversationSimulator:
             f"{user_context_block}"
             f"Patience: {traits.get('patience', 5)}/10\n"
             f"{mood_context}"
+            f"{coaching_block}"
             f"{lang_instruction}"
             f"{behavior_rules}\n"
             f"Recent conversation:\n{history}\n\n"

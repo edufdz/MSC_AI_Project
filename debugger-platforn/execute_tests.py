@@ -162,10 +162,11 @@ def _print_final_report(report, inbox, output_dir):
 @click.option("--fixed-fail-rate", default=0.01, type=float, help="Fixed mock fail rate for A/B test (default 0.01)")
 @click.option("--smoke-limit", default=10, type=int, help="Max tests for Phase E smoke test (default 10)")
 @click.option("--full-limit", default=50, type=int, help="Max tests for Phase E full test (default 50)")
-@click.option("--gan", is_flag=True, help="Enable GAN-style testing: Generator + Critic agents (reduces false positives)")
+@click.option("--gan", is_flag=True, help="Enable GAN-style testing: Generator + Critic agents. Cost: ~2x LLM calls per test; worst case ~6x with restarts.")
 @click.option("--critic-model", default="claude-haiku-4-5", help="Model for the Critic agent (default: Haiku)")
 @click.option("--max-restarts", default=2, type=int, help="Max conversation restarts by Critic (default 2)")
 @click.option("--quality-threshold", default=3.0, type=float, help="Minimum quality score 0-10 to avoid restart (default 3.0)")
+@click.option("--evaluate-every", default=2, type=int, help="Critic evaluates every N agent turns (default 2). Lower = more LLM calls.")
 def main(
     test_suite_file: str,
     agent_map_file: str,
@@ -198,6 +199,7 @@ def main(
     critic_model: str,
     max_restarts: int,
     quality_threshold: float,
+    evaluate_every: int,
 ):
     """Execute a test suite against an agent."""
     import random as _random
@@ -316,7 +318,7 @@ def main(
     # GAN mode display
     if gan:
         console.print("[bold magenta]GAN mode enabled[/bold magenta]: Generator + Critic (adversarial self-correction)")
-        console.print(f"  Critic model: {critic_model} | Max restarts: {max_restarts} | Quality threshold: {quality_threshold}")
+        console.print(f"  Critic model: {critic_model} | Max restarts: {max_restarts} | Quality threshold: {quality_threshold} | Evaluate every: {evaluate_every} turns")
         console.print()
 
     asyncio.run(_run_async(
@@ -351,6 +353,7 @@ def main(
         critic_model=critic_model,
         max_restarts=max_restarts,
         quality_threshold=quality_threshold,
+        evaluate_every=evaluate_every,
     ))
 
 
@@ -386,6 +389,7 @@ async def _run_async(
     critic_model: str = "claude-haiku-4-5",
     max_restarts: int = 2,
     quality_threshold: float = 3.0,
+    evaluate_every: int = 2,
 ):
     started_at = datetime.now(timezone.utc)
 
@@ -408,6 +412,7 @@ async def _run_async(
         critic_model=critic_model,
         max_restarts=max_restarts,
         quality_threshold=quality_threshold,
+        evaluate_every=evaluate_every,
     )
 
     # Monitor task (Rich terminal)
