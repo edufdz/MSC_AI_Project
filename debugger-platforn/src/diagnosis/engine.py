@@ -242,6 +242,28 @@ class DiagnosisEngine:
             by_fix_type[f.fix_type] += 1
 
         total_failures = sum(c.failure_count for c in clusters)
+        unique_bugs = len(clusters)
+
+        # Bug Discovery Rate: unique bugs found per test executed (%)
+        bug_discovery_rate = round(
+            unique_bugs / max(total_tests, 1) * 100, 1
+        )
+
+        # Redundancy Rate: % of failures that are duplicates of already-found bugs
+        redundancy_rate = round(
+            (total_failures - unique_bugs) / max(total_failures, 1) * 100, 1
+        ) if total_failures > 0 else 0.0
+
+        # Severity-Weighted Score: average severity weight per failure
+        severity_weights = {"critical": 5, "high": 3, "medium": 2, "low": 1}
+        severity_weighted_score = round(
+            sum(
+                severity_weights.get(c.severity.value, 2) * c.failure_count
+                for c in clusters
+            ) / max(total_failures, 1),
+            2,
+        )
+
         return {
             "total_failures_analyzed": total_failures,
             "total_tests": total_tests,
@@ -251,4 +273,8 @@ class DiagnosisEngine:
             "fix_proposals_by_type": dict(by_fix_type),
             "clusters_count": len(clusters),
             "fixes_count": len(fixes),
+            "unique_bugs_count": unique_bugs,
+            "bug_discovery_rate": bug_discovery_rate,
+            "redundancy_rate": redundancy_rate,
+            "severity_weighted_score": severity_weighted_score,
         }

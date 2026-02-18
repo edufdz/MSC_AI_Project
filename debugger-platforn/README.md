@@ -117,6 +117,16 @@ python diagnose_failures.py results/failure_inbox.json results/test_run_report.j
 python diagnose_failures.py results/failure_inbox.json results/test_run_report.json agent_map.json
 ```
 
+### Performance Metrics
+
+Phase D outputs metrics that measure testing quality (not just the agent):
+
+| Metric | What it measures |
+|--------|-----------------|
+| Bug Discovery Rate | Unique bugs found per test executed (%) — testing efficiency |
+| Redundancy Rate | Duplicate findings (%) — lower is better |
+| Severity-Weighted Score | Average severity per failure (critical=5, high=3, medium=2, low=1) |
+
 ## Phase E — Improve & Validate
 
 Apply fixes, run A/B tests, generate regression tests, and build deployment packages:

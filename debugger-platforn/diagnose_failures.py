@@ -134,6 +134,11 @@ def _print_summary(report):
         f"  Clusters found:          [bold]{s.get('clusters_count', 0)}[/bold]\n"
         f"  Fix proposals:           [bold]{s.get('fixes_count', 0)}[/bold]\n"
         f"\n"
+        f"  [bold underline]Performance Metrics[/bold underline]\n"
+        f"  Bug discovery rate:      [bold green]{s.get('bug_discovery_rate', 0)}%[/bold green]  (unique bugs / tests)\n"
+        f"  Redundancy rate:         [bold yellow]{s.get('redundancy_rate', 0)}%[/bold yellow]  (duplicate findings)\n"
+        f"  Severity-weighted score: [bold]{s.get('severity_weighted_score', 0)}[/bold]  (avg severity per failure)\n"
+        f"\n"
         f"  By root cause:  {_format_dict(s.get('by_root_cause', {}))}\n"
         f"  By severity:    {_format_dict(s.get('by_severity', {}))}",
         title="[bold]Diagnosis Summary[/bold]",
