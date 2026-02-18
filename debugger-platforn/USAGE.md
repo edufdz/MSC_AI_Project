@@ -344,6 +344,18 @@ python diagnose_failures.py results/failure_inbox.json results/test_run_report.j
 5. **Fix proposals** — Suggests fixes with estimated effort, fix rate, and risk level
 6. **Priority ranking** — Ranks clusters by impact to guide what to fix first
 
+### Diagnosis Performance Metrics
+
+The diagnosis summary includes metrics that measure the **quality of the testing process itself** (not just the agent under test):
+
+| Metric | Formula | What it measures |
+|--------|---------|-----------------|
+| **Bug Discovery Rate** | `unique_clusters / total_tests × 100` | Efficiency — how many unique bugs the tester finds per test executed. Higher = more efficient testing. |
+| **Redundancy Rate** | `(total_failures − unique_clusters) / total_failures × 100` | Waste — percentage of test failures that are duplicates of already-found bugs. Lower = less wasted effort. |
+| **Severity-Weighted Score** | `Σ(cluster.failures × severity_weight) / total_failures` | Average severity per failure. Weights: critical=5, high=3, medium=2, low=1. Higher = tester finds more severe bugs. |
+
+These metrics appear in the diagnosis summary panel alongside existing stats (failure rate, root cause breakdown, severity distribution).
+
 > You can also run Phase D automatically from Phase C by adding `--diagnose` to the execute command.
 
 ---
