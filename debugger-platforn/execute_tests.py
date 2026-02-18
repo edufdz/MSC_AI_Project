@@ -64,6 +64,7 @@ def _print_pre_run_summary(test_suite: dict, agent_map: dict, opts: dict):
     table.add_row("Workers", str(opts["workers"]))
     table.add_row("Connector", opts["connector"])
     table.add_row("AI personas", "yes" if opts["ai_personas"] else "no (offline)")
+    table.add_row("GAN mode", opts.get("gan_label", "off"))
     table.add_row("Language", opts.get("language", "English"))
     table.add_row("Traces", opts["traces_dir"] or "disabled")
     table.add_row("Output dir", str(opts["output_dir"]))
@@ -161,6 +162,10 @@ def _print_final_report(report, inbox, output_dir):
 @click.option("--fixed-fail-rate", default=0.01, type=float, help="Fixed mock fail rate for A/B test (default 0.01)")
 @click.option("--smoke-limit", default=10, type=int, help="Max tests for Phase E smoke test (default 10)")
 @click.option("--full-limit", default=50, type=int, help="Max tests for Phase E full test (default 50)")
+@click.option("--gan", is_flag=True, help="Enable GAN-style testing: Generator + Critic agents (reduces false positives)")
+@click.option("--critic-model", default="claude-haiku-4-5", help="Model for the Critic agent (default: Haiku)")
+@click.option("--max-restarts", default=2, type=int, help="Max conversation restarts by Critic (default 2)")
+@click.option("--quality-threshold", default=3.0, type=float, help="Minimum quality score 0-10 to avoid restart (default 3.0)")
 def main(
     test_suite_file: str,
     agent_map_file: str,
@@ -189,6 +194,10 @@ def main(
     fixed_fail_rate: float,
     smoke_limit: int,
     full_limit: int,
+    gan: bool,
+    critic_model: str,
+    max_restarts: int,
+    quality_threshold: float,
 ):
     """Execute a test suite against an agent."""
     import random as _random
@@ -292,6 +301,7 @@ def main(
         "workers": workers,
         "connector": connector_label,
         "ai_personas": ai_personas,
+        "gan_label": f"Generator + Critic ({critic_model})" if gan else "off",
         "traces_dir": traces_dir,
         "output_dir": output_dir,
         "language": detected_language,
@@ -303,6 +313,12 @@ def main(
     console.print()
 
     # Run
+    # GAN mode display
+    if gan:
+        console.print("[bold magenta]GAN mode enabled[/bold magenta]: Generator + Critic (adversarial self-correction)")
+        console.print(f"  Critic model: {critic_model} | Max restarts: {max_restarts} | Quality threshold: {quality_threshold}")
+        console.print()
+
     asyncio.run(_run_async(
         test_suite=test_suite,
         test_suite_full=test_suite_full,
@@ -331,6 +347,10 @@ def main(
         fixed_fail_rate=fixed_fail_rate,
         smoke_limit=smoke_limit,
         full_limit=full_limit,
+        use_gan=gan,
+        critic_model=critic_model,
+        max_restarts=max_restarts,
+        quality_threshold=quality_threshold,
     ))
 
 
@@ -362,6 +382,10 @@ async def _run_async(
     fixed_fail_rate: float = 0.01,
     smoke_limit: int = 10,
     full_limit: int = 50,
+    use_gan: bool = False,
+    critic_model: str = "claude-haiku-4-5",
+    max_restarts: int = 2,
+    quality_threshold: float = 3.0,
 ):
     started_at = datetime.now(timezone.utc)
 
@@ -380,6 +404,10 @@ async def _run_async(
         agent_map=agent_map,
         persona_context=persona_context,
         persona_context_analyzed=persona_context_analyzed,
+        use_gan=use_gan,
+        critic_model=critic_model,
+        max_restarts=max_restarts,
+        quality_threshold=quality_threshold,
     )
 
     # Monitor task (Rich terminal)

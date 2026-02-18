@@ -14,6 +14,7 @@ from typing import Any, Dict, List
 
 from .agent_connector import AgentConnector
 from .conversation_simulator import ConversationSimulator
+from .gan_simulator import GANConversationSimulator
 from .models import TestResult, TestStatus
 
 
@@ -35,6 +36,10 @@ class TestExecutionEngine:
         agent_map: Dict[str, Any] | None = None,
         persona_context: str | None = None,
         persona_context_analyzed: Dict[str, Any] | None = None,
+        use_gan: bool = False,
+        critic_model: str = "claude-haiku-4-5",
+        max_restarts: int = 2,
+        quality_threshold: float = 3.0,
     ):
         self.test_suite = test_suite
         self.agent_connector = agent_connector
@@ -45,6 +50,10 @@ class TestExecutionEngine:
         self.conversation_log_file = conversation_log_file
         self.persona_context = persona_context
         self.persona_context_analyzed = persona_context_analyzed
+        self.use_gan = use_gan
+        self.critic_model = critic_model
+        self.max_restarts = max_restarts
+        self.quality_threshold = quality_threshold
 
         # Extract goal-driven config from agent_map (terminal_outcomes, tool_chains, etc.)
         self._agent_map_extras: Dict[str, Any] = {}
@@ -220,14 +229,28 @@ class TestExecutionEngine:
         if self.persona_context_analyzed is not None:
             enriched["persona_context_analyzed"] = self.persona_context_analyzed
 
-        simulator = ConversationSimulator(
-            test_case=enriched,
-            agent_connector=self.agent_connector,
-            event_queue=self.event_queue,
-            use_ai_personas=self.use_ai_personas,
-            language=self.language,
-            conversation_log_file=self.conversation_log_file,
-        )
+        if self.use_gan:
+            simulator = GANConversationSimulator(
+                test_case=enriched,
+                agent_connector=self.agent_connector,
+                event_queue=self.event_queue,
+                use_ai=self.use_ai_personas,
+                critic_model=self.critic_model,
+                evaluate_every=2,
+                max_restarts=self.max_restarts,
+                quality_threshold=self.quality_threshold,
+                language=self.language,
+                conversation_log_file=self.conversation_log_file,
+            )
+        else:
+            simulator = ConversationSimulator(
+                test_case=enriched,
+                agent_connector=self.agent_connector,
+                event_queue=self.event_queue,
+                use_ai_personas=self.use_ai_personas,
+                language=self.language,
+                conversation_log_file=self.conversation_log_file,
+            )
         return await simulator.run()
 
     # ------------------------------------------------------------------
