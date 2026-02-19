@@ -38,7 +38,8 @@ from typing import Any, Dict, List, Optional
 
 from .agent_connector import AgentConnector
 from .conversation_simulator import ConversationSimulator
-from .critic_agent import CriticAgent, OfflineCriticAgent
+from .critic_agent import CriticAgent, CriticVerdict, OfflineCriticAgent
+from .llm_config import LLMProviderConfig
 from .models import ConversationTurn
 
 logger = logging.getLogger(__name__)
@@ -67,8 +68,6 @@ class GANConversationSimulator:
         Event queue for the live monitor.
     use_ai : bool
         If True, use LLM-based Critic+Generator. If False, offline heuristics.
-    critic_model : str
-        Model for the Critic agent (default: Haiku).
     evaluate_every : int
         Critic evaluates every N agent turns.
     max_restarts : int
@@ -87,12 +86,13 @@ class GANConversationSimulator:
         agent_connector: AgentConnector,
         event_queue: asyncio.Queue,
         use_ai: bool = True,
-        critic_model: str = "claude-haiku-4-5",
         evaluate_every: int = 2,
         max_restarts: int = 2,
         quality_threshold: float = 3.0,
         language: str = "English",
         conversation_log_file: str | None = None,
+        persona_config: Optional[LLMProviderConfig] = None,
+        critic_config: Optional[LLMProviderConfig] = None,
     ):
         self.test_case = test_case
         self.agent_connector = agent_connector
@@ -102,6 +102,7 @@ class GANConversationSimulator:
         self.quality_threshold = quality_threshold
         self.language = language
         self.conversation_log_file = conversation_log_file
+        self.persona_config = persona_config or LLMProviderConfig()
 
         self.scenario: Dict = test_case["scenario"]
         self.persona: Dict = test_case["persona"]
@@ -109,10 +110,10 @@ class GANConversationSimulator:
         # Initialize the Critic
         if use_ai:
             self.critic = CriticAgent(
-                model=critic_model,
                 evaluate_every=evaluate_every,
                 max_restarts=max_restarts,
                 quality_threshold=quality_threshold,
+                provider_config=critic_config or LLMProviderConfig(),
             )
         else:
             # Note: OfflineCriticAgent returns confidence 0.5–0.6, which is
@@ -130,6 +131,11 @@ class GANConversationSimulator:
         self._coaching: str = ""
         self.test_id = test_case.get("test_id", "unknown")
 
+        # Non-blocking mid-conversation Critic: fire evaluation as background task,
+        # collect the result on the NEXT callback. This lets persona message
+        # generation run in parallel with the Critic LLM call (~1.5s saved/eval).
+        self._pending_critic_task: Optional[asyncio.Task] = None
+
     # ------------------------------------------------------------------
     # Public
     # ------------------------------------------------------------------
@@ -146,6 +152,11 @@ class GANConversationSimulator:
         last_result: Optional[Dict[str, Any]] = None
 
         while self.restart_count <= self.max_restarts:
+            # Cancel any stale Critic task from a previous restart attempt.
+            if self._pending_critic_task is not None:
+                self._pending_critic_task.cancel()
+                self._pending_critic_task = None
+
             # Create a fresh ConversationSimulator with Critic callback.
             # This inherits ALL features: chaos, mood, edge behaviours,
             # terminal outcomes, tool chains, conversation logging, etc.
@@ -158,6 +169,7 @@ class GANConversationSimulator:
                 conversation_log_file=self.conversation_log_file,
                 on_agent_turn=self._critic_callback,
                 initial_coaching=self._coaching,
+                persona_config=self.persona_config,
             )
 
             result = await simulator.run()
@@ -256,39 +268,60 @@ class GANConversationSimulator:
         """
         Called by ConversationSimulator after each agent turn.
 
+        Non-blocking design: the Critic LLM call from the PREVIOUS evaluation
+        is awaited here (it has had N turns to complete, so the await is nearly
+        instant), and a NEW evaluation is fired as a background task so it runs
+        in parallel with the Generator producing the next persona message.
+
         Returns None to continue, or a signal dict to restart/coach.
         """
-        if not self.critic.should_evaluate(agent_turn_count):
-            return None
+        prev_coaching = ""
 
-        conv_so_far = self._turns_to_critic_format(turns)
-        mid_verdict = await self.critic.evaluate(
-            conversation=conv_so_far,
-            scenario=self.scenario,
-            persona=self.persona,
-        )
+        # --- Collect result from the previous background evaluation ---
+        if self._pending_critic_task is not None:
+            try:
+                verdict: CriticVerdict = await self._pending_critic_task
+            except asyncio.CancelledError:
+                # Task was cancelled at restart — safe to ignore.
+                self._pending_critic_task = None
+                return None
+            except Exception as e:
+                logger.warning(
+                    "Pending Critic task raised an unexpected error: %s — skipping", e
+                )
+                self._pending_critic_task = None
+                return None
+            self._pending_critic_task = None
 
-        await self.event_queue.put({
-            "type": "critic_mid_eval",
-            "test_id": self.test_id,
-            "turn": len(turns),
-            "quality_score": mid_verdict.quality_score,
-            "action": mid_verdict.action,
-            "coaching": mid_verdict.coaching,
-        })
+            await self.event_queue.put({
+                "type": "critic_mid_eval",
+                "test_id": self.test_id,
+                "turn": len(turns),
+                "quality_score": verdict.quality_score,
+                "action": verdict.action,
+                "coaching": verdict.coaching,
+            })
 
-        if mid_verdict.action == "restart":
-            return {
-                "action": "restart",
-                "reason": f"Critic requested restart: {mid_verdict.reasoning}",
-            }
+            if verdict.action == "restart":
+                return {
+                    "action": "restart",
+                    "reason": f"Critic requested restart: {verdict.reasoning}",
+                }
+            prev_coaching = verdict.coaching
 
-        if mid_verdict.coaching:
-            return {
-                "action": "continue",
-                "coaching": mid_verdict.coaching,
-            }
+        # --- Fire new evaluation in background (don't await) ---
+        if self.critic.should_evaluate(agent_turn_count):
+            conv_so_far = self._turns_to_critic_format(turns)
+            self._pending_critic_task = asyncio.create_task(
+                self.critic.evaluate(
+                    conversation=conv_so_far,
+                    scenario=self.scenario,
+                    persona=self.persona,
+                )
+            )
 
+        if prev_coaching:
+            return {"action": "continue", "coaching": prev_coaching}
         return None
 
     # ------------------------------------------------------------------

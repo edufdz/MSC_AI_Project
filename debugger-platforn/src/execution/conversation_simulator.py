@@ -6,19 +6,18 @@ synthetic persona and the agent under test.
 from __future__ import annotations
 
 import asyncio
+import logging
 import random
 import re
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
+logger = logging.getLogger(__name__)
+
 from .agent_connector import AgentConnector
+from .llm_config import LLMProviderConfig
 from .models import ChaosEvent, ConversationTurn
 from src.personas.models import MoodState
-
-# Cost constants (Claude Haiku pricing per 1M tokens)
-_INPUT_COST_PER_M = 1.00
-_OUTPUT_COST_PER_M = 5.00
-
 
 class ConversationSimulator:
     """
@@ -42,6 +41,7 @@ class ConversationSimulator:
         conversation_log_file: str | None = None,
         on_agent_turn: Optional[Any] = None,
         initial_coaching: str = "",
+        persona_config: Optional[LLMProviderConfig] = None,
     ):
         self.test_case = test_case
         self.scenario: Dict = test_case["scenario"]
@@ -91,6 +91,9 @@ class ConversationSimulator:
         # Optional user-provided context; analyzed form (from one-time LLM) is used when present
         self.persona_context_user: Optional[str] = test_case.get("persona_context")
         self.persona_context_analyzed: Optional[Dict[str, Any]] = test_case.get("persona_context_analyzed")
+
+        # LLM provider for AI persona messages
+        self._persona_config = persona_config or LLMProviderConfig()
 
         # Lazy-init async LLM client (reused across calls)
         self._ai_client = None
@@ -349,10 +352,9 @@ class ConversationSimulator:
         return self._generate_offline_message(turn_number, agent_last_response)
 
     def _get_ai_client(self):
-        """Lazy-init async Anthropic client, reused across calls."""
+        """Lazy-init async LLM client (Anthropic or OpenAI-compatible), reused across calls."""
         if self._ai_client is None:
-            from anthropic import AsyncAnthropic
-            self._ai_client = AsyncAnthropic()
+            self._ai_client = self._persona_config.create_async_client()
         return self._ai_client
 
     async def _generate_ai_message(
@@ -363,24 +365,75 @@ class ConversationSimulator:
         client = self._get_ai_client()
 
         if turn_number == 1:
+            # Note: edge behaviors (changes_mind, off_topic, etc.) are only active
+            # from turn 3+ via BEHAVIOR RULES in _build_followup_prompt. The first
+            # message intentionally skips them — the user has not yet had a chance
+            # to react, so behaviours like "changes mind" would be incoherent.
             prompt = self._build_first_message_prompt()
         else:
             prompt = self._build_followup_prompt(agent_last_response or "")
 
-        response = await client.messages.create(
-            model="claude-haiku-4-5",
-            max_tokens=200,
-            temperature=0.8,
-            messages=[{"role": "user", "content": prompt}],
-        )
+        # Retry with backoff on transient API errors.
+        # - Rate limit (429): wait 30 s before retrying (providers enforce 60 s windows).
+        # - Server errors (5xx): short exponential backoff (1 s, 2 s).
+        # - Auth / bad-request errors (401, 400): non-retryable, fail immediately.
+        # On exhaustion we raise — the runner marks the test as ERROR rather than
+        # silently degrading to offline mode (which produces near-useless output).
+        last_exc: Exception | None = None
+        text: str = ""
+        input_tokens: int = 0
+        output_tokens: int = 0
+        for attempt in range(3):
+            try:
+                text, input_tokens, output_tokens = await self._persona_config.call(
+                    client, prompt, max_tokens=350, temperature=0.8
+                )
+                break
+            except Exception as exc:
+                last_exc = exc
+                exc_str = str(exc).lower()
+                # Non-retryable: auth failures, invalid requests
+                if any(
+                    kw in exc_str
+                    for kw in ("401", "403", "authentication", "invalid api key", "bad request", "400")
+                ):
+                    logger.error(
+                        "AI persona LLM call failed with non-retryable error: %s", exc
+                    )
+                    raise RuntimeError(
+                        f"AI persona LLM call failed (non-retryable): {exc}"
+                    ) from exc
+                # Rate limit: long wait
+                if "429" in exc_str or "rate limit" in exc_str or "rate_limit" in exc_str:
+                    wait = 30
+                    logger.warning(
+                        "AI persona rate-limited (attempt %d/3) — waiting %ds: %s",
+                        attempt + 1, wait, exc,
+                    )
+                else:
+                    # Transient server error: short backoff
+                    wait = 2 ** attempt  # 1 s, 2 s, 4 s
+                    logger.warning(
+                        "AI persona LLM call failed (attempt %d/3) — retrying in %ds: %s",
+                        attempt + 1, wait, exc,
+                    )
+                # Skip sleep on the last attempt — we are about to raise anyway.
+                if attempt < 2:
+                    await asyncio.sleep(wait)
+        else:
+            raise RuntimeError(
+                f"AI persona LLM call failed after 3 attempts: {last_exc}"
+            ) from last_exc
 
-        message = response.content[0].text.strip()
+        message = text.strip()
+        # _apply_style handles verbosity/formality/typos/emoji.
+        # Edge behaviors (changes_mind, off-topic, etc.) are already injected via
+        # BEHAVIOR RULES in _build_followup_prompt — no need to apply them again here.
         message = self._apply_style(message)
-        message = self._apply_edge_behaviors(message, turn_number)
 
         self.llm_calls += 1
-        self.tokens_used += response.usage.input_tokens + response.usage.output_tokens
-        self.cost_usd += _calc_cost(response.usage)
+        self.tokens_used += input_tokens + output_tokens
+        self.cost_usd += self._persona_config.cost_for_tokens(input_tokens, output_tokens)
 
         return message
 
@@ -1425,7 +1478,3 @@ class ConversationSimulator:
             pass  # Don't fail tests if logging fails
 
 
-def _calc_cost(usage) -> float:
-    input_cost = (usage.input_tokens / 1_000_000) * _INPUT_COST_PER_M
-    output_cost = (usage.output_tokens / 1_000_000) * _OUTPUT_COST_PER_M
-    return input_cost + output_cost

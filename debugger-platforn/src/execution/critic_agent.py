@@ -24,12 +24,9 @@ import logging
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 
+from .llm_config import LLMProviderConfig
+
 logger = logging.getLogger(__name__)
-
-# Cost constants (Claude Haiku pricing per 1M tokens)
-_INPUT_COST_PER_M = 1.00
-_OUTPUT_COST_PER_M = 5.00
-
 
 @dataclass
 class CriticVerdict:
@@ -105,8 +102,10 @@ class CriticAgent:
         evaluate_every: int = 2,
         max_restarts: int = 2,
         quality_threshold: float = 3.0,
+        provider_config: Optional[LLMProviderConfig] = None,
     ):
-        self.model = model
+        self._provider_config = provider_config or LLMProviderConfig(model=model)
+        self.model = self._provider_config.resolved_model
         self.evaluate_every = evaluate_every
         self.max_restarts = max_restarts
         self.quality_threshold = quality_threshold
@@ -114,10 +113,9 @@ class CriticAgent:
         self._client = None  # lazy-init, reused across calls
 
     def _get_client(self):
-        """Return a shared AsyncAnthropic client (created once)."""
+        """Return a shared LLM client (Anthropic or OpenAI-compatible), created once."""
         if self._client is None:
-            from anthropic import AsyncAnthropic
-            self._client = AsyncAnthropic()
+            self._client = self._provider_config.create_async_client()
         return self._client
 
     def should_evaluate(self, turn_number: int) -> bool:
@@ -326,14 +324,10 @@ Respond with ONLY valid JSON:
     async def _call_llm(self, prompt: str) -> CriticVerdict:
         client = self._get_client()
 
-        response = await client.messages.create(
-            model=self.model,
-            max_tokens=300,
-            temperature=0.3,  # Low temp for consistent judgments
-            messages=[{"role": "user", "content": prompt}],
+        raw, input_tokens, output_tokens = await self._provider_config.call(
+            client, prompt, max_tokens=400, temperature=0.3
         )
-
-        raw = response.content[0].text.strip()
+        raw = raw.strip()
 
         # Parse JSON response
         try:
@@ -355,9 +349,8 @@ Respond with ONLY valid JSON:
                 "confidence": 0.3,
             }
 
-        tokens = response.usage.input_tokens + response.usage.output_tokens
-        cost = (response.usage.input_tokens / 1_000_000) * _INPUT_COST_PER_M + \
-               (response.usage.output_tokens / 1_000_000) * _OUTPUT_COST_PER_M
+        tokens = input_tokens + output_tokens
+        cost = self._provider_config.cost_for_tokens(input_tokens, output_tokens)
 
         return CriticVerdict(
             action=data.get("action", "continue"),

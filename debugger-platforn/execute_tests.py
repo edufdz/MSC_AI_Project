@@ -64,7 +64,10 @@ def _print_pre_run_summary(test_suite: dict, agent_map: dict, opts: dict):
     table.add_row("Workers", str(opts["workers"]))
     table.add_row("Connector", opts["connector"])
     table.add_row("AI personas", "yes" if opts["ai_personas"] else "no (offline)")
+    table.add_row("Persona model", opts.get("persona_model", "anthropic/claude-haiku-4-5"))
     table.add_row("GAN mode", opts.get("gan_label", "off"))
+    if opts.get("gan_label", "off") != "off":
+        table.add_row("Critic model", opts.get("critic_model_label", ""))
     table.add_row("Language", opts.get("language", "English"))
     table.add_row("Traces", opts["traces_dir"] or "disabled")
     table.add_row("Output dir", str(opts["output_dir"]))
@@ -167,6 +170,13 @@ def _print_final_report(report, inbox, output_dir):
 @click.option("--max-restarts", default=2, type=int, help="Max conversation restarts by Critic (default 2)")
 @click.option("--quality-threshold", default=3.0, type=float, help="Minimum quality score 0-10 to avoid restart (default 3.0)")
 @click.option("--evaluate-every", default=2, type=int, help="Critic evaluates every N agent turns (default 2). Lower = more LLM calls.")
+@click.option("--persona-provider", default="anthropic", help="LLM provider for persona messages: anthropic (default), groq, together, fireworks, openai, custom")
+@click.option("--persona-model", "persona_model_opt", default=None, help="Model override for persona (default: provider's cheapest model)")
+@click.option("--persona-api-key", default=None, help="API key for persona provider (or set GROQ_API_KEY / TOGETHER_API_KEY / etc. env var)")
+@click.option("--persona-base-url", default=None, help="Base URL for custom OpenAI-compatible persona provider")
+@click.option("--critic-provider", default="anthropic", help="LLM provider for Critic agent: anthropic (default), groq, together, fireworks, openai, custom")
+@click.option("--critic-api-key", default=None, help="API key for critic provider")
+@click.option("--critic-base-url", default=None, help="Base URL for custom critic provider")
 def main(
     test_suite_file: str,
     agent_map_file: str,
@@ -200,11 +210,33 @@ def main(
     max_restarts: int,
     quality_threshold: float,
     evaluate_every: int,
+    persona_provider: str,
+    persona_model_opt: str | None,
+    persona_api_key: str | None,
+    persona_base_url: str | None,
+    critic_provider: str,
+    critic_api_key: str | None,
+    critic_base_url: str | None,
 ):
     """Execute a test suite against an agent."""
     import random as _random
     if seed is not None:
         _random.seed(seed)
+
+    # Build LLM provider configs for persona generator and critic agent.
+    from src.execution.llm_config import LLMProviderConfig
+    persona_config = LLMProviderConfig(
+        provider=persona_provider,
+        model=persona_model_opt or None,
+        api_key=persona_api_key or None,
+        base_url=persona_base_url or None,
+    )
+    critic_config = LLMProviderConfig(
+        provider=critic_provider,
+        model=critic_model if critic_model != "claude-haiku-4-5" else None,
+        api_key=critic_api_key or None,
+        base_url=critic_base_url or None,
+    )
 
     # --improve implies --diagnose
     if improve:
@@ -303,7 +335,9 @@ def main(
         "workers": workers,
         "connector": connector_label,
         "ai_personas": ai_personas,
-        "gan_label": f"Generator + Critic ({critic_model})" if gan else "off",
+        "persona_model": persona_config.display_name() if ai_personas else "n/a (offline)",
+        "gan_label": f"Generator + Critic" if gan else "off",
+        "critic_model_label": critic_config.display_name() if gan else "",
         "traces_dir": traces_dir,
         "output_dir": output_dir,
         "language": detected_language,
@@ -354,6 +388,8 @@ def main(
         max_restarts=max_restarts,
         quality_threshold=quality_threshold,
         evaluate_every=evaluate_every,
+        persona_config=persona_config,
+        critic_config=critic_config,
     ))
 
 
@@ -390,6 +426,8 @@ async def _run_async(
     max_restarts: int = 2,
     quality_threshold: float = 3.0,
     evaluate_every: int = 2,
+    persona_config=None,
+    critic_config=None,
 ):
     started_at = datetime.now(timezone.utc)
 
@@ -413,6 +451,8 @@ async def _run_async(
         max_restarts=max_restarts,
         quality_threshold=quality_threshold,
         evaluate_every=evaluate_every,
+        persona_config=persona_config,
+        critic_config=critic_config,
     )
 
     # Monitor task (Rich terminal)
