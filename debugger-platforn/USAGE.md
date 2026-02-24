@@ -80,8 +80,6 @@ Creates personas, scenarios, coverage goals, and combines them into an executabl
 # Offline with template personas (fast, no API cost)
 python generate_tests.py agent_map.json --skip-ai --count 20
 
-# Offline with tlahuac personas (richer personas for Victoria-type agents)
-python generate_tests.py agent_map.json --use-tlahuac --skip-ai --count 20
 
 # With AI enrichment (generates additional personas + scenarios via Claude)
 python generate_tests.py agent_map.json --count 250 --persona-count 8 --scenario-count 10
@@ -105,7 +103,7 @@ python generate_tests.py agent_map.json --skip-ai --count 20 -o my_tests/
 | `--skip-ai` | off | Skip all AI generation |
 | `--count, -c` | 250 | Target number of test cases |
 | `--persona-count` | 8 | AI-generated personas to add |
-| `--scenario-count` | 10 | AI-generated scenarios to add |
+| `--scenario-count` | 10 | AI-generated scenarios to add |z
 | `--variants` | 3 | Variants per base scenario |
 | `--seed` | random | Random seed |
 | `--language, -l` | auto | Language for generated content |
@@ -151,6 +149,9 @@ python execute_tests.py generated/test_suite.json agent_map.json --mock --count 
 # With web dashboard (see below)
 python execute_tests.py generated/test_suite.json agent_map.json --mock --ui --count 10
 
+# When you run Phase C, you'll be prompted: "Do you want to add context for the personas to use? (y/n)"
+# If y, you can paste inline text (e.g. VIN, model name) or a path to a file (e.g. ./context.txt).
+
 # Execute then auto-run diagnosis (Phase C + D)
 python execute_tests.py generated/test_suite.json agent_map.json --mock --diagnose
 
@@ -177,6 +178,21 @@ python execute_tests.py generated/test_suite.json agent_map.json --mock --count 
 python execute_tests.py generated/test_suite.json agent_map.json --mock --ui --count 10
 ```
 
+### Testing persona context
+
+Before Phase C runs, the CLI asks: **Do you want to add context for the personas to use? (y/n)**. If you choose **y**:
+
+- **Inline:** type or paste context (e.g. `VIN: 1HGBH41JXMN109186, Model: Honda Accord 2021`) and press Enter.
+- **File:** enter a path (e.g. `./context.txt` or `./data/vin_list.txt`). The file contents are loaded and used as context.
+
+Personas (especially with `--ai-personas`) will see this context in their instructions and can mention it when talking to the agent. The execution summary shows **Persona context: yes** when context was loaded.
+
+**Automated tests:** run the persona-context tests (from `debugger-platforn/` with pytest installed):
+
+```bash
+python -m pytest tests/test_persona_context.py -v
+```
+
 ### Against the real agent
 
 **Terminal 1** — start the agent API (from repo root):
@@ -191,7 +207,7 @@ bun run api
 
 ```bash
 cd debugger-platforn
-python execute_tests.py generated/test_suite.json agent_map.json --count 10 -o results
+python execute_tests.py generated/test_suite.json agent_map.json --ui --ai-personas --count 10 -o results
 ```
 
 The API URL is **not** stored in `agent_map.json` (the map is generated from code and has no endpoint). It is read from **`agent_endpoints.json`** in the same directory (or the current working directory). That file defines which `localhost` (or URL) to use. See [Agent endpoints config](#agent-endpoints-config) below.

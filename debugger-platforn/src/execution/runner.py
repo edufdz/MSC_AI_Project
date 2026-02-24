@@ -33,6 +33,8 @@ class TestExecutionEngine:
         language: str = "English",
         conversation_log_file: str | None = None,
         agent_map: Dict[str, Any] | None = None,
+        persona_context: str | None = None,
+        persona_context_analyzed: Dict[str, Any] | None = None,
     ):
         self.test_suite = test_suite
         self.agent_connector = agent_connector
@@ -41,6 +43,8 @@ class TestExecutionEngine:
         self.traces_dir = traces_dir
         self.language = language
         self.conversation_log_file = conversation_log_file
+        self.persona_context = persona_context
+        self.persona_context_analyzed = persona_context_analyzed
 
         # Extract goal-driven config from agent_map (terminal_outcomes, tool_chains, etc.)
         self._agent_map_extras: Dict[str, Any] = {}
@@ -127,9 +131,12 @@ class TestExecutionEngine:
             })
 
             try:
-                timeout_sec = test_case.get("execution_config", {}).get(
-                    "timeout_per_tool_call_sec", 10
-                ) * test_case.get("scenario", {}).get("estimated_turns", 5) + 30
+                timeout_per_tool = test_case.get("execution_config", {}).get(
+                    "timeout_per_tool_call_sec", 30
+                )
+                estimated_turns = test_case.get("scenario", {}).get("estimated_turns", 10)
+                max_turns = test_case.get("execution_config", {}).get("max_turns", 40)
+                timeout_sec = timeout_per_tool * max(estimated_turns, max_turns) + 60
 
                 conv_result = await asyncio.wait_for(
                     self._run_conversation(test_case),
@@ -183,10 +190,14 @@ class TestExecutionEngine:
             return result
 
     async def _run_conversation(self, test_case: Dict) -> Dict[str, Any]:
-        # Inject agent_map extras (terminal_outcomes, tool_chains) into test_case
+        # Inject agent_map extras (terminal_outcomes, tool_chains) and optional persona context
         enriched = dict(test_case)
         if self._agent_map_extras:
             enriched.setdefault("agent_map", {}).update(self._agent_map_extras)
+        if self.persona_context is not None:
+            enriched["persona_context"] = self.persona_context
+        if self.persona_context_analyzed is not None:
+            enriched["persona_context_analyzed"] = self.persona_context_analyzed
 
         simulator = ConversationSimulator(
             test_case=enriched,

@@ -13,7 +13,7 @@ from pydantic import BaseModel, Field
 class ScenarioSuccessConditions(BaseModel):
     tool_called: Optional[str] = None
     tools_called: Optional[List[str]] = None
-    user_satisfied: bool = True
+    user_satisfied: bool = False  # Must be explicitly opted-in; default False prevents premature passes
     info_provided: Optional[List[str]] = None
 
 

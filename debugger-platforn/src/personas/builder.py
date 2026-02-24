@@ -11,6 +11,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
+import random
+
 import anthropic
 from dotenv import load_dotenv
 
@@ -25,6 +27,18 @@ _project_root = Path(__file__).parent.parent.parent
 load_dotenv(_project_root / ".env")
 
 MODEL = "claude-haiku-4-5"  # Switched to Haiku for cost savings (~67% cheaper)
+
+# Realistic fake names for generated personas — avoids leaking tool names
+_FAKE_NAMES = [
+    "Marcus Johnson", "Sofia Rivera", "James Chen", "Priya Patel",
+    "Carlos Mendoza", "Emma Thompson", "David Kim", "Aisha Williams",
+    "Robert Garcia", "Mei-Lin Wu", "Daniel Okafor", "Laura Petrov",
+    "Ahmed Hassan", "Rachel Nguyen", "Tyler Brooks", "Camila Santos",
+    "Nathan Fischer", "Olivia Reyes", "Kevin O'Brien", "Zara Mitchell",
+    "Brian Taylor", "Diana Kowalski", "Samuel Jones", "Fatima Al-Rashid",
+    "Chris Martinez", "Hannah Lee", "Victor Dubois", "Isabel Moreno",
+    "Ryan Cooper", "Ananya Sharma",
+]
 
 
 class PersonaBuilder:
@@ -45,6 +59,17 @@ class PersonaBuilder:
         self.language: str = language
         self.personas: List[Persona] = []
         self._usage_tracker = usage_tracker
+
+    def _pick_unique_name(self) -> str:
+        """Pick a realistic fake name not already used by any persona."""
+        used = {p.name for p in self.personas}
+        available = [n for n in _FAKE_NAMES if n not in used]
+        if not available:
+            # All names used — append a number to a random one
+            base = random.choice(_FAKE_NAMES)
+            suffix = len(self.personas) + 1
+            return f"{base} #{suffix}"
+        return random.choice(available)
 
     # ------------------------------------------------------------------
     # Template loading
@@ -467,7 +492,7 @@ Return ONLY a JSON array of strings (no markdown fences):
 
             chain_position = self._get_chain_position(tool_name, tool_chains)
 
-            traits, style, edge, persona_name = self._derive_tool_persona(
+            traits, style, edge, _ = self._derive_tool_persona(
                 tool_name, risk, custom_profiles,
                 param_count=param_count,
                 required_param_count=required_count,
@@ -484,7 +509,7 @@ Return ONLY a JSON array of strings (no markdown fences):
 
             persona = Persona(
                 persona_id=str(uuid.uuid4()),
-                name=persona_name,
+                name=self._pick_unique_name(),
                 agent_type=self.agent_type,
                 source="tool_attack",
                 traits=traits,
@@ -625,9 +650,9 @@ Return ONLY a JSON array of strings (no markdown fences):
         traits = _profile_to_traits(profile)
         style = PersonaStyle(**base["style"])
         edge = PersonaEdgeBehaviors(**edge_dict)
-        suffix = base["suffix"]
 
-        return traits, style, edge, f"{tool_name} {suffix}"
+        # Return None for name — caller will assign a realistic fake name
+        return traits, style, edge, None
 
     # ------------------------------------------------------------------
     # Flow-targeting persona generation
@@ -689,7 +714,7 @@ Return ONLY a JSON array of strings (no markdown fences):
 
             persona = Persona(
                 persona_id=str(uuid.uuid4()),
-                name=f"Indecisive {chain_name.replace('_', ' ').title()}",
+                name=self._pick_unique_name(),
                 agent_type=self.agent_type,
                 source="flow_attack",
                 traits=traits,

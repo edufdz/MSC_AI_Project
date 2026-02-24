@@ -10,7 +10,7 @@ from typing import Dict, List
 PERSONA_TEMPLATES: Dict[str, List[Dict]] = {
     "support": [
         {
-            "name": "Frustrated Customer",
+            "name": "Karen Mitchell",
             "traits": {
                 "patience": 2, "clarity": 4, "tech_savviness": 3,
                 "politeness": 3, "verbosity": 5,
@@ -29,7 +29,7 @@ PERSONA_TEMPLATES: Dict[str, List[Dict]] = {
             },
         },
         {
-            "name": "Confused First-Timer",
+            "name": "Tommy Brennan",
             "traits": {
                 "patience": 6, "clarity": 3, "tech_savviness": 2,
                 "politeness": 8, "verbosity": 8,
@@ -48,7 +48,7 @@ PERSONA_TEMPLATES: Dict[str, List[Dict]] = {
             },
         },
         {
-            "name": "Power User",
+            "name": "Derek Lawson",
             "traits": {
                 "patience": 7, "clarity": 9, "tech_savviness": 9,
                 "politeness": 6, "verbosity": 5,
@@ -67,7 +67,7 @@ PERSONA_TEMPLATES: Dict[str, List[Dict]] = {
             },
         },
         {
-            "name": "Angry Escalator",
+            "name": "Victor Ramos",
             "traits": {
                 "patience": 1, "clarity": 6, "tech_savviness": 5,
                 "politeness": 1, "verbosity": 7,
@@ -86,7 +86,7 @@ PERSONA_TEMPLATES: Dict[str, List[Dict]] = {
             },
         },
         {
-            "name": "Polite Elderly User",
+            "name": "Margaret Sullivan",
             "traits": {
                 "patience": 9, "clarity": 5, "tech_savviness": 2,
                 "politeness": 10, "verbosity": 9,
@@ -106,7 +106,7 @@ PERSONA_TEMPLATES: Dict[str, List[Dict]] = {
         },
         # ── New support personas ──
         {
-            "name": "Non-Native Speaker",
+            "name": "Hiroshi Tanaka",
             "traits": {
                 "patience": 7, "clarity": 4, "tech_savviness": 5,
                 "politeness": 7, "verbosity": 6,
@@ -125,7 +125,7 @@ PERSONA_TEMPLATES: Dict[str, List[Dict]] = {
             },
         },
         {
-            "name": "Accessibility-Focused User",
+            "name": "Sarah Winters",
             "traits": {
                 "patience": 7, "clarity": 7, "tech_savviness": 6,
                 "politeness": 8, "verbosity": 7,
@@ -144,7 +144,7 @@ PERSONA_TEMPLATES: Dict[str, List[Dict]] = {
             },
         },
         {
-            "name": "Multi-Tasking Parent",
+            "name": "Lisa Huang",
             "traits": {
                 "patience": 4, "clarity": 5, "tech_savviness": 5,
                 "politeness": 6, "verbosity": 4,
@@ -166,7 +166,7 @@ PERSONA_TEMPLATES: Dict[str, List[Dict]] = {
 
     "sales": [
         {
-            "name": "Budget-Conscious Researcher",
+            "name": "Nina Petrov",
             "traits": {
                 "patience": 8, "clarity": 7, "tech_savviness": 6,
                 "politeness": 7, "verbosity": 4,
@@ -185,7 +185,7 @@ PERSONA_TEMPLATES: Dict[str, List[Dict]] = {
             },
         },
         {
-            "name": "Impulsive Buyer",
+            "name": "Jake Morrison",
             "traits": {
                 "patience": 3, "clarity": 5, "tech_savviness": 4,
                 "politeness": 5, "verbosity": 3,
@@ -204,7 +204,7 @@ PERSONA_TEMPLATES: Dict[str, List[Dict]] = {
             },
         },
         {
-            "name": "Skeptical Evaluator",
+            "name": "Richard Okonkwo",
             "traits": {
                 "patience": 6, "clarity": 8, "tech_savviness": 8,
                 "politeness": 5, "verbosity": 6,
@@ -224,7 +224,7 @@ PERSONA_TEMPLATES: Dict[str, List[Dict]] = {
         },
         # ── New sales personas ──
         {
-            "name": "Loyalty Program Member",
+            "name": "Patricia Vega",
             "traits": {
                 "patience": 7, "clarity": 7, "tech_savviness": 5,
                 "politeness": 8, "verbosity": 5,
@@ -243,7 +243,7 @@ PERSONA_TEMPLATES: Dict[str, List[Dict]] = {
             },
         },
         {
-            "name": "Comparison Shopper",
+            "name": "Angela Dubois",
             "traits": {
                 "patience": 5, "clarity": 8, "tech_savviness": 7,
                 "politeness": 5, "verbosity": 7,
@@ -265,7 +265,7 @@ PERSONA_TEMPLATES: Dict[str, List[Dict]] = {
 
     "scheduling": [
         {
-            "name": "Last-Minute Booker",
+            "name": "Diego Navarro",
             "traits": {
                 "patience": 3, "clarity": 5, "tech_savviness": 5,
                 "politeness": 4, "verbosity": 4,
@@ -284,7 +284,7 @@ PERSONA_TEMPLATES: Dict[str, List[Dict]] = {
             },
         },
         {
-            "name": "Meticulous Planner",
+            "name": "Helen Crawford",
             "traits": {
                 "patience": 9, "clarity": 8, "tech_savviness": 6,
                 "politeness": 8, "verbosity": 8,
@@ -303,7 +303,7 @@ PERSONA_TEMPLATES: Dict[str, List[Dict]] = {
             },
         },
         {
-            "name": "Group Coordinator",
+            "name": "Omar Siddiqui",
             "traits": {
                 "patience": 5, "clarity": 6, "tech_savviness": 5,
                 "politeness": 7, "verbosity": 7,
@@ -323,7 +323,7 @@ PERSONA_TEMPLATES: Dict[str, List[Dict]] = {
         },
         # ── New scheduling personas ──
         {
-            "name": "Timezone-Confused Traveler",
+            "name": "Yuki Abe",
             "traits": {
                 "patience": 6, "clarity": 3, "tech_savviness": 4,
                 "politeness": 6, "verbosity": 6,
@@ -342,7 +342,7 @@ PERSONA_TEMPLATES: Dict[str, List[Dict]] = {
             },
         },
         {
-            "name": "Corporate Assistant",
+            "name": "Tanya Brooks",
             "traits": {
                 "patience": 7, "clarity": 8, "tech_savviness": 7,
                 "politeness": 8, "verbosity": 3,
@@ -364,7 +364,7 @@ PERSONA_TEMPLATES: Dict[str, List[Dict]] = {
 
     "research": [
         {
-            "name": "Focused Analyst",
+            "name": "Alex Romero",
             "traits": {
                 "patience": 8, "clarity": 9, "tech_savviness": 8,
                 "politeness": 7, "verbosity": 6,
@@ -383,7 +383,7 @@ PERSONA_TEMPLATES: Dict[str, List[Dict]] = {
             },
         },
         {
-            "name": "Exploratory Thinker",
+            "name": "Sam Delgado",
             "traits": {
                 "patience": 7, "clarity": 5, "tech_savviness": 6,
                 "politeness": 7, "verbosity": 8,
@@ -405,7 +405,7 @@ PERSONA_TEMPLATES: Dict[str, List[Dict]] = {
 
     "coding": [
         {
-            "name": "Junior Developer",
+            "name": "Ethan Park",
             "traits": {
                 "patience": 6, "clarity": 4, "tech_savviness": 5,
                 "politeness": 7, "verbosity": 7,
@@ -424,7 +424,7 @@ PERSONA_TEMPLATES: Dict[str, List[Dict]] = {
             },
         },
         {
-            "name": "Senior Engineer",
+            "name": "Monica Shah",
             "traits": {
                 "patience": 5, "clarity": 9, "tech_savviness": 10,
                 "politeness": 5, "verbosity": 3,
@@ -448,7 +448,7 @@ PERSONA_TEMPLATES: Dict[str, List[Dict]] = {
 # Fallback: generic personas usable for any agent type
 GENERIC_PERSONAS: List[Dict] = [
     {
-        "name": "Happy Path User",
+        "name": "Amanda Foster",
         "traits": {
             "patience": 8, "clarity": 8, "tech_savviness": 6,
             "politeness": 8, "verbosity": 5,
@@ -467,7 +467,7 @@ GENERIC_PERSONAS: List[Dict] = [
         },
     },
     {
-        "name": "Edge-Case Explorer",
+        "name": "Leo Fernandez",
         "traits": {
             "patience": 6, "clarity": 7, "tech_savviness": 8,
             "politeness": 5, "verbosity": 5,
@@ -486,7 +486,7 @@ GENERIC_PERSONAS: List[Dict] = [
         },
     },
     {
-        "name": "Adversarial Tester",
+        "name": "Ray Kowalski",
         "traits": {
             "patience": 4, "clarity": 6, "tech_savviness": 9,
             "politeness": 2, "verbosity": 4,
@@ -506,7 +506,7 @@ GENERIC_PERSONAS: List[Dict] = [
     },
     # ── New generic personas ──
     {
-        "name": "Distracted User",
+        "name": "Jenny Blackwood",
         "traits": {
             "patience": 5, "clarity": 4, "tech_savviness": 5,
             "politeness": 6, "verbosity": 2,
@@ -525,7 +525,7 @@ GENERIC_PERSONAS: List[Dict] = [
         },
     },
     {
-        "name": "Overthinker",
+        "name": "Arthur Lindgren",
         "traits": {
             "patience": 8, "clarity": 6, "tech_savviness": 6,
             "politeness": 7, "verbosity": 9,
@@ -549,79 +549,13 @@ GENERIC_PERSONAS: List[Dict] = [
 # ── Spanish translations ──────────────────────────────────────────
 # Only persona names are translated; numeric traits/style/edge_behaviors stay identical.
 
-_ES_NAME_MAP = {
-    # support
-    "Frustrated Customer": "Cliente Frustrado",
-    "Confused First-Timer": "Primerizo Confundido",
-    "Power User": "Usuario Experto",
-    "Angry Escalator": "Escalador Enojado",
-    "Polite Elderly User": "Usuario Mayor Amable",
-    "Non-Native Speaker": "Hablante No Nativo",
-    "Accessibility-Focused User": "Usuario Enfocado en Accesibilidad",
-    "Multi-Tasking Parent": "Padre Multitarea",
-    # scheduling
-    "Last-Minute Booker": "Reservador de Último Minuto",
-    "Meticulous Planner": "Planificador Meticuloso",
-    "Group Coordinator": "Coordinador de Grupo",
-    "Timezone-Confused Traveler": "Viajero Confundido con Horarios",
-    "Corporate Assistant": "Asistente Corporativo",
-    # sales
-    "Budget-Conscious Researcher": "Investigador Consciente del Presupuesto",
-    "Impulsive Buyer": "Comprador Impulsivo",
-    "Skeptical Evaluator": "Evaluador Escéptico",
-    "Loyalty Program Member": "Miembro del Programa de Lealtad",
-    "Comparison Shopper": "Comprador Comparativo",
-    # research
-    "Focused Analyst": "Analista Enfocado",
-    "Exploratory Thinker": "Pensador Exploratorio",
-    # coding
-    "Junior Developer": "Desarrollador Junior",
-    "Senior Engineer": "Ingeniero Senior",
-    # generic
-    "Happy Path User": "Usuario Camino Feliz",
-    "Edge-Case Explorer": "Explorador de Casos Límite",
-    "Adversarial Tester": "Probador Adversario",
-    "Distracted User": "Usuario Distraído",
-    "Overthinker": "Pensador Excesivo",
-}
+# Real names are language-neutral — no translation needed.
+# Keep the maps for backward compat but they're identity maps now.
+_ES_NAME_MAP: Dict[str, str] = {}  # Names are real names, no translation
 
 
 # ── Portuguese translations ──────────────────────────────────────
-_PT_NAME_MAP = {
-    # support
-    "Frustrated Customer": "Cliente Frustrado",
-    "Confused First-Timer": "Iniciante Confuso",
-    "Power User": "Usuário Avançado",
-    "Angry Escalator": "Escalador Irritado",
-    "Polite Elderly User": "Usuário Idoso Educado",
-    "Non-Native Speaker": "Falante Não Nativo",
-    "Accessibility-Focused User": "Usuário Focado em Acessibilidade",
-    "Multi-Tasking Parent": "Pai Multitarefa",
-    # scheduling
-    "Last-Minute Booker": "Reserva de Última Hora",
-    "Meticulous Planner": "Planejador Meticuloso",
-    "Group Coordinator": "Coordenador de Grupo",
-    "Timezone-Confused Traveler": "Viajante Confuso com Fuso Horário",
-    "Corporate Assistant": "Assistente Corporativo",
-    # sales
-    "Budget-Conscious Researcher": "Pesquisador Consciente do Orçamento",
-    "Impulsive Buyer": "Comprador Impulsivo",
-    "Skeptical Evaluator": "Avaliador Cético",
-    "Loyalty Program Member": "Membro do Programa de Fidelidade",
-    "Comparison Shopper": "Comprador Comparativo",
-    # research
-    "Focused Analyst": "Analista Focado",
-    "Exploratory Thinker": "Pensador Exploratório",
-    # coding
-    "Junior Developer": "Desenvolvedor Júnior",
-    "Senior Engineer": "Engenheiro Sênior",
-    # generic
-    "Happy Path User": "Usuário Caminho Feliz",
-    "Edge-Case Explorer": "Explorador de Casos Limite",
-    "Adversarial Tester": "Testador Adversário",
-    "Distracted User": "Usuário Distraído",
-    "Overthinker": "Pensador Excessivo",
-}
+_PT_NAME_MAP: Dict[str, str] = {}  # Names are real names, no translation
 
 
 def _translate_personas(templates: List[Dict], name_map: Dict[str, str]) -> List[Dict]:

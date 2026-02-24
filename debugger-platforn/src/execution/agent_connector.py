@@ -220,7 +220,7 @@ class APIAgentConnector(AgentConnector):
         self.api_key: str = agent_map.get("api_key", "")
         self.session_id: str | None = None
         self.timeout_sec: int = agent_map.get("success_criteria", {}).get(
-            "max_latency_ms", 30_000
+            "max_latency_ms", 60_000
         ) // 1000
 
     async def send_message(self, message: str, context: Dict | None = None) -> Dict[str, Any]:
@@ -322,7 +322,7 @@ class VictoriaConnector(AgentConnector):
         
         self.conversation_id: str | None = None
         self.timeout_sec: int = agent_map.get("success_criteria", {}).get(
-            "max_latency_ms", 30_000
+            "max_latency_ms", 60_000
         ) // 1000
 
     async def reset(self) -> None:

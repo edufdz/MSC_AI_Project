@@ -105,6 +105,8 @@ def _transition_panel(from_phase: str, to_phase: str, artifact: str, path: str):
 @click.option("--fixed-fail-rate", default=0.01, type=float, help="Fixed fail rate for A/B")
 @click.option("--smoke-limit", default=10, type=int, help="Smoke test limit")
 @click.option("--full-limit", default=50, type=int, help="Full test limit")
+# Validation
+@click.option("--skip-validation", is_flag=True, help="Skip post-Phase C conversation validation")
 # Control
 @click.option("--stop-after", default="e", type=click.Choice(["a", "b", "c", "d", "e"], case_sensitive=False),
               help="Stop after this phase (default: e = run all)")
@@ -135,6 +137,7 @@ def main(
     fixed_fail_rate: float,
     smoke_limit: int,
     full_limit: int,
+    skip_validation: bool,
     stop_after: str,
 ):
     """Run the full A→B→C→D→E agent debugging pipeline."""
@@ -311,6 +314,7 @@ def main(
     _phase_banner("Phase C: Test Execution", "Execute test suite with live monitoring")
 
     from src.execution.agent_connector import MockAgentConnector, APIAgentConnector
+    from src.execution.persona_context import analyze_persona_context, prompt_for_persona_context
     from src.execution.runner import TestExecutionEngine
     from src.execution.monitor import RealTimeMonitor
     from src.execution.aggregator import ResultsAggregator
@@ -339,6 +343,21 @@ def main(
 
     traces_dir = str(results_dir / "traces")
 
+    # Optional context for personas (inline text or path to file)
+    persona_context = prompt_for_persona_context()
+    persona_context_analyzed = None
+    if persona_context:
+        console.print("[dim]Persona context loaded.[/dim]")
+        if not skip_ai:
+            sample_goal = None
+            for tc in suite_for_exec.get("test_cases", [])[:1]:
+                sample_goal = tc.get("scenario", {}).get("user_goal")
+                break
+            with console.status("[dim]Analyzing context for personas...[/dim]"):
+                persona_context_analyzed = analyze_persona_context(persona_context, user_goal=sample_goal)
+            if persona_context_analyzed:
+                console.print("[dim]Context analyzed.[/dim]")
+
     # Run execution
     async def _run_phase_c():
         from datetime import datetime, timezone
@@ -351,6 +370,8 @@ def main(
             use_ai_personas=ai_personas,
             traces_dir=traces_dir,
             language=detected_language,
+            persona_context=persona_context,
+            persona_context_analyzed=persona_context_analyzed,
         )
 
         monitor_task = None
@@ -368,9 +389,10 @@ def main(
         aggregator = ResultsAggregator(suite_for_exec, results)
         report = aggregator.save_report(results_dir / "test_run_report.json", started_at)
         inbox = aggregator.save_failure_inbox(results_dir / "failure_inbox.json")
-        return report, inbox
+        aggregator.save_passed_inbox(results_dir / "passed_inbox.json")
+        return report, inbox, aggregator
 
-    report, inbox = asyncio.run(_run_phase_c())
+    report, inbox, aggregator = asyncio.run(_run_phase_c())
 
     c_elapsed = time.time() - c_start
     metrics["c"] = {
@@ -381,6 +403,51 @@ def main(
         "duration": f"{c_elapsed:.1f}s",
     }
     console.print(f"\n  [green]Phase C complete[/green] — {report.passed}/{report.total_tests} passed ({report.pass_rate:.1f}%), {c_elapsed:.1f}s")
+
+    # ─────────────────────────────────────────────────
+    # Validation: Filter fake failures & catch fake successes
+    # ─────────────────────────────────────────────────
+    if not skip_validation and _should_run("d", stop_after):
+        console.print()
+        console.print(Panel(
+            "[bold]Post-Phase C Validation[/bold]\n"
+            "Filtering persona-induced failures, chaos artifacts, and catching false successes",
+            style="yellow",
+        ))
+
+        v_start = time.time()
+
+        def on_validation_progress(msg: str):
+            console.print(f"  [dim]{msg}[/dim]")
+
+        inbox, _, validation = aggregator.validate_and_save(
+            results_dir=results_dir,
+            agent_map=agent_map_data,
+            use_ai=not skip_ai,
+            retry_config={
+                "max_retries": max_retries,
+                "backoff_base": backoff_base,
+            },
+            on_progress=on_validation_progress,
+        )
+
+        v_elapsed = time.time() - v_start
+        s = validation.summary
+        console.print(
+            f"  [green]Validation complete[/green] — "
+            f"{s.get('genuine_failures', 0)} genuine failures, "
+            f"{s.get('persona_incompetence_filtered', 0)} persona issues filtered, "
+            f"{s.get('chaos_induced_filtered', 0)} chaos-induced filtered, "
+            f"{s.get('false_successes_caught', 0)} false successes caught "
+            f"[{v_elapsed:.1f}s]"
+        )
+        metrics["validation"] = {
+            "genuine": s.get("genuine_failures", 0),
+            "persona_filtered": s.get("persona_incompetence_filtered", 0),
+            "chaos_filtered": s.get("chaos_induced_filtered", 0),
+            "false_successes": s.get("false_successes_caught", 0),
+            "duration": f"{v_elapsed:.1f}s",
+        }
 
     if not _should_run("d", stop_after):
         _print_final_summary(metrics, pipeline_start)
@@ -501,6 +568,13 @@ def _print_final_summary(metrics: dict, pipeline_start: float):
     if "c" in metrics:
         m = metrics["c"]
         rows.append(f"  Phase C (Execute):   {m.get('passed', '?')}/{m.get('total', '?')} passed ({m.get('pass_rate', '?')})  [{m['duration']}]")
+    if "validation" in metrics:
+        m = metrics["validation"]
+        rows.append(
+            f"  Validation:          {m.get('genuine', '?')} genuine, "
+            f"{m.get('persona_filtered', 0)}+{m.get('chaos_filtered', 0)} filtered, "
+            f"{m.get('false_successes', 0)} false successes  [{m['duration']}]"
+        )
     if "d" in metrics:
         m = metrics["d"]
         rows.append(f"  Phase D (Diagnose):  {m.get('clusters', '?')} clusters, {m.get('fix_proposals', '?')} fixes  [{m['duration']}]")
