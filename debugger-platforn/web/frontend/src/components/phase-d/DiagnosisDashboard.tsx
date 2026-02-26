@@ -9,9 +9,10 @@ import ToolFailureHeatmap from './ToolFailureHeatmap'
 
 interface DiagnosisDashboardProps {
   result: PhaseDResult
+  sessionId: string
 }
 
-export default function DiagnosisDashboard({ result }: DiagnosisDashboardProps) {
+export default function DiagnosisDashboard({ result, sessionId }: DiagnosisDashboardProps) {
   if (result.total_failures === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-64 space-y-3">
@@ -41,6 +42,7 @@ export default function DiagnosisDashboard({ result }: DiagnosisDashboardProps) 
         clusters={result.clusters}
         fixProposals={result.fix_proposals}
         priorityRanking={result.priority_ranking}
+        sessionId={sessionId}
       />
 
       {/* Fix Roadmap */}

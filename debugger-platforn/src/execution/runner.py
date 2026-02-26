@@ -73,9 +73,11 @@ class TestExecutionEngine:
 
         semaphore = asyncio.Semaphore(self.max_workers)
 
+        # Stagger starts by 0.5s each to avoid thundering herd on the API
+        stagger_interval = 0.5
         tasks = [
-            self._run_single(tc, semaphore)
-            for tc in self.test_cases
+            self._run_single(tc, semaphore, stagger_delay=i * stagger_interval)
+            for i, tc in enumerate(self.test_cases)
         ]
 
         raw = await asyncio.gather(*tasks, return_exceptions=True)
@@ -105,7 +107,12 @@ class TestExecutionEngine:
         self,
         test_case: Dict[str, Any],
         semaphore: asyncio.Semaphore,
+        stagger_delay: float = 0.0,
     ) -> TestResult:
+        # Stagger start to avoid thundering herd on the agent API
+        if stagger_delay > 0:
+            await asyncio.sleep(stagger_delay)
+
         async with semaphore:
             test_id = test_case.get("test_id", str(uuid.uuid4()))
             test_number = test_case.get("test_number", 0)
@@ -143,7 +150,21 @@ class TestExecutionEngine:
                     timeout=timeout_sec,
                 )
 
-                result.status = TestStatus.PASSED if conv_result["success"] else TestStatus.FAILED
+                # Minimum conversation length to declare a genuine FAILED.
+                # Fewer than 6 messages with an agent error is a connection/
+                # infrastructure problem, not a real test failure.
+                MIN_TURNS_FOR_FAILURE = 6
+                total_turns = len(conv_result.get("turns", []))
+                failure_reason = conv_result.get("failure_reason") or ""
+                is_agent_error = failure_reason.startswith("Agent error")
+
+                if conv_result["success"]:
+                    result.status = TestStatus.PASSED
+                elif is_agent_error and total_turns < MIN_TURNS_FOR_FAILURE:
+                    result.status = TestStatus.ERROR
+                else:
+                    result.status = TestStatus.FAILED
+
                 result.success = conv_result["success"]
                 result.failure_reason = conv_result.get("failure_reason")
                 result.outcome = conv_result.get("outcome")

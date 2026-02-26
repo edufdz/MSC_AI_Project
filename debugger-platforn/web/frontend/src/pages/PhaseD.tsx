@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useStore } from '../store'
 import { usePhaseRunner } from '../hooks/usePhaseRunner'
-import { getPhaseDStatus } from '../api/client'
+import { getPhaseDStatus, resetPhase as apiResetPhase } from '../api/client'
 import DiagnosisControls from '../components/phase-d/DiagnosisControls'
 import DiagnosisDashboard from '../components/phase-d/DiagnosisDashboard'
 import PhaseProgress from '../components/shared/PhaseProgress'
@@ -27,6 +27,7 @@ export default function PhaseD() {
   const setPhaseDResult = useStore((s) => s.setPhaseDResult)
   const setPhaseStatus = useStore((s) => s.setPhaseStatus)
   const phaseCCompleted = useStore((s) => s.phaseC) === 'completed'
+  const storeResetPhase = useStore((s) => s.resetPhase)
   const { runPhaseD } = usePhaseRunner()
 
   // Form state
@@ -46,6 +47,16 @@ export default function PhaseD() {
       }).catch(() => {})
     }
   }, [sessionId, phaseResult, phaseStatus, setPhaseStatus, setPhaseDResult])
+
+  const handleRerun = async () => {
+    if (!sessionId) return
+    try {
+      await apiResetPhase(sessionId, 'd')
+      storeResetPhase('d')
+    } catch (e) {
+      setError(String(e))
+    }
+  }
 
   const handleRun = async () => {
     setError('')
@@ -100,14 +111,22 @@ export default function PhaseD() {
             <h1 className="text-xl font-semibold tracking-tight text-pearl">Phase D: Diagnosis</h1>
             <p className="text-sm text-smoke mt-0.5">Failure analysis and fix recommendations</p>
           </div>
-          <div className="text-right">
-            <div className="text-2xl font-bold font-mono text-pearl">
-              {phaseResult.clusters_found}
+          <div className="flex items-center gap-4">
+            <button
+              onClick={handleRerun}
+              className="px-3 py-1.5 border border-border rounded-lg text-sm text-smoke hover:text-pearl hover:border-border-light transition-colors duration-200"
+            >
+              Re-run
+            </button>
+            <div className="text-right">
+              <div className="text-2xl font-bold font-mono text-pearl">
+                {phaseResult.clusters_found}
+              </div>
+              <div className="text-[11px] text-text-muted uppercase tracking-wider">Clusters Found</div>
             </div>
-            <div className="text-[11px] text-text-muted uppercase tracking-wider">Clusters Found</div>
           </div>
         </div>
-        <DiagnosisDashboard result={phaseResult} />
+        <DiagnosisDashboard result={phaseResult} sessionId={sessionId} />
       </div>
     )
   }

@@ -5,12 +5,14 @@ import StatusBadge from '../shared/StatusBadge'
 
 export default function SimulationCards() {
   const activeTests = useStore((s) => s.activeTests)
+  const phaseCStatus = useStore((s) => s.phaseC)
   const [selectedTestId, setSelectedTestId] = useState<string | null>(null)
   const [tab, setTab] = useState<'active' | 'conversations'>('active')
 
   const tests = Array.from(activeTests.values())
   const runningTests = tests.filter((t) => t.status === 'running')
   const completedTestsList = tests.filter((t) => t.status !== 'running')
+  const isLoadingSimulations = phaseCStatus === 'running' && runningTests.length === 0 && completedTestsList.length === 0
 
   if (selectedTestId) {
     const test = activeTests.get(selectedTestId)
@@ -54,7 +56,14 @@ export default function SimulationCards() {
       {/* Active simulations */}
       {tab === 'active' && (
         <div className="grid grid-cols-2 gap-3">
-          {runningTests.length === 0 && (
+          {isLoadingSimulations && (
+            <div className="col-span-2 flex flex-col items-center justify-center py-12 text-center">
+              <div className="w-10 h-10 border-2 border-platinum/30 border-t-platinum rounded-full animate-spin mb-3" />
+              <p className="text-sm font-medium text-pearl">Loading simulations…</p>
+              <p className="text-xs text-text-muted mt-1">Starting tests — simulations will appear here as they run</p>
+            </div>
+          )}
+          {!isLoadingSimulations && runningTests.length === 0 && (
             <div className="col-span-2 text-center py-8 text-text-muted text-sm">
               No active simulations
             </div>

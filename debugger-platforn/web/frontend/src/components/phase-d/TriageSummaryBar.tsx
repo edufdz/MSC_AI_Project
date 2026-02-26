@@ -32,16 +32,22 @@ export default function TriageSummaryBar({ result }: TriageSummaryBarProps) {
     : 'N/A'
 
   const cards = [
+    // Row 1: Core stats
     { label: 'Failures Analyzed', value: String(totalFailures), sub: `of ${totalTests} tests` },
-    { label: 'Clusters Found', value: String(summary.clusters_count), sub: 'failure groups' },
-    { label: 'Fix Proposals', value: String(summary.fixes_count), sub: 'actionable fixes' },
     { label: 'Failure Rate', value: `${summary.failure_rate.toFixed(1)}%`, sub: `${totalFailures} failures` },
     { label: 'Top Root Cause', value: topRootCause, sub: `${rootCauseEntries[0]?.[1] || 0} clusters` },
+    // Row 2: Performance metrics
+    { label: 'Bug Discovery', value: summary.bug_discovery_rate != null ? `${summary.bug_discovery_rate.toFixed(1)}%` : '--', sub: 'unique bugs per test' },
+    { label: 'Redundancy', value: summary.redundancy_rate != null ? `${summary.redundancy_rate.toFixed(1)}%` : '--', sub: 'duplicate failures' },
+    { label: 'Severity Score', value: summary.severity_weighted_score != null ? summary.severity_weighted_score.toFixed(2) : '--', sub: 'weighted avg (1-5)' },
+    // Row 3: Actionable
+    { label: 'Clusters Found', value: String(summary.clusters_count), sub: 'failure groups' },
+    { label: 'Fix Proposals', value: String(summary.fixes_count), sub: 'actionable fixes' },
     { label: 'Est. Improvement', value: `+${estimatedImprovement.toFixed(1)}%`, sub: `to ~${(currentPassRate + estimatedImprovement).toFixed(1)}%` },
   ]
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+    <div className="grid grid-cols-3 gap-3">
       {cards.map((card) => (
         <div key={card.label} className="bg-bg-card border border-border rounded-lg p-3">
           <div className="text-[11px] font-semibold uppercase tracking-widest text-text-muted">
