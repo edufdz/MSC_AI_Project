@@ -1,7 +1,7 @@
 // Zustand store for global app state
 
 import { create } from 'zustand'
-import type { PhaseAResult, PhaseBResult, PhaseCResult, WSEvent } from '../api/types'
+import type { PhaseAResult, PhaseBResult, PhaseCResult, PhaseDResult, TriageSummary, WSEvent } from '../api/types'
 
 export type PhaseStatusValue = 'idle' | 'running' | 'completed' | 'error'
 
@@ -36,21 +36,25 @@ export interface AppState {
   phaseA: PhaseStatusValue
   phaseB: PhaseStatusValue
   phaseC: PhaseStatusValue
-  setPhaseStatus: (phase: 'a' | 'b' | 'c', status: PhaseStatusValue) => void
+  phaseD: PhaseStatusValue
+  setPhaseStatus: (phase: 'a' | 'b' | 'c' | 'd', status: PhaseStatusValue) => void
 
   // Phase progress
   phaseAProgress: { step: string; message: string; pct: number }
   phaseBProgress: { step: string; message: string; pct: number }
   phaseCProgress: { step: string; message: string; pct: number }
-  setPhaseProgress: (phase: 'a' | 'b' | 'c', step: string, message: string, pct: number) => void
+  phaseDProgress: { step: string; message: string; pct: number }
+  setPhaseProgress: (phase: 'a' | 'b' | 'c' | 'd', step: string, message: string, pct: number) => void
 
   // Phase results
   phaseAResult: PhaseAResult | null
   phaseBResult: PhaseBResult | null
   phaseCResult: PhaseCResult | null
+  phaseDResult: PhaseDResult | null
   setPhaseAResult: (r: PhaseAResult | null) => void
   setPhaseBResult: (r: PhaseBResult | null) => void
   setPhaseCResult: (r: PhaseCResult | null) => void
+  setPhaseDResult: (r: PhaseDResult | null) => void
 
   // Phase C live monitor state
   totalTests: number
@@ -66,8 +70,10 @@ export interface AppState {
   activeTests: Map<string, ActiveTest>
   eventLog: EventLogEntry[]
   failures: Array<Record<string, unknown>>
+  triageSummary: TriageSummary | null
   setAllTools: (tools: string[]) => void
   handleExecutionEvent: (event: WSEvent) => void
+  hydratePhaseCFromResult: (r: PhaseCResult) => void
 
   // Reset
   resetSession: () => void
@@ -85,26 +91,31 @@ export const useStore = create<AppState>((set, get) => ({
   phaseA: 'idle',
   phaseB: 'idle',
   phaseC: 'idle',
+  phaseD: 'idle',
   setPhaseStatus: (phase, status) => {
     if (phase === 'a') set({ phaseA: status })
     else if (phase === 'b') set({ phaseB: status })
     else if (phase === 'c') set({ phaseC: status })
+    else if (phase === 'd') set({ phaseD: status })
   },
 
   phaseAProgress: { ...defaultProgress },
   phaseBProgress: { ...defaultProgress },
   phaseCProgress: { ...defaultProgress },
+  phaseDProgress: { ...defaultProgress },
   setPhaseProgress: (phase, step, message, pct) => {
-    const key = phase === 'a' ? 'phaseAProgress' : phase === 'b' ? 'phaseBProgress' : 'phaseCProgress'
+    const key = phase === 'a' ? 'phaseAProgress' : phase === 'b' ? 'phaseBProgress' : phase === 'c' ? 'phaseCProgress' : 'phaseDProgress'
     set({ [key]: { step, message, pct } })
   },
 
   phaseAResult: null,
   phaseBResult: null,
   phaseCResult: null,
+  phaseDResult: null,
   setPhaseAResult: (r) => set({ phaseAResult: r }),
   setPhaseBResult: (r) => set({ phaseBResult: r }),
   setPhaseCResult: (r) => set({ phaseCResult: r }),
+  setPhaseDResult: (r) => set({ phaseDResult: r }),
 
   // Phase C live state
   totalTests: 0,
@@ -120,6 +131,7 @@ export const useStore = create<AppState>((set, get) => ({
   activeTests: new Map(),
   eventLog: [],
   failures: [],
+  triageSummary: null,
   setAllTools: (tools) => set({ allTools: tools }),
 
   handleExecutionEvent: (event) => {
@@ -140,6 +152,7 @@ export const useStore = create<AppState>((set, get) => ({
         activeTests: new Map(),
         eventLog: [],
         failures: [],
+        triageSummary: null,
       })
       if (event.tools_called) {
         set({ allTools: event.tools_called as unknown as string[] })
@@ -203,6 +216,19 @@ export const useStore = create<AppState>((set, get) => ({
         set({ failures: [...state.failures, event as unknown as Record<string, unknown>] })
       }
       set({ activeTests: tests })
+    } else if (type === 'validation_completed') {
+      // Store triage summary from AI validation
+      if (event.summary) {
+        const s = event.summary as Record<string, number>
+        set({
+          triageSummary: {
+            genuine_failures: s.genuine_failures ?? 0,
+            persona_filtered: s.persona_incompetence_filtered ?? 0,
+            chaos_filtered: s.chaos_induced_filtered ?? 0,
+            false_successes: s.false_successes_caught ?? 0,
+          },
+        })
+      }
     } else if (type === 'run_completed') {
       // Final state update from run_completed enriched data
       if (typeof event.pass_rate === 'number') {
@@ -218,17 +244,31 @@ export const useStore = create<AppState>((set, get) => ({
     }
   },
 
+  hydratePhaseCFromResult: (r) => set({
+    totalTests: r.total_tests,
+    passedTests: r.passed,
+    failedTests: r.failed,
+    errorTests: r.errors,
+    timeoutTests: r.timeouts,
+    completedTests: r.total_tests,
+    passRate: r.pass_rate,
+    totalCost: r.total_cost_usd,
+  }),
+
   resetSession: () => set({
     sessionId: null,
     phaseA: 'idle',
     phaseB: 'idle',
     phaseC: 'idle',
+    phaseD: 'idle',
     phaseAProgress: { ...defaultProgress },
     phaseBProgress: { ...defaultProgress },
     phaseCProgress: { ...defaultProgress },
+    phaseDProgress: { ...defaultProgress },
     phaseAResult: null,
     phaseBResult: null,
     phaseCResult: null,
+    phaseDResult: null,
     totalTests: 0,
     passedTests: 0,
     failedTests: 0,
@@ -242,6 +282,7 @@ export const useStore = create<AppState>((set, get) => ({
     activeTests: new Map(),
     eventLog: [],
     failures: [],
+    triageSummary: null,
   }),
 }))
 

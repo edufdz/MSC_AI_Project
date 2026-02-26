@@ -37,10 +37,10 @@ export default function LiveMonitor() {
 
         {/* Stat cards */}
         <div className="grid grid-cols-2 gap-2 mb-4">
-          <StatCard label="Passed" value={passedTests} />
-          <StatCard label="Failed" value={failedTests} />
-          <StatCard label="Errors" value={errorTests} />
-          <StatCard label="Timeouts" value={timeoutTests} />
+          <StatCard label="Passed" value={passedTests} color="emerald" />
+          <StatCard label="Failed" value={failedTests} color="red" />
+          <StatCard label="Errors" value={errorTests} color="amber" />
+          <StatCard label="Timeouts" value={timeoutTests} color="yellow" />
         </div>
 
         {/* Pass rate */}
@@ -94,9 +94,18 @@ export default function LiveMonitor() {
   )
 }
 
-function StatCard({ label, value }: { label: string; value: number }) {
+const statCardStyles: Record<string, { border: string; bg: string; bgActive: string }> = {
+  emerald: { border: 'border-l-emerald-500', bg: 'bg-emerald-500/5', bgActive: 'bg-emerald-500/10' },
+  red:     { border: 'border-l-red-500',     bg: 'bg-red-500/5',     bgActive: 'bg-red-500/10' },
+  amber:   { border: 'border-l-amber-500',   bg: 'bg-amber-500/5',   bgActive: 'bg-amber-500/10' },
+  yellow:  { border: 'border-l-yellow-500',  bg: 'bg-yellow-500/5',  bgActive: 'bg-yellow-500/10' },
+}
+
+function StatCard({ label, value, color }: { label: string; value: number; color: string }) {
+  const style = statCardStyles[color]
+  const bgClass = value > 0 ? style.bgActive : style.bg
   return (
-    <div className="bg-bg-card border border-border rounded-lg p-3 text-center">
+    <div className={`border border-border border-l-4 ${style.border} ${bgClass} rounded-lg p-3 text-center`}>
       <div className="text-2xl font-bold font-mono text-pearl tabular-nums">{value}</div>
       <div className="text-[11px] text-text-muted uppercase tracking-wider">{label}</div>
     </div>

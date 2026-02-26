@@ -13,6 +13,7 @@ export function useWebSocket() {
   const setPhaseAResult = useStore((s) => s.setPhaseAResult)
   const setPhaseBResult = useStore((s) => s.setPhaseBResult)
   const setPhaseCResult = useStore((s) => s.setPhaseCResult)
+  const setPhaseDResult = useStore((s) => s.setPhaseDResult)
   const handleExecutionEvent = useStore((s) => s.handleExecutionEvent)
   const connRef = useRef<WSConnection | null>(null)
 
@@ -34,24 +35,25 @@ export function useWebSocket() {
 
       // Phase progress events
       if (event.type === 'phase_progress' && event.phase) {
-        const phase = event.phase as 'a' | 'b' | 'c'
+        const phase = event.phase as 'a' | 'b' | 'c' | 'd'
         setPhaseProgress(phase, event.step || '', event.message || '', event.progress_pct || 0)
         return
       }
 
       // Phase complete events
       if (event.type === 'phase_complete' && event.phase) {
-        const phase = event.phase as 'a' | 'b' | 'c'
+        const phase = event.phase as 'a' | 'b' | 'c' | 'd'
         setPhaseStatus(phase, 'completed')
         if (phase === 'a' && event.result) setPhaseAResult(event.result as never)
         if (phase === 'b' && event.result) setPhaseBResult(event.result as never)
         if (phase === 'c' && event.result) setPhaseCResult(event.result as never)
+        if (phase === 'd' && event.result) setPhaseDResult(event.result as never)
         return
       }
 
       // Phase error events
       if (event.type === 'phase_error' && event.phase) {
-        setPhaseStatus(event.phase as 'a' | 'b' | 'c', 'error')
+        setPhaseStatus(event.phase as 'a' | 'b' | 'c' | 'd', 'error')
         return
       }
 
@@ -69,5 +71,5 @@ export function useWebSocket() {
       conn.disconnect()
       connRef.current = null
     }
-  }, [sessionId, setWsConnected, setPhaseStatus, setPhaseProgress, setPhaseAResult, setPhaseBResult, setPhaseCResult, handleExecutionEvent])
+  }, [sessionId, setWsConnected, setPhaseStatus, setPhaseProgress, setPhaseAResult, setPhaseBResult, setPhaseCResult, setPhaseDResult, handleExecutionEvent])
 }

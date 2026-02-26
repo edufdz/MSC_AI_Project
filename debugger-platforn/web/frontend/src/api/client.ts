@@ -52,11 +52,18 @@ export const getPhaseBStatus = (sessionId: string) =>
   request<{ session_id: string; phase: string; status: string; progress_pct?: number; message?: string; result: Record<string, unknown> | null }>(`/api/phase-b/status/${sessionId}`)
 
 // Phase C
-export const runPhaseC = (body: { session_id: string; mock: boolean; workers: number; count: number; ai_personas: boolean; traces: boolean; fail_rate: number; seed: number | null; language: string | null; persona_context: string | null }) =>
+export const runPhaseC = (body: { session_id: string; mock: boolean; workers: number; count: number; ai_personas: boolean; traces: boolean; fail_rate: number; seed: number | null; language: string | null; persona_context: string | null; validate: boolean }) =>
   request<{ status: string; session_id: string }>('/api/phase-c/run', { method: 'POST', body: JSON.stringify(body) })
 
 export const getPhaseCStatus = (sessionId: string) =>
   request<{ session_id: string; phase: string; status: string; progress_pct?: number; message?: string; result: Record<string, unknown> | null }>(`/api/phase-c/status/${sessionId}`)
+
+// Phase D
+export const runPhaseD = (body: { session_id: string; skip_ai: boolean; use_embeddings: boolean; max_retries: number; backoff_base: number; backoff_max: number }) =>
+  request<{ status: string; session_id: string }>('/api/phase-d/run', { method: 'POST', body: JSON.stringify(body) })
+
+export const getPhaseDStatus = (sessionId: string) =>
+  request<{ session_id: string; phase: string; status: string; progress_pct?: number; message?: string; result: Record<string, unknown> | null }>(`/api/phase-d/status/${sessionId}`)
 
 // Artifacts
 export const getArtifact = (sessionId: string, type: string) =>

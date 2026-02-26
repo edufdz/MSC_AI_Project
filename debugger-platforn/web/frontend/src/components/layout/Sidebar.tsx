@@ -5,6 +5,7 @@ const phases = [
   { key: 'a' as const, label: 'Phase A', sub: 'Analyze', path: '/phase-a' },
   { key: 'b' as const, label: 'Phase B', sub: 'Generate Tests', path: '/phase-b' },
   { key: 'c' as const, label: 'Phase C', sub: 'Execute', path: '/phase-c' },
+  { key: 'd' as const, label: 'Phase D', sub: 'Diagnose', path: '/phase-d' },
 ]
 
 function StatusIcon({ status }: { status: string }) {
@@ -23,10 +24,11 @@ export default function Sidebar() {
   const phaseA = useStore((s) => s.phaseA)
   const phaseB = useStore((s) => s.phaseB)
   const phaseC = useStore((s) => s.phaseC)
+  const phaseD = useStore((s) => s.phaseD)
   const sessionId = useStore((s) => s.sessionId)
   const resetSession = useStore((s) => s.resetSession)
 
-  const statuses = { a: phaseA, b: phaseB, c: phaseC }
+  const statuses = { a: phaseA, b: phaseB, c: phaseC, d: phaseD }
 
   return (
     <aside className="w-[260px] min-w-[260px] bg-bg-surface border-r border-border flex flex-col">

@@ -26,24 +26,28 @@ export default function ConversationView({ test }: ConversationViewProps) {
         <div className="text-xs text-text-muted mt-1">Persona: {test.persona} | Difficulty: {test.difficulty}</div>
       </div>
 
-      {/* Conversation turns */}
+      {/* Conversation turns — WhatsApp style: green (user) / white (agent) */}
       <div className="space-y-2">
         {test.turns.map((turn, i) => (
           <div
             key={i}
-            className={`rounded-lg p-3 ${
-              turn.role === 'user'
-                ? 'bg-graphite/50 border border-border-light ml-4'
-                : 'bg-bg-card border border-border mr-4'
-            }`}
+            className={`flex ${turn.role === 'user' ? 'justify-end' : 'justify-start'}`}
           >
-            <div className="flex items-center justify-between mb-1">
-              <span className={`text-xs font-bold ${turn.role === 'user' ? 'text-pearl' : 'text-smoke'}`}>
-                {turn.role === 'user' ? 'User (Persona)' : 'Agent'}
-              </span>
-              <span className="text-[10px] text-text-muted font-mono">Turn {turn.turn}</span>
+            <div
+              className={`max-w-[85%] rounded-lg px-3 py-2 shadow-sm ${
+                turn.role === 'user'
+                  ? 'bg-[#D9FDD3] text-[#111B21] rounded-br-none'
+                  : 'bg-white text-[#111B21] rounded-bl-none border border-[#E9EDEF]'
+              }`}
+            >
+              <div className="flex items-center justify-between mb-1 gap-2">
+                <span className={`text-xs font-bold ${turn.role === 'user' ? 'text-[#0D8050]' : 'text-[#54656F]'}`}>
+                  {turn.role === 'user' ? 'User (Persona)' : 'Agent'}
+                </span>
+                <span className="text-[10px] text-[#667781] font-mono">Turn {turn.turn}</span>
+              </div>
+              <div className="text-sm whitespace-pre-wrap">{turn.message}</div>
             </div>
-            <div className="text-sm text-pearl whitespace-pre-wrap">{turn.message}</div>
           </div>
         ))}
       </div>

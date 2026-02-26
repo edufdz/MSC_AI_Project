@@ -16,8 +16,10 @@ export default function PhaseC() {
   const phaseResult = useStore((s) => s.phaseCResult)
   const setPhaseCResult = useStore((s) => s.setPhaseCResult)
   const setPhaseStatus = useStore((s) => s.setPhaseStatus)
+  const hydratePhaseCFromResult = useStore((s) => s.hydratePhaseCFromResult)
   const phaseBCompleted = useStore((s) => s.phaseB) === 'completed'
   const completedTests = useStore((s) => s.completedTests)
+  const triageSummary = useStore((s) => s.triageSummary)
   const { runPhaseC } = usePhaseRunner()
 
   // Form state
@@ -30,18 +32,21 @@ export default function PhaseC() {
   const [seed, setSeed] = useState<number | null>(null)
   const [language, setLanguage] = useState('')
   const [personaContext, setPersonaContext] = useState('')
+  const [validate, setValidate] = useState(true)
   const [error, setError] = useState('')
 
   useEffect(() => {
     if (sessionId && !phaseResult && phaseStatus !== 'running') {
       getPhaseCStatus(sessionId).then((s) => {
         if (s.status === 'completed' && s.result) {
+          const result = s.result as unknown as PhaseCResult
           setPhaseStatus('c', 'completed')
-          setPhaseCResult(s.result as unknown as PhaseCResult)
+          hydratePhaseCFromResult(result)
+          setPhaseCResult(result)
         }
       }).catch(() => {})
     }
-  }, [sessionId, phaseResult, phaseStatus, setPhaseStatus, setPhaseCResult])
+  }, [sessionId, phaseResult, phaseStatus, setPhaseStatus, setPhaseCResult, hydratePhaseCFromResult])
 
   const handleRun = async () => {
     setError('')
@@ -61,6 +66,7 @@ export default function PhaseC() {
         seed,
         language: language || null,
         persona_context: personaContext || null,
+        validate,
       })
     } catch (e) {
       setError(String(e))
@@ -90,12 +96,47 @@ export default function PhaseC() {
     )
   }
 
-  // Show live monitor when running or completed with events
-  const showMonitor = status === 'running' || (status === 'completed' && completedTests > 0)
+  // Show live monitor when running or when completed (keep it visible so you can still see conversations/results)
+  const showMonitor = status === 'running' || (status === 'completed' && (completedTests > 0 || phaseResult != null))
+  const failedCount = phaseResult ? phaseResult.failed + phaseResult.errors + phaseResult.timeouts : 0
+  const triage = phaseResult?.triage ?? triageSummary
 
   if (showMonitor) {
     return (
       <div className="h-full">
+        {/* Phase C → D CTA banner */}
+        {status === 'completed' && phaseResult && failedCount > 0 && (
+          <div className="mb-4 bg-bg-card border border-border rounded-lg px-4 py-3 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              {triage ? (
+                <>
+                  <span className="text-sm text-pearl font-medium">
+                    {triage.genuine_failures} genuine failure{triage.genuine_failures !== 1 ? 's' : ''}
+                  </span>
+                  <span className="text-xs text-text-muted">
+                    {triage.persona_filtered > 0 && `${triage.persona_filtered} persona-filtered`}
+                    {triage.persona_filtered > 0 && triage.chaos_filtered > 0 && ', '}
+                    {triage.chaos_filtered > 0 && `${triage.chaos_filtered} chaos-filtered`}
+                    {triage.false_successes > 0 && ` + ${triage.false_successes} false success${triage.false_successes !== 1 ? 'es' : ''} caught`}
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span className="text-sm text-pearl font-medium">
+                    {failedCount} failure{failedCount !== 1 ? 's' : ''} detected
+                  </span>
+                  <span className="text-xs text-text-muted">Ready for diagnosis</span>
+                </>
+              )}
+            </div>
+            <button
+              onClick={() => navigate('/phase-d')}
+              className="px-4 py-1.5 bg-platinum text-bg rounded-lg text-sm font-medium hover:bg-pearl transition-colors duration-200"
+            >
+              Diagnose &rarr;
+            </button>
+          </div>
+        )}
         <div className="flex items-center justify-between mb-4">
           <div>
             <h1 className="text-xl font-semibold tracking-tight text-pearl">Phase C: Live Monitor</h1>
@@ -138,6 +179,7 @@ export default function PhaseC() {
             failRate={failRate} onFailRateChange={setFailRate}
             seed={seed} onSeedChange={setSeed}
             language={language} onLanguageChange={setLanguage}
+            validate={validate} onValidateChange={setValidate}
           />
         </div>
 

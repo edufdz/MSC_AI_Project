@@ -19,7 +19,7 @@ class Session:
         self.output_dir = str(OUTPUT_BASE_DIR / self.session_id)
         Path(self.output_dir).mkdir(parents=True, exist_ok=True)
         self.phases_completed: list[str] = []
-        self.phase_status: dict[str, str] = {"a": "idle", "b": "idle", "c": "idle"}
+        self.phase_status: dict[str, str] = {"a": "idle", "b": "idle", "c": "idle", "d": "idle"}
         self.phase_results: dict[str, Any] = {}
         self.phase_progress: dict[str, dict[str, Any]] = {}  # phase -> {step, message, pct}
         self.artifacts: dict[str, str] = {}  # type -> file path

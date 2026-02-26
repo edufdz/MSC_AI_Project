@@ -4,6 +4,7 @@ import Dashboard from './pages/Dashboard'
 import PhaseA from './pages/PhaseA'
 import PhaseB from './pages/PhaseB'
 import PhaseC from './pages/PhaseC'
+import PhaseD from './pages/PhaseD'
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
         <Route path="/phase-a" element={<PhaseA />} />
         <Route path="/phase-b" element={<PhaseB />} />
         <Route path="/phase-c" element={<PhaseC />} />
+        <Route path="/phase-d" element={<PhaseD />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </AppShell>

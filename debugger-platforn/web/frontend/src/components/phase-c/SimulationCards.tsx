@@ -63,7 +63,7 @@ export default function SimulationCards() {
             <div
               key={test.test_id}
               onClick={() => setSelectedTestId(test.test_id)}
-              className="bg-bg-card border border-border-light rounded-lg p-3 cursor-pointer hover:border-platinum/30 transition-all duration-200"
+              className="bg-bg-card border border-accent/40 rounded-lg p-3 cursor-pointer hover:border-platinum/30 transition-all duration-200"
             >
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-mono text-smoke">{test.test_id}</span>
@@ -71,12 +71,17 @@ export default function SimulationCards() {
               </div>
               <div className="text-sm text-pearl truncate">{test.scenario}</div>
               <div className="text-xs text-text-muted mt-1">{test.persona}</div>
-              {/* Last messages */}
+              {/* Last messages — WhatsApp style: green (user) / white (agent) */}
               <div className="mt-2 space-y-1">
                 {test.turns.slice(-2).map((turn, i) => (
-                  <div key={i} className={`text-[11px] px-2 py-1 rounded ${
-                    turn.role === 'user' ? 'bg-graphite/80 text-smoke' : 'bg-bg-surface text-text-muted'
-                  }`}>
+                  <div
+                    key={i}
+                    className={`text-[11px] px-2 py-1 rounded max-w-full ${
+                      turn.role === 'user'
+                        ? 'bg-[#D9FDD3] text-[#111B21] ml-auto rounded-br-none'
+                        : 'bg-white text-[#111B21] border border-[#E9EDEF] rounded-bl-none'
+                    }`}
+                  >
                     <span className="font-bold">{turn.role}: </span>
                     <span className="truncate">{turn.message.slice(0, 60)}</span>
                   </div>
@@ -110,18 +115,25 @@ export default function SimulationCards() {
               No completed conversations yet
             </div>
           )}
-          {completedTestsList.map((test) => (
+          {completedTestsList.map((test) => {
+            const borderColor =
+              test.status === 'passed' ? 'border-l-emerald-500' :
+              test.status === 'failed' ? 'border-l-red-500' :
+              test.status === 'error' ? 'border-l-amber-500' :
+              test.status === 'timeout' ? 'border-l-yellow-500' : ''
+            return (
             <button
               key={test.test_id}
               onClick={() => setSelectedTestId(test.test_id)}
-              className="w-full flex items-center gap-3 px-3 py-2 bg-bg-card border border-border rounded-lg hover:border-border-light transition-all duration-200"
+              className={`w-full flex items-center gap-3 px-3 py-2 bg-bg-card border border-border rounded-lg hover:border-border-light transition-all duration-200 ${borderColor ? `border-l-4 ${borderColor}` : ''}`}
             >
               <span className="text-xs font-mono text-text-muted w-16">{test.test_id}</span>
               <span className="text-sm text-pearl flex-1 truncate text-left">{test.scenario}</span>
               <span className="text-xs text-text-muted">{test.turns.length} turns</span>
               <StatusBadge status={test.status} />
             </button>
-          ))}
+            )
+          })}
         </div>
       )}
     </div>

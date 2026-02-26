@@ -137,15 +137,70 @@ async def _run_phase_c_async(req: PhaseCRequest, emitter: ProgressEmitter) -> di
         persona_context_analyzed=persona_context_analyzed,
     )
 
-    # Forward engine events to WS clients
+    # Forward engine events to WS clients, enriching with running totals
     queue = ws_manager.get_queue(req.session_id)
 
+    # Extract all tool names from agent_map for tool coverage tracking
+    all_tools = [
+        t["name"]
+        for t in agent_map.get("components", {}).get("tools", [])
+    ]
+    # Fallback: try test_suite summary
+    if not all_tools:
+        all_tools = list(
+            test_suite.get("summary", {}).get("tool_invocation_counts", {}).keys()
+        )
+
     async def _forward_events():
+        totals = {
+            "passed": 0, "failed": 0, "errors": 0, "timeouts": 0,
+            "completed": 0, "total_tests": len(engine.test_cases),
+            "total_cost_usd": 0.0, "pass_rate": 0.0,
+            "tools_covered": 0, "tools_total": len(all_tools),
+        }
+        tools_seen: set[str] = set()
+
         while True:
             try:
                 event = await asyncio.wait_for(engine.event_queue.get(), timeout=0.3)
+                etype = event.get("type")
+
+                if etype == "run_started":
+                    event["_totals"] = dict(totals)
+                    event["tools_called"] = all_tools
+
+                elif etype == "test_completed":
+                    status = event.get("status", "")
+                    totals["completed"] += 1
+                    if status == "passed":
+                        totals["passed"] += 1
+                    elif status == "failed":
+                        totals["failed"] += 1
+                    elif status == "error":
+                        totals["errors"] += 1
+                    elif status == "timeout":
+                        totals["timeouts"] += 1
+                    totals["total_cost_usd"] += event.get("cost_usd", 0) or 0
+                    if totals["completed"] > 0:
+                        totals["pass_rate"] = round(
+                            totals["passed"] / totals["completed"] * 100, 1
+                        )
+                    event["_totals"] = dict(totals)
+
+                elif etype == "tool_called":
+                    tool_name = event.get("tool_name", "")
+                    if tool_name and tool_name not in tools_seen:
+                        tools_seen.add(tool_name)
+                        totals["tools_covered"] = len(tools_seen)
+
+                elif etype == "run_completed":
+                    if totals["completed"] > 0:
+                        event["pass_rate"] = round(
+                            totals["passed"] / totals["completed"] * 100, 1
+                        )
+
                 await ws_manager.broadcast(req.session_id, event)
-                if event.get("type") == "run_completed":
+                if etype == "run_completed":
                     return
             except asyncio.TimeoutError:
                 continue
@@ -161,17 +216,51 @@ async def _run_phase_c_async(req: PhaseCRequest, emitter: ProgressEmitter) -> di
     except asyncio.TimeoutError:
         forward_task.cancel()
 
-    emitter.emit("generating_reports", "Generating reports...", 90)
+    emitter.emit("generating_reports", "Generating reports...", 85)
 
     # Aggregate results
     aggregator = ResultsAggregator(test_suite, results)
     report = aggregator.save_report(output_dir / "test_run_report.json", started_at)
-    inbox = aggregator.save_failure_inbox(output_dir / "failure_inbox.json")
 
-    # Register artifacts
+    # Register common artifacts
     session_manager.set_artifact(req.session_id, "test-report", str(output_dir / "test_run_report.json"))
-    session_manager.set_artifact(req.session_id, "failure-inbox", str(output_dir / "failure_inbox.json"))
     session_manager.set_artifact(req.session_id, "conversation-log", conversation_log_file)
+
+    # Run AI-powered failure triage (or skip if validate=False)
+    triage_summary = None
+    if req.validate:
+        emitter.emit("validating", "Triaging failures with AI...", 90)
+        loop = asyncio.get_event_loop()
+        validated_inbox, validation_report, validation = await loop.run_in_executor(
+            None,
+            aggregator.validate_and_save,
+            output_dir,      # results_dir
+            agent_map,        # agent_map
+            True,             # use_ai (always AI)
+            None,             # retry_config
+            None,             # on_progress
+            engine.event_queue,  # event_queue for validation_completed event
+        )
+        session_manager.set_artifact(
+            req.session_id, "failure-inbox",
+            str(output_dir / "validated_failure_inbox.json")
+        )
+        session_manager.set_artifact(
+            req.session_id, "validation-report",
+            str(output_dir / "validation_report.json")
+        )
+        triage_summary = {
+            "genuine_failures": validation.summary.get("genuine_failures", 0),
+            "persona_filtered": validation.summary.get("persona_incompetence_filtered", 0),
+            "chaos_filtered": validation.summary.get("chaos_induced_filtered", 0),
+            "false_successes": validation.summary.get("false_successes_caught", 0),
+        }
+    else:
+        inbox = aggregator.save_failure_inbox(output_dir / "failure_inbox.json")
+        session_manager.set_artifact(
+            req.session_id, "failure-inbox",
+            str(output_dir / "failure_inbox.json")
+        )
 
     result = {
         "total_tests": report.total_tests,
@@ -185,6 +274,7 @@ async def _run_phase_c_async(req: PhaseCRequest, emitter: ProgressEmitter) -> di
         "tool_coverage_pct": report.coverage_pct,
         "tools_not_covered": report.tools_not_covered,
         "by_difficulty": report.by_difficulty,
+        "triage": triage_summary,
     }
     return result
 

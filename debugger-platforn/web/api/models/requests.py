@@ -39,6 +39,16 @@ class PhaseCRequest(BaseModel):
     seed: Optional[int] = None
     language: Optional[str] = None
     persona_context: Optional[str] = None
+    validate: bool = True  # Run AI-powered failure triage before Phase D
+
+
+class PhaseDRequest(BaseModel):
+    session_id: str
+    skip_ai: bool = False
+    use_embeddings: bool = False
+    max_retries: int = Field(default=3, ge=1, le=10)
+    backoff_base: float = Field(default=2.0, ge=1.0, le=10.0)
+    backoff_max: float = Field(default=60.0, ge=10.0, le=300.0)
 
 
 class FileBrowseRequest(BaseModel):

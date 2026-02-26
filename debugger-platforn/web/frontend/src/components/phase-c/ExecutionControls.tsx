@@ -9,6 +9,7 @@ interface ExecutionControlsProps {
   failRate: number
   seed: number | null
   language: string
+  validate: boolean
   onMockChange: (v: boolean) => void
   onWorkersChange: (v: number) => void
   onCountChange: (v: number) => void
@@ -17,6 +18,7 @@ interface ExecutionControlsProps {
   onFailRateChange: (v: number) => void
   onSeedChange: (v: number | null) => void
   onLanguageChange: (v: string) => void
+  onValidateChange: (v: boolean) => void
 }
 
 export default function ExecutionControls(props: ExecutionControlsProps) {
@@ -52,6 +54,7 @@ export default function ExecutionControls(props: ExecutionControlsProps) {
         <Slider label="Test Count Limit" value={props.count} min={0} max={500} step={10} onChange={props.onCountChange} />
         <Toggle label="AI Personas" checked={props.aiPersonas} onChange={props.onAiPersonasChange} description="Use AI for persona messages (costs $)" />
         <Toggle label="Enable Traces" checked={props.traces} onChange={props.onTracesChange} description="Save per-test trace files" />
+        <Toggle label="Validate Failures" checked={props.validate} onChange={props.onValidateChange} description="AI triage: filter persona/chaos failures before diagnosis" />
       </Section>
 
       {props.mock && (

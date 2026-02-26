@@ -77,6 +77,14 @@ export interface PhaseCRequest {
   seed: number | null
   language: string | null
   persona_context: string | null
+  validate: boolean
+}
+
+export interface TriageSummary {
+  genuine_failures: number
+  persona_filtered: number
+  chaos_filtered: number
+  false_successes: number
 }
 
 export interface PhaseCResult {
@@ -91,6 +99,91 @@ export interface PhaseCResult {
   tool_coverage_pct: number
   tools_not_covered: string[]
   by_difficulty: Record<string, Record<string, number>>
+  triage: TriageSummary | null
+}
+
+// Phase D
+export interface PhaseDRequest {
+  session_id: string
+  skip_ai: boolean
+  use_embeddings: boolean
+  max_retries: number
+  backoff_base: number
+  backoff_max: number
+}
+
+export interface FailureExample {
+  test_id: string
+  test_number: number
+  scenario: string
+  persona: string
+  failure_reason: string
+  trace_file: string
+  difficulty: string
+  coverage_goal: string
+  tools_called: string[]
+  tools_expected: string[]
+  turn_count: number
+  duration_sec: number
+  chaos_events: Array<Record<string, unknown>>
+}
+
+export interface MinimalReproduction {
+  steps: Array<{ role: string; content: string }>
+  expected_behavior: string
+  actual_behavior: string
+  key_trigger: string
+}
+
+export interface FailureCluster {
+  cluster_id: string
+  cluster_name: string
+  failure_count: number
+  failure_examples: FailureExample[]
+  root_cause_type: string
+  root_cause_description: string
+  common_pattern: string
+  key_indicators: string[]
+  severity: string
+  affected_scenarios: string[]
+  affected_tools: string[]
+  minimal_reproduction: MinimalReproduction | null
+  created_at: string
+}
+
+export interface FixProposal {
+  fix_id: string
+  cluster_id: string
+  fix_type: string
+  description: string
+  changes: Record<string, unknown>
+  estimated_fix_rate: number
+  estimated_effort: string
+  risk_level: string
+  created_at: string
+}
+
+export interface DiagnosisSummary {
+  total_failures_analyzed: number
+  total_tests: number
+  failure_rate: number
+  by_root_cause: Record<string, number>
+  by_severity: Record<string, number>
+  fix_proposals_by_type: Record<string, number>
+  clusters_count: number
+  fixes_count: number
+}
+
+export interface PhaseDResult {
+  report_id: string
+  run_id: string
+  total_failures: number
+  clusters_found: number
+  clusters: FailureCluster[]
+  fix_proposals: FixProposal[]
+  priority_ranking: string[]
+  summary: DiagnosisSummary
+  generated_at: string | null
 }
 
 // Filesystem browser
@@ -145,4 +238,5 @@ export interface WSEvent {
   }
   result?: Record<string, unknown>
   error?: string
+  summary?: Record<string, unknown>
 }
