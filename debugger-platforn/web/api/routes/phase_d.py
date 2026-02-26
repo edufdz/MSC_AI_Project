@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import re
 import sys
 import traceback
 from pathlib import Path
@@ -194,6 +195,27 @@ async def run_phase_d(req: PhaseDRequest):
 
     asyncio.create_task(_run())
     return {"status": "started", "session_id": req.session_id}
+
+
+TRACE_FILENAME_RE = re.compile(r"^trace_\d{4}_[a-f0-9]+\.json$")
+
+
+@router.get("/trace/{session_id}/{trace_filename}")
+async def get_trace(session_id: str, trace_filename: str):
+    """Return the full conversation trace JSON for a single test."""
+    if not TRACE_FILENAME_RE.match(trace_filename):
+        raise HTTPException(status_code=400, detail="Invalid trace filename")
+
+    session = session_manager.get_session(session_id)
+    if not session:
+        raise HTTPException(status_code=404, detail="Session not found")
+
+    trace_path = Path(session.output_dir) / "results" / "traces" / trace_filename
+    if not trace_path.exists():
+        raise HTTPException(status_code=404, detail="Trace file not found")
+
+    with open(trace_path) as f:
+        return json.load(f)
 
 
 @router.get("/status/{session_id}", response_model=PhaseStatusResponse)

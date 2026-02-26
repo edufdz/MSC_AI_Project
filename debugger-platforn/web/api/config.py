@@ -31,7 +31,7 @@ PHASE_A_DEFAULTS = {
 
 PHASE_B_DEFAULTS = {
     "skip_ai": False,
-    "count": 250,
+    "count": 150,
     "persona_count": 8,
     "scenario_count": 10,
     "variants": 3,
@@ -39,13 +39,14 @@ PHASE_B_DEFAULTS = {
     "language": None,
     "use_tlahuac": False,
     "tlahuac_dir": None,
+    "include_templates": False,
 }
 
 PHASE_C_DEFAULTS = {
-    "mock": True,
+    "mock": False,
     "workers": 10,
-    "count": 0,
-    "ai_personas": False,
+    "count": 10,
+    "ai_personas": True,
     "traces": True,
     "fail_rate": 0.05,
     "seed": None,

@@ -36,11 +36,12 @@ interface ToggleProps {
   checked: boolean
   onChange: (v: boolean) => void
   description?: string
+  disabled?: boolean
 }
 
-export function Toggle({ label, checked, onChange, description }: ToggleProps) {
+export function Toggle({ label, checked, onChange, description, disabled }: ToggleProps) {
   return (
-    <label className="flex items-center justify-between gap-3 cursor-pointer">
+    <label className={`flex items-center justify-between gap-3 ${disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}>
       <div>
         <span className="text-sm text-pearl">{label}</span>
         {description && <p className="text-[11px] text-text-muted">{description}</p>}
@@ -49,8 +50,9 @@ export function Toggle({ label, checked, onChange, description }: ToggleProps) {
         type="button"
         role="switch"
         aria-checked={checked}
-        onClick={() => onChange(!checked)}
-        className={`relative w-10 h-5 rounded-full transition-colors duration-200 ${checked ? 'bg-platinum' : 'bg-graphite'}`}
+        disabled={disabled}
+        onClick={() => !disabled && onChange(!checked)}
+        className={`relative w-10 h-5 rounded-full transition-colors duration-200 ${checked ? 'bg-platinum' : 'bg-graphite'} ${disabled ? 'cursor-not-allowed' : ''}`}
       >
         <span
           className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full transition-transform duration-200 ${checked ? 'translate-x-5 bg-bg' : 'bg-smoke'}`}

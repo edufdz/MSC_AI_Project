@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useStore } from '../store'
 import { usePhaseRunner } from '../hooks/usePhaseRunner'
-import { getPhaseBStatus } from '../api/client'
+import { getPhaseBStatus, resetPhase as apiResetPhase } from '../api/client'
 import GenerationControls from '../components/phase-b/GenerationControls'
 import TestSuitePreview from '../components/phase-b/TestSuitePreview'
 import PhaseProgress from '../components/shared/PhaseProgress'
@@ -28,18 +28,17 @@ export default function PhaseB() {
   const setPhaseBResult = useStore((s) => s.setPhaseBResult)
   const setPhaseStatus = useStore((s) => s.setPhaseStatus)
   const phaseACompleted = useStore((s) => s.phaseA) === 'completed'
+  const storeResetPhase = useStore((s) => s.resetPhase)
   const { runPhaseB } = usePhaseRunner()
 
   // Form state
-  const [count, setCount] = useState(250)
+  const [count, setCount] = useState(150)
   const [personaCount, setPersonaCount] = useState(8)
   const [scenarioCount, setScenarioCount] = useState(10)
   const [variants, setVariants] = useState(3)
-  const [skipAi, setSkipAi] = useState(false)
+  const [includeTemplates, setIncludeTemplates] = useState(false)
   const [seed, setSeed] = useState<number | null>(null)
   const [language, setLanguage] = useState('')
-  const [useTlahuac, setUseTlahuac] = useState(false)
-  const [tlahuacDir, setTlahuacDir] = useState('')
   const [error, setError] = useState('')
 
   useEffect(() => {
@@ -60,17 +59,20 @@ export default function PhaseB() {
       return
     }
     try {
+      // Reset this phase and downstream (C, D) so results are fresh
+      if (phaseStatus === 'completed') {
+        await apiResetPhase(sessionId, 'b')
+        storeResetPhase('b')
+      }
       await runPhaseB({
         session_id: sessionId,
-        skip_ai: skipAi,
         count,
         persona_count: personaCount,
         scenario_count: scenarioCount,
         variants,
         seed,
         language: language || null,
-        use_tlahuac: useTlahuac,
-        tlahuac_dir: tlahuacDir || null,
+        include_templates: includeTemplates,
       })
     } catch (e) {
       setError(String(e))
@@ -124,11 +126,9 @@ export default function PhaseB() {
             personaCount={personaCount} onPersonaCountChange={setPersonaCount}
             scenarioCount={scenarioCount} onScenarioCountChange={setScenarioCount}
             variants={variants} onVariantsChange={setVariants}
-            skipAi={skipAi} onSkipAiChange={setSkipAi}
+            includeTemplates={includeTemplates} onIncludeTemplatesChange={setIncludeTemplates}
             seed={seed} onSeedChange={setSeed}
             language={language} onLanguageChange={setLanguage}
-            useTlahuac={useTlahuac} onUseTlahuacChange={setUseTlahuac}
-            tlahuacDir={tlahuacDir} onTlahuacDirChange={setTlahuacDir}
           />
 
           {error && (
@@ -142,7 +142,7 @@ export default function PhaseB() {
             disabled={phaseStatus === 'running'}
             className="w-full px-4 py-3 bg-platinum text-bg rounded-lg font-medium hover:bg-pearl transition-colors duration-200 disabled:opacity-50"
           >
-            {phaseStatus === 'running' ? 'Generating...' : 'Run Phase B'}
+            {phaseStatus === 'running' ? 'Generating...' : phaseStatus === 'completed' ? 'Re-generate Tests' : 'Run Phase B'}
           </button>
 
           {phaseStatus === 'running' && (

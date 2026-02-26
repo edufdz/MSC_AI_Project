@@ -18,7 +18,7 @@ class PhaseARequest(BaseModel):
 class PhaseBRequest(BaseModel):
     session_id: str
     skip_ai: bool = False
-    count: int = Field(default=250, ge=10, le=5000)
+    count: int = Field(default=150, ge=10, le=5000)
     persona_count: int = Field(default=8, ge=0, le=20)
     scenario_count: int = Field(default=10, ge=0, le=50)
     variants: int = Field(default=3, ge=0, le=10)
@@ -26,14 +26,15 @@ class PhaseBRequest(BaseModel):
     language: Optional[str] = None
     use_tlahuac: bool = False
     tlahuac_dir: Optional[str] = None
+    include_templates: bool = False
 
 
 class PhaseCRequest(BaseModel):
     session_id: str
-    mock: bool = True
+    mock: bool = False
     workers: int = Field(default=10, ge=1, le=50)
-    count: int = Field(default=0, ge=0)
-    ai_personas: bool = False
+    count: int = Field(default=10, ge=0)
+    ai_personas: bool = True
     traces: bool = True
     fail_rate: float = Field(default=0.05, ge=0.0, le=1.0)
     seed: Optional[int] = None

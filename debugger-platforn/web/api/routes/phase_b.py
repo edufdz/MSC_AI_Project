@@ -78,6 +78,7 @@ def _run_phase_b_sync(req: PhaseBRequest, emitter: ProgressEmitter) -> dict:
         use_tlahuac=req.use_tlahuac,
         tlahuac_dir=req.tlahuac_dir,
         usage_tracker=usage_tracker,
+        include_templates=req.include_templates,
     )
 
     _stop_ticker.set()

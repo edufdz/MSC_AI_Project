@@ -213,15 +213,22 @@ class MockAgentConnector(AgentConnector):
 
 
 class APIAgentConnector(AgentConnector):
-    """Connect to an agent via HTTP API."""
+    """Connect to an agent via HTTP API.
+
+    NOTE: ``max_latency_ms`` from success_criteria is a *quality metric*
+    (how fast the agent *should* respond), NOT the HTTP timeout.
+    The HTTP timeout is set separately (default 120s) to allow LLM-backed
+    agents enough time to respond under load.
+    """
 
     def __init__(self, agent_map: Dict):
         self.endpoint: str = agent_map.get("api_endpoint", "")
         self.api_key: str = agent_map.get("api_key", "")
         self.session_id: str | None = None
-        self.timeout_sec: int = agent_map.get("success_criteria", {}).get(
-            "max_latency_ms", 60_000
-        ) // 1000
+        # HTTP timeout: generous to handle LLM latency under load
+        self.timeout_sec: int = agent_map.get("metadata", {}).get(
+            "http_timeout_sec", 120
+        )
 
     async def send_message(self, message: str, context: Dict | None = None) -> Dict[str, Any]:
         import aiohttp
@@ -275,55 +282,111 @@ class APIAgentConnector(AgentConnector):
 
 class VictoriaConnector(AgentConnector):
     """Connect to Victoria agent via its authenticated debug conversation API.
-    
+
     Victoria uses session cookie authentication:
     1. Create debug conversation: POST /conversations/debug
     2. Send messages: POST /conversations/:id/debug-message
-    
+
+    Concurrency architecture:
+    - A shared ``_api_semaphore`` limits how many HTTP requests are in-flight
+      at once (default 3), regardless of how many test workers exist.
+    - Transient failures (timeouts, 5xx) are retried with exponential backoff.
+    - This allows 10-20 test workers without overwhelming the API.
+
     Requires a session cookie from Pulpoo authentication.
-    You can get this by:
-    - Logging into Victoria in your browser
-    - Opening DevTools > Application > Cookies
-    - Copy the 'session' cookie value
-    - Set it in agent_map.json as "session_cookie" in metadata
     """
+
+    # Class-level semaphore shared across all per-conversation instances
+    _api_semaphore: Optional[asyncio.Semaphore] = None
+    _max_concurrent: int = 3
+
+    @classmethod
+    def configure_concurrency(cls, max_concurrent: int) -> None:
+        """Set the max concurrent API calls (call before tests start)."""
+        cls._max_concurrent = max_concurrent
+        cls._api_semaphore = None  # will be lazily created
+
+    @classmethod
+    def _get_semaphore(cls) -> asyncio.Semaphore:
+        if cls._api_semaphore is None:
+            cls._api_semaphore = asyncio.Semaphore(cls._max_concurrent)
+        return cls._api_semaphore
 
     def __init__(self, agent_map: Dict):
         import os
-        
+
         # Extract endpoint from environment variable (preferred), then agent_map
         base_endpoint = (
             os.getenv("VICTORIA_API_ENDPOINT") or
-            agent_map.get("api_endpoint") or 
+            agent_map.get("api_endpoint") or
             agent_map.get("metadata", {}).get("api_endpoint", "")
         )
-        
+
         if not base_endpoint:
             # Try to construct from app_id or use default
             app_id = agent_map.get("metadata", {}).get("app_id", "victoria-tlahuac")
             base_endpoint = f"http://localhost:3200/api/{app_id}"
-        
+
         self.base_endpoint = base_endpoint.rstrip("/")
         self.api_key: str = agent_map.get("api_key", "")
-        
+
         # Get session cookie from environment variable (preferred) or agent_map
         self.session_cookie: str = (
             os.getenv("VICTORIA_SESSION_COOKIE") or
-            agent_map.get("session_cookie") or 
+            agent_map.get("session_cookie") or
             agent_map.get("metadata", {}).get("session_cookie", "")
         )
-        
+
         if not self.session_cookie:
             raise ValueError(
                 "VictoriaConnector requires 'VICTORIA_SESSION_COOKIE' environment variable or "
                 "'session_cookie' in agent_map. "
                 "Get it from your browser DevTools > Application > Cookies after logging into Victoria."
             )
-        
+
         self.conversation_id: str | None = None
-        self.timeout_sec: int = agent_map.get("success_criteria", {}).get(
-            "max_latency_ms", 60_000
-        ) // 1000
+        # HTTP timeout: generous to handle LLM latency under load.
+        # max_latency_ms in success_criteria is a quality metric, not a timeout.
+        self.timeout_sec: int = agent_map.get("metadata", {}).get(
+            "http_timeout_sec", 120
+        )
+
+        # Retry config
+        self._max_retries: int = agent_map.get("metadata", {}).get("max_retries", 2)
+        self._backoff_base: float = agent_map.get("metadata", {}).get("backoff_base", 3.0)
+
+        # Concurrency from agent_map (overrides class default on first connector)
+        max_conc = agent_map.get("metadata", {}).get("max_concurrent_requests", 0)
+        if max_conc > 0:
+            VictoriaConnector.configure_concurrency(max_conc)
+
+    async def _request_with_retry(self, coro_factory, retryable_check=None):
+        """Execute an async request with semaphore gating and retry.
+
+        ``coro_factory`` is a callable that returns a new coroutine each call.
+        ``retryable_check`` is an optional callable(result) -> bool for
+        application-level retries (e.g. timeout error in result dict).
+        """
+        sem = self._get_semaphore()
+        last_result = None
+
+        for attempt in range(1 + self._max_retries):
+            async with sem:
+                last_result = await coro_factory()
+
+            # Check if we should retry
+            should_retry = False
+            if retryable_check and retryable_check(last_result):
+                should_retry = True
+
+            if not should_retry or attempt >= self._max_retries:
+                return last_result
+
+            # Exponential backoff with jitter
+            delay = self._backoff_base * (2 ** attempt) + random.uniform(0, 1)
+            await asyncio.sleep(delay)
+
+        return last_result
 
     async def reset(self) -> None:
         """Create a new debug conversation."""
@@ -342,32 +405,38 @@ class VictoriaConnector(AgentConnector):
             "clientName": "Test User",
         }
 
-        try:
-            async with aiohttp.ClientSession() as session:
-                async with session.post(
-                    f"{self.base_endpoint}/conversations/debug",
-                    json=payload,
-                    headers=headers,
-                    timeout=aiohttp.ClientTimeout(total=self.timeout_sec),
-                ) as resp:
-                    if resp.status == 200:
-                        data = await resp.json()
-                        self.conversation_id = data.get("conversationId") or data.get("conversation", {}).get("id")
-                        if not self.conversation_id:
-                            raise ValueError("Failed to get conversation ID from Victoria API")
-                    elif resp.status == 401:
-                        raise Exception(
-                            "Authentication failed. Session cookie may be invalid or expired. "
-                            "Please get a fresh session cookie from your browser."
-                        )
-                    else:
-                        body = await resp.text()
-                        raise Exception(f"Failed to create debug conversation: HTTP {resp.status}: {body[:200]}")
-        except Exception as e:
-            raise Exception(f"Victoria connector reset failed: {e}")
+        async def _do_reset():
+            try:
+                async with aiohttp.ClientSession() as session:
+                    async with session.post(
+                        f"{self.base_endpoint}/conversations/debug",
+                        json=payload,
+                        headers=headers,
+                        timeout=aiohttp.ClientTimeout(total=self.timeout_sec),
+                    ) as resp:
+                        if resp.status == 200:
+                            data = await resp.json()
+                            self.conversation_id = data.get("conversationId") or data.get("conversation", {}).get("id")
+                            if not self.conversation_id:
+                                raise ValueError("Failed to get conversation ID from Victoria API")
+                            return {"ok": True}
+                        elif resp.status == 401:
+                            raise Exception(
+                                "Authentication failed. Session cookie may be invalid or expired. "
+                                "Please get a fresh session cookie from your browser."
+                            )
+                        else:
+                            body = await resp.text()
+                            raise Exception(f"Failed to create debug conversation: HTTP {resp.status}: {body[:200]}")
+            except Exception as e:
+                raise Exception(f"Victoria connector reset failed: {e}")
+
+        sem = self._get_semaphore()
+        async with sem:
+            await _do_reset()
 
     async def send_message(self, message: str, context: Dict | None = None) -> Dict[str, Any]:
-        """Send message to Victoria debug conversation."""
+        """Send message to Victoria debug conversation with concurrency gating and retry."""
         import aiohttp
 
         if not self.conversation_id:
@@ -382,57 +451,74 @@ class VictoriaConnector(AgentConnector):
 
         payload = {"message": message}
 
-        try:
-            async with aiohttp.ClientSession() as session:
-                async with session.post(
-                    f"{self.base_endpoint}/conversations/{self.conversation_id}/debug-message",
-                    json=payload,
-                    headers=headers,
-                    timeout=aiohttp.ClientTimeout(total=self.timeout_sec),
-                ) as resp:
-                    if resp.status == 200:
-                        data = await resp.json()
-                        
-                        # Extract response text
-                        response_text = data.get("response", "") or data.get("aiResponse", "")
-                        
-                        # Extract tool calls from actions
-                        tool_calls = []
-                        actions = data.get("actions", [])
-                        for action in actions:
-                            if isinstance(action, dict):
-                                action_type = action.get("actionType", "")
-                                action_data = action.get("actionData", {})
-                                if action_type and action_type != "ai_process_message":
-                                    tool_calls.append({
-                                        "tool_name": action_type,
-                                        "tool_id": str(action.get("id", uuid.uuid4())),
-                                        "arguments": action_data,
-                                        "result": action.get("result"),
-                                    })
-                        
-                        return {
-                            "success": True,
-                            "response": response_text,
-                            "tool_calls": tool_calls,
-                            "error": None,
-                        }
-                    elif resp.status == 401:
-                        return {
-                            "success": False,
-                            "response": "",
-                            "tool_calls": [],
-                            "error": "Authentication failed. Session cookie may be invalid or expired.",
-                        }
-                    else:
-                        body = await resp.text()
-                        return {
-                            "success": False,
-                            "response": "",
-                            "tool_calls": [],
-                            "error": f"HTTP {resp.status}: {body[:200]}",
-                        }
-        except asyncio.TimeoutError:
-            return {"success": False, "response": "", "tool_calls": [], "error": "Request timed out"}
-        except Exception as e:
-            return {"success": False, "response": "", "tool_calls": [], "error": str(e)}
+        async def _do_send() -> Dict[str, Any]:
+            try:
+                async with aiohttp.ClientSession() as session:
+                    async with session.post(
+                        f"{self.base_endpoint}/conversations/{self.conversation_id}/debug-message",
+                        json=payload,
+                        headers=headers,
+                        timeout=aiohttp.ClientTimeout(total=self.timeout_sec),
+                    ) as resp:
+                        if resp.status == 200:
+                            data = await resp.json()
+
+                            # Extract response text
+                            response_text = data.get("response", "") or data.get("aiResponse", "")
+
+                            # Extract tool calls from actions
+                            tool_calls = []
+                            actions = data.get("actions", [])
+                            for action in actions:
+                                if isinstance(action, dict):
+                                    action_type = action.get("actionType", "")
+                                    action_data = action.get("actionData", {})
+                                    if action_type and action_type != "ai_process_message":
+                                        tool_calls.append({
+                                            "tool_name": action_type,
+                                            "tool_id": str(action.get("id", uuid.uuid4())),
+                                            "arguments": action_data,
+                                            "result": action.get("result"),
+                                        })
+
+                            return {
+                                "success": True,
+                                "response": response_text,
+                                "tool_calls": tool_calls,
+                                "error": None,
+                            }
+                        elif resp.status == 401:
+                            return {
+                                "success": False,
+                                "response": "",
+                                "tool_calls": [],
+                                "error": "Authentication failed. Session cookie may be invalid or expired.",
+                            }
+                        elif resp.status >= 500:
+                            body = await resp.text()
+                            return {
+                                "success": False,
+                                "response": "",
+                                "tool_calls": [],
+                                "error": f"HTTP {resp.status}: {body[:200]}",
+                                "_retryable": True,
+                            }
+                        else:
+                            body = await resp.text()
+                            return {
+                                "success": False,
+                                "response": "",
+                                "tool_calls": [],
+                                "error": f"HTTP {resp.status}: {body[:200]}",
+                            }
+            except asyncio.TimeoutError:
+                return {"success": False, "response": "", "tool_calls": [], "error": "Request timed out", "_retryable": True}
+            except Exception as e:
+                return {"success": False, "response": "", "tool_calls": [], "error": str(e)}
+
+        def _is_retryable(result: Dict) -> bool:
+            return bool(result.get("_retryable"))
+
+        result = await self._request_with_retry(_do_send, retryable_check=_is_retryable)
+        result.pop("_retryable", None)
+        return result

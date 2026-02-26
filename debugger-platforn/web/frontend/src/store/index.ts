@@ -76,6 +76,7 @@ export interface AppState {
   hydratePhaseCFromResult: (r: PhaseCResult) => void
 
   // Reset
+  resetPhase: (phase: 'a' | 'b' | 'c' | 'd') => void
   resetSession: () => void
 }
 
@@ -254,6 +255,30 @@ export const useStore = create<AppState>((set, get) => ({
     passRate: r.pass_rate,
     totalCost: r.total_cost_usd,
   }),
+
+  resetPhase: (phase) => {
+    const PIPELINE: Array<'a' | 'b' | 'c' | 'd'> = ['a', 'b', 'c', 'd']
+    const idx = PIPELINE.indexOf(phase)
+    const toReset = PIPELINE.slice(idx)
+
+    const patch: Record<string, unknown> = {}
+    for (const p of toReset) {
+      if (p === 'a') { patch.phaseA = 'idle'; patch.phaseAProgress = { ...defaultProgress }; patch.phaseAResult = null }
+      if (p === 'b') { patch.phaseB = 'idle'; patch.phaseBProgress = { ...defaultProgress }; patch.phaseBResult = null }
+      if (p === 'c') {
+        patch.phaseC = 'idle'
+        patch.phaseCProgress = { ...defaultProgress }
+        patch.phaseCResult = null
+        patch.totalTests = 0; patch.passedTests = 0; patch.failedTests = 0
+        patch.errorTests = 0; patch.timeoutTests = 0; patch.completedTests = 0
+        patch.passRate = 0; patch.totalCost = 0
+        patch.toolsCalled = new Set(); patch.activeTests = new Map()
+        patch.eventLog = []; patch.failures = []; patch.triageSummary = null
+      }
+      if (p === 'd') { patch.phaseD = 'idle'; patch.phaseDProgress = { ...defaultProgress }; patch.phaseDResult = null }
+    }
+    set(patch)
+  },
 
   resetSession: () => set({
     sessionId: null,

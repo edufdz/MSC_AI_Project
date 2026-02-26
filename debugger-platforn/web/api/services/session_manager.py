@@ -74,6 +74,29 @@ class SessionManager:
         if session:
             session.artifacts[artifact_type] = path
 
+    def reset_phase(self, session_id: str, phase: str) -> list[str]:
+        """Reset a phase and all downstream phases.
+
+        Returns the list of phases that were reset.
+        E.g. reset_phase("c") resets c and d.
+        """
+        PIPELINE = ["a", "b", "c", "d"]
+        session = self._sessions.get(session_id)
+        if not session or phase not in PIPELINE:
+            return []
+
+        idx = PIPELINE.index(phase)
+        to_reset = PIPELINE[idx:]
+
+        for p in to_reset:
+            session.phase_status[p] = "idle"
+            session.phase_results.pop(p, None)
+            session.phase_progress.pop(p, None)
+            if p in session.phases_completed:
+                session.phases_completed.remove(p)
+
+        return to_reset
+
 
 # Global singleton
 session_manager = SessionManager()

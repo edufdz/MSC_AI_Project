@@ -5,20 +5,16 @@ interface GenerationControlsProps {
   personaCount: number
   scenarioCount: number
   variants: number
-  skipAi: boolean
+  includeTemplates: boolean
   seed: number | null
   language: string
-  useTlahuac: boolean
-  tlahuacDir: string
   onCountChange: (v: number) => void
   onPersonaCountChange: (v: number) => void
   onScenarioCountChange: (v: number) => void
   onVariantsChange: (v: number) => void
-  onSkipAiChange: (v: boolean) => void
+  onIncludeTemplatesChange: (v: boolean) => void
   onSeedChange: (v: number | null) => void
   onLanguageChange: (v: string) => void
-  onUseTlahuacChange: (v: boolean) => void
-  onTlahuacDirChange: (v: string) => void
 }
 
 export default function GenerationControls(props: GenerationControlsProps) {
@@ -33,10 +29,10 @@ export default function GenerationControls(props: GenerationControlsProps) {
 
       <Section title="Options">
         <Toggle
-          label="Skip AI Generation"
-          checked={props.skipAi}
-          onChange={props.onSkipAiChange}
-          description="Offline mode — no API key needed"
+          label="Include Template Personas"
+          checked={props.includeTemplates}
+          onChange={props.onIncludeTemplatesChange}
+          description="Also create pre-built template personas (default: AI-only)"
         />
         <NumberInput label="Random Seed" value={props.seed} onChange={props.onSeedChange} placeholder="Optional" />
         <Select
@@ -49,27 +45,6 @@ export default function GenerationControls(props: GenerationControlsProps) {
           ]}
           onChange={props.onLanguageChange}
         />
-      </Section>
-
-      <Section title="Tlahuac Data">
-        <Toggle
-          label="Use Tlahuac Data"
-          checked={props.useTlahuac}
-          onChange={props.onUseTlahuacChange}
-          description="Load personas and scenarios from tlahuac pack"
-        />
-        {props.useTlahuac && (
-          <div className="space-y-1">
-            <label className="text-sm text-smoke">Tlahuac Directory</label>
-            <input
-              type="text"
-              value={props.tlahuacDir}
-              onChange={(e) => props.onTlahuacDirChange(e.target.value)}
-              placeholder="Auto-detect or specify path"
-              className="w-full px-3 py-2 text-sm bg-bg-card border border-border rounded-lg text-pearl font-mono focus:outline-none focus:border-platinum transition-colors"
-            />
-          </div>
-        )}
       </Section>
     </div>
   )

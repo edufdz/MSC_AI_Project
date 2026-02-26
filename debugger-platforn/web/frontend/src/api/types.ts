@@ -43,15 +43,13 @@ export interface PhaseAResult {
 // Phase B
 export interface PhaseBRequest {
   session_id: string
-  skip_ai: boolean
   count: number
   persona_count: number
   scenario_count: number
   variants: number
   seed: number | null
   language: string | null
-  use_tlahuac: boolean
-  tlahuac_dir: string | null
+  include_templates: boolean
 }
 
 export interface PhaseBResult {
@@ -68,12 +66,10 @@ export interface PhaseBResult {
 // Phase C
 export interface PhaseCRequest {
   session_id: string
-  mock: boolean
   workers: number
   count: number
   ai_personas: boolean
   traces: boolean
-  fail_rate: number
   seed: number | null
   language: string | null
   persona_context: string | null
@@ -172,6 +168,9 @@ export interface DiagnosisSummary {
   fix_proposals_by_type: Record<string, number>
   clusters_count: number
   fixes_count: number
+  bug_discovery_rate?: number
+  redundancy_rate?: number
+  severity_weighted_score?: number
 }
 
 export interface PhaseDResult {
@@ -184,6 +183,34 @@ export interface PhaseDResult {
   priority_ranking: string[]
   summary: DiagnosisSummary
   generated_at: string | null
+}
+
+// Trace types
+export interface TraceToolCall {
+  tool_name: string
+  tool_id: string
+  arguments: Record<string, unknown>
+  result: unknown
+}
+
+export interface TraceTurn {
+  turn_number: number
+  role: string
+  message: string
+  tool_calls: TraceToolCall[]
+  timestamp: string
+  duration_ms: number
+}
+
+export interface TraceData {
+  test_id: string
+  status: string
+  turns: TraceTurn[]
+  failure_reason: string | null
+  duration_sec: number
+  total_cost_usd: number
+  tools_called: string[]
+  tools_expected: string[]
 }
 
 // Filesystem browser

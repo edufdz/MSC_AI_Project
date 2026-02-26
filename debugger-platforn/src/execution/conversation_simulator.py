@@ -96,13 +96,43 @@ class ConversationSimulator:
 
     async def run(self) -> Dict[str, Any]:
         """Execute the full conversation and return results dict."""
-        await self.agent.reset()
-        
+        try:
+            await self.agent.reset()
+        except Exception as e:
+            return {
+                "success": False,
+                "failure_reason": f"Agent error: reset failed — {e}",
+                "outcome": None,
+                "tools_called_sequence": [],
+                "tool_results": [],
+                "turns": [],
+                "chaos_events": [],
+                "llm_calls": 0,
+                "tool_calls_count": 0,
+                "tokens_used": 0,
+                "cost_usd": 0.0,
+            }
+
         # Log conversation start with AI persona flag
         if self.conversation_log_file:
             self._log_conversation_start()
 
-        user_message = await self._generate_persona_message(turn_number=1)
+        try:
+            user_message = await self._generate_persona_message(turn_number=1)
+        except Exception as e:
+            return {
+                "success": False,
+                "failure_reason": f"Agent error: persona generation failed — {e}",
+                "outcome": None,
+                "tools_called_sequence": [],
+                "tool_results": [],
+                "turns": [],
+                "chaos_events": [],
+                "llm_calls": self.llm_calls,
+                "tool_calls_count": 0,
+                "tokens_used": self.tokens_used,
+                "cost_usd": self.cost_usd,
+            }
 
         turn_count = 0
         success = False

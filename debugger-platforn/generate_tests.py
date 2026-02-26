@@ -91,6 +91,7 @@ def _run_phase_b(
     tlahuac_personas: list[str] | None = None,
     tlahuac_dir: str | None = None,
     usage_tracker: PhaseBUsageTracker | None = None,
+    include_templates: bool = False,
 ) -> str:
     """Run all four Phase B sub-steps. Returns path to test_suite.json."""
     import random as _random
@@ -152,7 +153,7 @@ def _run_phase_b(
             data_dir = str(auto_dir)
 
     # When using tlahuac, skip template personas (use only tlahuac personas)
-    if not use_tlahuac:
+    if not use_tlahuac and include_templates:
         with console.status("[bold green]Loading persona templates..."):
             builder.load_templates()
 
@@ -225,8 +226,9 @@ def _run_phase_b(
     scenario_lib = ScenarioLibrary(
         agent_map, language=detected_language, usage_tracker=usage_tracker
     )
-    with console.status("[bold green]Loading scenario templates..."):
-        scenario_lib.load_templates()
+    if include_templates:
+        with console.status("[bold green]Loading scenario templates..."):
+            scenario_lib.load_templates()
 
     # External scenario loading (tlahuac)
     if use_tlahuac and data_dir:
@@ -315,7 +317,7 @@ def _run_phase_b(
 @click.argument("agent_map_file", type=click.Path(exists=True))
 @click.option("--output-dir", "-o", default="generated", help="Output directory for all generated files")
 @click.option("--skip-ai", is_flag=True, help="Skip all AI generation (offline mode)")
-@click.option("--count", "-c", default=250, type=int, help="Target number of test cases (default 250)")
+@click.option("--count", "-c", default=150, type=int, help="Target number of test cases (default 150)")
 @click.option("--persona-count", default=8, type=int, help="Number of AI-generated personas (default 8)")
 @click.option("--scenario-count", default=10, type=int, help="Number of AI-generated scenarios (default 10)")
 @click.option("--variants", default=3, type=int, help="Variants per base scenario (default 3)")

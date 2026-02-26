@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useStore } from '../store'
 import { usePhaseRunner } from '../hooks/usePhaseRunner'
-import { getPhaseCStatus } from '../api/client'
+import { getPhaseCStatus, resetPhase as apiResetPhase } from '../api/client'
 import ExecutionControls from '../components/phase-c/ExecutionControls'
 import PersonaContextInput from '../components/phase-c/PersonaContextInput'
 import LiveMonitor from '../components/phase-c/LiveMonitor'
@@ -18,22 +18,31 @@ export default function PhaseC() {
   const setPhaseStatus = useStore((s) => s.setPhaseStatus)
   const hydratePhaseCFromResult = useStore((s) => s.hydratePhaseCFromResult)
   const phaseBCompleted = useStore((s) => s.phaseB) === 'completed'
+  const phaseBResult = useStore((s) => s.phaseBResult)
   const completedTests = useStore((s) => s.completedTests)
+  const totalTests = useStore((s) => s.totalTests)
   const triageSummary = useStore((s) => s.triageSummary)
+  const storeResetPhase = useStore((s) => s.resetPhase)
   const { runPhaseC } = usePhaseRunner()
 
   // Form state
-  const [mock, setMock] = useState(true)
   const [workers, setWorkers] = useState(10)
-  const [count, setCount] = useState(0)
-  const [aiPersonas, setAiPersonas] = useState(false)
+  const [count, setCount] = useState(10)
+  const [aiPersonas, setAiPersonas] = useState(true)
   const [traces, setTraces] = useState(true)
-  const [failRate, setFailRate] = useState(0.05)
   const [seed, setSeed] = useState<number | null>(null)
   const [language, setLanguage] = useState('')
   const [personaContext, setPersonaContext] = useState('')
   const [validate, setValidate] = useState(true)
   const [error, setError] = useState('')
+
+  // If Phase B produced no non-AI personas, force AI personas on
+  const hasNonAiPersonas = phaseBResult?.personas?.some((p) => p.source !== 'ai_generated') ?? false
+  const forceAiPersonas = !hasNonAiPersonas
+
+  useEffect(() => {
+    if (forceAiPersonas && !aiPersonas) setAiPersonas(true)
+  }, [forceAiPersonas, aiPersonas])
 
   useEffect(() => {
     if (sessionId && !phaseResult && phaseStatus !== 'running') {
@@ -57,17 +66,25 @@ export default function PhaseC() {
     try {
       await runPhaseC({
         session_id: sessionId,
-        mock,
         workers,
         count,
         ai_personas: aiPersonas,
         traces,
-        fail_rate: failRate,
         seed,
         language: language || null,
         persona_context: personaContext || null,
         validate,
       })
+    } catch (e) {
+      setError(String(e))
+    }
+  }
+
+  const handleRerun = async () => {
+    if (!sessionId) return
+    try {
+      await apiResetPhase(sessionId, 'c')
+      storeResetPhase('c')
     } catch (e) {
       setError(String(e))
     }
@@ -102,8 +119,18 @@ export default function PhaseC() {
   const triage = phaseResult?.triage ?? triageSummary
 
   if (showMonitor) {
+    // Show loading state when execution just started and no tests have completed yet
+    const isInitializing = status === 'running' && completedTests === 0 && totalTests === 0
+
     return (
       <div className="h-full">
+        {isInitializing && (
+          <div className="flex flex-col items-center justify-center py-16 space-y-4">
+            <div className="w-8 h-8 border-2 border-platinum/30 border-t-platinum rounded-full animate-spin" />
+            <p className="text-sm text-smoke">Starting test execution...</p>
+            {progress.message && <p className="text-xs text-text-muted">{progress.message}</p>}
+          </div>
+        )}
         {/* Phase C → D CTA banner */}
         {status === 'completed' && phaseResult && failedCount > 0 && (
           <div className="mb-4 bg-bg-card border border-border rounded-lg px-4 py-3 flex items-center justify-between">
@@ -146,6 +173,12 @@ export default function PhaseC() {
           </div>
           {status === 'completed' && phaseResult && (
             <div className="flex items-center gap-4">
+              <button
+                onClick={handleRerun}
+                className="px-3 py-1.5 border border-border rounded-lg text-sm text-smoke hover:text-pearl hover:border-border-light transition-colors duration-200"
+              >
+                Re-run
+              </button>
               <div className="text-right">
                 <div className={`text-2xl font-bold font-mono ${phaseResult.pass_rate >= 80 ? 'text-pearl' : 'text-smoke'}`}>
                   {phaseResult.pass_rate.toFixed(1)}%
@@ -171,15 +204,14 @@ export default function PhaseC() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-6">
           <ExecutionControls
-            mock={mock} onMockChange={setMock}
             workers={workers} onWorkersChange={setWorkers}
             count={count} onCountChange={setCount}
             aiPersonas={aiPersonas} onAiPersonasChange={setAiPersonas}
             traces={traces} onTracesChange={setTraces}
-            failRate={failRate} onFailRateChange={setFailRate}
             seed={seed} onSeedChange={setSeed}
             language={language} onLanguageChange={setLanguage}
             validate={validate} onValidateChange={setValidate}
+            forceAiPersonas={forceAiPersonas}
           />
         </div>
 
