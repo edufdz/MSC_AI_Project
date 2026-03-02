@@ -107,6 +107,45 @@ Use `--agent-map` and `--test-suite` to skip early phases and resume from the mi
 | `--test-suite path/to/test_suite.json` | Skip Phase B; use existing test suite |
 | Both flags combined | Start directly at Phase C |
 
+## GAN Mode (Adversarial Testing)
+
+Phase C supports an optional **GAN-style architecture** inspired by Generative Adversarial Networks:
+
+- **Generator (G)**: the persona simulator — generates test conversations
+- **Critic (D)**: a second LLM that evaluates conversation quality, detects false positives, and coaches the Generator
+
+Both agents use cheap models (Haiku) — they correct each other, so neither needs to be individually brilliant. This keeps costs low while improving test quality.
+
+```bash
+# Enable GAN mode
+python execute_tests.py test_suite.json agent_map.json --mock --ai-personas --gan
+
+# Customize Critic behavior
+python execute_tests.py test_suite.json agent_map.json --mock --ai-personas --gan \
+    --critic-model claude-haiku-4-5 --max-restarts 3 --quality-threshold 4.0
+```
+
+| Flag | Default | Description |
+|------|---------|-------------|
+| `--gan` | off | Enable Generator + Critic adversarial mode |
+| `--critic-model` | `claude-haiku-4-5` | Model for the Critic agent |
+| `--max-restarts` | `2` | Max times Critic can restart a conversation |
+| `--quality-threshold` | `3.0` | Min quality score (0-10) to avoid restart |
+| `--evaluate-every` | `2` | Critic evaluates every N agent turns (lower = more accurate but costlier) |
+
+### Cost Impact
+
+In GAN mode, each test makes **~2x the LLM calls** (Generator + Critic).
+With `--max-restarts=2`, worst case is **~6x** for a single test.
+
+| Scenario | LLM calls vs standard |
+|----------|-----------------------|
+| No restarts | ~2x |
+| 1 restart | ~4x |
+| 2 restarts (max) | ~6x |
+
+Use `--evaluate-every 4` or higher to reduce Critic calls at the cost of less frequent intervention.
+
 ## Phase D — Diagnose Failures
 
 ```bash

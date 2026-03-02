@@ -4,12 +4,15 @@ from __future__ import annotations
 
 import asyncio
 import json
+import logging
 import os
 import sys
 import threading
 import time
 import traceback
 from pathlib import Path
+
+logger = logging.getLogger(__name__)
 
 from fastapi import APIRouter, HTTPException
 
@@ -43,8 +46,27 @@ def _run_phase_b_sync(req: PhaseBRequest, emitter: ProgressEmitter) -> dict:
 
     emitter.emit("loading_agent_map", "Loading Agent Map from Phase A...", 5)
 
-    has_api_key = bool(os.environ.get("ANTHROPIC_API_KEY"))
-    usage_tracker = PhaseBUsageTracker() if not req.skip_ai and has_api_key else None
+    # Build LLM config from request (None = use default Anthropic)
+    llm_config = None
+    if req.llm_provider:
+        from src.execution.llm_config import LLMProviderConfig
+        llm_config = LLMProviderConfig(
+            provider=req.llm_provider,
+            model=req.llm_model,
+            base_url=req.llm_base_url,
+        )
+        logger.info("Phase B LLM config: provider=%s model=%s", req.llm_provider, req.llm_model)
+    else:
+        logger.info("Phase B LLM config: default (Anthropic)")
+
+    if llm_config and not llm_config.needs_api_key:
+        has_api_key = True
+    elif llm_config:
+        has_api_key = bool(llm_config.resolved_api_key)
+    else:
+        has_api_key = bool(os.environ.get("ANTHROPIC_API_KEY"))
+    logger.info("Phase B has_api_key=%s skip_ai=%s", has_api_key, req.skip_ai)
+    usage_tracker = PhaseBUsageTracker(llm_config=llm_config) if not req.skip_ai and has_api_key else None
 
     emitter.emit("building_personas", "Generating personas...", 15)
 
@@ -79,6 +101,7 @@ def _run_phase_b_sync(req: PhaseBRequest, emitter: ProgressEmitter) -> dict:
         tlahuac_dir=req.tlahuac_dir,
         usage_tracker=usage_tracker,
         include_templates=req.include_templates,
+        llm_config=llm_config,
     )
 
     _stop_ticker.set()

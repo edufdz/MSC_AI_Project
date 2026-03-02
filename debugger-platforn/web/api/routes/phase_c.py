@@ -124,6 +124,16 @@ async def _run_phase_c_async(req: PhaseCRequest, emitter: ProgressEmitter) -> di
 
     started_at = datetime.now(timezone.utc)
 
+    # Build LLM config from request (None = use default Anthropic)
+    llm_config = None
+    if req.llm_provider:
+        from src.execution.llm_config import LLMProviderConfig
+        llm_config = LLMProviderConfig(
+            provider=req.llm_provider,
+            model=req.llm_model,
+            base_url=req.llm_base_url,
+        )
+
     engine = TestExecutionEngine(
         test_suite=test_suite,
         agent_connector=connector,
@@ -135,6 +145,8 @@ async def _run_phase_c_async(req: PhaseCRequest, emitter: ProgressEmitter) -> di
         agent_map=agent_map,
         persona_context=req.persona_context,
         persona_context_analyzed=persona_context_analyzed,
+        persona_config=llm_config,
+        critic_config=llm_config,
     )
 
     # Forward engine events to WS clients, enriching with running totals

@@ -84,6 +84,13 @@ class TestSuiteGenerator:
 
     def generate(self, target_count: int = 250) -> TestSuite:
         """Generate a coverage-driven test suite."""
+        if not self.scenarios:
+            raise ValueError(
+                "No scenarios available for test generation. "
+                "Set ANTHROPIC_API_KEY for AI-generated scenarios, "
+                "or pass --include-templates / include_templates=True to use built-in template scenarios."
+            )
+
         test_cases: List[TestCase] = []
 
         # Phase 1: Tool coverage

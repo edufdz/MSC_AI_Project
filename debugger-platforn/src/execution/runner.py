@@ -10,10 +10,12 @@ import os
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 from .agent_connector import AgentConnector
 from .conversation_simulator import ConversationSimulator
+from .gan_simulator import GANConversationSimulator
+from .llm_config import LLMProviderConfig
 from .models import TestResult, TestStatus
 
 
@@ -35,6 +37,13 @@ class TestExecutionEngine:
         agent_map: Dict[str, Any] | None = None,
         persona_context: str | None = None,
         persona_context_analyzed: Dict[str, Any] | None = None,
+        use_gan: bool = False,
+        critic_model: str = "claude-haiku-4-5",
+        max_restarts: int = 2,
+        quality_threshold: float = 3.0,
+        evaluate_every: int = 2,
+        persona_config: Optional[LLMProviderConfig] = None,
+        critic_config: Optional[LLMProviderConfig] = None,
     ):
         self.test_suite = test_suite
         self.agent_connector = agent_connector
@@ -45,6 +54,13 @@ class TestExecutionEngine:
         self.conversation_log_file = conversation_log_file
         self.persona_context = persona_context
         self.persona_context_analyzed = persona_context_analyzed
+        self.use_gan = use_gan
+        self.critic_model = critic_model
+        self.max_restarts = max_restarts
+        self.quality_threshold = quality_threshold
+        self.evaluate_every = evaluate_every
+        self.persona_config = persona_config or LLMProviderConfig()
+        self.critic_config = critic_config or LLMProviderConfig(model=critic_model)
 
         # Extract goal-driven config from agent_map (terminal_outcomes, tool_chains, etc.)
         self._agent_map_extras: Dict[str, Any] = {}
@@ -138,12 +154,11 @@ class TestExecutionEngine:
             })
 
             try:
-                timeout_per_tool = test_case.get("execution_config", {}).get(
-                    "timeout_per_tool_call_sec", 30
-                )
-                estimated_turns = test_case.get("scenario", {}).get("estimated_turns", 10)
                 max_turns = test_case.get("execution_config", {}).get("max_turns", 40)
-                timeout_sec = timeout_per_tool * max(estimated_turns, max_turns) + 60
+                # 6s/turn: ~2s agent + ~2s AI persona + ~1s Critic + buffer.
+                # In GAN mode, up to (max_restarts + 1) full runs can occur.
+                restarts = (self.max_restarts + 1) if self.use_gan else 1
+                timeout_sec = restarts * max_turns * 6 + 60
 
                 conv_result = await asyncio.wait_for(
                     self._run_conversation(test_case),
@@ -220,14 +235,30 @@ class TestExecutionEngine:
         if self.persona_context_analyzed is not None:
             enriched["persona_context_analyzed"] = self.persona_context_analyzed
 
-        simulator = ConversationSimulator(
-            test_case=enriched,
-            agent_connector=self.agent_connector,
-            event_queue=self.event_queue,
-            use_ai_personas=self.use_ai_personas,
-            language=self.language,
-            conversation_log_file=self.conversation_log_file,
-        )
+        if self.use_gan:
+            simulator = GANConversationSimulator(
+                test_case=enriched,
+                agent_connector=self.agent_connector,
+                event_queue=self.event_queue,
+                use_ai=self.use_ai_personas,
+                evaluate_every=self.evaluate_every,
+                max_restarts=self.max_restarts,
+                quality_threshold=self.quality_threshold,
+                language=self.language,
+                conversation_log_file=self.conversation_log_file,
+                persona_config=self.persona_config,
+                critic_config=self.critic_config,
+            )
+        else:
+            simulator = ConversationSimulator(
+                test_case=enriched,
+                agent_connector=self.agent_connector,
+                event_queue=self.event_queue,
+                use_ai_personas=self.use_ai_personas,
+                language=self.language,
+                conversation_log_file=self.conversation_log_file,
+                persona_config=self.persona_config,
+            )
         return await simulator.run()
 
     # ------------------------------------------------------------------
