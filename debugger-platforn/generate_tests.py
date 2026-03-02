@@ -56,20 +56,28 @@ _PHASE_B_PRICING = {"claude-haiku-4-5": {"input": 1.00, "output": 5.00}}
 class PhaseBUsageTracker:
     """Tracks token usage and cost for Phase B AI calls."""
 
-    def __init__(self, model: str = "claude-haiku-4-5"):
+    def __init__(self, model: str = "claude-haiku-4-5", llm_config=None):
         self.model = model
         self.input_tokens = 0
         self.output_tokens = 0
+        self._llm_config = llm_config
 
     def add(self, usage) -> None:
         """Record one API response usage (object with input_tokens, output_tokens)."""
         self.input_tokens += getattr(usage, "input_tokens", 0) or 0
         self.output_tokens += getattr(usage, "output_tokens", 0) or 0
 
+    def add_tokens(self, input_tokens: int, output_tokens: int) -> None:
+        """Record raw token counts from LLMProviderConfig.call_sync()."""
+        self.input_tokens += input_tokens
+        self.output_tokens += output_tokens
+
     def total_tokens(self) -> int:
         return self.input_tokens + self.output_tokens
 
     def cost_usd(self) -> float:
+        if self._llm_config:
+            return self._llm_config.cost_for_tokens(self.input_tokens, self.output_tokens)
         prices = _PHASE_B_PRICING.get(self.model, _PHASE_B_PRICING["claude-haiku-4-5"])
         return (self.input_tokens / 1_000_000 * prices["input"]) + (
             self.output_tokens / 1_000_000 * prices["output"]
@@ -92,6 +100,7 @@ def _run_phase_b(
     tlahuac_dir: str | None = None,
     usage_tracker: PhaseBUsageTracker | None = None,
     include_templates: bool = False,
+    llm_config=None,
 ) -> str:
     """Run all four Phase B sub-steps. Returns path to test_suite.json."""
     import random as _random
@@ -99,7 +108,17 @@ def _run_phase_b(
         _random.seed(seed)
 
     output_dir.mkdir(parents=True, exist_ok=True)
-    has_api_key = bool(os.environ.get("ANTHROPIC_API_KEY"))
+    if llm_config and not llm_config.needs_api_key:
+        has_api_key = True  # local provider (e.g. Ollama) — no key needed
+    elif llm_config:
+        has_api_key = bool(llm_config.resolved_api_key)
+    else:
+        has_api_key = bool(os.environ.get("ANTHROPIC_API_KEY"))
+
+    if llm_config:
+        console.print(f"  LLM provider: [cyan]{llm_config.display_name()}[/cyan]  has_api_key={has_api_key}")
+    else:
+        console.print(f"  LLM provider: [cyan]anthropic (default)[/cyan]  has_api_key={has_api_key}")
 
     # Resolve language: explicit flag > agent_map metadata > default English
     if language:
@@ -142,7 +161,8 @@ def _run_phase_b(
     ))
 
     builder = PersonaBuilder(
-        agent_map, language=detected_language, usage_tracker=usage_tracker
+        agent_map, language=detected_language, usage_tracker=usage_tracker,
+        llm_config=llm_config,
     )
 
     # Resolve tlahuac data directory (used for both personas and scenarios)
@@ -224,7 +244,8 @@ def _run_phase_b(
     ))
 
     scenario_lib = ScenarioLibrary(
-        agent_map, language=detected_language, usage_tracker=usage_tracker
+        agent_map, language=detected_language, usage_tracker=usage_tracker,
+        llm_config=llm_config,
     )
     if include_templates:
         with console.status("[bold green]Loading scenario templates..."):
@@ -242,8 +263,8 @@ def _run_phase_b(
     # AI-generated scenarios
     if scenario_count > 0 and not skip_ai and has_api_key:
         with console.status(f"[bold green]Generating {scenario_count} AI scenarios..."):
-            scenario_lib.generate_scenarios(count=scenario_count)
-        console.print(f"  Generated [green]{scenario_count}[/green] AI scenarios")
+            actual = scenario_lib.generate_scenarios(count=scenario_count)
+        console.print(f"  Generated [green]{len(actual)}[/green] AI scenarios")
     elif scenario_count > 0 and (skip_ai or not has_api_key):
         reason = "--skip-ai" if skip_ai else "ANTHROPIC_API_KEY not set"
         console.print(f"  [yellow]AI scenario generation skipped ({reason})[/yellow]")

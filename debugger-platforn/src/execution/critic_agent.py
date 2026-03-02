@@ -329,15 +329,25 @@ Respond with ONLY valid JSON:
         )
         raw = raw.strip()
 
-        # Parse JSON response
+        # Parse JSON response — robust to markdown fences and trailing text
+        import re as _re
+        raw = _re.sub(r"^```\w*\n?", "", raw)
+        raw = _re.sub(r"\n?```\s*$", "", raw)
+        raw = raw.strip()
+        data = None
         try:
-            # Handle potential markdown code blocks
-            if raw.startswith("```"):
-                raw = raw.split("```")[1]
-                if raw.startswith("json"):
-                    raw = raw[4:]
             data = json.loads(raw)
         except json.JSONDecodeError:
+            # Fallback: extract first JSON object from response
+            decoder = json.JSONDecoder()
+            for i, ch in enumerate(raw):
+                if ch == "{":
+                    try:
+                        data, _ = decoder.raw_decode(raw, i)
+                        break
+                    except json.JSONDecodeError:
+                        continue
+        if data is None:
             logger.warning("Critic returned invalid JSON: %s", raw[:200])
             data = {
                 "action": "continue",

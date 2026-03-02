@@ -50,6 +50,9 @@ export interface PhaseBRequest {
   seed: number | null
   language: string | null
   include_templates: boolean
+  llm_provider?: string
+  llm_model?: string
+  llm_base_url?: string
 }
 
 export interface PhaseBResult {
@@ -74,6 +77,9 @@ export interface PhaseCRequest {
   language: string | null
   persona_context: string | null
   validate: boolean
+  llm_provider?: string | null
+  llm_model?: string | null
+  llm_base_url?: string | null
 }
 
 export interface TriageSummary {

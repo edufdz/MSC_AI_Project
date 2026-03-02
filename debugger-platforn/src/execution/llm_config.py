@@ -3,6 +3,7 @@ LLM provider configuration — supports Anthropic and any OpenAI-compatible prov
 
 Supported providers (presets):
   anthropic  — Claude models via Anthropic SDK (default)
+  ollama     — Local models via Ollama (http://localhost:11434)
   groq       — llama-3.1-8b-instant, mixtral, etc. (free tier, very fast)
   together   — Meta Llama, Mistral, etc.
   fireworks  — Llama, Mixtral, etc.
@@ -52,6 +53,13 @@ _PROVIDER_PRESETS: dict[str, dict] = {
         "key_env": "ANTHROPIC_API_KEY",
         "input_cost_per_m": 1.00,   # Haiku 4.5
         "output_cost_per_m": 5.00,
+    },
+    "ollama": {
+        "base_url": "http://localhost:11434/v1",
+        "default_model": "mistral",
+        "key_env": None,            # Ollama needs no API key
+        "input_cost_per_m": 0.0,    # local — free
+        "output_cost_per_m": 0.0,
     },
     "groq": {
         "base_url": "https://api.groq.com/openai/v1",
@@ -153,9 +161,54 @@ class LLMProviderConfig:
     def is_anthropic(self) -> bool:
         return self.provider in _ANTHROPIC_PROVIDERS
 
+    @property
+    def needs_api_key(self) -> bool:
+        """Whether this provider requires an API key (False for ollama/local)."""
+        preset = _PROVIDER_PRESETS.get(self.provider, {})
+        return preset.get("key_env") is not None
+
     # ------------------------------------------------------------------ #
     # Client factory                                                       #
     # ------------------------------------------------------------------ #
+
+    def create_sync_client(self):
+        """Instantiate and return the appropriate synchronous LLM client."""
+        if self.is_anthropic:
+            from anthropic import Anthropic
+
+            kwargs: dict = {}
+            key = self.resolved_api_key
+            if key:
+                kwargs["api_key"] = key
+            return Anthropic(**kwargs)
+        else:
+            from openai import OpenAI
+
+            if self.provider == "custom" and not self.resolved_base_url:
+                raise ValueError(
+                    "provider='custom' requires an explicit base_url= argument."
+                )
+
+            kwargs: dict = {}
+            url = self.resolved_base_url
+            if url:
+                kwargs["base_url"] = url
+            key = self.resolved_api_key
+            if not key:
+                if not self.needs_api_key:
+                    # Ollama and local servers don't need a real key,
+                    # but the OpenAI SDK requires a non-empty string.
+                    key = "no-key-needed"
+                else:
+                    preset = _PROVIDER_PRESETS.get(self.provider, {})
+                    logger.warning(
+                        "No API key found for provider '%s' (expected env var: %s). "
+                        "Calls will likely fail with an authentication error.",
+                        self.provider,
+                        preset.get("key_env", "unknown"),
+                    )
+            kwargs["api_key"] = key
+            return OpenAI(**kwargs)
 
     def create_async_client(self):
         """Instantiate and return the appropriate async LLM client (lazy)."""
@@ -183,15 +236,19 @@ class LLMProviderConfig:
                 kwargs["base_url"] = url
             key = self.resolved_api_key
             if not key:
-                preset = _PROVIDER_PRESETS.get(self.provider, {})
-                logger.warning(
-                    "No API key found for provider '%s' (expected env var: %s). "
-                    "Calls will likely fail with an authentication error.",
-                    self.provider,
-                    preset.get("key_env", "unknown"),
-                )
-            else:
-                kwargs["api_key"] = key
+                if not self.needs_api_key:
+                    # Ollama and local servers don't need a real key,
+                    # but the OpenAI SDK requires a non-empty string.
+                    key = "no-key-needed"
+                else:
+                    preset = _PROVIDER_PRESETS.get(self.provider, {})
+                    logger.warning(
+                        "No API key found for provider '%s' (expected env var: %s). "
+                        "Calls will likely fail with an authentication error.",
+                        self.provider,
+                        preset.get("key_env", "unknown"),
+                    )
+            kwargs["api_key"] = key
             return AsyncOpenAI(**kwargs)
 
     # ------------------------------------------------------------------ #
@@ -233,6 +290,43 @@ class LLMProviderConfig:
                 response.choices[0].message.content or "",
                 response.usage.prompt_tokens,
                 response.usage.completion_tokens,
+            )
+
+    def call_sync(
+        self,
+        client,
+        prompt: str,
+        max_tokens: int,
+        temperature: float,
+    ) -> tuple[str, int, int]:
+        """
+        Synchronous variant of ``call()``.
+        Returns ``(text, input_tokens, output_tokens)``.
+        """
+        if self.is_anthropic:
+            response = client.messages.create(
+                model=self.resolved_model,
+                max_tokens=max_tokens,
+                temperature=temperature,
+                messages=[{"role": "user", "content": prompt}],
+            )
+            return (
+                response.content[0].text,
+                response.usage.input_tokens,
+                response.usage.output_tokens,
+            )
+        else:
+            response = client.chat.completions.create(
+                model=self.resolved_model,
+                max_tokens=max_tokens,
+                temperature=temperature,
+                messages=[{"role": "user", "content": prompt}],
+            )
+            usage = response.usage
+            return (
+                response.choices[0].message.content or "",
+                usage.prompt_tokens if usage else 0,
+                usage.completion_tokens if usage else 0,
             )
 
     # ------------------------------------------------------------------ #

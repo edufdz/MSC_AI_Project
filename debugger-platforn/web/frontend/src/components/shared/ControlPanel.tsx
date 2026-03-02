@@ -108,6 +108,28 @@ export function NumberInput({ label, value, onChange, placeholder }: NumberInput
   )
 }
 
+interface TextInputProps {
+  label: string
+  value: string
+  onChange: (v: string) => void
+  placeholder?: string
+}
+
+export function TextInput({ label, value, onChange, placeholder }: TextInputProps) {
+  return (
+    <div className="space-y-1.5">
+      <label className="text-sm text-smoke">{label}</label>
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder || ''}
+        className="w-full px-3 py-2 text-sm bg-bg-card border border-border rounded-lg text-pearl font-mono focus:outline-none focus:border-platinum transition-colors"
+      />
+    </div>
+  )
+}
+
 interface SectionProps {
   title: string
   children: ReactNode

@@ -39,6 +39,9 @@ export default function PhaseB() {
   const [includeTemplates, setIncludeTemplates] = useState(false)
   const [seed, setSeed] = useState<number | null>(null)
   const [language, setLanguage] = useState('')
+  const [llmProvider, setLlmProvider] = useState('')
+  const [llmModel, setLlmModel] = useState('')
+  const [llmBaseUrl, setLlmBaseUrl] = useState('')
   const [error, setError] = useState('')
 
   useEffect(() => {
@@ -73,6 +76,9 @@ export default function PhaseB() {
         seed,
         language: language || null,
         include_templates: includeTemplates,
+        llm_provider: llmProvider || null,
+        llm_model: llmModel || null,
+        llm_base_url: llmBaseUrl || null,
       })
     } catch (e) {
       setError(String(e))
@@ -129,6 +135,9 @@ export default function PhaseB() {
             includeTemplates={includeTemplates} onIncludeTemplatesChange={setIncludeTemplates}
             seed={seed} onSeedChange={setSeed}
             language={language} onLanguageChange={setLanguage}
+            llmProvider={llmProvider} onLlmProviderChange={setLlmProvider}
+            llmModel={llmModel} onLlmModelChange={setLlmModel}
+            llmBaseUrl={llmBaseUrl} onLlmBaseUrlChange={setLlmBaseUrl}
           />
 
           {error && (

@@ -13,9 +13,9 @@ from typing import Any, Dict, List, Optional
 
 import random
 
-import anthropic
 from dotenv import load_dotenv
 
+from src.execution.llm_config import LLMProviderConfig
 from src.personas.models import (
     Persona, PersonaLibrary,
     PersonaTraits, PersonaStyle, PersonaEdgeBehaviors,
@@ -25,8 +25,6 @@ from src.personas.templates import load_persona_templates, GENERIC_PERSONAS
 # Load .env from project root
 _project_root = Path(__file__).parent.parent.parent
 load_dotenv(_project_root / ".env")
-
-MODEL = "claude-haiku-4-5"  # Switched to Haiku for cost savings (~67% cheaper)
 
 # Realistic fake names for generated personas — avoids leaking tool names
 _FAKE_NAMES = [
@@ -52,6 +50,7 @@ class PersonaBuilder:
         agent_map: Dict,
         language: str = "English",
         usage_tracker: Any = None,
+        llm_config: Optional[LLMProviderConfig] = None,
     ):
         self.agent_map = agent_map
         self.agent_type: str = agent_map.get("metadata", {}).get("type", "custom")
@@ -59,6 +58,13 @@ class PersonaBuilder:
         self.language: str = language
         self.personas: List[Persona] = []
         self._usage_tracker = usage_tracker
+        self._llm_config = llm_config or LLMProviderConfig()
+        self._llm_client = None
+
+    def _get_llm_client(self):
+        if self._llm_client is None:
+            self._llm_client = self._llm_config.create_sync_client()
+        return self._llm_client
 
     def _pick_unique_name(self) -> str:
         """Pick a realistic fake name not already used by any persona."""
@@ -238,29 +244,28 @@ Return ONLY valid JSON (no markdown fences):
   ]
 }}"""
 
-        client = anthropic.Anthropic()
+        client = self._get_llm_client()
 
         # Attempt with 1 retry on JSON parse failure
         for attempt in range(2):
             if attempt == 0:
-                messages = [{"role": "user", "content": prompt}]
+                current_prompt = prompt
             else:
-                messages = [
-                    {"role": "user", "content": prompt},
-                    {"role": "assistant", "content": raw},
-                    {"role": "user", "content": "The previous response was not valid JSON. Please fix it and return ONLY valid JSON, no explanation."},
-                ]
+                current_prompt = (
+                    prompt
+                    + "\n\n--- PREVIOUS RESPONSE (INVALID JSON) ---\n"
+                    + raw
+                    + "\n\n--- FIX ---\nThe previous response was not valid JSON. "
+                    "Please fix it and return ONLY valid JSON, no explanation."
+                )
 
-            # Use enough tokens for N personas (each ~400–600 tokens); 8192 covers 10+
-            response = client.messages.create(
-                model=MODEL,
-                max_tokens=8192,
-                messages=messages,
+            raw, in_tok, out_tok = self._llm_config.call_sync(
+                client, current_prompt, max_tokens=8192, temperature=0.7,
             )
-            if self._usage_tracker and getattr(response, "usage", None):
-                self._usage_tracker.add(response.usage)
+            if self._usage_tracker:
+                self._usage_tracker.add_tokens(in_tok, out_tok)
 
-            raw = response.content[0].text.strip()
+            raw = raw.strip()
             if raw.startswith("```"):
                 raw = re.sub(r"^```\w*\n?", "", raw)
                 raw = re.sub(r"\n?```$", "", raw)
@@ -404,17 +409,15 @@ If the persona has edge behaviors, at least one message should demonstrate them.
 Return ONLY a JSON array of strings (no markdown fences):
 ["message 1", "message 2", "message 3"]"""
 
-        client = anthropic.Anthropic()
-        response = client.messages.create(
-            model=MODEL,
-            max_tokens=1024,
-            messages=[{"role": "user", "content": prompt}],
+        client = self._get_llm_client()
+        raw, in_tok, out_tok = self._llm_config.call_sync(
+            client, prompt, max_tokens=1024, temperature=0.7,
         )
-        if self._usage_tracker and getattr(response, "usage", None):
-            self._usage_tracker.add(response.usage)
+        if self._usage_tracker:
+            self._usage_tracker.add_tokens(in_tok, out_tok)
 
         import json, re
-        raw = response.content[0].text.strip()
+        raw = raw.strip()
         if raw.startswith("```"):
             raw = re.sub(r"^```\w*\n?", "", raw)
             raw = re.sub(r"\n?```$", "", raw)

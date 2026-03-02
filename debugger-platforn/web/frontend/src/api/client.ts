@@ -45,14 +45,14 @@ export const getPhaseAStatus = (sessionId: string) =>
   request<{ session_id: string; phase: string; status: string; progress_pct?: number; message?: string; result: Record<string, unknown> | null }>(`/api/phase-a/status/${sessionId}`)
 
 // Phase B
-export const runPhaseB = (body: { session_id: string; count: number; persona_count: number; scenario_count: number; variants: number; seed: number | null; language: string | null; include_templates: boolean }) =>
+export const runPhaseB = (body: { session_id: string; count: number; persona_count: number; scenario_count: number; variants: number; seed: number | null; language: string | null; include_templates: boolean; llm_provider?: string | null; llm_model?: string | null; llm_base_url?: string | null }) =>
   request<{ status: string; session_id: string }>('/api/phase-b/run', { method: 'POST', body: JSON.stringify(body) })
 
 export const getPhaseBStatus = (sessionId: string) =>
   request<{ session_id: string; phase: string; status: string; progress_pct?: number; message?: string; result: Record<string, unknown> | null }>(`/api/phase-b/status/${sessionId}`)
 
 // Phase C
-export const runPhaseC = (body: { session_id: string; workers: number; count: number; ai_personas: boolean; traces: boolean; seed: number | null; language: string | null; persona_context: string | null; validate: boolean }) =>
+export const runPhaseC = (body: { session_id: string; workers: number; count: number; ai_personas: boolean; traces: boolean; seed: number | null; language: string | null; persona_context: string | null; validate: boolean; llm_provider?: string | null; llm_model?: string | null; llm_base_url?: string | null }) =>
   request<{ status: string; session_id: string }>('/api/phase-c/run', { method: 'POST', body: JSON.stringify(body) })
 
 export const getPhaseCStatus = (sessionId: string) =>

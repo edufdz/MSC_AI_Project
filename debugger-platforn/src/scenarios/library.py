@@ -13,9 +13,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-import anthropic
 from dotenv import load_dotenv
 
+from src.execution.llm_config import LLMProviderConfig
 from src.scenarios.models import (
     Scenario, ScenarioCatalog,
     ScenarioSuccessConditions, ScenarioFailureConditions, ChaosConfig,
@@ -25,26 +25,57 @@ from src.scenarios.templates import load_scenario_templates, GENERIC_SCENARIOS
 _project_root = Path(__file__).parent.parent.parent
 load_dotenv(_project_root / ".env")
 
-MODEL = "claude-haiku-4-5"  # Switched to Haiku for cost savings (~67% cheaper)
-
 
 def _parse_json(text: str):
     text = text.strip()
-    if text.startswith("```"):
-        text = re.sub(r"^```\w*\n?", "", text)
-        text = re.sub(r"\n?```$", "", text)
-        text = text.strip()
-    return json.loads(text)
+    # Strip markdown fences (```json ... ```)
+    text = re.sub(r"^```\w*\n?", "", text)
+    text = re.sub(r"\n?```\s*$", "", text)
+    text = text.strip()
+    # Try direct parse
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        pass
+    # Use json.JSONDecoder to parse the first valid JSON value and ignore trailing text
+    decoder = json.JSONDecoder()
+    # Find the first [ or { and try to decode from there
+    for i, ch in enumerate(text):
+        if ch in ("{", "["):
+            try:
+                obj, _ = decoder.raw_decode(text, i)
+                return obj
+            except json.JSONDecodeError:
+                continue
+    raise json.JSONDecodeError("No JSON found in LLM response", text, 0)
 
 
 def _normalize_success_conditions(sc_data: Dict) -> Dict:
-    """Normalize success_conditions dict to ensure proper types.
-    Converts info_provided from string to list if needed."""
+    """Normalize success_conditions dict to handle type mismatches from LLMs.
+
+    Common issues: tool_called as list instead of string, info_provided as
+    string instead of list, etc.
+    """
     normalized = dict(sc_data)
+    # tool_called should be Optional[str] — LLMs sometimes return a list or dict
+    if "tool_called" in normalized:
+        tc = normalized["tool_called"]
+        if isinstance(tc, list):
+            normalized["tool_called"] = tc[0] if tc else None
+        elif isinstance(tc, dict):
+            # e.g. {"get_service_info": true} → "get_service_info"
+            normalized["tool_called"] = next(iter(tc), None)
+        elif isinstance(tc, bool):
+            normalized["tool_called"] = None
+    # tools_called should be Optional[List[str]] — LLMs sometimes return a string
+    if "tools_called" in normalized:
+        tc = normalized["tools_called"]
+        if isinstance(tc, str):
+            normalized["tools_called"] = [tc] if tc else None
+    # info_provided should be Optional[List[str]]
     if "info_provided" in normalized:
         ip = normalized["info_provided"]
         if isinstance(ip, str):
-            # Convert string to list - split by common delimiters or wrap as single item
             if ip and ip.strip():
                 normalized["info_provided"] = [ip]
             else:
@@ -52,7 +83,6 @@ def _normalize_success_conditions(sc_data: Dict) -> Dict:
         elif ip is None:
             normalized["info_provided"] = None
         elif not isinstance(ip, list):
-            # Fallback: wrap non-list, non-string, non-None values
             normalized["info_provided"] = [str(ip)]
     return normalized
 
@@ -68,6 +98,7 @@ class ScenarioLibrary:
         agent_map: Dict,
         language: str = "English",
         usage_tracker: Any = None,
+        llm_config: Optional[LLMProviderConfig] = None,
     ):
         self.agent_map = agent_map
         self.agent_type: str = agent_map.get("metadata", {}).get("type", "custom")
@@ -78,6 +109,13 @@ class ScenarioLibrary:
         self.language: str = language
         self.scenarios: List[Scenario] = []
         self._usage_tracker = usage_tracker
+        self._llm_config = llm_config or LLMProviderConfig()
+        self._llm_client = None
+
+    def _get_llm_client(self):
+        if self._llm_client is None:
+            self._llm_client = self._llm_config.create_sync_client()
+        return self._llm_client
 
     # ------------------------------------------------------------------
     # Template loading
@@ -240,47 +278,76 @@ Return ONLY valid JSON (no markdown fences):
   ]
 }}"""
 
-        client = anthropic.Anthropic()
-        response = client.messages.create(
-            model=MODEL,
-            max_tokens=4096,
-            messages=[{"role": "user", "content": prompt}],
-        )
-        if self._usage_tracker and getattr(response, "usage", None):
-            self._usage_tracker.add(response.usage)
+        client = self._get_llm_client()
 
-        data = _parse_json(response.content[0].text)
+        data = None
+        for attempt in range(2):
+            raw, in_tok, out_tok = self._llm_config.call_sync(
+                client, prompt, max_tokens=4096, temperature=0.7,
+            )
+            if self._usage_tracker:
+                self._usage_tracker.add_tokens(in_tok, out_tok)
+
+            try:
+                data = _parse_json(raw)
+                break
+            except json.JSONDecodeError:
+                if attempt == 1:
+                    raise
         generated = []
 
-        for s in data.get("scenarios", []):
-            # Ensure tools reference only real tools
-            req = [t for t in s.get("required_tools", []) if t in self.agent_tools]
-            opt = [t for t in s.get("optional_tools", []) if t in self.agent_tools]
+        # Handle both {"scenarios": [...]} and direct [...] formats
+        if isinstance(data, list):
+            scenario_list = data
+        elif isinstance(data, dict):
+            scenario_list = data.get("scenarios", data.get("results", []))
+        else:
+            scenario_list = []
 
-            # Normalize success_conditions to handle type mismatches
-            sc_data = _normalize_success_conditions(s.get("success_conditions", {}))
+        import logging
+        _log = logging.getLogger(__name__)
+        _log.warning("Parsed %d scenarios from LLM (data type=%s, keys=%s)",
+                      len(scenario_list), type(data).__name__,
+                      list(data.keys()) if isinstance(data, dict) else "N/A")
+        if scenario_list:
+            _log.warning("First scenario sample: %s", scenario_list[0])
 
-            scenario = Scenario(
-                scenario_id=str(uuid.uuid4()),
-                title=s["title"],
-                description=s["description"],
-                user_goal=s["user_goal"],
-                category=self.agent_type,
-                difficulty=s.get("difficulty", "medium"),
-                type=s.get("type", "happy_path"),
-                required_tools=req,
-                optional_tools=opt,
-                forbidden_tools=s.get("forbidden_tools", []),
-                success_conditions=ScenarioSuccessConditions(**sc_data),
-                failure_conditions=ScenarioFailureConditions(**s.get("failure_conditions", {})),
-                chaos_config=ChaosConfig(),
-                tags=s.get("tags", []),
-                estimated_turns=s.get("estimated_turns", 5),
-                source="ai_generated",
-                created_at=datetime.now(timezone.utc),
-            )
-            generated.append(scenario)
-            self.scenarios.append(scenario)
+        for s in scenario_list:
+            try:
+                # Ensure tools reference only real tools
+                req = [t for t in s.get("required_tools", []) if t in self.agent_tools]
+                opt = [t for t in s.get("optional_tools", []) if t in self.agent_tools]
+
+                # Normalize success_conditions to handle type mismatches
+                sc_data = _normalize_success_conditions(s.get("success_conditions", {}))
+
+                scenario = Scenario(
+                    scenario_id=str(uuid.uuid4()),
+                    title=s.get("title", "Untitled"),
+                    description=s.get("description", ""),
+                    user_goal=s.get("user_goal", ""),
+                    category=self.agent_type,
+                    difficulty=s.get("difficulty", "medium"),
+                    type=s.get("type", "happy_path"),
+                    required_tools=req,
+                    optional_tools=opt,
+                    forbidden_tools=s.get("forbidden_tools", []),
+                    success_conditions=ScenarioSuccessConditions(**sc_data),
+                    failure_conditions=ScenarioFailureConditions(**s.get("failure_conditions", {})),
+                    chaos_config=ChaosConfig(),
+                    tags=s.get("tags", []),
+                    estimated_turns=s.get("estimated_turns", 5),
+                    source="ai_generated",
+                    created_at=datetime.now(timezone.utc),
+                )
+                generated.append(scenario)
+                self.scenarios.append(scenario)
+            except Exception as e:
+                import logging
+                logging.getLogger(__name__).warning(
+                    "Skipping malformed scenario from LLM: %s — data: %s", e, s
+                )
+                continue
 
         return generated
 
@@ -347,50 +414,61 @@ Return ONLY valid JSON (no markdown fences):
   }}
 ]"""
 
-        client = anthropic.Anthropic()
-        response = client.messages.create(
-            model=MODEL,
-            max_tokens=4096,
-            messages=[{"role": "user", "content": prompt}],
-        )
-        if self._usage_tracker and getattr(response, "usage", None):
-            self._usage_tracker.add(response.usage)
+        client = self._get_llm_client()
 
-        variants_data = _parse_json(response.content[0].text)
+        variants_data = None
+        for attempt in range(2):
+            raw, in_tok, out_tok = self._llm_config.call_sync(
+                client, prompt, max_tokens=4096, temperature=0.7,
+            )
+            if self._usage_tracker:
+                self._usage_tracker.add_tokens(in_tok, out_tok)
+
+            try:
+                variants_data = _parse_json(raw)
+                break
+            except json.JSONDecodeError:
+                if attempt == 1:
+                    raise
         if isinstance(variants_data, dict):
             variants_data = variants_data.get("variants", variants_data.get("scenarios", []))
 
         variants = []
         for v in variants_data:
-            req = [t for t in v.get("required_tools", base.required_tools) if t in self.agent_tools]
-            opt = [t for t in v.get("optional_tools", []) if t in self.agent_tools]
+            try:
+                req = [t for t in v.get("required_tools", base.required_tools) if t in self.agent_tools]
+                opt = [t for t in v.get("optional_tools", []) if t in self.agent_tools]
 
-            # Normalize success_conditions to handle type mismatches
-            sc_data = _normalize_success_conditions(v.get("success_conditions", {}))
+                # Normalize success_conditions to handle type mismatches
+                sc_data = _normalize_success_conditions(v.get("success_conditions", {}))
 
-            variant = Scenario(
-                scenario_id=str(uuid.uuid4()),
-                title=v["title"],
-                description=v["description"],
-                user_goal=v["user_goal"],
-                category=base.category,
-                difficulty=v.get("difficulty", "medium"),
-                type="edge_case",
-                required_tools=req,
-                optional_tools=opt,
-                forbidden_tools=v.get("forbidden_tools", base.forbidden_tools),
-                success_conditions=ScenarioSuccessConditions(**sc_data),
-                failure_conditions=ScenarioFailureConditions(**v.get("failure_conditions", {})),
-                chaos_config=base.chaos_config,
-                tags=v.get("tags", base.tags),
-                estimated_turns=v.get("estimated_turns", base.estimated_turns + 2),
-                source="variant",
-                base_scenario_id=base.scenario_id,
-                variant_type=v.get("variant_type", "unknown"),
-                created_at=datetime.now(timezone.utc),
-            )
-            variants.append(variant)
-            self.scenarios.append(variant)
+                variant = Scenario(
+                    scenario_id=str(uuid.uuid4()),
+                    title=v.get("title", "Untitled variant"),
+                    description=v.get("description", ""),
+                    user_goal=v.get("user_goal", base.user_goal),
+                    category=base.category,
+                    difficulty=v.get("difficulty", "medium"),
+                    type="edge_case",
+                    required_tools=req,
+                    optional_tools=opt,
+                    forbidden_tools=v.get("forbidden_tools", base.forbidden_tools),
+                    success_conditions=ScenarioSuccessConditions(**sc_data),
+                    failure_conditions=ScenarioFailureConditions(**v.get("failure_conditions", {})),
+                    chaos_config=base.chaos_config,
+                    tags=v.get("tags", base.tags),
+                    estimated_turns=v.get("estimated_turns", base.estimated_turns + 2),
+                    source="variant",
+                    base_scenario_id=base.scenario_id,
+                    variant_type=v.get("variant_type", "unknown"),
+                    created_at=datetime.now(timezone.utc),
+                )
+                variants.append(variant)
+                self.scenarios.append(variant)
+            except Exception as e:
+                import logging
+                logging.getLogger(__name__).warning("Skipping malformed variant: %s", e)
+                continue
 
         return variants
 

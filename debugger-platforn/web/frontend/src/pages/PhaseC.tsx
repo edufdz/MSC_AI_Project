@@ -5,6 +5,7 @@ import { usePhaseRunner } from '../hooks/usePhaseRunner'
 import { getPhaseCStatus, resetPhase as apiResetPhase } from '../api/client'
 import ExecutionControls from '../components/phase-c/ExecutionControls'
 import PersonaContextInput from '../components/phase-c/PersonaContextInput'
+import LlmProviderSelect from '../components/shared/LlmProviderSelect'
 import LiveMonitor from '../components/phase-c/LiveMonitor'
 import type { PhaseCResult } from '../api/types'
 
@@ -34,6 +35,9 @@ export default function PhaseC() {
   const [language, setLanguage] = useState('')
   const [personaContext, setPersonaContext] = useState('')
   const [validate, setValidate] = useState(true)
+  const [llmProvider, setLlmProvider] = useState('')
+  const [llmModel, setLlmModel] = useState('')
+  const [llmBaseUrl, setLlmBaseUrl] = useState('')
   const [error, setError] = useState('')
 
   // If Phase B produced no non-AI personas, force AI personas on
@@ -74,6 +78,9 @@ export default function PhaseC() {
         language: language || null,
         persona_context: personaContext || null,
         validate,
+        llm_provider: llmProvider || null,
+        llm_model: llmModel || null,
+        llm_base_url: llmBaseUrl || null,
       })
     } catch (e) {
       setError(String(e))
@@ -217,6 +224,11 @@ export default function PhaseC() {
 
         <div className="space-y-6">
           <PersonaContextInput value={personaContext} onChange={setPersonaContext} />
+          <LlmProviderSelect
+            provider={llmProvider} onProviderChange={setLlmProvider}
+            model={llmModel} onModelChange={setLlmModel}
+            baseUrl={llmBaseUrl} onBaseUrlChange={setLlmBaseUrl}
+          />
         </div>
       </div>
 

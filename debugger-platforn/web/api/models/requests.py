@@ -27,6 +27,9 @@ class PhaseBRequest(BaseModel):
     use_tlahuac: bool = False
     tlahuac_dir: Optional[str] = None
     include_templates: bool = False
+    llm_provider: Optional[str] = None
+    llm_model: Optional[str] = None
+    llm_base_url: Optional[str] = None
 
 
 class PhaseCRequest(BaseModel):
@@ -41,6 +44,9 @@ class PhaseCRequest(BaseModel):
     language: Optional[str] = None
     persona_context: Optional[str] = None
     validate: bool = True  # Run AI-powered failure triage before Phase D
+    llm_provider: Optional[str] = None
+    llm_model: Optional[str] = None
+    llm_base_url: Optional[str] = None
 
 
 class PhaseDRequest(BaseModel):
