@@ -77,6 +77,7 @@ export interface PhaseCRequest {
   language: string | null
   persona_context: string | null
   validate: boolean
+  agent_endpoint?: string | null
   llm_provider?: string | null
   llm_model?: string | null
   llm_base_url?: string | null
@@ -189,6 +190,60 @@ export interface PhaseDResult {
   priority_ranking: string[]
   summary: DiagnosisSummary
   generated_at: string | null
+}
+
+// Certification
+export type CertificationTier = 'platinum' | 'gold' | 'silver' | 'not_certified'
+
+export interface CertificationCategoryScore {
+  category: string
+  score: number
+  weight: number
+  breakdown: Record<string, number>
+  notes: string[]
+}
+
+export interface CertificationHardBlocker {
+  blocker_type: string
+  condition: string
+  evidence: string
+  tier_blocked: CertificationTier
+}
+
+export interface CertificationConfidence {
+  total_simulations: number
+  confidence_level: number
+  margin_of_error: number
+  sample_sufficient: boolean
+}
+
+export interface CertificationTestingConditions {
+  total_simulations: number
+  by_difficulty: Record<string, number>
+  chaos_tested: boolean
+  persona_count: number
+  persona_diversity: number
+}
+
+export interface CertificationReport {
+  certification_id: string
+  agent_name: string
+  agent_framework: string
+  tier: CertificationTier
+  overall_score: number
+  category_scores: CertificationCategoryScore[]
+  hard_blockers: CertificationHardBlocker[]
+  strengths: string[]
+  improvements: string[]
+  testing_conditions: CertificationTestingConditions
+  confidence: CertificationConfidence
+  radar_chart_data: Record<string, number>
+  issued_at: string | null
+  expires_at: string | null
+}
+
+export interface CertificationRequest {
+  session_id: string
 }
 
 // Trace types

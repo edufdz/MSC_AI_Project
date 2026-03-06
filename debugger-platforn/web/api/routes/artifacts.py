@@ -23,6 +23,7 @@ ARTIFACT_FILES = {
     "conversation-log": "conversations.log",
     "test-configuration": "test_configuration.json",
     "graph-png": "agent_map_graph.png",
+    "certification-report": "certification_report.json",
 }
 
 

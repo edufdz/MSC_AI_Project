@@ -35,6 +35,7 @@ export default function PhaseC() {
   const [language, setLanguage] = useState('')
   const [personaContext, setPersonaContext] = useState('')
   const [validate, setValidate] = useState(true)
+  const [agentEndpoint, setAgentEndpoint] = useState('http://localhost:3099')
   const [llmProvider, setLlmProvider] = useState('')
   const [llmModel, setLlmModel] = useState('')
   const [llmBaseUrl, setLlmBaseUrl] = useState('')
@@ -78,6 +79,7 @@ export default function PhaseC() {
         language: language || null,
         persona_context: personaContext || null,
         validate,
+        agent_endpoint: agentEndpoint || null,
         llm_provider: llmProvider || null,
         llm_model: llmModel || null,
         llm_base_url: llmBaseUrl || null,
@@ -206,6 +208,19 @@ export default function PhaseC() {
       <div>
         <h1 className="text-xl font-semibold tracking-tight text-pearl">Phase C: Execute Tests</h1>
         <p className="text-sm text-smoke mt-0.5">Run the test suite against the agent with live monitoring</p>
+      </div>
+
+      {/* Agent Endpoint */}
+      <div className="p-4 bg-bg-card border border-border rounded-lg space-y-2">
+        <label className="block text-sm font-medium text-pearl">Agent Endpoint</label>
+        <p className="text-xs text-text-muted">The URL where your agent's HTTP API is running (must expose POST /chat)</p>
+        <input
+          type="text"
+          value={agentEndpoint}
+          onChange={(e) => setAgentEndpoint(e.target.value)}
+          placeholder="http://localhost:3099"
+          className="w-full px-3 py-2 bg-bg border border-border rounded-lg text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent"
+        />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

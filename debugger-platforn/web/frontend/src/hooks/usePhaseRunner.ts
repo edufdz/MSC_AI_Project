@@ -3,7 +3,7 @@
 import { useCallback, useRef } from 'react'
 import * as api from '../api/client'
 import { useStore, type AppState } from '../store'
-import type { PhaseARequest, PhaseBRequest, PhaseCRequest, PhaseDRequest } from '../api/types'
+import type { PhaseARequest, PhaseBRequest, PhaseCRequest, PhaseDRequest, CertificationRequest } from '../api/types'
 
 export function usePhaseRunner() {
   const setPhaseStatus = useStore((s: AppState) => s.setPhaseStatus)
@@ -12,6 +12,7 @@ export function usePhaseRunner() {
   const setPhaseBResult = useStore((s: AppState) => s.setPhaseBResult)
   const setPhaseCResult = useStore((s: AppState) => s.setPhaseCResult)
   const setPhaseDResult = useStore((s: AppState) => s.setPhaseDResult)
+  const setCertResult = useStore((s: AppState) => s.setCertResult)
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   const stopPolling = useCallback(() => {
@@ -22,9 +23,9 @@ export function usePhaseRunner() {
   }, [])
 
   const pollStatus = useCallback(
-    (phase: 'a' | 'b' | 'c' | 'd', sessionId: string) => {
+    (phase: 'a' | 'b' | 'c' | 'd' | 'cert', sessionId: string) => {
       stopPolling()
-      const getter = phase === 'a' ? api.getPhaseAStatus : phase === 'b' ? api.getPhaseBStatus : phase === 'c' ? api.getPhaseCStatus : api.getPhaseDStatus
+      const getter = phase === 'a' ? api.getPhaseAStatus : phase === 'b' ? api.getPhaseBStatus : phase === 'c' ? api.getPhaseCStatus : phase === 'd' ? api.getPhaseDStatus : api.getCertificationStatus
 
       pollRef.current = setInterval(async () => {
         try {
@@ -40,6 +41,7 @@ export function usePhaseRunner() {
             if (phase === 'b' && status.result) setPhaseBResult(status.result as never)
             if (phase === 'c' && status.result) setPhaseCResult(status.result as never)
             if (phase === 'd' && status.result) setPhaseDResult(status.result as never)
+            if (phase === 'cert' && status.result) setCertResult(status.result as never)
           } else if (status.status === 'error') {
             stopPolling()
             setPhaseStatus(phase, 'error')
@@ -49,7 +51,7 @@ export function usePhaseRunner() {
         }
       }, 1000)
     },
-    [stopPolling, setPhaseStatus, setPhaseProgress, setPhaseAResult, setPhaseBResult, setPhaseCResult, setPhaseDResult],
+    [stopPolling, setPhaseStatus, setPhaseProgress, setPhaseAResult, setPhaseBResult, setPhaseCResult, setPhaseDResult, setCertResult],
   )
 
   const runPhaseA = useCallback(
@@ -88,5 +90,14 @@ export function usePhaseRunner() {
     [setPhaseStatus, pollStatus],
   )
 
-  return { runPhaseA, runPhaseB, runPhaseC, runPhaseD, stopPolling }
+  const runCertification = useCallback(
+    async (params: CertificationRequest) => {
+      setPhaseStatus('cert', 'running')
+      await api.runCertification(params)
+      pollStatus('cert', params.session_id)
+    },
+    [setPhaseStatus, pollStatus],
+  )
+
+  return { runPhaseA, runPhaseB, runPhaseC, runPhaseD, runCertification, stopPolling }
 }

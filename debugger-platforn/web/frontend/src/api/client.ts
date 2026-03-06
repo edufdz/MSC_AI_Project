@@ -52,7 +52,7 @@ export const getPhaseBStatus = (sessionId: string) =>
   request<{ session_id: string; phase: string; status: string; progress_pct?: number; message?: string; result: Record<string, unknown> | null }>(`/api/phase-b/status/${sessionId}`)
 
 // Phase C
-export const runPhaseC = (body: { session_id: string; workers: number; count: number; ai_personas: boolean; traces: boolean; seed: number | null; language: string | null; persona_context: string | null; validate: boolean; llm_provider?: string | null; llm_model?: string | null; llm_base_url?: string | null }) =>
+export const runPhaseC = (body: { session_id: string; workers: number; count: number; ai_personas: boolean; traces: boolean; seed: number | null; language: string | null; persona_context: string | null; validate: boolean; agent_endpoint?: string | null; llm_provider?: string | null; llm_model?: string | null; llm_base_url?: string | null }) =>
   request<{ status: string; session_id: string }>('/api/phase-c/run', { method: 'POST', body: JSON.stringify(body) })
 
 export const getPhaseCStatus = (sessionId: string) =>
@@ -64,6 +64,13 @@ export const runPhaseD = (body: { session_id: string; skip_ai: boolean; use_embe
 
 export const getPhaseDStatus = (sessionId: string) =>
   request<{ session_id: string; phase: string; status: string; progress_pct?: number; message?: string; result: Record<string, unknown> | null }>(`/api/phase-d/status/${sessionId}`)
+
+// Certification
+export const runCertification = (body: { session_id: string }) =>
+  request<{ status: string; session_id: string }>('/api/certification/run', { method: 'POST', body: JSON.stringify(body) })
+
+export const getCertificationStatus = (sessionId: string) =>
+  request<{ session_id: string; phase: string; status: string; progress_pct?: number; message?: string; result: Record<string, unknown> | null }>(`/api/certification/status/${sessionId}`)
 
 // Phase reset
 export const resetPhase = (sessionId: string, phase: string) =>

@@ -4,13 +4,17 @@ const steps = [
   { key: 'a' as const, label: 'Analyze' },
   { key: 'b' as const, label: 'Generate' },
   { key: 'c' as const, label: 'Execute' },
+  { key: 'd' as const, label: 'Diagnose' },
+  { key: 'cert' as const, label: 'Certify' },
 ]
 
 export default function ProgressStepper() {
   const phaseA = useStore((s) => s.phaseA)
   const phaseB = useStore((s) => s.phaseB)
   const phaseC = useStore((s) => s.phaseC)
-  const statuses = { a: phaseA, b: phaseB, c: phaseC }
+  const phaseD = useStore((s) => s.phaseD)
+  const certStatus = useStore((s) => s.certStatus)
+  const statuses = { a: phaseA, b: phaseB, c: phaseC, d: phaseD, cert: certStatus }
 
   return (
     <div className="flex items-center gap-2">

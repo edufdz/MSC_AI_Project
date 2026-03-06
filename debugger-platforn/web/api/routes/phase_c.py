@@ -70,6 +70,10 @@ async def _run_phase_c_async(req: PhaseCRequest, emitter: ProgressEmitter) -> di
 
     apply_endpoints_to_agent_map(agent_map, str(agent_map_path))
 
+    # Override with user-provided endpoint from the UI
+    if req.agent_endpoint:
+        agent_map["api_endpoint"] = req.agent_endpoint.rstrip("/")
+
     # Language detection
     language = req.language or agent_map.get("metadata", {}).get("conversation_language", "English")
     if language.lower() in ("spanish", "español", "espanol", "es"):

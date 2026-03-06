@@ -20,12 +20,12 @@ from dotenv import load_dotenv
 load_dotenv(PROJECT_ROOT / ".env")
 
 from web.api.config import CORS_ORIGINS
-from web.api.routes import sessions, filesystem, phase_a, phase_b, phase_c, phase_d, artifacts
+from web.api.routes import sessions, filesystem, phase_a, phase_b, phase_c, phase_d, certification, artifacts
 from web.api.ws import ws_endpoint
 
 app = FastAPI(
     title="Agent Debugger Platform",
-    description="Web API for the Agent Debugger pipeline (Phases A-D)",
+    description="Web API for the Agent Debugger pipeline (Phases A-D + Certification)",
     version="1.0.0",
 )
 
@@ -45,6 +45,7 @@ app.include_router(phase_a.router)
 app.include_router(phase_b.router)
 app.include_router(phase_c.router)
 app.include_router(phase_d.router)
+app.include_router(certification.router)
 app.include_router(artifacts.router)
 
 

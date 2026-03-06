@@ -46,7 +46,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 console = Console()
 
-PHASE_ORDER = ["a", "b", "c", "d", "e"]
+PHASE_ORDER = ["a", "b", "c", "d", "cert", "e"]
 
 
 def _should_run(phase: str, stop_after: str) -> bool:
@@ -108,7 +108,7 @@ def _transition_panel(from_phase: str, to_phase: str, artifact: str, path: str):
 # Validation
 @click.option("--skip-validation", is_flag=True, help="Skip post-Phase C conversation validation")
 # Control
-@click.option("--stop-after", default="e", type=click.Choice(["a", "b", "c", "d", "e"], case_sensitive=False),
+@click.option("--stop-after", default="e", type=click.Choice(["a", "b", "c", "d", "cert", "e"], case_sensitive=False),
               help="Stop after this phase (default: e = run all)")
 def main(
     repo_path: str,
@@ -151,7 +151,7 @@ def main(
 
     console.print(Panel(
         "[bold]Agent Debugger — Full Pipeline[/bold]\n"
-        "A (Analyze) → B (Generate) → C (Execute) → D (Diagnose) → E (Improve)",
+        "A (Analyze) → B (Generate) → C (Execute) → D (Diagnose) → Cert → E (Improve)",
         style="bold blue",
     ))
 
@@ -501,6 +501,78 @@ def main(
         console.print("\n[green]No failures to diagnose — all tests passed![/green]")
         metrics["d"] = {"clusters": 0, "fix_proposals": 0, "duration": "0.0s"}
 
+    if not _should_run("cert", stop_after):
+        _print_final_summary(metrics, pipeline_start)
+        return
+
+    # ─────────────────────────────────────────────────
+    # Certification Phase
+    # ─────────────────────────────────────────────────
+    _phase_banner("Certification", "Score agent across 5 categories and assign tier")
+
+    from src.certification.engine import CertificationEngine
+
+    cert_start = time.time()
+
+    def on_cert_progress(msg: str):
+        console.print(f"  [dim]{msg}[/dim]")
+
+    cert_engine = CertificationEngine(on_progress=on_cert_progress)
+
+    report_dict_for_cert = report.model_dump(mode="json")
+    cert_result = cert_engine.run(
+        results_dir=results_dir,
+        test_run_report=report_dict_for_cert,
+        diagnosis_report=diag_dict,
+        agent_map=agent_map_data,
+    )
+
+    cert_elapsed = time.time() - cert_start
+    tier = cert_result.get("tier", "not_certified")
+    overall = cert_result.get("overall_score", 0)
+
+    # Tier display styling
+    tier_styles = {
+        "platinum": "[bold white on blue] PLATINUM [/bold white on blue]",
+        "gold": "[bold black on yellow] GOLD [/bold black on yellow]",
+        "silver": "[bold black on white] SILVER [/bold black on white]",
+        "not_certified": "[bold white on red] NOT CERTIFIED [/bold white on red]",
+    }
+    tier_display = tier_styles.get(tier, tier)
+
+    # Category scores bar chart
+    cat_lines = []
+    for cs in cert_result.get("category_scores", []):
+        bar_len = int(cs["score"] / 5)
+        bar = "█" * bar_len + "░" * (20 - bar_len)
+        cat_lines.append(f"  {cs['category']:<25} {bar} {cs['score']:5.1f}/100 ({cs['weight']:.0%})")
+
+    body = f"  Tier: {tier_display}  |  Overall Score: [bold]{overall:.1f}[/bold]/100\n\n"
+    body += "\n".join(cat_lines)
+
+    # Strengths
+    strengths = cert_result.get("strengths", [])
+    if strengths:
+        body += "\n\n  [green]Strengths:[/green]"
+        for s in strengths:
+            body += f"\n    + {s}"
+
+    # Improvements
+    improvements = cert_result.get("improvements", [])
+    if improvements:
+        body += "\n\n  [yellow]Improvements:[/yellow]"
+        for imp in improvements:
+            body += f"\n    - {imp}"
+
+    console.print(Panel(body, title="[bold]Certification Report[/bold]", style="cyan"))
+
+    metrics["cert"] = {
+        "tier": tier,
+        "overall_score": overall,
+        "duration": f"{cert_elapsed:.1f}s",
+    }
+    console.print(f"\n  [green]Certification complete[/green] — {tier.upper()} ({overall:.1f}/100), {cert_elapsed:.1f}s")
+
     if not _should_run("e", stop_after):
         _print_final_summary(metrics, pipeline_start)
         return
@@ -578,6 +650,9 @@ def _print_final_summary(metrics: dict, pipeline_start: float):
     if "d" in metrics:
         m = metrics["d"]
         rows.append(f"  Phase D (Diagnose):  {m.get('clusters', '?')} clusters, {m.get('fix_proposals', '?')} fixes  [{m['duration']}]")
+    if "cert" in metrics:
+        m = metrics["cert"]
+        rows.append(f"  Certification:       {m.get('tier', '?').upper()} ({m.get('overall_score', '?')}/100)  [{m['duration']}]")
     if "e" in metrics:
         m = metrics["e"]
         rows.append(f"  Phase E (Improve):   {m.get('fixes_applied', '?')} fixes, {m.get('pass_rate_improvement', '?')}  [{m['duration']}]")

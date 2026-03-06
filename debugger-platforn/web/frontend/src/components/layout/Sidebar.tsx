@@ -6,6 +6,7 @@ const phases = [
   { key: 'b' as const, label: 'Phase B', sub: 'Generate Tests', path: '/phase-b' },
   { key: 'c' as const, label: 'Phase C', sub: 'Execute', path: '/phase-c' },
   { key: 'd' as const, label: 'Phase D', sub: 'Diagnose', path: '/phase-d' },
+  { key: 'cert' as const, label: 'Certification', sub: 'Score & Certify', path: '/certification' },
 ]
 
 function StatusIcon({ status }: { status: string }) {
@@ -25,10 +26,11 @@ export default function Sidebar() {
   const phaseB = useStore((s) => s.phaseB)
   const phaseC = useStore((s) => s.phaseC)
   const phaseD = useStore((s) => s.phaseD)
+  const certStatus = useStore((s) => s.certStatus)
   const sessionId = useStore((s) => s.sessionId)
   const resetSession = useStore((s) => s.resetSession)
 
-  const statuses = { a: phaseA, b: phaseB, c: phaseC, d: phaseD }
+  const statuses = { a: phaseA, b: phaseB, c: phaseC, d: phaseD, cert: certStatus }
 
   return (
     <aside className="w-[260px] min-w-[260px] bg-bg-surface border-r border-border flex flex-col">
@@ -37,8 +39,8 @@ export default function Sidebar() {
         className="px-5 py-4 border-b border-border cursor-pointer"
         onClick={() => navigate('/')}
       >
-        <h1 className="text-lg font-semibold tracking-tight text-pearl">Debugger</h1>
-        <p className="text-[11px] text-text-muted mt-0.5 uppercase tracking-wider">Agent Testing Platform</p>
+        <h1 className="text-lg font-semibold tracking-tight text-pearl">Plavio</h1>
+        <p className="text-[11px] text-text-muted mt-0.5 uppercase tracking-wider">Trust your AI workforce</p>
       </div>
 
       {/* Phase stepper */}

@@ -60,7 +60,7 @@ async def reset_phase(session_id: str, phase: str):
     if not session:
         raise HTTPException(status_code=404, detail="Session not found")
 
-    if phase not in ("a", "b", "c", "d"):
+    if phase not in ("a", "b", "c", "d", "cert"):
         raise HTTPException(status_code=400, detail="Invalid phase")
 
     # Don't allow reset if the phase is currently running

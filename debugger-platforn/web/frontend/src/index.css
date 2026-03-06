@@ -16,13 +16,13 @@ html, body, #root {
 /* Custom scrollbar */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #2A2A2A; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #383838; }
+::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
 
 /* Animations */
 @keyframes pulse-accent {
-  0%, 100% { box-shadow: 0 0 4px rgba(215, 215, 210, 0.3); }
-  50% { box-shadow: 0 0 10px rgba(215, 215, 210, 0.15); }
+  0%, 100% { box-shadow: 0 0 4px rgba(59, 130, 200, 0.3); }
+  50% { box-shadow: 0 0 10px rgba(59, 130, 200, 0.15); }
 }
 
 @keyframes pulse-soft {
@@ -43,7 +43,7 @@ html, body, #root {
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
-  background: #2A2A2A;
+  background: #E2E8F0;
   border-radius: 4px;
   height: 4px;
 }
@@ -54,11 +54,11 @@ input[type="range"]::-webkit-slider-thumb {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: #D7D7D2;
+  background: #3B82C8;
   cursor: pointer;
-  border: 2px solid #0A0A0A;
+  border: 2px solid #FFFFFF;
 }
 
 input[type="range"]::-webkit-slider-thumb:hover {
-  background: #F5F5F2;
+  background: #2563EB;
 }

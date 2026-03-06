@@ -44,6 +44,7 @@ class PhaseCRequest(BaseModel):
     language: Optional[str] = None
     persona_context: Optional[str] = None
     validate: bool = True  # Run AI-powered failure triage before Phase D
+    agent_endpoint: Optional[str] = None  # e.g. http://localhost:3099
     llm_provider: Optional[str] = None
     llm_model: Optional[str] = None
     llm_base_url: Optional[str] = None
@@ -56,6 +57,10 @@ class PhaseDRequest(BaseModel):
     max_retries: int = Field(default=3, ge=1, le=10)
     backoff_base: float = Field(default=2.0, ge=1.0, le=10.0)
     backoff_max: float = Field(default=60.0, ge=10.0, le=300.0)
+
+
+class CertificationRequest(BaseModel):
+    session_id: str
 
 
 class FileBrowseRequest(BaseModel):

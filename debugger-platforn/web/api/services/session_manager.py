@@ -80,7 +80,7 @@ class SessionManager:
         Returns the list of phases that were reset.
         E.g. reset_phase("c") resets c and d.
         """
-        PIPELINE = ["a", "b", "c", "d"]
+        PIPELINE = ["a", "b", "c", "d", "cert"]
         session = self._sessions.get(session_id)
         if not session or phase not in PIPELINE:
             return []

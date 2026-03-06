@@ -1,7 +1,7 @@
 // Zustand store for global app state
 
 import { create } from 'zustand'
-import type { PhaseAResult, PhaseBResult, PhaseCResult, PhaseDResult, TriageSummary, WSEvent } from '../api/types'
+import type { PhaseAResult, PhaseBResult, PhaseCResult, PhaseDResult, CertificationReport, TriageSummary, WSEvent } from '../api/types'
 
 export type PhaseStatusValue = 'idle' | 'running' | 'completed' | 'error'
 
@@ -37,24 +37,28 @@ export interface AppState {
   phaseB: PhaseStatusValue
   phaseC: PhaseStatusValue
   phaseD: PhaseStatusValue
-  setPhaseStatus: (phase: 'a' | 'b' | 'c' | 'd', status: PhaseStatusValue) => void
+  certStatus: PhaseStatusValue
+  setPhaseStatus: (phase: 'a' | 'b' | 'c' | 'd' | 'cert', status: PhaseStatusValue) => void
 
   // Phase progress
   phaseAProgress: { step: string; message: string; pct: number }
   phaseBProgress: { step: string; message: string; pct: number }
   phaseCProgress: { step: string; message: string; pct: number }
   phaseDProgress: { step: string; message: string; pct: number }
-  setPhaseProgress: (phase: 'a' | 'b' | 'c' | 'd', step: string, message: string, pct: number) => void
+  certProgress: { step: string; message: string; pct: number }
+  setPhaseProgress: (phase: 'a' | 'b' | 'c' | 'd' | 'cert', step: string, message: string, pct: number) => void
 
   // Phase results
   phaseAResult: PhaseAResult | null
   phaseBResult: PhaseBResult | null
   phaseCResult: PhaseCResult | null
   phaseDResult: PhaseDResult | null
+  certResult: CertificationReport | null
   setPhaseAResult: (r: PhaseAResult | null) => void
   setPhaseBResult: (r: PhaseBResult | null) => void
   setPhaseCResult: (r: PhaseCResult | null) => void
   setPhaseDResult: (r: PhaseDResult | null) => void
+  setCertResult: (r: CertificationReport | null) => void
 
   // Phase C live monitor state
   totalTests: number
@@ -76,7 +80,7 @@ export interface AppState {
   hydratePhaseCFromResult: (r: PhaseCResult) => void
 
   // Reset
-  resetPhase: (phase: 'a' | 'b' | 'c' | 'd') => void
+  resetPhase: (phase: 'a' | 'b' | 'c' | 'd' | 'cert') => void
   resetSession: () => void
 }
 
@@ -93,19 +97,22 @@ export const useStore = create<AppState>((set, get) => ({
   phaseB: 'idle',
   phaseC: 'idle',
   phaseD: 'idle',
+  certStatus: 'idle',
   setPhaseStatus: (phase, status) => {
     if (phase === 'a') set({ phaseA: status })
     else if (phase === 'b') set({ phaseB: status })
     else if (phase === 'c') set({ phaseC: status })
     else if (phase === 'd') set({ phaseD: status })
+    else if (phase === 'cert') set({ certStatus: status })
   },
 
   phaseAProgress: { ...defaultProgress },
   phaseBProgress: { ...defaultProgress },
   phaseCProgress: { ...defaultProgress },
   phaseDProgress: { ...defaultProgress },
+  certProgress: { ...defaultProgress },
   setPhaseProgress: (phase, step, message, pct) => {
-    const key = phase === 'a' ? 'phaseAProgress' : phase === 'b' ? 'phaseBProgress' : phase === 'c' ? 'phaseCProgress' : 'phaseDProgress'
+    const key = phase === 'a' ? 'phaseAProgress' : phase === 'b' ? 'phaseBProgress' : phase === 'c' ? 'phaseCProgress' : phase === 'd' ? 'phaseDProgress' : 'certProgress'
     set({ [key]: { step, message, pct } })
   },
 
@@ -113,10 +120,12 @@ export const useStore = create<AppState>((set, get) => ({
   phaseBResult: null,
   phaseCResult: null,
   phaseDResult: null,
+  certResult: null,
   setPhaseAResult: (r) => set({ phaseAResult: r }),
   setPhaseBResult: (r) => set({ phaseBResult: r }),
   setPhaseCResult: (r) => set({ phaseCResult: r }),
   setPhaseDResult: (r) => set({ phaseDResult: r }),
+  setCertResult: (r) => set({ certResult: r }),
 
   // Phase C live state
   totalTests: 0,
@@ -257,7 +266,7 @@ export const useStore = create<AppState>((set, get) => ({
   }),
 
   resetPhase: (phase) => {
-    const PIPELINE: Array<'a' | 'b' | 'c' | 'd'> = ['a', 'b', 'c', 'd']
+    const PIPELINE: Array<'a' | 'b' | 'c' | 'd' | 'cert'> = ['a', 'b', 'c', 'd', 'cert']
     const idx = PIPELINE.indexOf(phase)
     const toReset = PIPELINE.slice(idx)
 
@@ -276,6 +285,7 @@ export const useStore = create<AppState>((set, get) => ({
         patch.eventLog = []; patch.failures = []; patch.triageSummary = null
       }
       if (p === 'd') { patch.phaseD = 'idle'; patch.phaseDProgress = { ...defaultProgress }; patch.phaseDResult = null }
+      if (p === 'cert') { patch.certStatus = 'idle'; patch.certProgress = { ...defaultProgress }; patch.certResult = null }
     }
     set(patch)
   },
@@ -286,14 +296,17 @@ export const useStore = create<AppState>((set, get) => ({
     phaseB: 'idle',
     phaseC: 'idle',
     phaseD: 'idle',
+    certStatus: 'idle',
     phaseAProgress: { ...defaultProgress },
     phaseBProgress: { ...defaultProgress },
     phaseCProgress: { ...defaultProgress },
     phaseDProgress: { ...defaultProgress },
+    certProgress: { ...defaultProgress },
     phaseAResult: null,
     phaseBResult: null,
     phaseCResult: null,
     phaseDResult: null,
+    certResult: null,
     totalTests: 0,
     passedTests: 0,
     failedTests: 0,
