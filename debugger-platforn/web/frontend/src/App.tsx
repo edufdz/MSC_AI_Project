@@ -6,12 +6,14 @@ import PhaseB from './pages/PhaseB'
 import PhaseC from './pages/PhaseC'
 import PhaseD from './pages/PhaseD'
 import Certification from './pages/Certification'
+import SessionOverview from './pages/SessionOverview'
 
 export default function App() {
   return (
     <AppShell>
       <Routes>
         <Route path="/" element={<Dashboard />} />
+        <Route path="/session/:id" element={<SessionOverview />} />
         <Route path="/phase-a" element={<PhaseA />} />
         <Route path="/phase-b" element={<PhaseB />} />
         <Route path="/phase-c" element={<PhaseC />} />

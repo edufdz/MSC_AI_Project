@@ -12,6 +12,8 @@ class SessionResponse(BaseModel):
     output_dir: str
     created_at: str
     phases_completed: list[str] = []
+    phase_status: Optional[dict[str, str]] = None
+    phase_results: Optional[dict[str, Any]] = None
 
 
 class SessionListResponse(BaseModel):

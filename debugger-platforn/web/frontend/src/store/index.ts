@@ -78,6 +78,15 @@ export interface AppState {
   setAllTools: (tools: string[]) => void
   handleExecutionEvent: (event: WSEvent) => void
   hydratePhaseCFromResult: (r: PhaseCResult) => void
+  hydratePhaseCTraces: (traces: Array<{
+    test_id: string; test_number: number; scenario: string; persona: string;
+    difficulty: string; status: string;
+    turns: Array<{ turn: number; role: string; message: string; duration_ms: number }>;
+    tool_calls: Array<{ tool_name: string; status: string }>;
+  }>) => void
+
+  // Hydrate full session from server
+  hydrateSession: (sessionId: string, phaseStatus: Record<string, string>, phaseResults: Record<string, Record<string, unknown>>) => void
 
   // Reset
   resetPhase: (phase: 'a' | 'b' | 'c' | 'd' | 'cert') => void
@@ -264,6 +273,61 @@ export const useStore = create<AppState>((set, get) => ({
     passRate: r.pass_rate,
     totalCost: r.total_cost_usd,
   }),
+
+  hydratePhaseCTraces: (traces) => {
+    const tests = new Map<string, ActiveTest>()
+    const tc = new Set<string>()
+    for (const t of traces) {
+      tests.set(t.test_id, {
+        test_id: t.test_id,
+        test_number: t.test_number,
+        scenario: t.scenario,
+        persona: t.persona,
+        difficulty: t.difficulty,
+        status: t.status,
+        turns: t.turns,
+        tool_calls: t.tool_calls,
+      })
+      for (const call of t.tool_calls) {
+        tc.add(call.tool_name)
+      }
+    }
+    set({ activeTests: tests, toolsCalled: tc })
+  },
+
+  hydrateSession: (sessionId, phaseStatus, phaseResults) => {
+    const patch: Record<string, unknown> = { sessionId }
+
+    const statusMap = { a: 'phaseA', b: 'phaseB', c: 'phaseC', d: 'phaseD', cert: 'certStatus' } as const
+    for (const [key, field] of Object.entries(statusMap)) {
+      const status = phaseStatus[key]
+      if (status === 'completed' || status === 'error') {
+        patch[field] = status
+      }
+    }
+
+    const resultMap = { a: 'phaseAResult', b: 'phaseBResult', c: 'phaseCResult', d: 'phaseDResult', cert: 'certResult' } as const
+    for (const [key, field] of Object.entries(resultMap)) {
+      if (phaseResults[key]) {
+        patch[field] = phaseResults[key]
+      }
+    }
+
+    // Hydrate Phase C live metrics if available
+    const cResult = phaseResults.c as PhaseCResult | undefined
+    if (cResult) {
+      patch.totalTests = cResult.total_tests
+      patch.passedTests = cResult.passed
+      patch.failedTests = cResult.failed
+      patch.errorTests = cResult.errors
+      patch.timeoutTests = cResult.timeouts
+      patch.completedTests = cResult.total_tests
+      patch.passRate = cResult.pass_rate
+      patch.totalCost = cResult.total_cost_usd
+    }
+
+    set(patch)
+  },
 
   resetPhase: (phase) => {
     const PIPELINE: Array<'a' | 'b' | 'c' | 'd' | 'cert'> = ['a', 'b', 'c', 'd', 'cert']

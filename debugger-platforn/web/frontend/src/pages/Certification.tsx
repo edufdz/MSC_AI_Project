@@ -1,9 +1,14 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useStore } from '../store'
 import { usePhaseRunner } from '../hooks/usePhaseRunner'
-import { getCertificationStatus, resetPhase as apiResetPhase } from '../api/client'
+import { getCertificationStatus, resetPhase as apiResetPhase, saveSession } from '../api/client'
 import PhaseProgress from '../components/shared/PhaseProgress'
-import type { CertificationReport, CertificationCategoryScore } from '../api/types'
+import TierBadge from '../components/certification/TierBadge'
+import CategoryRadarChart from '../components/certification/CategoryRadarChart'
+import ScoreBreakdown from '../components/certification/ScoreBreakdown'
+import ConfidenceMeter from '../components/certification/ConfidenceMeter'
+import PrintableCertificate from '../components/certification/PrintableCertificate'
+import type { CertificationReport } from '../api/types'
 
 const CERT_STEPS = [
   { key: 'loading_data', label: 'Loading data...', pctThreshold: 5 },
@@ -12,49 +17,11 @@ const CERT_STEPS = [
   { key: 'complete', label: 'Certification complete', pctThreshold: 95 },
 ]
 
-const TIER_STYLES: Record<string, { bg: string; text: string; label: string }> = {
-  platinum: { bg: 'bg-blue-600', text: 'text-white', label: 'PLATINUM' },
-  gold: { bg: 'bg-yellow-500', text: 'text-black', label: 'GOLD' },
-  silver: { bg: 'bg-gray-300', text: 'text-black', label: 'SILVER' },
-  not_certified: { bg: 'bg-red-600', text: 'text-white', label: 'NOT CERTIFIED' },
-}
-
-function ScoreBar({ score, label }: { score: number; label: string }) {
-  const pct = Math.max(0, Math.min(100, score))
-  const color = pct >= 85 ? 'bg-green-500' : pct >= 70 ? 'bg-yellow-500' : pct >= 50 ? 'bg-orange-500' : 'bg-red-500'
-  return (
-    <div className="flex items-center gap-3">
-      <span className="text-sm text-text-dim w-44 shrink-0">{label}</span>
-      <div className="flex-1 h-3 bg-bg-card rounded-full overflow-hidden">
-        <div className={`h-full ${color} rounded-full transition-all duration-500`} style={{ width: `${pct}%` }} />
-      </div>
-      <span className="text-sm font-mono text-pearl w-16 text-right">{score.toFixed(1)}</span>
-    </div>
-  )
-}
-
-function CategoryDetail({ cs }: { cs: CertificationCategoryScore }) {
-  const [open, setOpen] = useState(false)
-  return (
-    <div className="border border-border rounded-lg p-3">
-      <button onClick={() => setOpen(!open)} className="w-full text-left">
-        <ScoreBar score={cs.score} label={`${cs.category} (${(cs.weight * 100).toFixed(0)}%)`} />
-      </button>
-      {open && (
-        <div className="mt-3 pl-4 space-y-1 text-sm text-text-dim">
-          {Object.entries(cs.breakdown).map(([k, v]) => (
-            <div key={k} className="flex justify-between">
-              <span>{k.replace(/_/g, ' ')}</span>
-              <span className="font-mono">{typeof v === 'number' ? v.toFixed(2) : v}</span>
-            </div>
-          ))}
-          {cs.notes.map((n, i) => (
-            <div key={i} className="text-text-muted italic">- {n}</div>
-          ))}
-        </div>
-      )}
-    </div>
-  )
+const TIER_COLORS: Record<string, string> = {
+  platinum: '#3B82F6',
+  gold: '#F59E0B',
+  silver: '#9CA3AF',
+  not_certified: '#EF4444',
 }
 
 export default function Certification() {
@@ -70,6 +37,21 @@ export default function Certification() {
   const { runCertification } = usePhaseRunner()
 
   const [error, setError] = useState('')
+  const [showPrintable, setShowPrintable] = useState(false)
+  const [revealed, setRevealed] = useState(false)
+  const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved'>('idle')
+
+  const handleSaveSession = useCallback(async () => {
+    if (!sessionId) return
+    setSaveState('saving')
+    try {
+      await saveSession(sessionId)
+      setSaveState('saved')
+      setTimeout(() => setSaveState('idle'), 3000)
+    } catch {
+      setSaveState('idle')
+    }
+  }, [sessionId])
 
   // Hydrate from server on mount
   useEffect(() => {
@@ -78,30 +60,51 @@ export default function Certification() {
         if (s.status === 'completed' && s.result) {
           setPhaseStatus('cert', 'completed')
           setCertResult(s.result as unknown as CertificationReport)
+          setRevealed(true) // Skip animation for hydrated results
         }
       }).catch(() => {})
     }
   }, [sessionId, certResult, phaseStatus, setPhaseStatus, setCertResult])
 
-  const handleRerun = async () => {
+  // Confetti on first reveal
+  useEffect(() => {
+    if (phaseStatus === 'completed' && certResult && !revealed) {
+      setRevealed(true)
+      if (certResult.tier !== 'not_certified') {
+        import('canvas-confetti').then(({ default: confetti }) => {
+          const color = TIER_COLORS[certResult.tier] || '#3B82F6'
+          confetti({
+            particleCount: 80,
+            spread: 70,
+            origin: { y: 0.3 },
+            colors: [color, '#ffffff', color + '80'],
+          })
+        }).catch(() => {})
+      }
+    }
+  }, [phaseStatus, certResult, revealed])
+
+  const handleRerun = useCallback(async () => {
     if (!sessionId) return
     try {
       await apiResetPhase(sessionId, 'cert')
       storeResetPhase('cert')
+      setRevealed(false)
     } catch (e) {
       setError(String(e))
     }
-  }
+  }, [sessionId, storeResetPhase])
 
-  const handleRun = async () => {
+  const handleRun = useCallback(async () => {
     setError('')
     if (!sessionId) { setError('No active session'); return }
     try {
+      setRevealed(false)
       await runCertification({ session_id: sessionId })
     } catch (e) {
       setError(String(e))
     }
-  }
+  }, [sessionId, runCertification])
 
   const canRun = phaseDCompleted || phaseCCompleted
 
@@ -117,82 +120,171 @@ export default function Certification() {
 
   // Completed state
   if (phaseStatus === 'completed' && certResult) {
-    const tier = TIER_STYLES[certResult.tier] || TIER_STYLES.not_certified
+    const tierColor = TIER_COLORS[certResult.tier] || TIER_COLORS.not_certified
+    const expiresAt = certResult.expires_at ? new Date(certResult.expires_at) : null
+    const daysLeft = expiresAt ? Math.ceil((expiresAt.getTime() - Date.now()) / (1000 * 60 * 60 * 24)) : null
+
     return (
-      <div className="p-6 max-w-4xl mx-auto space-y-6">
+      <div className="p-6 max-w-5xl mx-auto space-y-8">
+        {showPrintable && (
+          <PrintableCertificate report={certResult} onClose={() => setShowPrintable(false)} />
+        )}
+
+        {/* Header with actions */}
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-semibold text-pearl">Certification Report</h2>
-          <button onClick={handleRerun} className="px-4 py-2 text-sm border border-border rounded-lg hover:bg-bg-card text-text-dim">
-            Re-run
-          </button>
+          <div className="flex items-center gap-2">
+            <button onClick={handleSaveSession}
+              disabled={saveState === 'saving'}
+              className={`px-4 py-2 text-sm border rounded-lg font-medium transition-colors ${
+                saveState === 'saved'
+                  ? 'bg-green-50 border-green-200 text-green-700'
+                  : 'border-border hover:bg-bg-card text-text-dim'
+              }`}>
+              {saveState === 'saved' ? 'Saved!' : saveState === 'saving' ? 'Saving...' : 'Save Session'}
+            </button>
+            <button onClick={() => setShowPrintable(true)}
+              className="px-4 py-2 text-sm bg-accent text-white rounded-lg hover:bg-accent/90 font-medium transition-colors">
+              View Certificate
+            </button>
+            <button onClick={handleRerun}
+              className="px-4 py-2 text-sm border border-border rounded-lg hover:bg-bg-card text-text-dim transition-colors">
+              Re-run
+            </button>
+          </div>
         </div>
 
-        {/* Tier + Score */}
-        <div className="flex items-center gap-6 p-6 bg-bg-surface border border-border rounded-xl">
-          <span className={`px-4 py-2 rounded-lg font-bold text-lg ${tier.bg} ${tier.text}`}>
-            {tier.label}
-          </span>
-          <div>
-            <div className="text-4xl font-bold text-pearl">{certResult.overall_score.toFixed(1)}</div>
-            <div className="text-sm text-text-muted">Overall Score / 100</div>
-          </div>
-          <div className="ml-auto text-right text-sm text-text-dim">
-            <div>ID: {certResult.certification_id}</div>
-            {certResult.issued_at && <div>Issued: {new Date(certResult.issued_at).toLocaleDateString()}</div>}
-            {certResult.expires_at && <div>Expires: {new Date(certResult.expires_at).toLocaleDateString()}</div>}
+        {/* Hero card: Badge + Meta */}
+        <div className="flex items-center gap-8 p-8 bg-bg-surface border border-border rounded-xl"
+          style={{ borderTopColor: tierColor, borderTopWidth: 3 }}>
+          <TierBadge tier={certResult.tier} score={certResult.overall_score} size={180} animated={!revealed} />
+
+          <div className="flex-1 space-y-3">
+            <div>
+              <div className="text-sm text-text-muted">Agent</div>
+              <div className="text-xl font-bold text-pearl">{certResult.agent_name}</div>
+              <div className="text-sm text-text-dim">{certResult.agent_framework}</div>
+            </div>
+
+            <div className="flex gap-6 text-sm">
+              <div>
+                <span className="text-text-muted">Issued: </span>
+                <span className="text-pearl">
+                  {certResult.issued_at ? new Date(certResult.issued_at).toLocaleDateString() : 'N/A'}
+                </span>
+              </div>
+              <div>
+                <span className="text-text-muted">Expires: </span>
+                <span className="text-pearl">
+                  {expiresAt ? expiresAt.toLocaleDateString() : 'N/A'}
+                </span>
+                {daysLeft !== null && daysLeft > 0 && (
+                  <span className={`ml-2 text-xs px-2 py-0.5 rounded-full ${
+                    daysLeft <= 30 ? 'bg-yellow-100 text-yellow-700' : 'bg-green-100 text-green-700'
+                  }`}>
+                    {daysLeft}d left
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <div className="text-xs font-mono text-text-muted">ID: {certResult.certification_id}</div>
           </div>
         </div>
 
-        {/* Category Scores */}
-        <div className="space-y-3">
-          <h3 className="text-lg font-medium text-pearl">Category Scores</h3>
-          {certResult.category_scores.map((cs) => (
-            <CategoryDetail key={cs.category} cs={cs} />
-          ))}
+        {/* Radar + Breakdown side by side */}
+        <div className="grid grid-cols-2 gap-6">
+          <div className="p-6 bg-bg-surface border border-border rounded-xl">
+            <CategoryRadarChart data={certResult.radar_chart_data} tier={certResult.tier} />
+          </div>
+          <div className="p-6 bg-bg-surface border border-border rounded-xl">
+            <ScoreBreakdown categories={certResult.category_scores} />
+          </div>
         </div>
 
         {/* Hard Blockers */}
         {certResult.hard_blockers.length > 0 && (
-          <div className="space-y-2">
-            <h3 className="text-lg font-medium text-red-600">Hard Blockers</h3>
-            {certResult.hard_blockers.map((b, i) => (
-              <div key={i} className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm">
-                <div className="font-medium text-red-700">{b.condition}</div>
-                {b.evidence && <div className="text-red-600/70 mt-1">Evidence: {b.evidence}</div>}
-                <div className="text-red-500 mt-1">Blocks: {b.tier_blocked.replace('_', ' ')}</div>
-              </div>
-            ))}
+          <div className="p-6 bg-red-50 border border-red-200 rounded-xl space-y-3">
+            <h3 className="text-lg font-medium text-red-700 flex items-center gap-2">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                <line x1="12" y1="9" x2="12" y2="13" />
+                <line x1="12" y1="17" x2="12.01" y2="17" />
+              </svg>
+              Hard Blockers ({certResult.hard_blockers.length})
+            </h3>
+            <div className="space-y-2">
+              {certResult.hard_blockers.map((b, i) => (
+                <div key={i} className="flex items-start gap-3 p-3 bg-white/60 rounded-lg">
+                  <div className="w-1.5 h-1.5 rounded-full bg-red-500 mt-2 shrink-0" />
+                  <div className="flex-1">
+                    <div className="text-sm font-medium text-red-800">{b.condition}</div>
+                    {b.evidence && <div className="text-xs text-red-600/70 mt-1">{b.evidence}</div>}
+                  </div>
+                  <span className="text-xs px-2 py-0.5 bg-red-100 text-red-700 rounded-full shrink-0">
+                    Blocks {b.tier_blocked.replace('_', ' ')}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         )}
 
         {/* Strengths & Improvements */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-6">
           {certResult.strengths.length > 0 && (
-            <div className="space-y-2">
-              <h3 className="text-lg font-medium text-green-600">Strengths</h3>
+            <div className="p-6 bg-bg-surface border border-border rounded-xl space-y-3">
+              <h3 className="text-lg font-medium text-green-600 flex items-center gap-2">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                  <polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
+                Strengths
+              </h3>
               {certResult.strengths.map((s, i) => (
-                <div key={i} className="text-sm text-text-dim pl-3 border-l-2 border-green-600">{s}</div>
+                <div key={i} className="flex items-start gap-2 text-sm text-text-dim">
+                  <span className="text-green-500 mt-0.5 shrink-0">+</span>
+                  <span>{s}</span>
+                </div>
               ))}
             </div>
           )}
           {certResult.improvements.length > 0 && (
-            <div className="space-y-2">
-              <h3 className="text-lg font-medium text-yellow-600">Improvements</h3>
+            <div className="p-6 bg-bg-surface border border-border rounded-xl space-y-3">
+              <h3 className="text-lg font-medium text-yellow-600 flex items-center gap-2">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="8" x2="12" y2="12" />
+                  <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+                Areas for Improvement
+              </h3>
               {certResult.improvements.map((s, i) => (
-                <div key={i} className="text-sm text-text-dim pl-3 border-l-2 border-yellow-600">{s}</div>
+                <div key={i} className="flex items-start gap-2 text-sm text-text-dim">
+                  <span className="text-yellow-500 mt-0.5 shrink-0">-</span>
+                  <span>{s}</span>
+                </div>
               ))}
             </div>
           )}
         </div>
 
-        {/* Confidence */}
-        <div className="p-4 bg-bg-surface border border-border rounded-lg text-sm text-text-dim">
-          <h3 className="text-base font-medium text-pearl mb-2">Confidence Metrics</h3>
-          <div className="grid grid-cols-2 gap-2">
-            <div>Simulations: {certResult.confidence.total_simulations}</div>
-            <div>Confidence: {certResult.confidence.confidence_level.toFixed(1)}%</div>
-            <div>Margin of Error: +/-{certResult.confidence.margin_of_error.toFixed(1)}%</div>
-            <div>Sample Sufficient: {certResult.confidence.sample_sufficient ? 'Yes' : 'No'}</div>
+        {/* Confidence Meter */}
+        <div className="p-6 bg-bg-surface border border-border rounded-xl">
+          <ConfidenceMeter confidence={certResult.confidence} overallScore={certResult.overall_score} />
+        </div>
+
+        {/* Testing Conditions */}
+        <div className="p-4 bg-bg-surface border border-border rounded-xl">
+          <h3 className="text-sm font-medium text-pearl mb-3">Testing Conditions</h3>
+          <div className="flex gap-6 text-sm text-text-dim flex-wrap">
+            <span>Simulations: <strong className="text-pearl">{certResult.testing_conditions.total_simulations}</strong></span>
+            <span>Personas: <strong className="text-pearl">{certResult.testing_conditions.persona_count}</strong></span>
+            <span>Diversity: <strong className="text-pearl">{(certResult.testing_conditions.persona_diversity * 100).toFixed(0)}%</strong></span>
+            <span>Chaos Tested: <strong className="text-pearl">{certResult.testing_conditions.chaos_tested ? 'Yes' : 'No'}</strong></span>
+            {Object.entries(certResult.testing_conditions.by_difficulty).map(([d, n]) => (
+              <span key={d}>{d}: <strong className="text-pearl">{n}</strong></span>
+            ))}
           </div>
         </div>
       </div>
@@ -203,28 +295,76 @@ export default function Certification() {
   return (
     <div className="p-6 max-w-3xl mx-auto space-y-6">
       <h2 className="text-2xl font-semibold text-pearl">Certification</h2>
-      <p className="text-text-dim">
-        Score the agent across 5 categories (Safety, Reliability, Tool Competency, Conversation Quality, Efficiency)
-        and assign a certification tier.
-      </p>
 
-      {!canRun && (
-        <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-yellow-700">
-          Phase C or D must be completed before running certification.
+      <div className="p-6 bg-bg-surface border border-border rounded-xl space-y-4">
+        <p className="text-text-dim">
+          Score the agent across 5 categories and assign a certification tier.
+        </p>
+
+        {/* Readiness check */}
+        <div className="space-y-2">
+          <div className="text-sm font-medium text-pearl">Readiness Check</div>
+          <div className="flex gap-3">
+            {[
+              { label: 'Phase C (Execution)', done: phaseCCompleted },
+              { label: 'Phase D (Diagnosis)', done: phaseDCompleted },
+            ].map((p) => (
+              <div key={p.label} className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm border ${
+                p.done ? 'bg-green-50 border-green-200 text-green-700' : 'bg-bg-card border-border text-text-muted'
+              }`}>
+                {p.done ? (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                ) : (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="12" cy="12" r="10" />
+                  </svg>
+                )}
+                {p.label}
+              </div>
+            ))}
+          </div>
         </div>
-      )}
 
-      {error && (
-        <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">{error}</div>
-      )}
+        {!canRun && (
+          <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-yellow-700">
+            Complete Phase C or D before running certification.
+          </div>
+        )}
 
-      <button
-        onClick={handleRun}
-        disabled={!canRun}
-        className="px-6 py-3 bg-accent text-bg font-medium rounded-lg hover:bg-accent/90 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
-      >
-        Run Certification
-      </button>
+        {error && (
+          <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">{error}</div>
+        )}
+
+        <button
+          onClick={handleRun}
+          disabled={!canRun}
+          className="px-6 py-3 bg-accent text-white font-medium rounded-lg hover:bg-accent/90 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+        >
+          Run Certification
+        </button>
+      </div>
+
+      {/* Tier legend */}
+      <div className="p-4 bg-bg-surface border border-border rounded-xl">
+        <div className="text-sm font-medium text-pearl mb-3">Certification Tiers</div>
+        <div className="grid grid-cols-4 gap-3">
+          {[
+            { tier: 'Platinum', score: '90+', color: '#3B82F6', desc: '100+ sims, <1% hallucination' },
+            { tier: 'Gold', score: '75+', color: '#F59E0B', desc: '50+ sims, <3% hallucination' },
+            { tier: 'Silver', score: '60+', color: '#9CA3AF', desc: '20+ sims, <8% hallucination' },
+            { tier: 'Not Certified', score: '<60', color: '#EF4444', desc: 'Does not meet minimum' },
+          ].map((t) => (
+            <div key={t.tier} className="text-center p-3 rounded-lg bg-white border border-border">
+              <div className="w-3 h-3 rounded-full mx-auto mb-2" style={{ backgroundColor: t.color }} />
+              <div className="text-sm font-medium text-pearl">{t.tier}</div>
+              <div className="text-xs font-mono text-text-dim">{t.score}</div>
+              <div className="text-[10px] text-text-muted mt-1">{t.desc}</div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }

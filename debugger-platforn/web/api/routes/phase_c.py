@@ -329,6 +329,61 @@ async def run_phase_c(req: PhaseCRequest):
     return {"status": "started", "session_id": req.session_id}
 
 
+@router.get("/traces/{session_id}")
+async def get_phase_c_traces(session_id: str):
+    """Return all saved trace files for a Phase C run."""
+    session = session_manager.get_session(session_id)
+    if not session:
+        raise HTTPException(status_code=404, detail="Session not found")
+
+    output_dir = Path(session.output_dir) / "results" / "traces"
+    if not output_dir.exists():
+        # Also check without results/ prefix
+        output_dir = Path(session.output_dir) / "traces"
+    if not output_dir.exists():
+        return {"traces": []}
+
+    traces = []
+    for trace_file in sorted(output_dir.glob("trace_*.json")):
+        try:
+            data = json.loads(trace_file.read_text())
+            # Map to the shape expected by the frontend activeTests store
+            tool_calls = []
+            for tool_name in data.get("tools_called_sequence", []):
+                tool_calls.append({"tool_name": tool_name, "status": "success"})
+            # Also add from tool_results if available
+            if not tool_calls and data.get("tool_results"):
+                for tr in data["tool_results"]:
+                    tool_calls.append({
+                        "tool_name": tr.get("tool_name", tr.get("name", "unknown")),
+                        "status": "success" if tr.get("success", True) else "error",
+                    })
+
+            turns = []
+            for t in data.get("turns", []):
+                turns.append({
+                    "turn": t.get("turn_number", 0),
+                    "role": t.get("role", ""),
+                    "message": t.get("message", ""),
+                    "duration_ms": t.get("duration_ms", 0),
+                })
+
+            traces.append({
+                "test_id": data.get("test_id", ""),
+                "test_number": data.get("test_number", 0),
+                "scenario": data.get("scenario_title", ""),
+                "persona": data.get("persona_name", ""),
+                "difficulty": data.get("difficulty", "medium"),
+                "status": data.get("status", "unknown"),
+                "turns": turns,
+                "tool_calls": tool_calls,
+            })
+        except Exception:
+            continue
+
+    return {"traces": traces}
+
+
 @router.get("/status/{session_id}", response_model=PhaseStatusResponse)
 async def get_phase_c_status(session_id: str):
     session = session_manager.get_session(session_id)

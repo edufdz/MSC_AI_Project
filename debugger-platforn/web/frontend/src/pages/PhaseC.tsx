@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useStore } from '../store'
 import { usePhaseRunner } from '../hooks/usePhaseRunner'
-import { getPhaseCStatus, resetPhase as apiResetPhase } from '../api/client'
+import { getPhaseCStatus, getPhaseCTraces, resetPhase as apiResetPhase } from '../api/client'
 import ExecutionControls from '../components/phase-c/ExecutionControls'
 import PersonaContextInput from '../components/phase-c/PersonaContextInput'
 import LlmProviderSelect from '../components/shared/LlmProviderSelect'
@@ -18,6 +18,7 @@ export default function PhaseC() {
   const setPhaseCResult = useStore((s) => s.setPhaseCResult)
   const setPhaseStatus = useStore((s) => s.setPhaseStatus)
   const hydratePhaseCFromResult = useStore((s) => s.hydratePhaseCFromResult)
+  const hydratePhaseCTraces = useStore((s) => s.hydratePhaseCTraces)
   const phaseBCompleted = useStore((s) => s.phaseB) === 'completed'
   const phaseBResult = useStore((s) => s.phaseBResult)
   const completedTests = useStore((s) => s.completedTests)
@@ -57,10 +58,16 @@ export default function PhaseC() {
           setPhaseStatus('c', 'completed')
           hydratePhaseCFromResult(result)
           setPhaseCResult(result)
+          // Load saved conversation traces
+          getPhaseCTraces(sessionId).then((t) => {
+            if (t.traces.length > 0) {
+              hydratePhaseCTraces(t.traces)
+            }
+          }).catch(() => {})
         }
       }).catch(() => {})
     }
-  }, [sessionId, phaseResult, phaseStatus, setPhaseStatus, setPhaseCResult, hydratePhaseCFromResult])
+  }, [sessionId, phaseResult, phaseStatus, setPhaseStatus, setPhaseCResult, hydratePhaseCFromResult, hydratePhaseCTraces])
 
   const handleRun = async () => {
     setError('')

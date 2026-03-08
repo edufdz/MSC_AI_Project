@@ -15,14 +15,26 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
 }
 
 // Sessions
+export interface SessionSummary {
+  session_id: string
+  output_dir: string
+  created_at: string
+  phases_completed: string[]
+  phase_status?: Record<string, string>
+  phase_results?: Record<string, Record<string, unknown>>
+}
+
 export const createSession = () =>
-  request<{ session_id: string; output_dir: string; created_at: string }>('/api/sessions', { method: 'POST' })
+  request<SessionSummary>('/api/sessions', { method: 'POST' })
 
 export const listSessions = () =>
-  request<{ sessions: Array<{ session_id: string; output_dir: string; created_at: string; phases_completed: string[] }> }>('/api/sessions')
+  request<{ sessions: SessionSummary[] }>('/api/sessions')
 
 export const getSession = (id: string) =>
-  request<{ session_id: string; output_dir: string; created_at: string; phases_completed: string[] }>(`/api/sessions/${id}`)
+  request<SessionSummary>(`/api/sessions/${id}`)
+
+export const saveSession = (id: string) =>
+  request<{ saved: boolean; session_id: string }>(`/api/sessions/${id}/save`, { method: 'POST' })
 
 // Filesystem
 export const resolveDirectory = (name: string, files: string[]) =>
@@ -57,6 +69,20 @@ export const runPhaseC = (body: { session_id: string; workers: number; count: nu
 
 export const getPhaseCStatus = (sessionId: string) =>
   request<{ session_id: string; phase: string; status: string; progress_pct?: number; message?: string; result: Record<string, unknown> | null }>(`/api/phase-c/status/${sessionId}`)
+
+export interface SavedTrace {
+  test_id: string
+  test_number: number
+  scenario: string
+  persona: string
+  difficulty: string
+  status: string
+  turns: Array<{ turn: number; role: string; message: string; duration_ms: number }>
+  tool_calls: Array<{ tool_name: string; status: string }>
+}
+
+export const getPhaseCTraces = (sessionId: string) =>
+  request<{ traces: SavedTrace[] }>(`/api/phase-c/traces/${sessionId}`)
 
 // Phase D
 export const runPhaseD = (body: { session_id: string; skip_ai: boolean; use_embeddings: boolean; max_retries: number; backoff_base: number; backoff_max: number }) =>

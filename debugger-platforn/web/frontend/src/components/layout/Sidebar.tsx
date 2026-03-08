@@ -1,5 +1,7 @@
+import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useStore } from '../../store'
+import { saveSession } from '../../api/client'
 
 const phases = [
   { key: 'a' as const, label: 'Phase A', sub: 'Analyze', path: '/phase-a' },
@@ -30,7 +32,23 @@ export default function Sidebar() {
   const sessionId = useStore((s) => s.sessionId)
   const resetSession = useStore((s) => s.resetSession)
 
+  const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved'>('idle')
+
   const statuses = { a: phaseA, b: phaseB, c: phaseC, d: phaseD, cert: certStatus }
+
+  const hasAnyCompleted = Object.values(statuses).some((s) => s === 'completed')
+
+  const handleSave = async () => {
+    if (!sessionId) return
+    setSaveState('saving')
+    try {
+      await saveSession(sessionId)
+      setSaveState('saved')
+      setTimeout(() => setSaveState('idle'), 2500)
+    } catch {
+      setSaveState('idle')
+    }
+  }
 
   return (
     <aside className="w-[260px] min-w-[260px] bg-bg-surface border-r border-border flex flex-col">
@@ -75,6 +93,19 @@ export default function Sidebar() {
 
       {/* Bottom actions */}
       <div className="px-3 pb-4 space-y-2">
+        {sessionId && hasAnyCompleted && (
+          <button
+            onClick={handleSave}
+            disabled={saveState === 'saving'}
+            className={`w-full px-3 py-2 text-sm border rounded-lg transition-all duration-200 ${
+              saveState === 'saved'
+                ? 'bg-green-50 border-green-200 text-green-700'
+                : 'border-border hover:bg-bg-card text-text-dim hover:text-text-primary'
+            }`}
+          >
+            {saveState === 'saved' ? 'Session Saved' : saveState === 'saving' ? 'Saving...' : 'Save Session'}
+          </button>
+        )}
         {sessionId && (
           <button
             onClick={() => {
