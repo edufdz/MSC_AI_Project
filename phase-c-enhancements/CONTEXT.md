@@ -98,7 +98,7 @@ TestExecutionEngine (runner.py, 285 LOC)
         spurious (fake failures / fake successes), AI batch mode with
         heuristic fallback
 ```
-
+ 
 Supporting modules: `llm_config.py` (352 LOC — multi-provider persona/critic
 LLMs: Anthropic, Groq, Together, Fireworks, OpenAI, custom),
 `persona_context.py` (user-supplied business context for personas),
