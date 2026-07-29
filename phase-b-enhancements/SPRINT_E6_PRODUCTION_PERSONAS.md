@@ -36,7 +36,7 @@ Fit the 10-trait and style distributions to Langfuse production traces (formalit
   - Sample from the fitted distributions (truncated normal, clipped to 1-10)
   - Each persona's traits match the real population statistics
   - Set `source = "production_grounded"`
-  - Assign realistic names from the cultural distribution (Mexican-Spanish for Samsung)
+  - Assign realistic names from the cultural distribution (Mexican-Spanish for TechRepair)
 
 ### E6.3 Integrate into B2
 

@@ -58,7 +58,7 @@ class TestEnrichedMapWithoutTraces:
     """The enriched map still works with traces disabled (structural-only run)."""
 
     def test_structural_enhancements_still_run(self, phase_b):
-        gen = phase_b(map_name="samsung", use_traces=False)
+        gen = phase_b(map_name="tech_repair", use_traces=False)
         srcs = gen.scenario_sources
         # Guardrail/policy/adversarial come from the map structure, not traces
         assert srcs.get("policy_graph", 0) > 0

@@ -2,7 +2,7 @@
 
 This is the end-to-end offline workflow that answers the dissertation's four
 research questions. **There is no live connection between the production
-Samsung system and the simulator**: conversations are extracted once,
+TechRepair system and the simulator**: conversations are extracted once,
 anonymised, and everything downstream — ground truth, seeds, generation,
 measurement — runs on the anonymised corpus and compares it against
 simulation results.
@@ -40,8 +40,8 @@ All commands run from `debugger-platforn/`.
 
 ```bash
 python3 anonymize_export.py \
-    --input ../docs/samsung-conversations-export.json \
-    --output ../docs/samsung-conversations-anonymized.json
+    --input ../docs/tech_repair-conversations-export.json \
+    --output ../docs/tech_repair-conversations-anonymized.json
 ```
 
 Requires the anonymisation backend (`anonymization/backend`) importable for
@@ -53,8 +53,8 @@ cached).
 
 ```bash
 python3 run_experiments.py \
-    --export ../docs/samsung-conversations-anonymized.json \
-    --agent-map samsung_whatsapp_map.json \
+    --export ../docs/tech_repair-conversations-anonymized.json \
+    --agent-map tech_repair_whatsapp_map.json \
     --budget 100
 ```
 
@@ -75,8 +75,8 @@ All four generation strategies from the Background Report are implemented
 
 ```bash
 python3 run_experiments.py \
-    --export ../docs/samsung-conversations-anonymized.json \
-    --agent-map samsung_whatsapp_map.json \
+    --export ../docs/tech_repair-conversations-anonymized.json \
+    --agent-map tech_repair_whatsapp_map.json \
     --budget 100 --arms blind,feedback,naive_llm,gan
 ```
 
@@ -93,8 +93,8 @@ LLM arms are skipped with an explicit note when no API key is present.
 
 ```bash
 python3 run_sensitivity.py \
-    --export ../docs/samsung-conversations-anonymized.json \
-    --agent-map samsung_whatsapp_map.json
+    --export ../docs/tech_repair-conversations-anonymized.json \
+    --agent-map tech_repair_whatsapp_map.json
 ```
 
 Re-runs the blind-vs-feedback comparison varying one analysis choice at a
@@ -110,7 +110,7 @@ transcripts. The harness makes this a ~1-hour task:
 ```bash
 # Build the blind 50-conversation packet (40 flagged + 10 clean controls)
 python3 run_validation.py sample \
-    --export ../docs/samsung-conversations-anonymized.json \
+    --export ../docs/tech_repair-conversations-anonymized.json \
     --output-dir validation_packet
 
 # Annotate interactively in the terminal (resumable; q to save & quit)
@@ -149,12 +149,12 @@ comparator between recorded production conversations and the simulation:
 
 ```bash
 # Serve an offline simulated agent from the agent map
-python3 sandbox_bridge.py serve --agent-map samsung_whatsapp_map.json \
+python3 sandbox_bridge.py serve --agent-map tech_repair_whatsapp_map.json \
     --mode echo --port 8099 --trace-dir sandbox_traces/
 
 # Replay anonymised production conversations through it; fidelity report
-python3 sandbox_bridge.py replay --agent-map samsung_whatsapp_map.json \
-    --export ../docs/samsung-conversations-anonymized.json \
+python3 sandbox_bridge.py replay --agent-map tech_repair_whatsapp_map.json \
+    --export ../docs/tech_repair-conversations-anonymized.json \
     --sample 50 --output fidelity_report.json
 ```
 

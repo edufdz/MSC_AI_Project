@@ -104,5 +104,5 @@ For each numbered guardrail rule, generate one compliance test and one violation
 - Complexity scaling produces more variants for complex rules
 - Language-mismatch produces Spanish provocations testing English rules
 - Metamorphic relations enforce language and formality invariance
-- Samsung agent (62-79 rules) produces ~120-200 guardrail test pairs
+- TechRepair agent (62-79 rules) produces ~120-200 guardrail test pairs
 - Measurement harness shows every rule_id covered by at least one test

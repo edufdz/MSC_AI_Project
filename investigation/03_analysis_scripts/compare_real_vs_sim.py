@@ -5,7 +5,7 @@ Real-vs-Simulated failure comparison (docs/REAL_VS_SIM_COMPARISON_PLAN.md).
 Runs the SAME structured-signal failure scorer (src/production/scoring.py —
 no LLM anywhere) over both corpora:
 
-  REAL — the anonymised production export (1,299 Samsung WhatsApp convs)
+  REAL — the anonymised production export (1,299 TechRepair WhatsApp convs)
   SIM  — Phase C ``conversations.json`` exports from live-agent runs
 
 Simulated conversations are adapted to the production message schema first,
@@ -22,8 +22,8 @@ the frozen shared taxonomy, then compared three ways:
 
 Usage:
     python3 compare_real_vs_sim.py \
-        --real ../docs/samsung-conversations-anonymized.json \
-        --sim results_samsung_live_v4/conversations.json \
+        --real ../docs/tech_repair-conversations-anonymized.json \
+        --sim results_tech_repair_live_v4/conversations.json \
         --sim pipeline_output/session-636fc721/results/conversations.json \
         -o ../docs/results/real_vs_sim
 """

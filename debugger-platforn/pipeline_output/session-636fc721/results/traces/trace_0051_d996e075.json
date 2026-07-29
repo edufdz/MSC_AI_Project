@@ -21,7 +21,7 @@
     {
       "turn_number": 1,
       "role": "agent",
-      "message": "Hola, gracias por contactar a Samsung Polanco.\n\nHe revisado el sistema con el n\u00famero que proporcionaste (ORD-12345), pero no encontr\u00e9 una orden con ese folio. \n\nLos registros que tengo para Valeria Mendoza Garc\u00eda son:\n- **Orden 4151234567** (Galaxy S24 Ultra 256GB) - Env\u00edo a domicilio\n",
+      "message": "Hola, gracias por contactar a TechRepair Polanco.\n\nHe revisado el sistema con el n\u00famero que proporcionaste (ORD-12345), pero no encontr\u00e9 una orden con ese folio. \n\nLos registros que tengo para Valeria Mendoza Garc\u00eda son:\n- **Orden 4151234567** (Galaxy S24 Ultra 256GB) - Env\u00edo a domicilio\n",
       "tool_calls": [
         {
           "tool_name": "order_lookup",

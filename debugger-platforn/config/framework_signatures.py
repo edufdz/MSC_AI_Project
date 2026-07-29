@@ -148,7 +148,7 @@ DOMAIN_INDICATORS = {
 }
 
 INDUSTRY_INDICATORS = {
-    "consumer_electronics": ["device", "phone", "laptop", "warranty", "dispositivo", "garantía", "samsung", "apple"],
+    "consumer_electronics": ["device", "phone", "laptop", "warranty", "dispositivo", "garantía", "tech_repair", "apple"],
     "healthcare": ["patient", "doctor", "appointment", "diagnosis", "paciente", "médico", "cita médica"],
     "finance": ["account", "balance", "transfer", "loan", "cuenta", "saldo", "préstamo"],
     "retail": ["cart", "checkout", "shipping", "return", "carrito", "envío", "devolución"],

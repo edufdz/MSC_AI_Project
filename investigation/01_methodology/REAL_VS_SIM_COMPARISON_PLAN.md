@@ -2,7 +2,7 @@
 
 **Written 2026-07-24.** Companion to `PROJECT_STATUS.md` (research state),
 `Agent_Failure_Analysis_Plan.pdf` (the production failure-analysis plan), and
-`SAMSUNG_LIVE_SIMULATION.md` (the live-agent execute-mode work). This document
+`TECH_REPAIR_LIVE_SIMULATION.md` (the live-agent execute-mode work). This document
 proposes **how to compare real production errors against simulated
 conversations** for the dissertation, and how to structure the resulting
 report chapter.
@@ -14,7 +14,7 @@ report chapter.
 The dissertation's RQ1 — *does synthetic testing predict production
 failures?* — has so far been answered only in **static mode** (recall 0.068:
 what suites are *designed* to target). With the live agent
-(`samsung-live-agent/`, sprint X3) we can now answer the **behavioural**
+(`tech_repair-live-agent/`, sprint X3) we can now answer the **behavioural**
 version:
 
 > When the simulator talks to the *real* agent code, do the failures that
@@ -25,7 +25,7 @@ That is a **correspondence study** between two corpora:
 
 | | Real corpus | Simulated corpus |
 |---|---|---|
-| Source | `docs/samsung-conversations-anonymized.json` (1,299 convs, 376 rule-based failures) | Phase C `conversations.json` runs against the live agent (v4: 40, session-636fc721: 200; more can be generated at ~$0.005/conv persona cost) |
+| Source | `docs/tech_repair-conversations-anonymized.json` (1,299 convs, 376 rule-based failures) | Phase C `conversations.json` runs against the live agent (v4: 40, session-636fc721: 200; more can be generated at ~$0.005/conv persona cost) |
 | Failure labels | 8 production categories from structured signals (`src/production/`) | Same signals are observable in simulated dialogues (escalation, repeats, loops, abandonment) |
 | Common language | **Frozen 16-category shared taxonomy** (`src/evaluation/taxonomy.py`, v1.0-frozen-2026-07-14) via the projection layer | Same |
 

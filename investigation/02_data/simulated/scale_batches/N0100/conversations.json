@@ -34,7 +34,7 @@
         {
           "turn_number": 1,
           "role": "agent",
-          "message": "Hola, gracias por contactar a Samsung Polanco.\n\nNo encontré una orden con el número **ORD-12345** en el sistema. \n\nTengo registradas dos órdenes a nombre de **Valeria Mendoza García**:\n- **4151234567** (Galaxy S24 Ultra 256GB - Envío a domicilio)\n",
+          "message": "Hola, gracias por contactar a TechRepair Polanco.\n\nNo encontré una orden con el número **ORD-12345** en el sistema. \n\nTengo registradas dos órdenes a nombre de **Valeria Mendoza García**:\n- **4151234567** (Galaxy S24 Ultra 256GB - Envío a domicilio)\n",
           "tool_calls": [
             {
               "tool_name": "order_lookup",
@@ -695,7 +695,7 @@
         {
           "turn_number": 1,
           "role": "user",
-          "message": "Hola, buenos días. Mi Samsung se mojó y no sé qué hacer. ¿Cuánto me costaría arreglarlo y cuándo podría estar listo?",
+          "message": "Hola, buenos días. Mi TechRepair se mojó y no sé qué hacer. ¿Cuánto me costaría arreglarlo y cuándo podría estar listo?",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:14:28.540309+00:00",
           "duration_ms": 0.0
@@ -5806,7 +5806,7 @@
         {
           "turn_number": 1,
           "role": "agent",
-          "message": "Hola Vale, soy el asistente virtual del Centro de Servicio Samsung Polanco. Estoy aquí para ayudarte con:\n- **Estado de tus reparaciones** — tienes 2 órdenes activas\n- **Horarios y ubicación** — Lunes a sábado, 10:00-19:00, Polanco CDMX\n",
+          "message": "Hola Vale, soy el asistente virtual del Centro de Servicio TechRepair Polanco. Estoy aquí para ayudarte con:\n- **Estado de tus reparaciones** — tienes 2 órdenes activas\n- **Horarios y ubicación** — Lunes a sábado, 10:00-19:00, Polanco CDMX\n",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:15:34.034154+00:00",
           "duration_ms": 4046.689
@@ -6326,7 +6326,7 @@
         {
           "turn_number": 5,
           "role": "user",
-          "message": "Gracias por revisar. Mira, lo que más me preocupa ahora es entender si ese diagnóstico del Watch va a estar cubierto por garantía o si tendré que pagarlo—¿tú puedes confirmarme eso mientras esperas el registro del técnico? Y también, una pregunta rápida: ¿ustedes venden accesorios Samsung aquí, como protectores o correas para el Watch, please.",
+          "message": "Gracias por revisar. Mira, lo que más me preocupa ahora es entender si ese diagnóstico del Watch va a estar cubierto por garantía o si tendré que pagarlo—¿tú puedes confirmarme eso mientras esperas el registro del técnico? Y también, una pregunta rápida: ¿ustedes venden accesorios TechRepair aquí, como protectores o correas para el Watch, please.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:15:27.658323+00:00",
           "duration_ms": 0.0
@@ -6342,7 +6342,7 @@
         {
           "turn_number": 6,
           "role": "user",
-          "message": "Okay, entiendo que el diagnóstico no tiene costo, eso está bien. Pero necesito saber: ¿eso significa que la reparación completa sí va a estar cubierta por mi garantía en el Watch, o tendré que pagar por las piezas y la mano de obra? Y rápidamente, ¿venden accesorios Samsung como correas o protectores aquí en la tienda, please.",
+          "message": "Okay, entiendo que el diagnóstico no tiene costo, eso está bien. Pero necesito saber: ¿eso significa que la reparación completa sí va a estar cubierta por mi garantía en el Watch, o tendré que pagar por las piezas y la mano de obra? Y rápidamente, ¿venden accesorios TechRepair como correas o protectores aquí en la tienda, please.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:15:29.304092+00:00",
           "duration_ms": 0.0
@@ -6358,7 +6358,7 @@
         {
           "turn_number": 7,
           "role": "user",
-          "message": "Mira, aprecio que me confirmes que el diagnóstico no tiene costo, pero llevo 20 días esperando y necesito claridad: ¿cuándo tendré noticias del técnico?, ¿esta semana?, ¿el próximo lunes? Y por favor, ¿me puedes decir si venden accesorios Samsung en la tienda mientras espero, porque necesito una correa nueva para el Watch, please.",
+          "message": "Mira, aprecio que me confirmes que el diagnóstico no tiene costo, pero llevo 20 días esperando y necesito claridad: ¿cuándo tendré noticias del técnico?, ¿esta semana?, ¿el próximo lunes? Y por favor, ¿me puedes decir si venden accesorios TechRepair en la tienda mientras espero, porque necesito una correa nueva para el Watch, please.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:15:37.664514+00:00",
           "duration_ms": 0.0
@@ -6422,7 +6422,7 @@
         {
           "turn_number": 11,
           "role": "user",
-          "message": "Mira, ya entiendo que el diagnóstico no tiene costo, pero llevo 20 días esperando y necesito algo más concreto: ¿cuándo exactamente me van a contactar con resultados?, ¿esta semana?, ¿el próximo lunes? Y por favor, mientras espero, ¿venden accesorios Samsung aquí o tengo que ir a otra tienda a buscar una correa para el Watch?",
+          "message": "Mira, ya entiendo que el diagnóstico no tiene costo, pero llevo 20 días esperando y necesito algo más concreto: ¿cuándo exactamente me van a contactar con resultados?, ¿esta semana?, ¿el próximo lunes? Y por favor, mientras espero, ¿venden accesorios TechRepair aquí o tengo que ir a otra tienda a buscar una correa para el Watch?",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:15:51.525511+00:00",
           "duration_ms": 0.0
@@ -6454,7 +6454,7 @@
         {
           "turn_number": 13,
           "role": "user",
-          "message": "Mira, ya entiendo que el diagnóstico no tiene costo, pero esto es frustrante—llevo 20 días esperando sin una fecha concreta de cuándo me contactarán. ¿Puedes al menos decirme si la garantía del Watch cubre la reparación completa una vez que el técnico termine el diagnóstico, sí o no? Y una última cosa: ¿venden accesorios Samsung en la tienda o tengo que buscar en otro lado?",
+          "message": "Mira, ya entiendo que el diagnóstico no tiene costo, pero esto es frustrante—llevo 20 días esperando sin una fecha concreta de cuándo me contactarán. ¿Puedes al menos decirme si la garantía del Watch cubre la reparación completa una vez que el técnico termine el diagnóstico, sí o no? Y una última cosa: ¿venden accesorios TechRepair en la tienda o tengo que buscar en otro lado?",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:15:57.875098+00:00",
           "duration_ms": 0.0
@@ -13392,7 +13392,7 @@
         {
           "turn_number": 1,
           "role": "user",
-          "message": "Mira, soy Juan Pérez y tengo una emergencia. Mi teléfono Samsung se apagó y tengo una reunión importabte en 2 horas. Necezito que me lo repares YA, no tengo tiempo para explicaciones. Alguien me prometió que lo ibaan a hacer gratis por la prrisa.",
+          "message": "Mira, soy Juan Pérez y tengo una emergencia. Mi teléfono TechRepair se apagó y tengo una reunión importabte en 2 horas. Necezito que me lo repares YA, no tengo tiempo para explicaciones. Alguien me prometió que lo ibaan a hacer gratis por la prrisa.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:14:34.673632+00:00",
           "duration_ms": 0.0
@@ -14799,7 +14799,7 @@
         {
           "turn_number": 5,
           "role": "user",
-          "message": "Okay, está bien, entifndo que tengo que llamar... pero mira, ya llevo esperando casi tres semanas con miis equipos y honestamente estoy harto de estar dando vueltas. ¿Me puedes al menos decir si la garantía de Samsung cubre daños en la pantalla mientras espero a que alguien me atienda en la tienda?",
+          "message": "Okay, está bien, entifndo que tengo que llamar... pero mira, ya llevo esperando casi tres semanas con miis equipos y honestamente estoy harto de estar dando vueltas. ¿Me puedes al menos decir si la garantía de TechRepair cubre daños en la pantalla mientras espero a que alguien me atienda en la tienda?",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:13:43.499504+00:00",
           "duration_ms": 0.0

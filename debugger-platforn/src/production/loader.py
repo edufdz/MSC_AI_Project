@@ -1,7 +1,7 @@
 """
 Loader for the production WhatsApp conversation export.
 
-Export schema (docs/samsung-conversations-export.json):
+Export schema (docs/tech_repair-conversations-export.json):
 
     {
       "exported_at": str,

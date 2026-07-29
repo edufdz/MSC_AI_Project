@@ -2,7 +2,7 @@
 
 Taxonomy `1.0-frozen-2026-07-14` · scorer parity: src/production/scoring.py (identical for both corpora; no LLM) · failure threshold min_score=3.0
 
-Sim sources: results_samsung_live_v4/conversations.json, pipeline_output/session-636fc721/results/conversations.json, /private/tmp/claude-501/-Users-eduardo7-Desktop-dos-agent-debugger-MSC-AI-Project-debugger-platforn/5a2f8237-c6c7-47f7-b7ba-29a369aca51a/scratchpad/sim_runAB_conversations.json
+Sim sources: results_tech_repair_live_v4/conversations.json, pipeline_output/session-636fc721/results/conversations.json, /private/tmp/claude-501/-Users-eduardo7-Desktop-dos-agent-debugger-MSC-AI-Project-debugger-platforn/5a2f8237-c6c7-47f7-b7ba-29a369aca51a/scratchpad/sim_runAB_conversations.json
 
 ## Corpora
 

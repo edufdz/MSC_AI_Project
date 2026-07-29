@@ -6,12 +6,12 @@ Examples:
 
     # Full offline run on the production export (static targeting mode)
     python3 run_experiments.py \
-        --export ../docs/samsung-conversations-export.json \
-        --agent-map samsung_whatsapp_map.json \
+        --export ../docs/tech_repair-conversations-export.json \
+        --agent-map tech_repair_whatsapp_map.json \
         --budget 100
 
     # Closed-loop run: execute both arms against the sandbox bridge
-    python3 sandbox_bridge.py serve --agent-map samsung_whatsapp_map.json --port 8099 &
+    python3 sandbox_bridge.py serve --agent-map tech_repair_whatsapp_map.json --port 8099 &
     python3 run_experiments.py --export ... --agent-map ... \
         --mode execute --connector http://localhost:8099
 """

@@ -6,7 +6,7 @@ overall project state.
 
 ## What This Is
 
-A detailed analysis of **Phase C (Execute)** of the Plavio Agent Debugger
+A detailed analysis of **Phase C (Execute)** of the Agent-Testing Platform
 platform — its architecture, its interfaces with Phases A, B and D, its role
 in the dissertation's central claim, and the evidence-based gaps that the
 enhancement sprints must close.
@@ -15,7 +15,7 @@ enhancement sprints must close.
 
 The dissertation ("Closing the Loop Between Synthetic Agent Testing and
 Production Reality") asks: **could synthetic adversarial testing have
-predicted the failures the real Samsung/Pulpoo agent actually had?**
+predicted the failures the real TechRepair/Pulpoo agent actually had?**
 
 That question has two halves:
 
@@ -197,7 +197,7 @@ Consequence: **the quality of Phase A's outcome extraction bounds the
 validity of every Phase C verdict.** If Phase A misses a terminal outcome
 or a tool chain, Phase C falls back to legacy scenario conditions or to
 "some tool succeeded", and verdicts degrade silently. (Note:
-`samsung_whatsapp_map.json` predates the Phase A code-tree feature and
+`tech_repair_whatsapp_map.json` predates the Phase A code-tree feature and
 should be regenerated — PROJECT_STATUS §6.3.)
 
 ## 3. Connection to Phase B (Generate)

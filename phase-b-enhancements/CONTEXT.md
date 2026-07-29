@@ -2,7 +2,7 @@
 
 ## What This Is
 
-A series of evidence-based enhancements to **Phase B (Generate)** of the Plavio Agent Debugger platform. Phase B takes the Agent Map produced by Phase A and generates a structured test suite (personas, scenarios, test cases) for Phase C to execute against the live agent.
+A series of evidence-based enhancements to **Phase B (Generate)** of the Agent-Testing Platform. Phase B takes the Agent Map produced by Phase A and generates a structured test suite (personas, scenarios, test cases) for Phase C to execute against the live agent.
 
 ## Why These Enhancements Exist
 
@@ -20,7 +20,7 @@ This work is part of an MSC AI research project. A literature review identified 
 
 ## The Codebase
 
-**Platform**: Plavio Agent Debugger — end-to-end AI-powered platform for testing, debugging, and certifying conversational AI agents.
+**Platform**: Agent-Testing Platform — end-to-end AI-powered platform for testing, debugging, and certifying conversational AI agents.
 
 **Root directory**: `debugger-platforn/` (note the typo — intentional, do not rename)
 

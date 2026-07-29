@@ -177,10 +177,10 @@ Edit `backend/brand_terms.json`:
 
 ```json
 {
-  "brands": ["Samsung", "Apple"],
+  "brands": ["TechRepair", "Apple"],
   "devices": ["Galaxy S24 Ultra", "Galaxy A55", "iPhone 15"],
-  "products": ["Samsung Pay", "Apple Pay"],
-  "services": ["Samsung Service Center"]
+  "products": ["TechRepair Pay", "Apple Pay"],
+  "services": ["TechRepair Service Center"]
 }
 ```
 

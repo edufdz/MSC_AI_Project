@@ -85,7 +85,7 @@ async def _read_file(file: UploadFile) -> str:
 
 def _extract_text_from_json(raw_json: str) -> str:
     """Extract conversation text from JSON. Supports common formats:
-    - Samsung/Supabase export: {conversations: [{messages: [{text_body, direction}]}]}
+    - TechRepair/Supabase export: {conversations: [{messages: [{text_body, direction}]}]}
     - Array of message objects with 'content'/'text'/'message' field
     - Object with 'messages'/'conversation'/'turns' array
     - Plain string value
@@ -96,7 +96,7 @@ def _extract_text_from_json(raw_json: str) -> str:
     if isinstance(data, str):
         return data
 
-    # Samsung/Supabase multi-conversation export
+    # TechRepair/Supabase multi-conversation export
     if isinstance(data, dict) and "conversations" in data and isinstance(data["conversations"], list):
         return _extract_multi_conversation(data["conversations"])
 

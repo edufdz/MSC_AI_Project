@@ -7,7 +7,7 @@ The predictive-validity study compares failures from two independent origins:
      vocabulary is :class:`src.diagnosis.models.RootCauseType` (12 values).
   2. PRODUCTION — human-process signals mined from real deployed-agent
      conversations, whose vocabulary is the eight production failure
-     categories defined in the Samsung failure-analysis plan
+     categories defined in the TechRepair failure-analysis plan
      (docs/Agent_Failure_Plan.md).
 
 Comparability is impossible until both speak the same vocabulary, so this

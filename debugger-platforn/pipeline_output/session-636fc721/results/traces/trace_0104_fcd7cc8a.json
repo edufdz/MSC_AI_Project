@@ -13,7 +13,7 @@
     {
       "turn_number": 1,
       "role": "user",
-      "message": "Hola, buenos d\u00edas. Tengo una consulta sobre mis dos reparacinoes en Samsung y necesito actualizar algunos datos de mi direcci\u00f3n porque me estoy mudando pronto. \u00bfPuedes ayudarme con eso, please.",
+      "message": "Hola, buenos d\u00edas. Tengo una consulta sobre mis dos reparacinoes en TechRepair y necesito actualizar algunos datos de mi direcci\u00f3n porque me estoy mudando pronto. \u00bfPuedes ayudarme con eso, please.",
       "tool_calls": [],
       "timestamp": "2026-07-24 15:03:20.055815+00:00",
       "duration_ms": 0.0

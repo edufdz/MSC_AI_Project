@@ -1,8 +1,8 @@
 {
   "generated_at": "2026-07-14T16:01:31.725190+00:00",
   "base_config": {
-    "export_path": "../docs/samsung-conversations-anonymized.json",
-    "agent_map_path": "samsung_whatsapp_map.json",
+    "export_path": "../docs/tech_repair-conversations-anonymized.json",
+    "agent_map_path": "tech_repair_whatsapp_map.json",
     "budget": 100,
     "min_score": 3.0,
     "holdout_fraction": 0.3,

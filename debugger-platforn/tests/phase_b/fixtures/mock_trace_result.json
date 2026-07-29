@@ -117,7 +117,7 @@
       "trace_id": "trace-009-verbose-polite",
       "outcome": "success",
       "messages": [
-        {"role": "user", "content": "Hello! I hope you're having a wonderful day. I ordered a Samsung Galaxy phone about two weeks ago and I wanted to know if it has been dispatched yet. If you could check the status for me, I would be very grateful. Thank you so much in advance!"},
+        {"role": "user", "content": "Hello! I hope you're having a wonderful day. I ordered a TechRepair Galaxy phone about two weeks ago and I wanted to know if it has been dispatched yet. If you could check the status for me, I would be very grateful. Thank you so much in advance!"},
         {"role": "assistant", "content": "Thank you for your detailed message! I'm happy to help."},
         {"role": "user", "content": "I truly appreciate your help. Could you possibly provide any information about the expected delivery date?"}
       ],

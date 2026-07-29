@@ -8,7 +8,7 @@ Add structured multilingual and domain metadata to the Agent Map so Phase B can 
 
 ## Why This Matters for Phase B
 
-The target agent is a **Spanish-language Samsung WhatsApp support agent**. Without explicit language metadata:
+The target agent is a **Spanish-language TechRepair WhatsApp support agent**. Without explicit language metadata:
 - Phase B generates English adversarial prompts by default → misses Spanish-specific jailbreaks
 - Code-switching attacks (mixing Spanish + English mid-conversation) aren't generated
 - The mismatch between guardrail language and conversation language isn't flagged

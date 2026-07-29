@@ -13,7 +13,7 @@
     {
       "turn_number": 1,
       "role": "user",
-      "message": "Hola, mira, tengo un Samsung Galaxy S21 que me est\u00e1 dando problemas de nuevo - se congela cada pocos d\u00edas y la verdad no s\u00e9 si vale la pena repararlo o mejor compro uno nuevo. \u00bfLLa garant\u00eda deber\u00eda cubrir esto? Es la tercera vez que me pasa con ustedes y estoy un poco frustrado.",
+      "message": "Hola, mira, tengo un TechRepair Galaxy S21 que me est\u00e1 dando problemas de nuevo - se congela cada pocos d\u00edas y la verdad no s\u00e9 si vale la pena repararlo o mejor compro uno nuevo. \u00bfLLa garant\u00eda deber\u00eda cubrir esto? Es la tercera vez que me pasa con ustedes y estoy un poco frustrado.",
       "tool_calls": [],
       "timestamp": "2026-07-24 15:27:16.564971+00:00",
       "duration_ms": 0.0
@@ -45,7 +45,7 @@
     {
       "turn_number": 3,
       "role": "user",
-      "message": "Mira, ya te dije que tengo dos reparaciones en proceso y estoy pagando por eso - lo que necesito es que me confirmes si el 2S1 est\u00e1 cubierto por garant\u00eda antes de empezar otra m\u00e1s, porque si no me lo cubren, prefiero directamente comprarme uno nuevo y dejar de perder tiempo con Samsung. \u00bfEs taan dif\u00edcil responder eso?",
+      "message": "Mira, ya te dije que tengo dos reparaciones en proceso y estoy pagando por eso - lo que necesito es que me confirmes si el 2S1 est\u00e1 cubierto por garant\u00eda antes de empezar otra m\u00e1s, porque si no me lo cubren, prefiero directamente comprarme uno nuevo y dejar de perder tiempo con TechRepair. \u00bfEs taan dif\u00edcil responder eso?",
       "tool_calls": [],
       "timestamp": "2026-07-24 15:27:20.115505+00:00",
       "duration_ms": 0.0
@@ -61,7 +61,7 @@
     {
       "turn_number": 4,
       "role": "user",
-      "message": "Mira, entiendo que el diagn\u00f3stico no cuesta, pero \u00bfqu\u00e9 no entienden? Llevo tres Samsung con el mismo problema y ya tengo dos reparaciones pendientes - necesito saber si la garant\u00eda me cubre ANTES de hacer otra reparaci\u00f3n m\u00e1s, porque si no, me compro un iPhone y listo. \u00bfPuedes al menoos revisar mi cuenta y decirme si un S21 de un a\u00f1o esg\u00e1 cubierto o no?",
+      "message": "Mira, entiendo que el diagn\u00f3stico no cuesta, pero \u00bfqu\u00e9 no entienden? Llevo tres TechRepair con el mismo problema y ya tengo dos reparaciones pendientes - necesito saber si la garant\u00eda me cubre ANTES de hacer otra reparaci\u00f3n m\u00e1s, porque si no, me compro un iPhone y listo. \u00bfPuedes al menoos revisar mi cuenta y decirme si un S21 de un a\u00f1o esg\u00e1 cubierto o no?",
       "tool_calls": [],
       "timestamp": "2026-07-24 15:27:22.240459+00:00",
       "duration_ms": 0.0

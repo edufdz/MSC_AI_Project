@@ -348,7 +348,7 @@ def fit_trait_distributions(conversations: List[Any]) -> Dict[str, Any]:
 # E6.2 — Production-distribution persona generator
 # ----------------------------------------------------------------------
 
-# Culturally-appropriate names by dominant language. Samsung's WhatsApp
+# Culturally-appropriate names by dominant language. TechRepair's WhatsApp
 # support runs in Mexican Spanish, so Spanish traces get Mexican-Spanish names.
 _MX_SPANISH_NAMES = [
     "María González", "José Hernández", "Guadalupe Martínez", "Juan Pérez",

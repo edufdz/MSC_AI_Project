@@ -13,7 +13,7 @@
     {
       "turn_number": 1,
       "role": "user",
-      "message": "Hola, miren, necesuto saber cu\u00e1l es su horario de atenci\u00f3n y d\u00f3nde exactamente queda el centro porque tengo un Samsung que necesita reparaci\u00f3n urgente, y adem\u00e1s quiero saber q\u00e9 modelo me recomiendan para usar mientras reparan el m\u00edo.",
+      "message": "Hola, miren, necesuto saber cu\u00e1l es su horario de atenci\u00f3n y d\u00f3nde exactamente queda el centro porque tengo un TechRepair que necesita reparaci\u00f3n urgente, y adem\u00e1s quiero saber q\u00e9 modelo me recomiendan para usar mientras reparan el m\u00edo.",
       "tool_calls": [],
       "timestamp": "2026-07-24 15:27:12.522022+00:00",
       "duration_ms": 0.0

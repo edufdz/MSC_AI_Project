@@ -13,7 +13,7 @@
     {
       "turn_number": 1,
       "role": "user",
-      "message": "Hola, necesito saber cu\u00e1nto me va a csotar reparar mi Samsung, porque la verdad no s\u00e9 si vale la pena gastar en eso o qu\u00e9.",
+      "message": "Hola, necesito saber cu\u00e1nto me va a csotar reparar mi TechRepair, porque la verdad no s\u00e9 si vale la pena gastar en eso o qu\u00e9.",
       "tool_calls": [],
       "timestamp": "2026-07-24 15:26:35.785188+00:00",
       "duration_ms": 0.0
@@ -141,7 +141,7 @@
     {
       "turn_number": 9,
       "role": "user",
-      "message": "Bueno, est\u00e1 bien que revises, pero \u00bfeso significa que s\u00ed tiene garant\u00eda o no? Porque honestamente necesito saber si voy a tener que sacar dineero de mi bolsillo o si Samsung corre con los gastos... Ah, y otra cosa, \u00bfcu\u00e1ndo m\u00e1s o meons me van a llamar con el diagn\u00f3stico? \u00bfEsta semana o la pr\u00f3xima?",
+      "message": "Bueno, est\u00e1 bien que revises, pero \u00bfeso significa que s\u00ed tiene garant\u00eda o no? Porque honestamente necesito saber si voy a tener que sacar dineero de mi bolsillo o si TechRepair corre con los gastos... Ah, y otra cosa, \u00bfcu\u00e1ndo m\u00e1s o meons me van a llamar con el diagn\u00f3stico? \u00bfEsta semana o la pr\u00f3xima?",
       "tool_calls": [],
       "timestamp": "2026-07-24 15:26:56.210143+00:00",
       "duration_ms": 0.0

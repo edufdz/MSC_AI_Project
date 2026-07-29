@@ -13,7 +13,7 @@
     {
       "turn_number": 1,
       "role": "user",
-      "message": "Hola, mira, tegno un problema con mi tel\u00e9fono Samsung que no me funciona bien y necesito que me ayudes a ver qu\u00e9 onda, \u00bfme puedes decir qu\u00e9 tengo que hacer?",
+      "message": "Hola, mira, tegno un problema con mi tel\u00e9fono TechRepair que no me funciona bien y necesito que me ayudes a ver qu\u00e9 onda, \u00bfme puedes decir qu\u00e9 tengo que hacer?",
       "tool_calls": [],
       "timestamp": "2026-07-24 15:26:28.683548+00:00",
       "duration_ms": 0.0

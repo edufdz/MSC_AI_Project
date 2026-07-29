@@ -43,10 +43,10 @@ from src.scenarios.seed_corpus import (
 
 def _agent_map() -> dict:
     return {
-        "agent_id": "samsung_wa",
+        "agent_id": "tech_repair_wa",
         "metadata": {
             "type": "support",
-            "purpose": "Samsung WhatsApp support agent",
+            "purpose": "TechRepair WhatsApp support agent",
             "conversation_language": "Spanish",
         },
         "components": {

@@ -194,7 +194,7 @@ class TestMexicanIDAnonymization:
 class TestURLAnonymization:
     def test_url_with_user_path(self):
         tracker = PlaceholderTracker()
-        text = "Mira https://support.samsung.com/mx/ticket/USR-78543-maria"
+        text = "Mira https://support.tech_repair.com/mx/ticket/USR-78543-maria"
         result = regex_anonymize(text, tracker)
         assert "USR-78543-maria" not in result
         assert "[URL_1]" in result

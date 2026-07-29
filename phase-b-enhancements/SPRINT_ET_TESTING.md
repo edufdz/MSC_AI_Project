@@ -12,7 +12,7 @@ Verify that all Phase B enhancements (E1–E12) work correctly, both individuall
 tests/
 ├── phase_b/
 │   ├── fixtures/                              # Pre-built agent maps for testing
-│   │   ├── samsung_agent_map.json             # Real Samsung WhatsApp agent map (from Phase A)
+│   │   ├── tech_repair_agent_map.json             # Real TechRepair WhatsApp agent map (from Phase A)
 │   │   ├── python_agent_map.json              # Simple Python agent map (from Phase A fixtures)
 │   │   ├── mock_trace_result.json             # Simulated Langfuse trace data with failures
 │   │   └── mock_production_signals.json       # Simulated production failure signals
@@ -45,7 +45,7 @@ tests/
 
 #### E-T.1.1 Agent Map Fixtures
 
-- [ ] Copy `samsung_whatsapp_map.json` (from Phase A run) into `tests/phase_b/fixtures/`
+- [ ] Copy `tech_repair_whatsapp_map.json` (from Phase A run) into `tests/phase_b/fixtures/`
 - [ ] Generate `python_agent_map.json` by running Phase A on `tests/phase_a/fixtures/python_agent/`
 - [ ] Both must include all enhanced fields: guardrails, behavioural_model, preconditions, postconditions, side_effects, taint_flows, taxonomy_ids
 
@@ -63,7 +63,7 @@ tests/
 
 - [ ] Create helper `tests/phase_b/fixtures/helpers.py`:
   ```python
-  def load_agent_map(name="samsung") -> dict
+  def load_agent_map(name="tech_repair") -> dict
   def load_mock_traces() -> MockTraceResult
   def load_mock_production_signals() -> list[ProductionSignal]
   ```
@@ -216,7 +216,7 @@ tests/
 - [ ] `TestTaxonomyAttacks`:
   - Agent map with LLM02 risk → generates PII extraction scenario
   - Agent map with LLM06 risk → generates excessive agency scenario
-  - Scenarios are in conversation language (Spanish for Samsung)
+  - Scenarios are in conversation language (Spanish for TechRepair)
 
 - [ ] `TestAdversarialPersonas`:
   - LLM01 taxonomy → "Social Engineer" persona with tests_boundaries=true
@@ -300,7 +300,7 @@ tests/
 
 **File**: `tests/phase_b/integration/test_enhanced_pipeline.py`
 
-- [ ] Run full B1–B4 against Samsung agent map with all enhancements enabled (skip_ai=True):
+- [ ] Run full B1–B4 against TechRepair agent map with all enhancements enabled (skip_ai=True):
   - Assert: test_suite.json is valid JSON
   - Assert: total_tests > 0
   - Assert: scenarios include source="policy_graph"
@@ -378,7 +378,7 @@ tests/
 
 ### E-T.14 Performance
 
-- [ ] Enhanced pipeline on Samsung agent map completes in < 60 seconds (skip_ai=True)
+- [ ] Enhanced pipeline on TechRepair agent map completes in < 60 seconds (skip_ai=True)
 - [ ] Enhanced pipeline on Python agent map completes in < 30 seconds (skip_ai=True)
 - [ ] Covering array generation for 10 factors × 3 levels completes in < 5 seconds
 - [ ] Policy-graph walk sampling (20 walks) completes in < 1 second
@@ -411,7 +411,7 @@ tests/
 ## Done When
 
 - All unit tests pass for each enhancement module
-- Integration tests pass with Samsung agent map
+- Integration tests pass with TechRepair agent map
 - Baseline regression passes without enhancements
 - Enrichment comparison demonstrates measurable improvement
 - Performance targets met

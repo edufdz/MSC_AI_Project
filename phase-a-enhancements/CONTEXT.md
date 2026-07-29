@@ -2,7 +2,7 @@
 
 ## What This Is
 
-A series of enhancements to **Phase A (Analyze)** of the Plavio Agent Debugger platform. Phase A is the foundational analysis stage that scans an AI agent's source code and produces a structured **Agent Map** (`agent_map.json`) describing the agent's architecture, tools, prompts, memory systems, risks, and behaviour.
+A series of enhancements to **Phase A (Analyze)** of the Agent-Testing Platform. Phase A is the foundational analysis stage that scans an AI agent's source code and produces a structured **Agent Map** (`agent_map.json`) describing the agent's architecture, tools, prompts, memory systems, risks, and behaviour.
 
 ## Why These Enhancements Exist
 
@@ -16,7 +16,7 @@ This work is part of an MSC AI research project. A literature review identified 
 
 ## The Codebase
 
-**Platform**: Plavio Agent Debugger — an end-to-end AI-powered platform for testing, debugging, and certifying conversational AI agents.
+**Platform**: Agent-Testing Platform — an end-to-end AI-powered platform for testing, debugging, and certifying conversational AI agents.
 
 **Root directory**: `debugger-platforn/` (note the typo in the directory name — it is intentional, do not rename)
 

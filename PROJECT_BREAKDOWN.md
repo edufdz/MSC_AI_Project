@@ -1,8 +1,8 @@
-# Plavio Agent Debugger - Full Project Breakdown
+# Agent-Testing Platform - Full Project Breakdown
 
 ## What Is This?
 
-The **Plavio Agent Debugger** is an AI-powered platform for testing, debugging, and certifying conversational AI agents. It ingests an agent's codebase, generates comprehensive test suites, executes them (against a mock or real agent), diagnoses failures, and certifies the agent's quality. The entire workflow is orchestrated through a **5-phase pipeline** (A through E) plus a final **Certification** step, all accessible via a polished web UI with real-time progress streaming.
+The **Agent-Testing Platform** is an AI-powered platform for testing, debugging, and certifying conversational AI agents. It ingests an agent's codebase, generates comprehensive test suites, executes them (against a mock or real agent), diagnoses failures, and certifies the agent's quality. The entire workflow is orchestrated through a **5-phase pipeline** (A through E) plus a final **Certification** step, all accessible via a polished web UI with real-time progress streaming.
 
 ---
 

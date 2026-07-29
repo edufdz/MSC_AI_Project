@@ -4,7 +4,7 @@ Ground-truth validation workflow.
 
     # 1. Build the blind annotation packet (50 conversations)
     python3 run_validation.py sample \
-        --export ../docs/samsung-conversations-anonymized.json \
+        --export ../docs/tech_repair-conversations-anonymized.json \
         --output-dir validation_packet
 
     # 2a. HUMAN annotation (the number the dissertation reports)

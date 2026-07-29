@@ -13,9 +13,9 @@ import type {
   ResearchResults,
 } from '../api/types'
 
-const DEFAULT_INPUT_PATH = '../docs/samsung-conversations-export.json'
-const DEFAULT_ANON_PATH = '../docs/samsung-conversations-anonymized.json'
-const DEFAULT_AGENT_MAP = 'samsung_whatsapp_map.json'
+const DEFAULT_INPUT_PATH = '../docs/tech_repair-conversations-export.json'
+const DEFAULT_ANON_PATH = '../docs/tech_repair-conversations-anonymized.json'
+const DEFAULT_AGENT_MAP = 'tech_repair_whatsapp_map.json'
 
 const CHART_NAMES = [
   { name: 'rq1_per_category_recall.png', label: 'RQ1 · Per-category recall' },

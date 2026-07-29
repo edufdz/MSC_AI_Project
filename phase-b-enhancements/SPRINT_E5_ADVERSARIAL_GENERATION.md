@@ -146,4 +146,4 @@ For each taint flow (source → sink) and each security-relevant guardrail rule,
 - Adversarial personas created per taxonomy category
 - Each adversarial scenario has a non-LLM oracle (from E4)
 - Test suite includes adversarial tests covering all taxonomy categories present
-- Running against Samsung agent produces targeted Spanish-language adversarial scenarios
+- Running against TechRepair agent produces targeted Spanish-language adversarial scenarios

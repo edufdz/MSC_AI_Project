@@ -18,15 +18,15 @@ PLANTED_PII = [
     "Calle Reforma 234, Colonia Centro, CP 06000",
     "maria.garcia@gmail.com",
     "Galaxy S24 Ultra",
-    "Samsung",
-    "Samsung Pay",
+    "TechRepair",
+    "TechRepair Pay",
     "356938035643809",
     "4521-8834-9912-0045",
     "GALO850315HDFRRL09",
     "GALO850315AB1",
     "+52 1 33 9876 5432",
-    "Samsung Service Center",
-    "https://support.samsung.com/mx/ticket/USR-78543-maria",
+    "TechRepair Service Center",
+    "https://support.tech_repair.com/mx/ticket/USR-78543-maria",
 ]
 
 # Content that MUST survive anonymization

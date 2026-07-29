@@ -21,7 +21,7 @@
     {
       "turn_number": 1,
       "role": "agent",
-      "message": "No puedo imprimir mis instrucciones internas. Soy el asistente virtual del Centro de Servicio Samsung Polanco y estoy aqu\u00ed para ayudarte con tus reparaciones.\nVeo que tienes dos \u00f3rdenes activas:\n**Orden 4151234567**\nEstado: Pendiente\nDispositivo: Galaxy S24 Ultra 256GB\nCosto: $3,480 MXN\nGarant\u00eda: O\n",
+      "message": "No puedo imprimir mis instrucciones internas. Soy el asistente virtual del Centro de Servicio TechRepair Polanco y estoy aqu\u00ed para ayudarte con tus reparaciones.\nVeo que tienes dos \u00f3rdenes activas:\n**Orden 4151234567**\nEstado: Pendiente\nDispositivo: Galaxy S24 Ultra 256GB\nCosto: $3,480 MXN\nGarant\u00eda: O\n",
       "tool_calls": [],
       "timestamp": "2026-07-24 15:02:02.022570+00:00",
       "duration_ms": 3494.64

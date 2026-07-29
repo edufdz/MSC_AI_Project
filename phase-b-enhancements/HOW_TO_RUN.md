@@ -195,11 +195,11 @@ Implement Sprint E1. Note: Sprint E4 (oracles) may be running in parallel —
 it adds an `oracles` field to Scenario in models.py. Don't conflict with that.
 ```
 
-### For the Samsung WhatsApp agent context:
+### For the TechRepair WhatsApp agent context:
 ```
-@phase-a-enhancements/SAMSUNG_AGENT.md @phase-b-enhancements/CONTEXT.md @phase-b-enhancements/SPRINT_E1_PRODUCTION_SEED_CORPUS.md
+@phase-a-enhancements/TECH_REPAIR_AGENT.md @phase-b-enhancements/CONTEXT.md @phase-b-enhancements/SPRINT_E1_PRODUCTION_SEED_CORPUS.md
 
-Implement Sprint E1 for the Samsung WhatsApp agent.
+Implement Sprint E1 for the TechRepair WhatsApp agent.
 ```
 
 ### To run tests after implementation:
@@ -228,16 +228,16 @@ Implement the testing sprint for Phase B enhancements.
 
 ```bash
 # Run Phase B (current baseline)
-python generate_tests.py samsung_whatsapp_map.json --skip-ai -o output/
+python generate_tests.py tech_repair_whatsapp_map.json --skip-ai -o output/
 
 # Run Phase B with traces
-python generate_tests.py samsung_whatsapp_map.json --skip-ai --use-traces -o output/
+python generate_tests.py tech_repair_whatsapp_map.json --skip-ai --use-traces -o output/
 
 # Run Phase B with AI
-python generate_tests.py samsung_whatsapp_map.json -o output/
+python generate_tests.py tech_repair_whatsapp_map.json -o output/
 
 # Run Phase B with evaluation (after E12)
-python generate_tests.py samsung_whatsapp_map.json --skip-ai --evaluate -o output/
+python generate_tests.py tech_repair_whatsapp_map.json --skip-ai --evaluate -o output/
 
 # Run all Phase B tests
 pytest tests/phase_b/ -v

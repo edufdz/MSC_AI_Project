@@ -23,7 +23,7 @@
 
 ## Overview
 
-The Anonymization System is a full-stack platform designed to strip **personally identifiable information (PII)** and **brand-confidential terms** from Spanish-language customer-support conversation transcripts. It was built as part of the MSC AI Research Project at Imperial College London, processing real WhatsApp support conversations from Pulpoo for Samsung.
+The Anonymization System is a full-stack platform designed to strip **personally identifiable information (PII)** and **brand-confidential terms** from Spanish-language customer-support conversation transcripts. It was built as part of the MSC AI Research Project at Imperial College London, processing real WhatsApp support conversations from Pulpoo for TechRepair.
 
 **Key Principles:**
 
@@ -104,9 +104,9 @@ The Anonymization System is a full-stack platform designed to strip **personally
 │                                                                  │
 │  ┌─────────────────────┐  ┌──────────────────────────────────┐  │
 │  │     config.py       │  │      brand_terms.json            │  │
-│  │ • PII_PATTERNS      │  │ • brands: [Samsung, Galaxy, …]   │  │
+│  │ • PII_PATTERNS      │  │ • brands: [TechRepair, Galaxy, …]   │  │
 │  │ • CATEGORY_ORDER    │  │ • devices: [Galaxy S24, …]       │  │
-│  │ • BRAND_CATEGORY_MAP│  │ • products: [Samsung Care+, …]   │  │
+│  │ • BRAND_CATEGORY_MAP│  │ • products: [TechRepair Care+, …]   │  │
 │  │ • PlaceholderTracker│  │ • services: [SmartThings, …]     │  │
 │  └─────────────────────┘  └──────────────────────────────────┘  │
 │                                                                  │
@@ -384,10 +384,10 @@ This pass replaces brand-specific terminology with category placeholders, ensuri
 
 | JSON Key | Placeholder | Examples |
 |----------|-------------|----------|
-| `brands` | `[BRAND_N]` | Samsung, Galaxy, Pulpoo |
+| `brands` | `[BRAND_N]` | TechRepair, Galaxy, Pulpoo |
 | `devices` | `[DEVICE_N]` | Galaxy S24, Galaxy S23, Galaxy Tab S9 |
-| `products` | `[PRODUCT_N]` | Samsung Care+, Samsung Members |
-| `services` | `[SERVICE_N]` | SmartThings, Samsung Pay, Bixby |
+| `products` | `[PRODUCT_N]` | TechRepair Care+, TechRepair Members |
+| `services` | `[SERVICE_N]` | SmartThings, TechRepair Pay, Bixby |
 
 ### Key Mechanisms
 
@@ -405,7 +405,7 @@ Before replacing a match, the system checks if the match position falls inside a
 - If the bracket count indicates the match is inside a placeholder, replacement is skipped
 
 **3. Case-Insensitive, Word-Boundary Matching:**
-- `re.IGNORECASE` handles "Samsung", "samsung", "SAMSUNG"
+- `re.IGNORECASE` handles "TechRepair", "tech_repair", "TECH_REPAIR"
 - `\b` word boundaries prevent partial matches (e.g., "Galaxying" won't match "Galaxy")
 - `re.escape()` handles special characters in terms (e.g., "Care+" is escaped properly)
 
@@ -508,7 +508,7 @@ Input File
         │   {"messages": [...], "conversation": [...],
         │    "turns": [...], "data": [...], "chat": [...]}
         │
-        └── Multi-conversation export (Samsung/Supabase)
+        └── Multi-conversation export (TechRepair/Supabase)
             {"conversations": [{
               "id": "...",
               "customer_name": "...",
@@ -720,7 +720,7 @@ Cliente: Mi teléfono es 55 1234 5678.
 
 Supported key names: `messages`, `conversation`, `turns`, `data`, `chat`
 
-### JSON — Multi-Conversation Export (Samsung/Supabase)
+### JSON — Multi-Conversation Export (TechRepair/Supabase)
 
 ```json
 {
@@ -759,9 +759,9 @@ For multi-conversation exports, metadata fields (`customer_name`, `phone_number`
 | URL | Pass 1 (Regex) | HTTP/HTTPS patterns | `[URL_N]` | `https://support.example.com/...` |
 | PERSON | Pass 2 (NER) | spaCy NER model | `[PERSON_N]` | `María García López` |
 | LOCATION | Pass 2 (NER) | spaCy NER model | `[LOCATION_N]` | `Guadalajara`, `Jalisco` |
-| BRAND | Pass 3 (Brand) | Dictionary lookup | `[BRAND_N]` | `Samsung`, `Pulpoo` |
+| BRAND | Pass 3 (Brand) | Dictionary lookup | `[BRAND_N]` | `TechRepair`, `Pulpoo` |
 | DEVICE | Pass 3 (Brand) | Dictionary lookup | `[DEVICE_N]` | `Galaxy S24`, `Galaxy Tab S9` |
-| PRODUCT | Pass 3 (Brand) | Dictionary lookup | `[PRODUCT_N]` | `Samsung Care+` |
+| PRODUCT | Pass 3 (Brand) | Dictionary lookup | `[PRODUCT_N]` | `TechRepair Care+` |
 | SERVICE | Pass 3 (Brand) | Dictionary lookup | `[SERVICE_N]` | `SmartThings`, `Bixby` |
 
 ### What Is NOT Anonymized
@@ -788,10 +788,10 @@ LOG_LEVEL=INFO                     # Logging verbosity
 
 ```json
 {
-  "brands": ["Samsung", "Galaxy", "Pulpoo"],
+  "brands": ["TechRepair", "Galaxy", "Pulpoo"],
   "devices": ["Galaxy S24", "Galaxy S23", "Galaxy A15", "Galaxy Tab S9"],
-  "products": ["Samsung Care+", "Samsung Members"],
-  "services": ["SmartThings", "Samsung Pay", "Bixby"]
+  "products": ["TechRepair Care+", "TechRepair Members"],
+  "services": ["SmartThings", "TechRepair Pay", "Bixby"]
 }
 ```
 

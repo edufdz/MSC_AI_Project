@@ -1,4 +1,4 @@
-CONTEXTO DEL CLIENTE — datos ficticios de la simulación Samsung (samsung-live-agent/fake-db/seed.ts)
+CONTEXTO DEL CLIENTE — datos ficticios de la simulación TechRepair (tech_repair-live-agent/fake-db/seed.ts)
 
 Quién soy:
 - Nombre: Valeria Mendoza García (me dicen "Vale")
@@ -21,5 +21,5 @@ Mi otra reparación (reloj):
 - Lo dejé en un centro de servicio (carry-in) hace unos 20 días; está en garantía, sin costo
 
 Historial:
-- He contactado a Samsung unas 6 veces; la última vez pregunté por el estado de mi reparación
+- He contactado a TechRepair unas 6 veces; la última vez pregunté por el estado de mi reparación
 - En una llamada anterior me explicaron la cotización de $3,480 MXN y dije que lo pensaría

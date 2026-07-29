@@ -243,7 +243,7 @@ class TestDomainDetection:
 
     def test_consumer_electronics_industry(self):
         tools = [_make_tool("check_warranty", "Check device warranty status")]
-        prompts = [_make_prompt("Help with Samsung phone issues and garantía.")]
+        prompts = [_make_prompt("Help with TechRepair phone issues and garantía.")]
         result = _detect_domain_metadata(tools, prompts)
         assert result["industry"] == "consumer_electronics"
 

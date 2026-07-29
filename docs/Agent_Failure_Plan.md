@@ -1,8 +1,8 @@
-# Samsung Agent Failure Analysis System — Plan
+# TechRepair Agent Failure Analysis System — Plan
 
 ## Context
 
-We have **1,299 historical WhatsApp conversations** (24,537 messages) between Samsung customers and our AI agent stored in Supabase. The agent handles service order inquiries, delivery logistics, pricing, and general support for Samsung Polanco's repair center.
+We have **1,299 historical WhatsApp conversations** (24,537 messages) between TechRepair customers and our AI agent stored in Supabase. The agent handles service order inquiries, delivery logistics, pricing, and general support for TechRepair Polanco's repair center.
 
 The goal is to build a system that identifies every situation where the agent failed, classifies the failure type, and produces actionable insights to improve the agent's prompt, tools, and graph logic.
 
@@ -316,7 +316,7 @@ Based on gaps found in the data:
 
 ## Data Sources
 
-- **Primary:** `whatsapp_conversations` and `whatsapp_messages` tables in Supabase (Samsung project: `jfiezisbitkmamirxopq`)
-- **Export script:** `connect/cores/samsung-next/scripts/extract-conversations.ts` — extracts all conversations + messages to a local JSON file
-- **Export location:** `connect/cores/samsung-next/samsung-conversations-export.json` (34MB, gitignored)
+- **Primary:** `whatsapp_conversations` and `whatsapp_messages` tables in Supabase (TechRepair project: `jfiezisbitkmamirxopq`)
+- **Export script:** `connect/cores/tech_repair-next/scripts/extract-conversations.ts` — extracts all conversations + messages to a local JSON file
+- **Export location:** `connect/cores/tech_repair-next/tech_repair-conversations-export.json` (34MB, gitignored)
 - **Existing evaluation infra:** Langfuse auto-regression system (see `server/services/evaluation/auto-regression.ts`)

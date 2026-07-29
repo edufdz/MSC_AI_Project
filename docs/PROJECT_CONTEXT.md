@@ -3,7 +3,7 @@
 ## About
 Eduardo Fernandez Salazar, Imperial College London MSc AI. Individual project (dissertation), 2026.
 
-Developer of the agent testing platform (the "debugging agent project") — an automated adversarial testing system for conversational AI agents with a four-phase pipeline (A: agent-map analysis, B: persona/scenario generation, C: test execution, D: failure diagnosis). Also operates the Samsung WhatsApp customer-support agent at Pulpoo, which is the production validation target.
+Developer of the agent testing platform (the "debugging agent project") — an automated adversarial testing system for conversational AI agents with a four-phase pipeline (A: agent-map analysis, B: persona/scenario generation, C: test execution, D: failure diagnosis). Also operates the TechRepair WhatsApp customer-support agent at Pulpoo, which is the production validation target.
 
 ---
 
@@ -27,14 +27,14 @@ Subtitle: A Production-Feedback System for Predictive Agent Reliability Testing,
 
 ## The Three Systems
 1. **Agent testing platform / debugging agent project** (this repo: `debugger-platforn/`) — Phases A-D pipeline, enhanced during project
-2. **Deployed Samsung WhatsApp agent** (Pulpoo) — real production agent handling Spanish-language customer support
+2. **Deployed TechRepair WhatsApp agent** (Pulpoo) — real production agent handling Spanish-language customer support
 3. **Langfuse observability** — production traces in Langfuse Cloud, self-hosted instance stood up for synthetic traces
 
 ## Current Status (updated 2026-07-14 — post Background Report)
 - All three systems exist and run independently
 - Platform Phases A-D enhanced substantially
 - Langfuse production observability integration is live
-- **DESIGN CHANGE**: no direct connection between the Samsung production
+- **DESIGN CHANGE**: no direct connection between the TechRepair production
   system and the simulator. Conversations are extracted once, anonymised,
   and compared offline against simulation results.
 - **BUILT** (see docs/RESEARCH_WORKFLOW.md):
@@ -73,7 +73,7 @@ Integration of the three systems into one closed measurement loop. Key pieces ne
 
 ## Key Methodological Decisions
 - Ground truth is constructed from **independent human-process signals** (escalations, complaints, QA flags), NOT from LLM-as-a-judge scores — this avoids circularity
-- All testing runs against a **sandboxed copy** of the Samsung agent, never the live production system
+- All testing runs against a **sandboxed copy** of the TechRepair agent, never the live production system
 - Synthetic and production data kept in **separate Langfuse instances** (self-hosted vs cloud)
 - A negative result (low predictive validity) is explicitly designed to be as valuable as a positive one
 

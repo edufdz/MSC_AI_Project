@@ -3,7 +3,7 @@ Replay harness: behavioural fidelity of the sandbox vs production.
 
 Research purpose: the sandbox bridge is only useful for testing if it
 behaves *like* the production agent. This module replays recorded
-production conversations (Samsung WhatsApp export schema: messages with
+production conversations (TechRepair WhatsApp export schema: messages with
 ``source`` in {"customer", "ai_agent"} and ``text_body``) against a sandbox
 ``/chat`` endpoint and computes a deterministic, LLM-free fidelity score:
 
@@ -92,7 +92,7 @@ class ReplayResult:
 
 
 # ──────────────────────────────────────────────────────────────────
-# Extraction helpers (Samsung WhatsApp export schema)
+# Extraction helpers (TechRepair WhatsApp export schema)
 # ──────────────────────────────────────────────────────────────────
 
 
@@ -150,7 +150,7 @@ def replay_conversation(
 ) -> ReplayResult:
     """Replay a production conversation's customer side into the sandbox.
 
-    Plays each customer message (Samsung export schema) into ``POST /chat``
+    Plays each customer message (TechRepair export schema) into ``POST /chat``
     in order, under a single fresh session, and collects the sandbox
     responses and tool calls. The session is reset afterwards so its trace
     is flushed to the JSONL file.

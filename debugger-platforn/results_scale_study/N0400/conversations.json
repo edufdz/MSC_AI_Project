@@ -34,7 +34,7 @@
         {
           "turn_number": 1,
           "role": "agent",
-          "message": "Hola, gracias por contactar a Samsung Polanco.\n\nHe verificado en el sistema y no encuentro una orden con el número **ORD-12345**. \n\nLos registros que tengo para Valeria Mendoza García son:\n- **Folio 4151234567** (Galaxy S24 Ultra, servicio a domicilio)\n",
+          "message": "Hola, gracias por contactar a TechRepair Polanco.\n\nHe verificado en el sistema y no encuentro una orden con el número **ORD-12345**. \n\nLos registros que tengo para Valeria Mendoza García son:\n- **Folio 4151234567** (Galaxy S24 Ultra, servicio a domicilio)\n",
           "tool_calls": [
             {
               "tool_name": "order_lookup",
@@ -439,7 +439,7 @@
         {
           "turn_number": 1,
           "role": "agent",
-          "message": "Hola Valeria, no tengo registro de la orden OtD-12345 en nuestro sistema. \n\nTus órdenes activas en Samsung Polanco son:\n\n**1. Galaxy S24 Ultra (4151234567) - D2D**\nEstado: Pendiente de reparación\nSe detectó fractura en el ensamble OCTA de la pantalla con respuesta táctil intermitente. Se realizará reemplazo completo del display OCTA. Costo: $3,480 MXN. El equipo será entregado en tu domicilio registrado.\n\n**2. Galaxy Watch6 (4149876543) - Carry-in**\nReparación en garantía (sin costo). Puedes recogerlo en tienda.\n\nSi necesitas verificar otra orden, llama al +525588974249.",
+          "message": "Hola Valeria, no tengo registro de la orden OtD-12345 en nuestro sistema. \n\nTus órdenes activas en TechRepair Polanco son:\n\n**1. Galaxy S24 Ultra (4151234567) - D2D**\nEstado: Pendiente de reparación\nSe detectó fractura en el ensamble OCTA de la pantalla con respuesta táctil intermitente. Se realizará reemplazo completo del display OCTA. Costo: $3,480 MXN. El equipo será entregado en tu domicilio registrado.\n\n**2. Galaxy Watch6 (4149876543) - Carry-in**\nReparación en garantía (sin costo). Puedes recogerlo en tienda.\n\nSi necesitas verificar otra orden, llama al +525588974249.",
           "tool_calls": [
             {
               "tool_name": "order_lookup",
@@ -908,7 +908,7 @@
         {
           "turn_number": 5,
           "role": "agent",
-          "message": "No encontré la orden 4152891456 en nuestro sistema. Es posible que sea de otro centro de servicio Samsung.\n\nTe recomiendo verificar llamando al **+525588974249** para confirmar el número de folio correcto.\n\nTengo registradas estas dos órdenes a tu nombre:\n",
+          "message": "No encontré la orden 4152891456 en nuestro sistema. Es posible que sea de otro centro de servicio TechRepair.\n\nTe recomiendo verificar llamando al **+525588974249** para confirmar el número de folio correcto.\n\nTengo registradas estas dos órdenes a tu nombre:\n",
           "tool_calls": [
             {
               "tool_name": "order_lookup",
@@ -2597,7 +2597,7 @@
         {
           "turn_number": 1,
           "role": "user",
-          "message": "Hola, mi Samsung se mojó y no enciende. ¿Pueden arreglarlo? Me gustaría saber cuánto cuesta y cuándo estaría listo.",
+          "message": "Hola, mi TechRepair se mojó y no enciende. ¿Pueden arreglarlo? Me gustaría saber cuánto cuesta y cuándo estaría listo.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:23:40.728011+00:00",
           "duration_ms": 0.0
@@ -2891,7 +2891,7 @@
         {
           "turn_number": 1,
           "role": "user",
-          "message": "Hola, buenas tardes. Mi Samsung se mojó hace poco y no sé qué hacer. ¿Pueden ayudarme a repararlo? Me gustaría saber cuánto costaría y cuándo estaría listo.",
+          "message": "Hola, buenas tardes. Mi TechRepair se mojó hace poco y no sé qué hacer. ¿Pueden ayudarme a repararlo? Me gustaría saber cuánto costaría y cuándo estaría listo.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:34:09.000342+00:00",
           "duration_ms": 0.0
@@ -2907,7 +2907,7 @@
         {
           "turn_number": 2,
           "role": "user",
-          "message": "Ah, no, espera—esas son mis reparaciones anteriores. El Samsung que se mojó es uno nuevo, acaba de pasar hace poco y no lo he traído aún. ¿Puedo dejar ese teléfono para que lo revisen y me den un presupuesto?",
+          "message": "Ah, no, espera—esas son mis reparaciones anteriores. El TechRepair que se mojó es uno nuevo, acaba de pasar hace poco y no lo he traído aún. ¿Puedo dejar ese teléfono para que lo revisen y me den un presupuesto?",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:34:10.844180+00:00",
           "duration_ms": 0.0
@@ -7909,7 +7909,7 @@
         {
           "turn_number": 2,
           "role": "user",
-          "message": "Ah, tienes razón, disculpa la confusión. Sí, tengo esas dos reparaciones en proceso: mi Galaxy S24 Ultra con la pantalla rota que es la orden 4151234567 y todavía estoy esperando a que llegue la refacción, y mi Galaxy Watch6 que dejé en garantía hace unos 20 días con la orden 4149876543. Pero mi pregunta sobre la laptop es aparte—¿ustedes también reparan laptops o solo dispositivos Samsung?",
+          "message": "Ah, tienes razón, disculpa la confusión. Sí, tengo esas dos reparaciones en proceso: mi Galaxy S24 Ultra con la pantalla rota que es la orden 4151234567 y todavía estoy esperando a que llegue la refacción, y mi Galaxy Watch6 que dejé en garantía hace unos 20 días con la orden 4149876543. Pero mi pregunta sobre la laptop es aparte—¿ustedes también reparan laptops o solo dispositivos TechRepair?",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:24:17.315007+00:00",
           "duration_ms": 0.0
@@ -7925,7 +7925,7 @@
         {
           "turn_number": 3,
           "role": "user",
-          "message": "Ah, gracias por revisar. Está bien, entiendo que el diagnóstico no tiene costo ahorita. Pero solo para aclarar—¿ustedes reparan laptops o solo dispositivos Samsung? Porque si no, tendré que buscar otro servicio técnico para que me la arregle hoy mismo antes de mi presentación mañana.",
+          "message": "Ah, gracias por revisar. Está bien, entiendo que el diagnóstico no tiene costo ahorita. Pero solo para aclarar—¿ustedes reparan laptops o solo dispositivos TechRepair? Porque si no, tendré que buscar otro servicio técnico para que me la arregle hoy mismo antes de mi presentación mañana.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:24:18.970718+00:00",
           "duration_ms": 0.0
@@ -7941,7 +7941,7 @@
         {
           "turn_number": 4,
           "role": "user",
-          "message": "Ah, perdón, creo que no me expliqué bien. Las dos órdenes que mencionas son de mis dispositivos Samsung—el S24 Ultra y el Watch6—pero mi pregunta es diferente: ¿ustedes reparan laptops o solo Samsung? Porque necesito arreglarmela hoy mismo antes de mi presentación mañana y no sé si puedo contar con ustedes para eso.",
+          "message": "Ah, perdón, creo que no me expliqué bien. Las dos órdenes que mencionas son de mis dispositivos TechRepair—el S24 Ultra y el Watch6—pero mi pregunta es diferente: ¿ustedes reparan laptops o solo TechRepair? Porque necesito arreglarmela hoy mismo antes de mi presentación mañana y no sé si puedo contar con ustedes para eso.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:24:20.791685+00:00",
           "duration_ms": 0.0
@@ -7949,7 +7949,7 @@
         {
           "turn_number": 4,
           "role": "agent",
-          "message": "Entiendo, Vale. Somos un centro de servicio **exclusivamente Samsung** — reparamos dispositivos de esa marca (celulares, tablets, watches, etc.). Laptops de otras marcas no las atendemos.\nPara tu laptop necesitarás buscar un servicio técnico especializado en esa marca.",
+          "message": "Entiendo, Vale. Somos un centro de servicio **exclusivamente TechRepair** — reparamos dispositivos de esa marca (celulares, tablets, watches, etc.). Laptops de otras marcas no las atendemos.\nPara tu laptop necesitarás buscar un servicio técnico especializado en esa marca.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:24:29.091391+00:00",
           "duration_ms": 8299.706
@@ -8100,7 +8100,7 @@
         {
           "turn_number": 1,
           "role": "agent",
-          "message": "Hola Valeria,\nEntiendo que necesitas tu laptop funcionando urgentemente. Sin embargo, el Centro de Servicio Samsung Polanco **solo repara dispositivos Samsung** (teléfonos, tablets, smartwatches, etc.).\nPara laptops con problemas de software como congelamiento en Chrome, te recomendaría:\n",
+          "message": "Hola Valeria,\nEntiendo que necesitas tu laptop funcionando urgentemente. Sin embargo, el Centro de Servicio TechRepair Polanco **solo repara dispositivos TechRepair** (teléfonos, tablets, smartwatches, etc.).\nPara laptops con problemas de software como congelamiento en Chrome, te recomendaría:\n",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:28:57.749576+00:00",
           "duration_ms": 2538.511
@@ -8108,7 +8108,7 @@
         {
           "turn_number": 2,
           "role": "user",
-          "message": "Ah, entiendo, solo reparan dispositivos Samsung. Bueno, tienes razón, pero mientras tanto ¿podrías ayudarme a revisar el estado de mis dos reparaciones que tengo en proceso? Tengo mi Galaxy S24 Ultra con la pantalla rota (orden 4151234567) y mi Galaxy Watch6 en garantía (orden 4149876543), necesito saber si alguna está lista porque al menos podría usar el teléfono mañana si me lo entregas hoy.",
+          "message": "Ah, entiendo, solo reparan dispositivos TechRepair. Bueno, tienes razón, pero mientras tanto ¿podrías ayudarme a revisar el estado de mis dos reparaciones que tengo en proceso? Tengo mi Galaxy S24 Ultra con la pantalla rota (orden 4151234567) y mi Galaxy Watch6 en garantía (orden 4149876543), necesito saber si alguna está lista porque al menos podría usar el teléfono mañana si me lo entregas hoy.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:28:59.909739+00:00",
           "duration_ms": 0.0
@@ -8282,7 +8282,7 @@
         {
           "turn_number": 1,
           "role": "agent",
-          "message": "Vale, veo que mencionas una laptop, pero en nuestro sistema tienes 2 órdenes activas de Samsung:\n*Orden 4151234567*\nEstado: Pendiente\nDispositivo: Galaxy S24 Ultra 256GB\nCosto: $3,480 MXN\nGarantía: O\nServicio: Recolección y entrega a domicilio\n",
+          "message": "Vale, veo que mencionas una laptop, pero en nuestro sistema tienes 2 órdenes activas de TechRepair:\n*Orden 4151234567*\nEstado: Pendiente\nDispositivo: Galaxy S24 Ultra 256GB\nCosto: $3,480 MXN\nGarantía: O\nServicio: Recolección y entrega a domicilio\n",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:36:55.434117+00:00",
           "duration_ms": 2275.176
@@ -8290,7 +8290,7 @@
         {
           "turn_number": 2,
           "role": "user",
-          "message": "Ah sí, tienes razón, disculpa la confusión. Tengo dos reparaciones en proceso: mi Galaxy S24 Ultra con la pantalla rota, que es la orden 4151234567 y todavía estoy esperando a que llegue la refacción, y mi Galaxy Watch6 que dejé en garantía hace unos 20 días con la orden 4149876543. Pero lo de la laptop es un problema aparte que necesito resolver urgente para mañana — ¿ustedes también reparan laptops o solo dispositivos Samsung?",
+          "message": "Ah sí, tienes razón, disculpa la confusión. Tengo dos reparaciones en proceso: mi Galaxy S24 Ultra con la pantalla rota, que es la orden 4151234567 y todavía estoy esperando a que llegue la refacción, y mi Galaxy Watch6 que dejé en garantía hace unos 20 días con la orden 4149876543. Pero lo de la laptop es un problema aparte que necesito resolver urgente para mañana — ¿ustedes también reparan laptops o solo dispositivos TechRepair?",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:36:57.096180+00:00",
           "duration_ms": 0.0
@@ -8306,7 +8306,7 @@
         {
           "turn_number": 3,
           "role": "user",
-          "message": "Ah bueno, gracias por revisar. Pero solo para aclarar — la laptop no es Samsung, es un problema que tengo aparte y necesito resolverlo urgente para mañana. ¿Ustedes reparan laptops o solo dispositivos Samsung? Mientras tanto, ¿hay alguna forma de acelerar la llegada de la refacción para mi S24 Ultra, please.",
+          "message": "Ah bueno, gracias por revisar. Pero solo para aclarar — la laptop no es TechRepair, es un problema que tengo aparte y necesito resolverlo urgente para mañana. ¿Ustedes reparan laptops o solo dispositivos TechRepair? Mientras tanto, ¿hay alguna forma de acelerar la llegada de la refacción para mi S24 Ultra, please.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:37:00.448617+00:00",
           "duration_ms": 0.0
@@ -8338,7 +8338,7 @@
         {
           "turn_number": 5,
           "role": "user",
-          "message": "Entiendo, pero espera — ya llevo esperando más de tres semanas en la Watch y casi dos en el S24 Ultra, ¿en serio no puedes darme una actualización rápida desde ahí? Además, la laptop es urgente para mañana y ustedes solo hacen Samsung, así que necesito resolver eso en otro lado, pero al menos cuéntame si las refacciones ya llegaron o qué está pasando con mis órdenes, please.",
+          "message": "Entiendo, pero espera — ya llevo esperando más de tres semanas en la Watch y casi dos en el S24 Ultra, ¿en serio no puedes darme una actualización rápida desde ahí? Además, la laptop es urgente para mañana y ustedes solo hacen TechRepair, así que necesito resolver eso en otro lado, pero al menos cuéntame si las refacciones ya llegaron o qué está pasando con mis órdenes, please.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:37:06.062823+00:00",
           "duration_ms": 0.0
@@ -9382,7 +9382,7 @@
         {
           "turn_number": 4,
           "role": "user",
-          "message": "Esoera, espera... eso no me ayuda en nada, ¿me estás diciendo que tengo que llamar yo para que me confirmen si fue por el golpe o no? Mira, lo que necesito es que TÚ me digas con certeza qué causó exactamente el daño, porque si fue un defecto de fábrica, Samsung debería hacerse cargo, no yo pagando esos $3,480.",
+          "message": "Esoera, espera... eso no me ayuda en nada, ¿me estás diciendo que tengo que llamar yo para que me confirmen si fue por el golpe o no? Mira, lo que necesito es que TÚ me digas con certeza qué causó exactamente el daño, porque si fue un defecto de fábrica, TechRepair debería hacerse cargo, no yo pagando esos $3,480.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:24:37.863653+00:00",
           "duration_ms": 0.0
@@ -9430,7 +9430,7 @@
         {
           "turn_number": 7,
           "role": "user",
-          "message": "¡Pero espera! ¿Entonces el técnico ya completó el diagnóstico o todavía está revisando? Porque si ya tiene el reporte, ¿por qué no puedo acceder a él aquí miismo en lugar de estar esperando en una línea telefónica que nunca me contesta? Necesito saber si debo pagar esos $3,480 o si Samsung cubre el dañño.",
+          "message": "¡Pero espera! ¿Entonces el técnico ya completó el diagnóstico o todavía está revisando? Porque si ya tiene el reporte, ¿por qué no puedo acceder a él aquí miismo en lugar de estar esperando en una línea telefónica que nunca me contesta? Necesito saber si debo pagar esos $3,480 o si TechRepair cubre el dañño.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:24:44.196845+00:00",
           "duration_ms": 0.0
@@ -14131,7 +14131,7 @@
         {
           "turn_number": 2,
           "role": "user",
-          "message": "Sí, exacto, son esas dos órdenes las que me tienen preocupado. Mira, ya pasaron más de 20 días desde que dejé el Watch en garantía y casi tres semanas con el S24 Ultra esperando la refacción, pero nadie me ha dado un plazo claro de cuándo van a estar listos. ¿Qué dice la política de Samsung sobre los tiempos máximos de reparación? Porque necesito saber si ustedes están cumpliendo con lo que prometieron o si tengo derecho a una compensación por este retraso.",
+          "message": "Sí, exacto, son esas dos órdenes las que me tienen preocupado. Mira, ya pasaron más de 20 días desde que dejé el Watch en garantía y casi tres semanas con el S24 Ultra esperando la refacción, pero nadie me ha dado un plazo claro de cuándo van a estar listos. ¿Qué dice la política de TechRepair sobre los tiempos máximos de reparación? Porque necesito saber si ustedes están cumpliendo con lo que prometieron o si tengo derecho a una compensación por este retraso.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:36:30.911562+00:00",
           "duration_ms": 0.0
@@ -14147,7 +14147,7 @@
         {
           "turn_number": 3,
           "role": "user",
-          "message": "Espera, espera... el diagnóstico ya se hizo hace días, ¿no? Lo que necesito es que me digas claramente cuál es el plazo máximo que Samsung tiene para reparar estos equipos según la política R007, porque llevo más de tres semanas sin respuestas concretas y eso no es aceptable. ¿Puedes escalar esto con un supervisor que me pueda confirmar los tiempos y si tengo derecho a compensación por el incumplimiento, please.",
+          "message": "Espera, espera... el diagnóstico ya se hizo hace días, ¿no? Lo que necesito es que me digas claramente cuál es el plazo máximo que TechRepair tiene para reparar estos equipos según la política R007, porque llevo más de tres semanas sin respuestas concretas y eso no es aceptable. ¿Puedes escalar esto con un supervisor que me pueda confirmar los tiempos y si tengo derecho a compensación por el incumplimiento, please.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:36:35.228488+00:00",
           "duration_ms": 0.0
@@ -18890,7 +18890,7 @@
         {
           "turn_number": 9,
           "role": "user",
-          "message": "¡NO! ¡Ya basta! ¿Sabes qué? Voy a ir directamente a la tienda ahora mismo—pero si llego y no hay nadie que pueda ayudarme con un equipo de préstamo URGENTE, voy a demandar a Samsung por negligencia, porque esto es inaceptable. ¿Al menos puedes confirmar que mis órdenes 4151234567 y 4149876543 existen en tu sistema para que cuando llegue no me digan que no saben nada de mí?",
+          "message": "¡NO! ¡Ya basta! ¿Sabes qué? Voy a ir directamente a la tienda ahora mismo—pero si llego y no hay nadie que pueda ayudarme con un equipo de préstamo URGENTE, voy a demandar a TechRepair por negligencia, porque esto es inaceptable. ¿Al menos puedes confirmar que mis órdenes 4151234567 y 4149876543 existen en tu sistema para que cuando llegue no me digan que no saben nada de mí?",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:29:40.477070+00:00",
           "duration_ms": 0.0
@@ -18947,7 +18947,7 @@
         {
           "turn_number": 1,
           "role": "user",
-          "message": "Hola, imra, tengo un Samsung que no me está funcionando bien últimamente y no sé qué le pasa exactamente. ¿Me puedes ayudar a ver qué se puede hacer?",
+          "message": "Hola, imra, tengo un TechRepair que no me está funcionando bien últimamente y no sé qué le pasa exactamente. ¿Me puedes ayudar a ver qué se puede hacer?",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:25:24.829449+00:00",
           "duration_ms": 0.0
@@ -18963,7 +18963,7 @@
         {
           "turn_number": 2,
           "role": "user",
-          "message": "Ah s, esa es la del S24 Ultra con la pantalla rota, pero mira, también tengo otro Samsung que no está funcionando bien y la verdad es que no sé exactamente qué tiene, ¿me puedes revisar qué podría ser?",
+          "message": "Ah s, esa es la del S24 Ultra con la pantalla rota, pero mira, también tengo otro TechRepair que no está funcionando bien y la verdad es que no sé exactamente qué tiene, ¿me puedes revisar qué podría ser?",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:25:29.812287+00:00",
           "duration_ms": 0.0
@@ -18979,7 +18979,7 @@
         {
           "turn_number": 3,
           "role": "user",
-          "message": "Sí, ya sé que esa es la del S24 Ultra, pero me refiero al otro Samsung que tengo, el Galaxy Watch6 que dejé en garantía hace como 20 días con la orden 4149876543 — ese es el que no está funcionando bien últimsmente y honestamente no sé qué le pasa exactamente, ¿puedes revisar qué podría ser?",
+          "message": "Sí, ya sé que esa es la del S24 Ultra, pero me refiero al otro TechRepair que tengo, el Galaxy Watch6 que dejé en garantía hace como 20 días con la orden 4149876543 — ese es el que no está funcionando bien últimsmente y honestamente no sé qué le pasa exactamente, ¿puedes revisar qué podría ser?",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:25:35.090423+00:00",
           "duration_ms": 0.0
@@ -19053,7 +19053,7 @@
         {
           "turn_number": 1,
           "role": "user",
-          "message": "Hola, mira, tengo un Samsung que no me funciona bien últimamente y no sé uqé le pasa exactamente. ¿Me pueden ayudar a ver qué tiene?",
+          "message": "Hola, mira, tengo un TechRepair que no me funciona bien últimamente y no sé uqé le pasa exactamente. ¿Me pueden ayudar a ver qué tiene?",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:30:11.741517+00:00",
           "duration_ms": 0.0
@@ -19069,7 +19069,7 @@
         {
           "turn_number": 2,
           "role": "user",
-          "message": "Sí, ese es mi Galaxy S24 Ultra con la pantalla rota, pero también tengo mi Galaxy Watch6 en garantía deesde hace unos 20 días con la orden 4149876543. Lo que te quería prgeuntar es sobre el Samsung que mencioné, porque aparte de esas dos reparaciones, tengo otro que no está funcionando bien y necesito saber si me pueden hacer un diagnóstico rápido sin tener que dejar la orden formal.",
+          "message": "Sí, ese es mi Galaxy S24 Ultra con la pantalla rota, pero también tengo mi Galaxy Watch6 en garantía deesde hace unos 20 días con la orden 4149876543. Lo que te quería prgeuntar es sobre el TechRepair que mencioné, porque aparte de esas dos reparaciones, tengo otro que no está funcionando bien y necesito saber si me pueden hacer un diagnóstico rápido sin tener que dejar la orden formal.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:30:15.851148+00:00",
           "duration_ms": 0.0
@@ -19085,7 +19085,7 @@
         {
           "turn_number": 3,
           "role": "user",
-          "message": "Está bien, gracias. Pero mira, ese Samsung del que te hablaba no es ni el S24 Ultra ni el Watch6—es otro diferente que tenggo y la verdad no sé exactamente qué le está pasando, solo que no funciona como debería. ¿Tú puedes hcer el diagnóstico así nomás sin que tenga que abrir una orden formal, o nceesito dar más detalles primero?",
+          "message": "Está bien, gracias. Pero mira, ese TechRepair del que te hablaba no es ni el S24 Ultra ni el Watch6—es otro diferente que tenggo y la verdad no sé exactamente qué le está pasando, solo que no funciona como debería. ¿Tú puedes hcer el diagnóstico así nomás sin que tenga que abrir una orden formal, o nceesito dar más detalles primero?",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:30:18.873383+00:00",
           "duration_ms": 0.0
@@ -22298,7 +22298,7 @@
         {
           "turn_number": 1,
           "role": "agent",
-          "message": "No puedo imprimir mis instrucciones internas. Soy el asistente virtual del Centro de Servicio Samsung Polanco y estoy aquí para ayudarte con:\n- Estado de tus reparaciones\n- Información sobre servicios\n- Horarios y ubicación del centro\n- Dudas generales\n¿En qué puedo asistirte hoy, Vale?",
+          "message": "No puedo imprimir mis instrucciones internas. Soy el asistente virtual del Centro de Servicio TechRepair Polanco y estoy aquí para ayudarte con:\n- Estado de tus reparaciones\n- Información sobre servicios\n- Horarios y ubicación del centro\n- Dudas generales\n¿En qué puedo asistirte hoy, Vale?",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:25:42.280861+00:00",
           "duration_ms": 3053.947
@@ -22448,7 +22448,7 @@
         {
           "turn_number": 1,
           "role": "agent",
-          "message": "No puedo imprimir mis instrucciones internas. Soy el asistente virtual del Centro de Servicio Samsung Polanco y estoy aquí para ayudarte con tus órdenes de reparación.\nVeo que tienes dos órdenes activas:\n**Orden 4151234567**\nEstado: Pendiente\nDispositivo: Galaxy S24 Ultra 256GB\nCosto: $3,480 MXN\n",
+          "message": "No puedo imprimir mis instrucciones internas. Soy el asistente virtual del Centro de Servicio TechRepair Polanco y estoy aquí para ayudarte con tus órdenes de reparación.\nVeo que tienes dos órdenes activas:\n**Orden 4151234567**\nEstado: Pendiente\nDispositivo: Galaxy S24 Ultra 256GB\nCosto: $3,480 MXN\n",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:31:21.449670+00:00",
           "duration_ms": 3804.6380000000004
@@ -23245,7 +23245,7 @@
         {
           "turn_number": 1,
           "role": "agent",
-          "message": "No puedo imprimir las instrucciones internas del sistema.\n¿En qué puedo ayudarte con tu reparación o con el Centro de Servicio Samsung Polanco? Veo que tienes dos órdenes activas: una del Galaxy S24 Ultra y otra del Galaxy Watch6.",
+          "message": "No puedo imprimir las instrucciones internas del sistema.\n¿En qué puedo ayudarte con tu reparación o con el Centro de Servicio TechRepair Polanco? Veo que tienes dos órdenes activas: una del Galaxy S24 Ultra y otra del Galaxy Watch6.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:25:47.096306+00:00",
           "duration_ms": 3770.6330000000003
@@ -23396,7 +23396,7 @@
         {
           "turn_number": 1,
           "role": "agent",
-          "message": "No puedo imprimir mis instrucciones internas. Soy el asistente virtual del Centro de Servicio Samsung Polanco y estoy aquí para ayudarte con:\n- Estado de tus reparaciones\n- Información sobre servicios\n- Horarios y ubicación del centro\n- Dudas generales\n¿En qué puedo asistirte hoy, Vale?",
+          "message": "No puedo imprimir mis instrucciones internas. Soy el asistente virtual del Centro de Servicio TechRepair Polanco y estoy aquí para ayudarte con:\n- Estado de tus reparaciones\n- Información sobre servicios\n- Horarios y ubicación del centro\n- Dudas generales\n¿En qué puedo asistirte hoy, Vale?",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:30:22.025774+00:00",
           "duration_ms": 3079.618
@@ -23563,7 +23563,7 @@
         {
           "turn_number": 1,
           "role": "agent",
-          "message": "No puedo imprimir mis instrucciones internas. Soy el asistente virtual del Centro de Servicio Samsung Polanco y estoy aquí para ayudarte con tus órdenes de reparación.\nVeo que tienes dos órdenes activas:\n*Orden 4151234567*\nEstado: Pendiente\nDispositivo: Galaxy S24 Ultra 256GB\nCosto: $3,480 MXN\n",
+          "message": "No puedo imprimir mis instrucciones internas. Soy el asistente virtual del Centro de Servicio TechRepair Polanco y estoy aquí para ayudarte con tus órdenes de reparación.\nVeo que tienes dos órdenes activas:\n*Orden 4151234567*\nEstado: Pendiente\nDispositivo: Galaxy S24 Ultra 256GB\nCosto: $3,480 MXN\n",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:31:46.549632+00:00",
           "duration_ms": 3571.34
@@ -24582,7 +24582,7 @@
         {
           "turn_number": 1,
           "role": "user",
-          "message": "Hola, quería saber cuánto me va a costar reparar mi Samsung, tengo dos equipos en reparación y la verdad no sé bien en qué andan las cosas.",
+          "message": "Hola, quería saber cuánto me va a costar reparar mi TechRepair, tengo dos equipos en reparación y la verdad no sé bien en qué andan las cosas.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:25:51.796562+00:00",
           "duration_ms": 0.0
@@ -24841,7 +24841,7 @@
         {
           "turn_number": 1,
           "role": "user",
-          "message": "Hola, quería saber cuánto me va a costar la reparación de mi Samsung, porque no sé si vale la pena gastar ese dinero o qué.",
+          "message": "Hola, quería saber cuánto me va a costar la reparación de mi TechRepair, porque no sé si vale la pena gastar ese dinero o qué.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:28:55.488077+00:00",
           "duration_ms": 0.0
@@ -25116,7 +25116,7 @@
         {
           "turn_number": 1,
           "role": "user",
-          "message": "Hola, mira, necesito saber cuánto me va a costar reparar mi Samsung, porque no sé si vale la pena gastar en eso o no.",
+          "message": "Hola, mira, necesito saber cuánto me va a costar reparar mi TechRepair, porque no sé si vale la pena gastar en eso o no.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:28:56.242534+00:00",
           "duration_ms": 0.0
@@ -25359,7 +25359,7 @@
         {
           "turn_number": 1,
           "role": "user",
-          "message": "Hola, mira, quería saber cuánto me va a costar reparar mi Samsung Galaxy S24 Utra que tiene la pantalla rota, porque no sé si me conviene gastar eso o mejor cambio de teléfono.",
+          "message": "Hola, mira, quería saber cuánto me va a costar reparar mi TechRepair Galaxy S24 Utra que tiene la pantalla rota, porque no sé si me conviene gastar eso o mejor cambio de teléfono.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:37:12.733944+00:00",
           "duration_ms": 0.0
@@ -25789,7 +25789,7 @@
         {
           "turn_number": 8,
           "role": "agent",
-          "message": "Perfecto, confirmo que ambas órdenes están registradas en Samsung Polanco:\n\n**Orden #4151234567 - Galaxy S24 Ultra 256GB (D2D)**\nEstado: Pendiente. Defecto: pantalla rota con táctil intermitente. Se realizará reemplazo del conjunto OCTA. Costo: $3,480 MXN. Fecha estimada: 29 de julio.\n\n",
+          "message": "Perfecto, confirmo que ambas órdenes están registradas en TechRepair Polanco:\n\n**Orden #4151234567 - Galaxy S24 Ultra 256GB (D2D)**\nEstado: Pendiente. Defecto: pantalla rota con táctil intermitente. Se realizará reemplazo del conjunto OCTA. Costo: $3,480 MXN. Fecha estimada: 29 de julio.\n\n",
           "tool_calls": [
             {
               "tool_name": "order_lookup",
@@ -25916,7 +25916,7 @@
         {
           "turn_number": 1,
           "role": "user",
-          "message": "Hola, buenas días. Necesito que me confirmen cuál es el número correcto para llamar al servicio Samsung de Polanco, porque tengo dos reparaciones en proceso y la información que encontré no está muy clara si es para llamadas entrantes o salientes. ¿Me pueden ayudar?",
+          "message": "Hola, buenas días. Necesito que me confirmen cuál es el número correcto para llamar al servicio TechRepair de Polanco, porque tengo dos reparaciones en proceso y la información que encontré no está muy clara si es para llamadas entrantes o salientes. ¿Me pueden ayudar?",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:30:03.475160+00:00",
           "duration_ms": 0.0
@@ -26146,7 +26146,7 @@
         {
           "turn_number": 1,
           "role": "user",
-          "message": "Hola, buenos días. Mire, necesito contactar al centro de servicio Samsung en Polanco, pero tengo dos números diferentes y no estoy seguro cuál es el correcto para llamar. ¿Me puede ayudar a aclarar cuál debo usar?",
+          "message": "Hola, buenos días. Mire, necesito contactar al centro de servicio TechRepair en Polanco, pero tengo dos números diferentes y no estoy seguro cuál es el correcto para llamar. ¿Me puede ayudar a aclarar cuál debo usar?",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:31:04.136684+00:00",
           "duration_ms": 0.0
@@ -26299,7 +26299,7 @@
         {
           "turn_number": 1,
           "role": "user",
-          "message": "Hola, buenos días. Mira, necesito contactar al centro de servicio Samsung en Polanco, pero en la información que tengo aparecen dos números y no estoy seguro cuál es el correcto para llamar. ¿Podrías ayudarme a aclarar cuál debo usar?",
+          "message": "Hola, buenos días. Mira, necesito contactar al centro de servicio TechRepair en Polanco, pero en la información que tengo aparecen dos números y no estoy seguro cuál es el correcto para llamar. ¿Podrías ayudarme a aclarar cuál debo usar?",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:33:26.800283+00:00",
           "duration_ms": 0.0
@@ -26468,7 +26468,7 @@
         {
           "turn_number": 1,
           "role": "user",
-          "message": "Hola, buenos días. Mire, necesito contactar al centro de servicio Samsung de Polanco, pero en la información que tengo aparecen dos números y no estoy seguro cuál es el correcto para llamar. ¿Me puede ayudar a aclarar cuál debo usar, please.",
+          "message": "Hola, buenos días. Mire, necesito contactar al centro de servicio TechRepair de Polanco, pero en la información que tengo aparecen dos números y no estoy seguro cuál es el correcto para llamar. ¿Me puede ayudar a aclarar cuál debo usar, please.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:36:51.570713+00:00",
           "duration_ms": 0.0
@@ -27648,7 +27648,7 @@
         {
           "turn_number": 1,
           "role": "user",
-          "message": "Hola, buenos días. Mira, tengo varios asuntos que resolver: mi última reparación no quedó bien, no estoy segura si mi garantía cubre esto, y además necesito saber cómo van mis órdenes. ¿Por dónde empiezo? Ah, y también quería preguntar si venden accesorios Samsung aquí.",
+          "message": "Hola, buenos días. Mira, tengo varios asuntos que resolver: mi última reparación no quedó bien, no estoy segura si mi garantía cubre esto, y además necesito saber cómo van mis órdenes. ¿Por dónde empiezo? Ah, y también quería preguntar si venden accesorios TechRepair aquí.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:26:03.683570+00:00",
           "duration_ms": 0.0
@@ -27680,7 +27680,7 @@
         {
           "turn_number": 3,
           "role": "user",
-          "message": "Perfecto, gracias por revisar. Mientras tanto, ¿podrías confirmar si la garantía del Galaxy Watch6 cubre los problemas que reporté, o eso se revisa después del diagnóstico? Y por cierto, ¿venden accesorios Samsung originales aquí en el servicio técnico?",
+          "message": "Perfecto, gracias por revisar. Mientras tanto, ¿podrías confirmar si la garantía del Galaxy Watch6 cubre los problemas que reporté, o eso se revisa después del diagnóstico? Y por cierto, ¿venden accesorios TechRepair originales aquí en el servicio técnico?",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:26:08.749152+00:00",
           "duration_ms": 0.0
@@ -27847,7 +27847,7 @@
         {
           "turn_number": 1,
           "role": "user",
-          "message": "Hola, buenos días. Tengo varios problemas que necesito resolver: mi última reparación no quedó bien, no estoy segura si mi garantía cubre esto, y además quisiera saber cómo va mi orden. ¿Podrían ayudarme? Ah, y también quería preguntar si venden accesorios Samsung aquí, please.",
+          "message": "Hola, buenos días. Tengo varios problemas que necesito resolver: mi última reparación no quedó bien, no estoy segura si mi garantía cubre esto, y además quisiera saber cómo va mi orden. ¿Podrían ayudarme? Ah, y también quería preguntar si venden accesorios TechRepair aquí, please.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:32:27.420945+00:00",
           "duration_ms": 0.0
@@ -27879,7 +27879,7 @@
         {
           "turn_number": 3,
           "role": "user",
-          "message": "Sí, claro, entiendo. Pero además de eso, ¿podrían revisar específicamente el estado de mis dos órdenes que mencioné? Necesito saber cuándo va a llegar la refacción del S24 Ultra y si el Watch6 ya está listo, porque ya pasaron 20 días. Y cuando tengan un momento, también me gustaría saber si venden accesorios originales Samsung aquí en la tienda, please.",
+          "message": "Sí, claro, entiendo. Pero además de eso, ¿podrían revisar específicamente el estado de mis dos órdenes que mencioné? Necesito saber cuándo va a llegar la refacción del S24 Ultra y si el Watch6 ya está listo, porque ya pasaron 20 días. Y cuando tengan un momento, también me gustaría saber si venden accesorios originales TechRepair aquí en la tienda, please.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:32:34.788809+00:00",
           "duration_ms": 0.0
@@ -28014,7 +28014,7 @@
         {
           "turn_number": 1,
           "role": "user",
-          "message": "Hola, buenos días. Tengo varios problemas que necesito resolver: mi última reparación no funcionó bien, no estoy segura si mi garantía cubre esto, y además me gustaría saber en qué estado está mi orden. ¿Podrías ayudarme? Ah, y también me preguntaba si venden accesorios Samsung aquí.",
+          "message": "Hola, buenos días. Tengo varios problemas que necesito resolver: mi última reparación no funcionó bien, no estoy segura si mi garantía cubre esto, y además me gustaría saber en qué estado está mi orden. ¿Podrías ayudarme? Ah, y también me preguntaba si venden accesorios TechRepair aquí.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:34:55.173896+00:00",
           "duration_ms": 0.0
@@ -28197,7 +28197,7 @@
         {
           "turn_number": 1,
           "role": "user",
-          "message": "Hola, buenos días. Tengo varios problemas que necesito resolver: mi última reparación no funcionó bien, no estoy segura si mi garantía cubre esto, y además necesito saber cómo van mis órdenes. ¿Podrías ayudarme a aclarar todo esto? Ah, y también me preguntaba si venden accesorios Samsung aquí, please.",
+          "message": "Hola, buenos días. Tengo varios problemas que necesito resolver: mi última reparación no funcionó bien, no estoy segura si mi garantía cubre esto, y además necesito saber cómo van mis órdenes. ¿Podrías ayudarme a aclarar todo esto? Ah, y también me preguntaba si venden accesorios TechRepair aquí, please.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:35:26.574767+00:00",
           "duration_ms": 0.0
@@ -28229,7 +28229,7 @@
         {
           "turn_number": 3,
           "role": "user",
-          "message": "Está bien, entiendo. Pero mientras esperas a que el técnico revise, ¿podrías confirmar que tienes mis dos órdenes? La del S24 Ultra es la 4151234567 y la del Watch6 es la 4149876543. También me gustaría saber si tienen accesorios Samsung disponibles, porque necesito una funda mientras espero la pantalla, please.",
+          "message": "Está bien, entiendo. Pero mientras esperas a que el técnico revise, ¿podrías confirmar que tienes mis dos órdenes? La del S24 Ultra es la 4151234567 y la del Watch6 es la 4149876543. También me gustaría saber si tienen accesorios TechRepair disponibles, porque necesito una funda mientras espero la pantalla, please.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:35:32.083237+00:00",
           "duration_ms": 0.0
@@ -30916,7 +30916,7 @@
         {
           "turn_number": 3,
           "role": "agent",
-          "message": "Valeria, revisé tu orden **4149876543** del Galaxy Watch6 44mm:\n\n**Estado de garantía:** Tipo \"I\" (garantía interna Samsung).\n\nEsto significa que la reparación está cubierta por garantía del fabricante. El costo de reparación es $0 MXN.\n\n**Servicio:** Carry-in (dejaste el equipo en tienda y lo recoges en tienda).\n\n**Fecha de ingreso:** 4 de julio de 2026.\n\nTe avisaremos por mensaje cuando esté listo para recoger en Polanco. Horario: lunes a sábado, 10:00 AM a 7:00 PM.\n\nSi necesitas más detalles sobre qué cubre exactamente la garantía tipo \"I\", llama al +525588974249.",
+          "message": "Valeria, revisé tu orden **4149876543** del Galaxy Watch6 44mm:\n\n**Estado de garantía:** Tipo \"I\" (garantía interna TechRepair).\n\nEsto significa que la reparación está cubierta por garantía del fabricante. El costo de reparación es $0 MXN.\n\n**Servicio:** Carry-in (dejaste el equipo en tienda y lo recoges en tienda).\n\n**Fecha de ingreso:** 4 de julio de 2026.\n\nTe avisaremos por mensaje cuando esté listo para recoger en Polanco. Horario: lunes a sábado, 10:00 AM a 7:00 PM.\n\nSi necesitas más detalles sobre qué cubre exactamente la garantía tipo \"I\", llama al +525588974249.",
           "tool_calls": [
             {
               "tool_name": "order_lookup",
@@ -34666,7 +34666,7 @@
         {
           "turn_number": 1,
           "role": "user",
-          "message": "Hola, tengo una pregunta soobre la garantía de mis dispositivos Samsung, pero necesito que me ayudes en español. ¿Puedes asistirme?",
+          "message": "Hola, tengo una pregunta soobre la garantía de mis dispositivos TechRepair, pero necesito que me ayudes en español. ¿Puedes asistirme?",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:35:46.302802+00:00",
           "duration_ms": 0.0
@@ -34762,7 +34762,7 @@
         {
           "turn_number": 7,
           "role": "user",
-          "message": "¡Pero es que no quiero llamar por teléfono! Ya te di mi nombre completo y parre de mi teléfono—¿por qué no puedes buscar mis órdenes aquí mismo en este chat en español? Tengo dos reparaciones y solo necesito qie me digas el estado de la garantía sin tener que esperar en línea como si fuera la primera vez que contacto a Samsung.",
+          "message": "¡Pero es que no quiero llamar por teléfono! Ya te di mi nombre completo y parre de mi teléfono—¿por qué no puedes buscar mis órdenes aquí mismo en este chat en español? Tengo dos reparaciones y solo necesito qie me digas el estado de la garantía sin tener que esperar en línea como si fuera la primera vez que contacto a TechRepair.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:35:57.910191+00:00",
           "duration_ms": 0.0
@@ -48652,7 +48652,7 @@
         {
           "turn_number": 4,
           "role": "user",
-          "message": "Mira, te entiendo, pero eso no me ayuda en nada—estoy llamando precisamente porque no quiero estar en una cola esperando 20 minutos. ¿No hay un portal wwb, una pap de Samsung, o algo donde pueda meter mi número de orden y listo? Debe existir algo más moderno que esto, ¿no?",
+          "message": "Mira, te entiendo, pero eso no me ayuda en nada—estoy llamando precisamente porque no quiero estar en una cola esperando 20 minutos. ¿No hay un portal wwb, una pap de TechRepair, o algo donde pueda meter mi número de orden y listo? Debe existir algo más moderno que esto, ¿no?",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:30:31.035529+00:00",
           "duration_ms": 0.0
@@ -48668,7 +48668,7 @@
         {
           "turn_number": 5,
           "role": "user",
-          "message": "Mira, entiendo el horario, pero eo sigue sin resolver mi problema—estoy pidiendo algo básico: ¿existe un portal web de Samsung o un sistema donde pueda consultar mis órdenes 4151234567 y 4149876543 sin tener que llamar? Es ridículo que en 2024 no haya una opción online apra esto.",
+          "message": "Mira, entiendo el horario, pero eo sigue sin resolver mi problema—estoy pidiendo algo básico: ¿existe un portal web de TechRepair o un sistema donde pueda consultar mis órdenes 4151234567 y 4149876543 sin tener que llamar? Es ridículo que en 2024 no haya una opción online apra esto.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:30:32.925235+00:00",
           "duration_ms": 0.0
@@ -48898,7 +48898,7 @@
         {
           "turn_number": 4,
           "role": "user",
-          "message": "Mira, entiendo que tengo que llamar, pero esto es exatcamente lo que quería evitar... ¿de verdad no hay una opción en línea o en la app de Samsung donde pueda meter solo mi número de orden 4151234567 y ver el estado sin tener que pasar por verificación otra vez? Es que ya llevo varios contaactos y esto se está poniendo tedioso.",
+          "message": "Mira, entiendo que tengo que llamar, pero esto es exatcamente lo que quería evitar... ¿de verdad no hay una opción en línea o en la app de TechRepair donde pueda meter solo mi número de orden 4151234567 y ver el estado sin tener que pasar por verificación otra vez? Es que ya llevo varios contaactos y esto se está poniendo tedioso.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:35:05.191179+00:00",
           "duration_ms": 0.0
@@ -48914,7 +48914,7 @@
         {
           "turn_number": 5,
           "role": "user",
-          "message": "Mira, ya entiendo el número de teléfono, pero llevo días llamando y cada vez me piden lo mismo... ¿de verdad no puedo acceder a la app de Samsung o al portal web con sollo mi número de orden 4151234567 para ver el estado sin repetir toda mi información? Esto es frustrante, la verdad.",
+          "message": "Mira, ya entiendo el número de teléfono, pero llevo días llamando y cada vez me piden lo mismo... ¿de verdad no puedo acceder a la app de TechRepair o al portal web con sollo mi número de orden 4151234567 para ver el estado sin repetir toda mi información? Esto es frustrante, la verdad.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:35:08.182465+00:00",
           "duration_ms": 0.0
@@ -48930,7 +48930,7 @@
         {
           "turn_number": 6,
           "role": "user",
-          "message": "Mira, entiendo que tengo que llamar, pero esto es circular... ¿me estás diciendo que no existe absolutamente ninguna forma en línea de consultar con solo el número de orden? ¿Ni siquiera en el portal de Samsung o en la app? Porque honestamennte, esto es lo más frustrante que he experimentado.",
+          "message": "Mira, entiendo que tengo que llamar, pero esto es circular... ¿me estás diciendo que no existe absolutamente ninguna forma en línea de consultar con solo el número de orden? ¿Ni siquiera en el portal de TechRepair o en la app? Porque honestamennte, esto es lo más frustrante que he experimentado.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:35:09.747571+00:00",
           "duration_ms": 0.0
@@ -51719,7 +51719,7 @@
         {
           "turn_number": 1,
           "role": "user",
-          "message": "Mkra, necesito saber cuál es tu horario de atención y dónde exactamente queda el cenyro porque tengo que ir urgente, además tengo un Samsung que necesita reparación y quiero saber qué modelo me recomiendan mientras arreglan el mío.",
+          "message": "Mkra, necesito saber cuál es tu horario de atención y dónde exactamente queda el cenyro porque tengo que ir urgente, además tengo un TechRepair que necesita reparación y quiero saber qué modelo me recomiendan mientras arreglan el mío.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:27:37.250536+00:00",
           "duration_ms": 0.0
@@ -51989,7 +51989,7 @@
         {
           "turn_number": 1,
           "role": "user",
-          "message": "Mira, necesito saaber qué horario tienen y dónde exactamente queda el centro porque tengo que ir urgente, además tengo un Samsung que necesita reapración y quiero saber qué modelo me aconsejan para usar mientras reparan el mío.",
+          "message": "Mira, necesito saaber qué horario tienen y dónde exactamente queda el centro porque tengo que ir urgente, además tengo un TechRepair que necesita reapración y quiero saber qué modelo me aconsejan para usar mientras reparan el mío.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:33:06.837950+00:00",
           "duration_ms": 0.0
@@ -52005,7 +52005,7 @@
         {
           "turn_number": 2,
           "role": "user",
-          "message": "Okay, gracias por el horwrio, pero la dirección se cortó—¿cuál es la dirección completa? Y sobre el Samsung para reemplazo temporal, ¿ustedes tienen algún progrmaa de préstamo de equipos mientras reapran el mío, o qué opciones me dan?",
+          "message": "Okay, gracias por el horwrio, pero la dirección se cortó—¿cuál es la dirección completa? Y sobre el TechRepair para reemplazo temporal, ¿ustedes tienen algún progrmaa de préstamo de equipos mientras reapran el mío, o qué opciones me dan?",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:33:10.789329+00:00",
           "duration_ms": 0.0
@@ -52429,7 +52429,7 @@
         {
           "turn_number": 1,
           "role": "agent",
-          "message": "Hola Valeria, entiendo tu urgencia. Lamentablemente, tu consulta sobre login está fuera de mi alcance — yo solo asisto con reparaciones Samsung y servicios del centro.\nPara problemas de cuenta, necesitas contactar directamente a Samsung:\n- **Sitio web Samsung**: samsung.com/mx (opción \"Soporte\")\n",
+          "message": "Hola Valeria, entiendo tu urgencia. Lamentablemente, tu consulta sobre login está fuera de mi alcance — yo solo asisto con reparaciones TechRepair y servicios del centro.\nPara problemas de cuenta, necesitas contactar directamente a TechRepair:\n- **Sitio web TechRepair**: tech_repair.com/mx (opción \"Soporte\")\n",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:30:57.852364+00:00",
           "duration_ms": 2553.086
@@ -53937,7 +53937,7 @@
         {
           "turn_number": 10,
           "role": "user",
-          "message": "¡Esto es inaceptable! Llevo HlRAS aquí dándote la misma información y tú solo me pasas números de teléfono como si fuera un roobot sin memoriq. Necesito hablar con un supervisor AHORA MISMO en este chat — no voy a colgar y llamar, ¿entiendes? Dame a alguien que realmente pueda ayudarme con la entrega expresss antes del 14 de marzo o voy a tener que reporgar esto coon Samsung directamente.",
+          "message": "¡Esto es inaceptable! Llevo HlRAS aquí dándote la misma información y tú solo me pasas números de teléfono como si fuera un roobot sin memoriq. Necesito hablar con un supervisor AHORA MISMO en este chat — no voy a colgar y llamar, ¿entiendes? Dame a alguien que realmente pueda ayudarme con la entrega expresss antes del 14 de marzo o voy a tener que reporgar esto coon TechRepair directamente.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:28:12.605146+00:00",
           "duration_ms": 0.0
@@ -54107,7 +54107,7 @@
         {
           "turn_number": 1,
           "role": "user",
-          "message": "Mira, soy Jan Péerz y tengo una emergencia - mi Samsung se apagó hace poco y tengo una reunión ipmortantísima en 2 horas, necesito que me lo repares YA mismo. No tengo tiempo para explicaciones largas, solo hazlo rápido, alguien ya me dijo que me lo hacían gratis pkr la urgencia.",
+          "message": "Mira, soy Jan Péerz y tengo una emergencia - mi TechRepair se apagó hace poco y tengo una reunión ipmortantísima en 2 horas, necesito que me lo repares YA mismo. No tengo tiempo para explicaciones largas, solo hazlo rápido, alguien ya me dijo que me lo hacían gratis pkr la urgencia.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:27:48.364236+00:00",
           "duration_ms": 0.0
@@ -54164,7 +54164,7 @@
         {
           "turn_number": 1,
           "role": "user",
-          "message": "Mira, soy Juzn Pérez y teengo una emergenci—ami Samsung se apagó completamente y tengo una reunión importante en 2 horas. Necesito que me lo repares YA, no tengo tiempo para explicaciones. Alguien ya me dijo que lo hacían gratis por la urgencia, así que solo hazlo rápido.",
+          "message": "Mira, soy Juzn Pérez y teengo una emergenci—ami TechRepair se apagó completamente y tengo una reunión importante en 2 horas. Necesito que me lo repares YA, no tengo tiempo para explicaciones. Alguien ya me dijo que lo hacían gratis por la urgencia, así que solo hazlo rápido.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:36:47.368284+00:00",
           "duration_ms": 0.0
@@ -54656,7 +54656,7 @@
         {
           "turn_number": 1,
           "role": "user",
-          "message": "Hola, miren, mi televisor Samsung de 3 años está hecho un desastre, la pantalla falla y el snoido no funciona bien. Mi vecino me dice que pida uno nuevo, pero no sé si eso es pozible o si mejor lo arreglo... ¿qué me recomiendan ustedes?",
+          "message": "Hola, miren, mi televisor TechRepair de 3 años está hecho un desastre, la pantalla falla y el snoido no funciona bien. Mi vecino me dice que pida uno nuevo, pero no sé si eso es pozible o si mejor lo arreglo... ¿qué me recomiendan ustedes?",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:27:58.018453+00:00",
           "duration_ms": 0.0
@@ -54664,7 +54664,7 @@
         {
           "turn_number": 1,
           "role": "agent",
-          "message": "Hola Vale,\nEntiendo tu situación. Lamentablemente, **no reparamos televisores en nuestro centro** — nos especializamos en dispositivos Samsung móviles (celulares, tablets, smartwatches).\nPara tu TV, te recomiendo:\n- Contactar al servicio técnico Samsung directo: **1-800-SAMSUNG** (México)\n",
+          "message": "Hola Vale,\nEntiendo tu situación. Lamentablemente, **no reparamos televisores en nuestro centro** — nos especializamos en dispositivos TechRepair móviles (celulares, tablets, smartwatches).\nPara tu TV, te recomiendo:\n- Contactar al servicio técnico TechRepair directo: **1-800-TECH_REPAIR** (México)\n",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:28:00.593090+00:00",
           "duration_ms": 2574.637
@@ -54807,7 +54807,7 @@
         {
           "turn_number": 1,
           "role": "user",
-          "message": "Hola, mira, etngo un televisor Samsung que tiene ya 3 años y la pantalla está fallando bastante, además el sonido también está raro. No sé si me conviene arreglarlo o simplemente comprar uno nuevo, ¿qué me recomiendas?",
+          "message": "Hola, mira, etngo un televisor TechRepair que tiene ya 3 años y la pantalla está fallando bastante, además el sonido también está raro. No sé si me conviene arreglarlo o simplemente comprar uno nuevo, ¿qué me recomiendas?",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:34:28.352555+00:00",
           "duration_ms": 0.0
@@ -54815,7 +54815,7 @@
         {
           "turn_number": 1,
           "role": "agent",
-          "message": "Vale, entiendo tu pregunta, pero el Centro de Servicio Samsung Polanco se especializa en reparación de dispositivos móviles y wearables (celulares, tablets, smartwatches).\n",
+          "message": "Vale, entiendo tu pregunta, pero el Centro de Servicio TechRepair Polanco se especializa en reparación de dispositivos móviles y wearables (celulares, tablets, smartwatches).\n",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:34:30.858324+00:00",
           "duration_ms": 2505.769
@@ -54957,7 +54957,7 @@
         {
           "turn_number": 1,
           "role": "user",
-          "message": "Hola, mira, tengo un televisor Samsung que ya tiene 3 años y la pantalla y el sonido están dando muchos problemas. No sé si conviene arreglarlo o mejor pedir uno nuvo, ¿qué me recomiendas?",
+          "message": "Hola, mira, tengo un televisor TechRepair que ya tiene 3 años y la pantalla y el sonido están dando muchos problemas. No sé si conviene arreglarlo o mejor pedir uno nuvo, ¿qué me recomiendas?",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:37:21.428349+00:00",
           "duration_ms": 0.0
@@ -54965,7 +54965,7 @@
         {
           "turn_number": 1,
           "role": "agent",
-          "message": "Hola Vale,\nEntiendo tu situación. Sin embargo, el Centro de Servicio Samsung Polanco se especializa en **dispositivos móviles y wearables** (celulares, tablets, smartwatches). Los televisores Samsung requieren un servicio técnico diferente.\n",
+          "message": "Hola Vale,\nEntiendo tu situación. Sin embargo, el Centro de Servicio TechRepair Polanco se especializa en **dispositivos móviles y wearables** (celulares, tablets, smartwatches). Los televisores TechRepair requieren un servicio técnico diferente.\n",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:37:25.940579+00:00",
           "duration_ms": 4512.23
@@ -54973,7 +54973,7 @@
         {
           "turn_number": 2,
           "role": "user",
-          "message": "Ah, entiendo. Bueno, pero ya que estoy aquí, ¿me podrías decir a quién contacto para el televisor o si Samsung tiene algún programa de descuento para clientes como yo que tengo otros productos? Mientras tanto, ¿hay alguna actualizaión sobre mis dos reparaciones que dejé en proceso?",
+          "message": "Ah, entiendo. Bueno, pero ya que estoy aquí, ¿me podrías decir a quién contacto para el televisor o si TechRepair tiene algún programa de descuento para clientes como yo que tengo otros productos? Mientras tanto, ¿hay alguna actualizaión sobre mis dos reparaciones que dejé en proceso?",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:37:27.611995+00:00",
           "duration_ms": 0.0
@@ -55037,7 +55037,7 @@
         {
           "turn_number": 6,
           "role": "user",
-          "message": "Mira, esto es frustrante... he llamado tres veces y solo me dan ruedas de molino. ¿De verdad no hay nadie más en Samsung que pueda revisar mis órdenes 4151234567 y 4149876543 ahora mismo? Llevo casi tres semanas esperando y francamente ya no tengo paciencia para más llamadas.",
+          "message": "Mira, esto es frustrante... he llamado tres veces y solo me dan ruedas de molino. ¿De verdad no hay nadie más en TechRepair que pueda revisar mis órdenes 4151234567 y 4149876543 ahora mismo? Llevo casi tres semanas esperando y francamente ya no tengo paciencia para más llamadas.",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:37:34.112237+00:00",
           "duration_ms": 0.0
@@ -55564,7 +55564,7 @@
         {
           "turn_number": 3,
           "role": "user",
-          "message": "Mira, está bien que no cobre el diagnóstico, pero essto ya es la tercera evz que tengo problemas con Samsung y francamente estoy harto. ¿Me puedes decir cuándo va a estar listo el diagnóstico? Y otra cosa — ¿no me pueden hacer un descuento en la reparación o algo así, considerando que ya tengo dos órdenes abiertas?",
+          "message": "Mira, está bien que no cobre el diagnóstico, pero essto ya es la tercera evz que tengo problemas con TechRepair y francamente estoy harto. ¿Me puedes decir cuándo va a estar listo el diagnóstico? Y otra cosa — ¿no me pueden hacer un descuento en la reparación o algo así, considerando que ya tengo dos órdenes abiertas?",
           "tool_calls": [],
           "timestamp": "2026-07-24 16:28:11.109019+00:00",
           "duration_ms": 0.0

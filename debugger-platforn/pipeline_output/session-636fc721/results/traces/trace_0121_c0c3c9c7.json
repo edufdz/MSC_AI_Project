@@ -45,7 +45,7 @@
     {
       "turn_number": 3,
       "role": "user",
-      "message": "Mira, entiendo que el diagn\u00f3stico no tiene costo, peero seo no es lo que te estoy preguntando... necesito saber espec\u00edficamente si mi Galaxy Wattch6 est\u00e1 cubierto por la garant\u00eda de Samsung y cu\u00e1les son los t\u00e9rminos exactos de esa cobertura. \u00bfPor qu\u00e9 no me das esa informaci\u00f3n directamente en lugar de hablarme del diagn\u00f3stico?",
+      "message": "Mira, entiendo que el diagn\u00f3stico no tiene costo, peero seo no es lo que te estoy preguntando... necesito saber espec\u00edficamente si mi Galaxy Wattch6 est\u00e1 cubierto por la garant\u00eda de TechRepair y cu\u00e1les son los t\u00e9rminos exactos de esa cobertura. \u00bfPor qu\u00e9 no me das esa informaci\u00f3n directamente en lugar de hablarme del diagn\u00f3stico?",
       "tool_calls": [],
       "timestamp": "2026-07-24 15:27:15.109871+00:00",
       "duration_ms": 0.0

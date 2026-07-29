@@ -8,11 +8,11 @@ deterministic failure injection, and replay recorded production
 conversations to measure the sandbox's behavioural fidelity.
 
 Usage:
-    python3 sandbox_bridge.py serve --agent-map samsung_whatsapp_map.json \\
+    python3 sandbox_bridge.py serve --agent-map tech_repair_whatsapp_map.json \\
         --mode echo --port 8099 --trace-dir sandbox_traces/
 
-    python3 sandbox_bridge.py replay --agent-map samsung_whatsapp_map.json \\
-        --export ../docs/samsung-conversations-export.json \\
+    python3 sandbox_bridge.py replay --agent-map tech_repair_whatsapp_map.json \\
+        --export ../docs/tech_repair-conversations-export.json \\
         --mode echo --sample 20 --output fidelity_report.json
 """
 

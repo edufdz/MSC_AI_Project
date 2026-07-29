@@ -15,9 +15,9 @@ testing of a conversational agent predicts the failures that occur in real
 production, and whether feeding real production failures back into test
 generation improves that prediction. The testbed is the agent testing
 platform in `debugger-platforn/` (Phases A–E pipeline + web UI) and 1,299
-real Spanish WhatsApp support conversations from the deployed Samsung agent
+real Spanish WhatsApp support conversations from the deployed TechRepair agent
 (Pulpoo). **Design decision (2026-07-14): there is NO live connection
-between the Samsung production system and this platform** — conversations
+between the TechRepair production system and this platform** — conversations
 were extracted once, anonymised, and everything runs offline on the
 anonymised corpus.
 
@@ -51,13 +51,13 @@ anonymised corpus.
 | Web integration | `/api/research/*`, frontend **Research** page | Anonymise → ground-truth preview → run experiments → results/charts/history |
 
 ### The data
-- `docs/samsung-conversations-export.json` — RAW export, 1,299 conversations,
+- `docs/tech_repair-conversations-export.json` — RAW export, 1,299 conversations,
   **contains real customer PII and is tracked in git history**. Keep the
   repo private; purge before any public release.
-- `docs/samsung-conversations-anonymized.json` — the anonymised corpus every
+- `docs/tech_repair-conversations-anonymized.json` — the anonymised corpus every
   experiment uses (verified: zero email/phone leaks, identifiers dropped).
-- `debugger-platforn/samsung_whatsapp_map.json` — Phase A agent map of the
-  real Samsung agent (predates the code_tree feature; re-run Phase A on the
+- `debugger-platforn/tech_repair_whatsapp_map.json` — Phase A agent map of the
+  real TechRepair agent (predates the code_tree feature; re-run Phase A on the
   agent repo to regenerate with the tree).
 
 ## 3. The results (archived in `docs/results/`, regenerable deterministically)
@@ -75,15 +75,15 @@ no LLM). Time split: train = Jan–May, held-out = Jun 2026.
 Caveat that must accompany any citation: these are **static-mode** numbers
 (what suites are *designed* to detect). Execute mode works end-to-end but
 was only demonstrated against the echo stand-in agent; behavioural numbers
-require running a local copy of the Samsung agent behind the sandbox bridge.
+require running a local copy of the TechRepair agent behind the sandbox bridge.
 
 Reproduce everything:
 ```bash
 cd debugger-platforn
-python3 run_experiments.py --export ../docs/samsung-conversations-anonymized.json \
-    --agent-map samsung_whatsapp_map.json --budget 100 --arms blind,feedback,naive_llm,gan
-python3 run_sensitivity.py --export ../docs/samsung-conversations-anonymized.json \
-    --agent-map samsung_whatsapp_map.json
+python3 run_experiments.py --export ../docs/tech_repair-conversations-anonymized.json \
+    --agent-map tech_repair_whatsapp_map.json --budget 100 --arms blind,feedback,naive_llm,gan
+python3 run_sensitivity.py --export ../docs/tech_repair-conversations-anonymized.json \
+    --agent-map tech_repair_whatsapp_map.json
 ```
 
 ## 4. WHAT REMAINS — the to-do list, in priority order
@@ -120,10 +120,10 @@ The anonymisation system, its tests, and the verified-clean corpus are the
 evidence the submission needs. See `anonymization/` + `docs/RESEARCH_WORKFLOW.md`.
 
 ### 4.3 Behavioural (execute-mode) results — optional but strengthens RQ1
-Run a local copy of the Samsung agent (repo `pulpoo-final`, outside this
+Run a local copy of the TechRepair agent (repo `pulpoo-final`, outside this
 project) behind the sandbox bridge, then:
 ```bash
-python3 sandbox_bridge.py serve --agent-map samsung_whatsapp_map.json --mode http \
+python3 sandbox_bridge.py serve --agent-map tech_repair_whatsapp_map.json --mode http \
     --upstream-url http://localhost:<agent-port> --port 8099
 python3 run_experiments.py ... --mode execute --connector http://localhost:8099
 ```
@@ -173,5 +173,5 @@ with `anonymization/backend` on `sys.path` (handled by
    purge with `git filter-repo` before making public or sharing.
 2. **Human annotation not yet done** (§4.1) — the only remaining gating
    test that requires no new code.
-3. `samsung_whatsapp_map.json` predates the Phase A code-tree feature;
+3. `tech_repair_whatsapp_map.json` predates the Phase A code-tree feature;
    regenerate when convenient.

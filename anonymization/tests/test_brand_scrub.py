@@ -9,9 +9,9 @@ from brand_scrub import brand_anonymize
 class TestBrandReplacement:
     def test_brand_name_replaced(self):
         tracker = PlaceholderTracker()
-        text = "Mi dispositivo Samsung no enciende"
+        text = "Mi dispositivo TechRepair no enciende"
         result = brand_anonymize(text, tracker)
-        assert "Samsung" not in result
+        assert "TechRepair" not in result
         assert "[BRAND_" in result
 
     def test_device_name_replaced(self):
@@ -32,17 +32,17 @@ class TestBrandReplacement:
 
     def test_service_name_replaced(self):
         tracker = PlaceholderTracker()
-        text = "Ve al Samsung Service Center más cercano"
+        text = "Ve al TechRepair Service Center más cercano"
         result = brand_anonymize(text, tracker)
-        assert "Samsung Service Center" not in result
+        assert "TechRepair Service Center" not in result
 
     def test_multiple_brand_terms(self):
         tracker = PlaceholderTracker()
-        text = "El Samsung Galaxy A55 funciona con Samsung Pay"
+        text = "El TechRepair Galaxy A55 funciona con TechRepair Pay"
         result = brand_anonymize(text, tracker)
-        assert "Samsung" not in result
+        assert "TechRepair" not in result
         assert "Galaxy A55" not in result
-        assert "Samsung Pay" not in result
+        assert "TechRepair Pay" not in result
 
 
 class TestBrandPreservesContent:
@@ -56,6 +56,6 @@ class TestBrandPreservesContent:
 
     def test_does_not_scrub_inside_existing_placeholders(self):
         tracker = PlaceholderTracker()
-        text = "El [PHONE_1] es de la tienda Samsung"
+        text = "El [PHONE_1] es de la tienda TechRepair"
         result = brand_anonymize(text, tracker)
         assert "[PHONE_1]" in result

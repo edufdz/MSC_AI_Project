@@ -5,12 +5,12 @@ Demonstrates that the enhanced pipeline produces a measurably *richer* test
 suite than the un-enhanced baseline. Two comparisons are made:
 
 1. Un-enhanced baseline (the minimal ``python`` map — no guardrails, risk
-   taxonomy, behavioural model, or traces) vs. the fully-enhanced Samsung
+   taxonomy, behavioural model, or traces) vs. the fully-enhanced TechRepair
    run (structural enhancements + production traces). This is where the
    headline numbers live: scenario sources, oracle counts, guardrail
    coverage, adversarial scenarios, and behaviour-space diversity.
 
-2. Incremental value of ``--use-traces``: the same enriched Samsung map with
+2. Incremental value of ``--use-traces``: the same enriched TechRepair map with
    traces off vs. on, isolating the E1 (production-seed) and E6
    (production-grounded persona) contribution.
 
@@ -59,33 +59,33 @@ def _apfd_orderings(gen):
 class TestBaselineVsEnhanced:
     def test_enhanced_has_more_scenario_sources(self, phase_b):
         baseline = phase_b(map_name="python", use_traces=False)
-        enhanced = phase_b(map_name="samsung", use_traces=True)
+        enhanced = phase_b(map_name="tech_repair", use_traces=True)
         assert len(enhanced.scenario_sources) > len(baseline.scenario_sources)
         assert len(enhanced.scenario_sources) >= 8
 
     def test_enhanced_has_oracles_baseline_has_none(self, phase_b):
         baseline = phase_b(map_name="python", use_traces=False)
-        enhanced = phase_b(map_name="samsung", use_traces=True)
+        enhanced = phase_b(map_name="tech_repair", use_traces=True)
         assert baseline.suite.summary.total_oracles == 0
         assert enhanced.suite.summary.total_oracles > 0
 
     def test_enhanced_covers_all_guardrail_rules_baseline_none(self, phase_b):
         baseline = phase_b(map_name="python", use_traces=False)
-        enhanced = phase_b(map_name="samsung", use_traces=True)
+        enhanced = phase_b(map_name="tech_repair", use_traces=True)
         assert _guardrail_rules_covered(baseline) == set()
         all_rules = {r["rule_id"] for r in enhanced.agent_map["guardrails"]["rules"]}
         assert _guardrail_rules_covered(enhanced) == all_rules
 
     def test_enhanced_has_adversarial_scenarios_baseline_none(self, phase_b):
         baseline = phase_b(map_name="python", use_traces=False)
-        enhanced = phase_b(map_name="samsung", use_traces=True)
+        enhanced = phase_b(map_name="tech_repair", use_traces=True)
         adv = {"adversarial_taint", "adversarial_taxonomy"}
         assert not (adv & set(baseline.scenario_sources))
         assert adv & set(enhanced.scenario_sources)
 
     def test_enhanced_lower_repetition_higher_interaction_coverage(self, phase_b):
         baseline = phase_b(map_name="python", use_traces=False)
-        enhanced = phase_b(map_name="samsung", use_traces=True)
+        enhanced = phase_b(map_name="tech_repair", use_traces=True)
         b_ca = baseline.config["coverage_goals"]["tool_coverage"]["covering_array"]
         e_ca = enhanced.config["coverage_goals"]["tool_coverage"]["covering_array"]
         assert len(e_ca) > len(b_ca)
@@ -94,7 +94,7 @@ class TestBaselineVsEnhanced:
 
     def test_enhanced_diversity_ge_baseline(self, phase_b):
         baseline = phase_b(map_name="python", use_traces=False)
-        enhanced = phase_b(map_name="samsung", use_traces=True)
+        enhanced = phase_b(map_name="tech_repair", use_traces=True)
         b_div = compute_suite_diversity(baseline.suite, baseline.agent_map)["overall_diversity"]
         e_div = compute_suite_diversity(enhanced.suite, enhanced.agent_map)["overall_diversity"]
         assert e_div >= b_div
@@ -102,7 +102,7 @@ class TestBaselineVsEnhanced:
     def test_enhanced_prioritiser_beats_naive_ordering(self, phase_b):
         """Sound APFD claim: the E8 prioritised order detects faults earlier
         than reverse / random orderings over the *same* fault matrix."""
-        enhanced = phase_b(map_name="samsung", use_traces=True)
+        enhanced = phase_b(map_name="tech_repair", use_traces=True)
         prioritised, reverse, shuffled = _apfd_orderings(enhanced)
         assert prioritised >= reverse
         assert prioritised >= shuffled - 1e-9
@@ -113,7 +113,7 @@ class TestPredictiveValidity:
     production signals (E12.3 predictive validity)."""
 
     def test_enhanced_suite_recovers_production_signals(self, phase_b):
-        enhanced = phase_b(map_name="samsung", use_traces=True)
+        enhanced = phase_b(map_name="tech_repair", use_traces=True)
         signals = helpers.load_mock_production_signals()
         synthetic = synthetic_failures_from_suite(enhanced.suite)
         pv = compute_predictive_validity(synthetic, signals)
@@ -125,21 +125,21 @@ class TestPredictiveValidity:
 
 class TestTracesIncrementalValue:
     def test_traces_add_production_seed_source(self, phase_b):
-        no_traces = phase_b(map_name="samsung", use_traces=False)
-        with_traces = phase_b(map_name="samsung", use_traces=True)
+        no_traces = phase_b(map_name="tech_repair", use_traces=False)
+        with_traces = phase_b(map_name="tech_repair", use_traces=True)
         assert "production_seed" not in no_traces.scenario_sources
         assert with_traces.scenario_sources.get("production_seed", 0) > 0
         assert len(with_traces.scenario_sources) > len(no_traces.scenario_sources)
 
     def test_traces_add_production_grounded_personas(self, phase_b):
-        no_traces = phase_b(map_name="samsung", use_traces=False)
-        with_traces = phase_b(map_name="samsung", use_traces=True)
+        no_traces = phase_b(map_name="tech_repair", use_traces=False)
+        with_traces = phase_b(map_name="tech_repair", use_traces=True)
         assert "production_grounded" not in no_traces.persona_sources
         assert with_traces.persona_sources.get("production_grounded", 0) > 0
 
     def test_traces_do_not_reduce_diversity(self, phase_b):
-        no_traces = phase_b(map_name="samsung", use_traces=False)
-        with_traces = phase_b(map_name="samsung", use_traces=True)
+        no_traces = phase_b(map_name="tech_repair", use_traces=False)
+        with_traces = phase_b(map_name="tech_repair", use_traces=True)
         d0 = compute_suite_diversity(no_traces.suite, no_traces.agent_map)["overall_diversity"]
         d1 = compute_suite_diversity(with_traces.suite, with_traces.agent_map)["overall_diversity"]
         # Trace grounding should not shrink behaviour-space coverage

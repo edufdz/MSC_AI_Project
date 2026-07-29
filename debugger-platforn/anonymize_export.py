@@ -18,8 +18,8 @@ preserved untouched because the ground-truth scorer depends on them.
 
 Usage:
     python3 anonymize_export.py \
-        --input ../docs/samsung-conversations-export.json \
-        --output ../docs/samsung-conversations-anonymized.json
+        --input ../docs/tech_repair-conversations-export.json \
+        --output ../docs/tech_repair-conversations-anonymized.json
 """
 
 from __future__ import annotations

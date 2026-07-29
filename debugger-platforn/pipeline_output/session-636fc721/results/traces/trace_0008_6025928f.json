@@ -13,7 +13,7 @@
     {
       "turn_number": 1,
       "role": "user",
-      "message": "Hola, mi Samsung se moj\u00f3 y no s\u00e9 qu\u00e9 hacer. \u00bfPueden ayudarme a repararlo? Me gustar\u00eda saber cu\u00e1nto cuesta y cu\u00e1ndo podr\u00eda estar listo.",
+      "message": "Hola, mi TechRepair se moj\u00f3 y no s\u00e9 qu\u00e9 hacer. \u00bfPueden ayudarme a repararlo? Me gustar\u00eda saber cu\u00e1nto cuesta y cu\u00e1ndo podr\u00eda estar listo.",
       "tool_calls": [],
       "timestamp": "2026-07-24 15:02:28.393470+00:00",
       "duration_ms": 0.0

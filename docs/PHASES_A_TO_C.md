@@ -1,8 +1,8 @@
-# Plavio Agent Debugger — Phases A to C
+# Agent-Testing Platform — Phases A to C
 
 ## Technical Documentation
 
-> This document provides a detailed technical breakdown of the first three phases of the Plavio Agent Debugger pipeline. Phase A receives the deepest coverage as the foundational analysis stage.
+> This document provides a detailed technical breakdown of the first three phases of the Agent-Testing Platform pipeline. Phase A receives the deepest coverage as the foundational analysis stage.
 
 ---
 

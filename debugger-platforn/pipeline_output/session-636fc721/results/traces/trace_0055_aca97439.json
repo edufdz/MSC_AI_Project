@@ -77,7 +77,7 @@
     {
       "turn_number": 5,
       "role": "user",
-      "message": "Est\u00e1 bien, voy a llamar, pero esto es rid\u00edculo... Mira, antes de que cuelgue, al menos dime si puedo verificar mi pago en l\u00ednea en la app de Samsung o tengo que hacerlo por tel\u00e9fono tambii\u00e9n. Y por favor, cuanndo llame, \u00bfnecesito tener mi n\u00famero de orden a mano o algo m\u00e1s?",
+      "message": "Est\u00e1 bien, voy a llamar, pero esto es rid\u00edculo... Mira, antes de que cuelgue, al menos dime si puedo verificar mi pago en l\u00ednea en la app de TechRepair o tengo que hacerlo por tel\u00e9fono tambii\u00e9n. Y por favor, cuanndo llame, \u00bfnecesito tener mi n\u00famero de orden a mano o algo m\u00e1s?",
       "tool_calls": [],
       "timestamp": "2026-07-24 15:03:37.457064+00:00",
       "duration_ms": 0.0

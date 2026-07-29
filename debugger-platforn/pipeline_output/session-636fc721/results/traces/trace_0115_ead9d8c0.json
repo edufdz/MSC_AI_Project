@@ -13,7 +13,7 @@
     {
       "turn_number": 1,
       "role": "user",
-      "message": "Hola, buenos d\u00edas. Tengo un problema cin mis dos reparaciones en Samsung y necesito verificar que los datos de mi direcci\u00f3n est\u00e9n correctos en el sistema, porque me preocupa que no me lleguen las notificaciones, please.",
+      "message": "Hola, buenos d\u00edas. Tengo un problema cin mis dos reparaciones en TechRepair y necesito verificar que los datos de mi direcci\u00f3n est\u00e9n correctos en el sistema, porque me preocupa que no me lleguen las notificaciones, please.",
       "tool_calls": [],
       "timestamp": "2026-07-24 15:03:10.853841+00:00",
       "duration_ms": 0.0

@@ -4,8 +4,8 @@ Sensitivity sweep for the RQ3 result: vary min_score, holdout_fraction, and
 the RNG seed one at a time and check the feedback-vs-blind delta survives.
 
     python3 run_sensitivity.py \
-        --export ../docs/samsung-conversations-anonymized.json \
-        --agent-map samsung_whatsapp_map.json
+        --export ../docs/tech_repair-conversations-anonymized.json \
+        --agent-map tech_repair_whatsapp_map.json
 """
 
 from __future__ import annotations

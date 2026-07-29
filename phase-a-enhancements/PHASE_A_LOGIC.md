@@ -2,7 +2,7 @@
 
 ## What Phase A Does
 
-Phase A is the **analysis stage** of the Plavio Agent Debugger. It takes an AI agent's source code as input and produces a structured **Agent Map** (`agent_map.json`) that fully describes the agent's architecture, tools, prompts, risks, guardrails, and behaviour. This Agent Map is the sole input to Phase B (test generation).
+Phase A is the **analysis stage** of the Agent-Testing Platform. It takes an AI agent's source code as input and produces a structured **Agent Map** (`agent_map.json`) that fully describes the agent's architecture, tools, prompts, risks, guardrails, and behaviour. This Agent Map is the sole input to Phase B (test generation).
 
 **Core thesis**: richer Agent Map → better tests.
 
@@ -517,9 +517,9 @@ Edges from LangGraph topology extraction show the actual state machine flow (mul
 
 ---
 
-## Samsung WhatsApp Agent — Example Output
+## TechRepair WhatsApp Agent — Example Output
 
-When run against the Samsung WhatsApp agent at Pulpoo:
+When run against the TechRepair WhatsApp agent at Pulpoo:
 
 | Metric | Value |
 |--------|-------|

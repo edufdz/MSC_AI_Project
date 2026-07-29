@@ -6,7 +6,7 @@ A standalone anonymization platform that takes raw customer-support conversation
 
 ## Why It Exists
 
-This platform is part of an MSC AI research project at Imperial College London. The research requires analysis of real production conversations from a Spanish-language WhatsApp customer support agent (operated by Pulpoo for Samsung). Before any analysis can happen, conversations must be fully anonymized to:
+This platform is part of an MSC AI research project at Imperial College London. The research requires analysis of real production conversations from a Spanish-language WhatsApp customer support agent (operated by Pulpoo for TechRepair). Before any analysis can happen, conversations must be fully anonymized to:
 
 1. Comply with ethics requirements (Imperial ethics board submission)
 2. Remove all customer PII (names, phones, emails, addresses, account numbers)

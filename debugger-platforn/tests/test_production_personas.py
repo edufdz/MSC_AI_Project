@@ -33,7 +33,7 @@ from src.personas.trace_grounding import (
 # ---------------------------------------------------------------
 
 def _spanish_conversations() -> list:
-    """Mexican-Spanish support conversations (Samsung-style)."""
+    """Mexican-Spanish support conversations (TechRepair-style)."""
     return [
         {
             "trace_id": "t1",
@@ -73,8 +73,8 @@ def _spanish_conversations() -> list:
 
 def _agent_map() -> dict:
     return {
-        "agent_id": "samsung_wa",
-        "metadata": {"type": "support", "purpose": "Samsung support", "conversation_language": "Spanish"},
+        "agent_id": "tech_repair_wa",
+        "metadata": {"type": "support", "purpose": "TechRepair support", "conversation_language": "Spanish"},
         "components": {"tools": [{"name": "get_order_status", "risk_level": "low"}]},
     }
 

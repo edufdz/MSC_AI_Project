@@ -16,7 +16,7 @@ Outputs curves (PNG), scale_curves.json, and SCALE_REPORT.md.
 
 Usage:
     python3 scale_curves.py \
-        --real ../docs/samsung-conversations-anonymized.json \
+        --real ../docs/tech_repair-conversations-anonymized.json \
         --batches results_scale_study \
         -o ../docs/results/real_vs_sim/scale
 """

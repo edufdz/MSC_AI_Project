@@ -13,7 +13,7 @@
     {
       "turn_number": 1,
       "role": "user",
-      "message": "Hola, buenos d\u00edas. Mira, necesito contactar al centro de servicio Samsung de Polanco pero tengo dos n\u00fameros diferentes y no me queda claro cu\u00e1l es el correcto para llamar. \u00bfMe podr\u00edas ayudar a identificar cu\u00e1l debo usar?",
+      "message": "Hola, buenos d\u00edas. Mira, necesito contactar al centro de servicio TechRepair de Polanco pero tengo dos n\u00fameros diferentes y no me queda claro cu\u00e1l es el correcto para llamar. \u00bfMe podr\u00edas ayudar a identificar cu\u00e1l debo usar?",
       "tool_calls": [],
       "timestamp": "2026-07-24 15:26:36.478958+00:00",
       "duration_ms": 0.0

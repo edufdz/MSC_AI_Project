@@ -193,7 +193,7 @@ def _echo_turn(
 ) -> Tuple[str, List[Dict[str, Any]], List[TraceToolCall]]:
     """Deterministic stand-in agent: templated reply + 0-2 mock tool calls.
 
-    Keyword routing (mirrors the Samsung support domain the platform
+    Keyword routing (mirrors the TechRepair support domain the platform
     studies):
         - "orden"/"order"/digits  → first tool containing "order"/"status"
                                     (else the first registered tool)

@@ -1,7 +1,7 @@
 # FULL PROJECT CONTEXT — read this first
 
 **Written 2026-07-24 (end of day). Supersedes `PROJECT_STATUS.md` (2026-07-14)
-and `SAMSUNG_LIVE_SIMULATION.md` (2026-07-24 morning) as the single catch-up
+and `TECH_REPAIR_LIVE_SIMULATION.md` (2026-07-24 morning) as the single catch-up
 document.** Give this file to any new working session (human or AI) — it says
 what the project is, what exists, what the results are, every gotcha, and what
 remains.
@@ -16,9 +16,9 @@ synthetic adversarial testing of a conversational agent predicts the failures
 that occur in real production, and whether feeding production failures back
 into test generation improves prediction. The testbed is (a) an agent-testing
 platform (`debugger-platforn/`: Phases A–E + web UI), (b) 1,299 real anonymised
-Spanish WhatsApp conversations from the deployed Samsung/Pulpoo support agent,
+Spanish WhatsApp conversations from the deployed TechRepair/Pulpoo support agent,
 and (c) a **verbatim copy of that production agent** running against a fake DB
-(`samsung-live-agent/`). As of 2026-07-24 the loop is closed behaviourally:
+(`tech_repair-live-agent/`). As of 2026-07-24 the loop is closed behaviourally:
 simulated conversations against the live agent are compared to real failures
 under an **identical rule-based scorer**, with a 7-batch scale study
 (N=10…1000, 2,560 conversations). Headline: **simulation reproduces 5/7
@@ -31,8 +31,8 @@ budget-limited.**
 | Path | What |
 |---|---|
 | `debugger-platforn/` | The platform. Phases: A analyze code→agent_map; B generate personas/scenarios/tests; C execute (this is "Fase C"); D diagnose; E improve. Web UI: FastAPI (`web/api`, system python3) + React (`web/frontend`, vite/bun). CLI entry points: `analyze.py`, `generate_tests.py`, `execute_tests.py`, `run_pipeline.py`, `diagnose_failures.py`. |
-| `samsung-live-agent/` | Verbatim pulpoo WhatsApp agent + in-memory fake Supabase. `bun run api` → **:3098** (`POST /chat`, `GET /db`, `POST /reset`, `GET /health`). Needs `.env` with ANTHROPIC_API_KEY + OPENAI_API_KEY. Agent code untouched; 5 fake shims; 6 type-only `// [sim]` patches. |
-| `docs/` | All docs + the real corpus. `samsung-conversations-export.json` = **RAW, contains PII, tracked in git history — never push public**. `samsung-conversations-anonymized.json` = the corpus every experiment uses. `docs/results/` = archived experiment outputs. |
+| `tech_repair-live-agent/` | Verbatim pulpoo WhatsApp agent + in-memory fake Supabase. `bun run api` → **:3098** (`POST /chat`, `GET /db`, `POST /reset`, `GET /health`). Needs `.env` with ANTHROPIC_API_KEY + OPENAI_API_KEY. Agent code untouched; 5 fake shims; 6 type-only `// [sim]` patches. |
+| `docs/` | All docs + the real corpus. `tech_repair-conversations-export.json` = **RAW, contains PII, tracked in git history — never push public**. `tech_repair-conversations-anonymized.json` = the corpus every experiment uses. `docs/results/` = archived experiment outputs. |
 | `investigation/` | **Self-contained package** of the real-vs-sim study: methodology, all data (real + every sim corpus), scripts, results, and the LaTeX report (`05_report/report.tex` → `report.pdf`, compile with `tectonic report.tex` — tectonic installed via brew 2026-07-24). |
 | `phase-c-enhancements/CONTEXT.md` | Phase C gap analysis; sprint plan X1 (oracle evaluation), X2 (behavioural detectors), X3 (real-agent execute mode — DONE), etc. |
 
@@ -48,9 +48,9 @@ while saying "you have two orders"; verified working in every run).
 
 ## 4. Critical operational gotchas (each one has bitten already)
 
-1. **Two agent maps.** `samsung_whatsapp_map.json` = pristine research map
+1. **Two agent maps.** `tech_repair_whatsapp_map.json` = pristine research map
    (NO terminal outcomes → every execute run scores 0 vacuously — keep for
-   research arms). `samsung_whatsapp_map_live.json` = execution map (terminal
+   research arms). `tech_repair_whatsapp_map_live.json` = execution map (terminal
    outcomes `order_status_provided`/`escalated_to_human`, Spanish confirmation
    phrases, `api_endpoint`, `runtime_tools: [order_lookup, escalate_to_human]`).
    **Always execute with the live map.** The web route auto-merges the live
@@ -71,7 +71,7 @@ while saying "you have two orders"; verified working in every run).
 6. **Persona-context prompt blocks on stdin.** Non-interactive runs: pipe
    `printf "\n"` (default-Y uses the pre-made context). Do NOT also redirect
    `< /dev/null` (kills the pipe → context OFF, changes the experiment).
-7. **`@langchain/core` pinned 1.2.3** in samsung-live-agent (bun needs
+7. **`@langchain/core` pinned 1.2.3** in tech_repair-live-agent (bun needs
    `uuid.v6`). The agent's OpenAI event-verifier throws non-fatal
    OUTPUT_PARSING_FAILURE ~10% of tests (upstream zod bug, fails open —
    a genuine production bug faithfully reproduced; do not fix).
@@ -100,10 +100,10 @@ while saying "you have two orders"; verified working in every run).
 
 | Run | N | Result | Where |
 |---|---|---|---|
-| v1 (research map — the trap) | 10 | 0/10 vacuous | `results_samsung_live/` |
-| v2 (live map, pre-context) | 10 | 9/10 | `results_samsung_live_v2/` |
-| v3 (context on) | 10 | 10/10 | `results_samsung_live_v3/` |
-| v4 (full suite) | 40 | 40/40, 100% tool cov | `results_samsung_live_v4/` |
+| v1 (research map — the trap) | 10 | 0/10 vacuous | `results_tech_repair_live/` |
+| v2 (live map, pre-context) | 10 | 9/10 | `results_tech_repair_live_v2/` |
+| v3 (context on) | 10 | 10/10 | `results_tech_repair_live_v3/` |
+| v4 (full suite) | 40 | 40/40, 100% tool cov | `results_tech_repair_live_v4/` |
 | 200-run (tiled suite, CLI) | 200 | 197/200; 3 real repetition-loop failures (#8 #26 #147) | traces in commit `420f116`; consolidated JSON in `investigation/` |
 | User web runs | 10, 150 | 141/150 (94%) | `pipeline_output/session-636fc721/results/` |
 | Scale study | 7 batches, 2,560 total | see §7 | `results_scale_study/N*/` |
@@ -185,11 +185,11 @@ sensitivity configs). RQ4 arm ranking: feedback > blind/template > naive_llm
 
 ```bash
 # Live agent (terminal 1)
-cd samsung-live-agent && bun run api                  # :3098
+cd tech_repair-live-agent && bun run api                  # :3098
 
 # Phase C against it (terminal 2)
 cd debugger-platforn && printf "\n" | ./venv/bin/python execute_tests.py \
-  generated_samsung/test_suite.json samsung_whatsapp_map_live.json \
+  generated_tech_repair/test_suite.json tech_repair_whatsapp_map_live.json \
   --count 40 --workers 4 --ai-personas -o results_new --no-monitor
 
 # Web platform
@@ -197,9 +197,9 @@ cd debugger-platforn && uvicorn web.api.app:app --port 8000   # system python3
 cd debugger-platforn/web/frontend && bun run dev              # :5173
 
 # Real-vs-sim comparison / scale curves (system python3)
-python3 compare_real_vs_sim.py --real ../docs/samsung-conversations-anonymized.json \
+python3 compare_real_vs_sim.py --real ../docs/tech_repair-conversations-anonymized.json \
   --sim <conversations.json> -o ../docs/results/real_vs_sim
-python3 scale_curves.py --real ../docs/samsung-conversations-anonymized.json \
+python3 scale_curves.py --real ../docs/tech_repair-conversations-anonymized.json \
   --batches results_scale_study -o ../docs/results/real_vs_sim/scale
 
 # Report

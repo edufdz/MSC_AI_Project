@@ -17,8 +17,8 @@
       "naive_llm",
       "gan"
     ],
-    "export_path": "../docs/samsung-conversations-anonymized.json",
-    "agent_map_path": "samsung_whatsapp_map.json"
+    "export_path": "../docs/tech_repair-conversations-anonymized.json",
+    "agent_map_path": "tech_repair_whatsapp_map.json"
   },
   "anonymisation_level": "full",
   "skipped_arms": [],

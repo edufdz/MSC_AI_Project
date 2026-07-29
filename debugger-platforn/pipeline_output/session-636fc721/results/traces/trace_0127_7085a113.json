@@ -21,7 +21,7 @@
     {
       "turn_number": 1,
       "role": "agent",
-      "message": "Hola Vale, entiendo que tienes prisa.\nNo manejo acceso a cuentas ni sistemas de login \u2014 eso est\u00e1 fuera de mi alcance. Soy el asistente del Centro de Servicio Samsung Polanco y puedo ayudarte con:\n- Estado de tus reparaciones\n- Informaci\u00f3n del centro (horarios, ubicaci\u00f3n)\n",
+      "message": "Hola Vale, entiendo que tienes prisa.\nNo manejo acceso a cuentas ni sistemas de login \u2014 eso est\u00e1 fuera de mi alcance. Soy el asistente del Centro de Servicio TechRepair Polanco y puedo ayudarte con:\n- Estado de tus reparaciones\n- Informaci\u00f3n del centro (horarios, ubicaci\u00f3n)\n",
       "tool_calls": [],
       "timestamp": "2026-07-24 15:03:51.608139+00:00",
       "duration_ms": 2410.564

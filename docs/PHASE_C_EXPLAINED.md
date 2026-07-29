@@ -1,10 +1,10 @@
 # Phase C (Execute) — Detailed Explanation
 
 > **What this document is:** a self-contained, in-depth explanation of Phase C of the
-> Plavio Agent Debugger platform (`debugger-platforn/`): what it does, how it works
+> Agent-Testing Platform (`debugger-platforn/`): what it does, how it works
 > internally, how it connects to the other phases, how pass/fail is decided, what it
 > outputs, its known limitations, and how it has actually been used against the live
-> Samsung/Pulpoo agent. Companion docs: `PHASE_B_AND_C_EXPLAINED.md` (B→C handoff),
+> TechRepair/Pulpoo agent. Companion docs: `PHASE_B_AND_C_EXPLAINED.md` (B→C handoff),
 > `PHASES_A_TO_C.md` (field-level reference), `phase-c-enhancements/CONTEXT.md`
 > (gap analysis + sprint plan), `FULL_CONTEXT.md` (project state).
 
@@ -50,9 +50,9 @@ Because the agent map *directly configures the verdict logic at runtime*, the
 quality of Phase A's outcome extraction bounds the validity of every Phase C
 verdict. This has a critical operational consequence in this project:
 
-> **The two-maps gotcha.** `samsung_whatsapp_map.json` is the pristine research
+> **The two-maps gotcha.** `tech_repair_whatsapp_map.json` is the pristine research
 > map — it has **no terminal outcomes**, so every execute run against it scores 0
-> vacuously. `samsung_whatsapp_map_live.json` is the execution map (terminal
+> vacuously. `tech_repair_whatsapp_map_live.json` is the execution map (terminal
 > outcomes `order_status_provided` / `escalated_to_human`, Spanish confirmation
 > phrases, `api_endpoint`, `runtime_tools`). **Always execute with the live map.**
 > The web route auto-merges the live map's execution fields into session maps via
@@ -73,7 +73,7 @@ A typical live run (agent on `:3098` in another terminal):
 
 ```bash
 cd debugger-platforn && printf "\n" | ./venv/bin/python execute_tests.py \
-  generated_samsung/test_suite.json samsung_whatsapp_map_live.json \
+  generated_tech_repair/test_suite.json tech_repair_whatsapp_map_live.json \
   --count 40 --workers 4 --ai-personas -o results_new --no-monitor
 ```
 
@@ -119,7 +119,7 @@ a time, until a terminal outcome fires, the persona abandons, or `max_turns`
      free, no API calls, used for CI and pipeline smoke tests.
    User-supplied **persona context** (`persona_context.py`) grounds the persona
    in real business data — in this project, the fake customer Valeria Mendoza
-   García and her two Samsung repair orders.
+   García and her two TechRepair repair orders.
 2. **Maybe inject chaos** (`_maybe_inject_chaos`, per-turn rolls when the test's
    `chaos_injection` config enables them): `timeout` (15%/turn — agent call
    skipped entirely), `malformed_response` (10% — response corrupted before the
@@ -139,7 +139,7 @@ a time, until a terminal outcome fires, the persona abandons, or `max_turns`
 | Connector | When | How |
 |---|---|---|
 | **MockAgentConnector** | `--mock` / no endpoint | Fully local simulated agent: canned EN/ES responses, configurable fail rate (5%), tool-call rate (40%), simulated latency, tool-chain progression driven by the agent map. Good for pipeline tests; its failures are *random noise*, never research findings. |
-| **APIAgentConnector** | Real agent over HTTP | `POST {endpoint}` with `{"message", "session_id"}`; expects `{response, tool_calls}`; 120s timeout. This is how the live Samsung agent on `:3098` is exercised. |
+| **APIAgentConnector** | Real agent over HTTP | `POST {endpoint}` with `{"message", "session_id"}`; expects `{response, tool_calls}`; 120s timeout. This is how the live TechRepair agent on `:3098` is exercised. |
 | **VictoriaConnector** | Victoria-framework agents | Session cookies, 3-concurrent-request semaphore, exponential-backoff retries. |
 
 ### 4.3 GAN mode (optional adversarial quality loop)
@@ -270,9 +270,9 @@ because they shape how Phase C results must be read.
 
 ---
 
-## 8. Phase C in practice — the live Samsung agent runs
+## 8. Phase C in practice — the live TechRepair agent runs
 
-Sprint X3 is done: `samsung-live-agent/` is a **verbatim copy of the production
+Sprint X3 is done: `tech_repair-live-agent/` is a **verbatim copy of the production
 Pulpoo WhatsApp agent** running against an in-memory fake Supabase (`bun run api`
 → `:3098`), wired to Phase C via `agent_endpoints.json` and the
 `APIAgentConnector`. Every simulation converses with the fake customer **Valeria
@@ -317,4 +317,4 @@ budget-limited. Full study in `investigation/` (report:
 | Oracles (generated, unevaluated) | `src/oracles/`, attached in `src/scenarios/library.py` |
 | Sandbox bridge + fidelity | `src/sandbox/bridge.py`, `src/sandbox/replay.py` |
 | Execution-map overlay (web) | `src/endpoints_config.py` |
-| Live agent | `samsung-live-agent/` (`:3098`) |
+| Live agent | `tech_repair-live-agent/` (`:3098`) |

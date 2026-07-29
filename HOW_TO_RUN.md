@@ -142,13 +142,13 @@ cd debugger-platforn
 
 # 1. Anonymise the extracted conversations (once)
 python3 anonymize_export.py \
-    --input ../docs/samsung-conversations-export.json \
-    --output ../docs/samsung-conversations-anonymized.json
+    --input ../docs/tech_repair-conversations-export.json \
+    --output ../docs/tech_repair-conversations-anonymized.json
 
 # 2. Run the predictive-validity experiments
 python3 run_experiments.py \
-    --export ../docs/samsung-conversations-anonymized.json \
-    --agent-map samsung_whatsapp_map.json --budget 100
+    --export ../docs/tech_repair-conversations-anonymized.json \
+    --agent-map tech_repair_whatsapp_map.json --budget 100
 ```
 
 Artefacts land in `experiments_output/<timestamp>/` (results.json, REPORT.md,
@@ -157,9 +157,9 @@ charts). The same workflow is available in the web UI under **Research**.
 Optional simulation endpoint + production-vs-simulation fidelity comparison:
 
 ```bash
-python3 sandbox_bridge.py serve --agent-map samsung_whatsapp_map.json --port 8099
-python3 sandbox_bridge.py replay --agent-map samsung_whatsapp_map.json \
-    --export ../docs/samsung-conversations-anonymized.json --sample 50 \
+python3 sandbox_bridge.py serve --agent-map tech_repair_whatsapp_map.json --port 8099
+python3 sandbox_bridge.py replay --agent-map tech_repair_whatsapp_map.json \
+    --export ../docs/tech_repair-conversations-anonymized.json --sample 50 \
     --output fidelity_report.json
 ```
 

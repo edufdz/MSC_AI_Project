@@ -8,7 +8,7 @@ Convert every real production failure trace (escalation, complaint, QA flag) int
 
 ## Why This Matters
 
-The current B3 scenario library generates scenarios from the agent's tool surface and generic edge-case dimensions. It has zero knowledge of what actually fails in production. The Samsung WhatsApp agent has Langfuse traces with escalation events, failure patterns, and complaint sequences — these are the ideal seeds because they are known to reach a failure.
+The current B3 scenario library generates scenarios from the agent's tool surface and generic edge-case dimensions. It has zero knowledge of what actually fails in production. The TechRepair WhatsApp agent has Langfuse traces with escalation events, failure patterns, and complaint sequences — these are the ideal seeds because they are known to reach a failure.
 
 ## Tasks
 
@@ -100,7 +100,7 @@ The current B3 scenario library generates scenarios from the agent's tool surfac
   - `"perturb_tool_arg"`: keep same sequence but change one tool argument (e.g., different order_id format)
   - `"adjacent_tool"`: replace one tool in the sequence with a neighbouring tool (same dependency group)
   - `"add_noise"`: insert an unrelated tool call mid-sequence (simulates user tangent)
-  - `"change_language"`: switch between Spanish/English (for the Samsung bilingual agent)
+  - `"change_language"`: switch between Spanish/English (for the TechRepair bilingual agent)
   - `"change_formality"`: switch between usted/tú
 
 - [ ] Implement `expand_seed_corpus(corpus: SeedCorpus, mutations_per_seed: int = 3) -> list[Scenario]`:

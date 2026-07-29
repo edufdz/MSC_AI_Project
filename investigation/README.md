@@ -10,9 +10,9 @@ excluded.
 | Path | What it is |
 |---|---|
 | `01_methodology/REAL_VS_SIM_COMPARISON_PLAN.md` | Pre-registered design: three comparison layers, reachability, statistics, validity threats |
-| `01_methodology/SAMSUNG_LIVE_SIMULATION.md` | How the verbatim live-agent simulation works |
-| `02_data/real/samsung-conversations-anonymized.json` | The real corpus: 1,299 anonymised production conversations |
-| `02_data/simulated/run_v4_40tests.json` | 40-test live run (generated_samsung suite) |
+| `01_methodology/TECH_REPAIR_LIVE_SIMULATION.md` | How the verbatim live-agent simulation works |
+| `02_data/real/tech_repair-conversations-anonymized.json` | The real corpus: 1,299 anonymised production conversations |
+| `02_data/simulated/run_v4_40tests.json` | 40-test live run (generated_tech_repair suite) |
 | `02_data/simulated/run_web_150tests.json` | 150-test run launched from the web platform |
 | `02_data/simulated/run_200tests_recovered.json` | 200-test CLI run (recovered from git commit 420f116 traces) |
 | `02_data/simulated/scale_batches/N0010…N1000/` | The 7 independent scale-study batches: conversations.json + test_run_report.json + failure_inbox.json each |
@@ -35,9 +35,9 @@ excluded.
 
 ```bash
 cd 03_analysis_scripts
-python3 compare_real_vs_sim.py --real ../02_data/real/samsung-conversations-anonymized.json \
+python3 compare_real_vs_sim.py --real ../02_data/real/tech_repair-conversations-anonymized.json \
     --sim ../02_data/simulated/run_v4_40tests.json [--sim ...] -o out/
-python3 scale_curves.py --real ../02_data/real/samsung-conversations-anonymized.json \
+python3 scale_curves.py --real ../02_data/real/tech_repair-conversations-anonymized.json \
     --batches ../02_data/simulated/scale_batches -o out/scale/
 ```
 

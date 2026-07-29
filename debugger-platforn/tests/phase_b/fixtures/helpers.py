@@ -24,18 +24,18 @@ from src.evaluation.taxonomy import FailureCategory  # noqa: E402
 
 FIXTURES_DIR = Path(__file__).resolve().parent
 
-# Named agent-map fixtures. "samsung"/"enriched" is the rich map exercising
+# Named agent-map fixtures. "tech_repair"/"enriched" is the rich map exercising
 # every Phase B enhancement; "python"/"minimal" is a stripped-down map used
 # for graceful-degradation tests.
 _AGENT_MAPS = {
-    "samsung": "enriched_agent_map.json",
+    "tech_repair": "enriched_agent_map.json",
     "enriched": "enriched_agent_map.json",
     "python": "python_agent_map.json",
     "minimal": "python_agent_map.json",
 }
 
 
-def agent_map_path(name: str = "samsung") -> Path:
+def agent_map_path(name: str = "tech_repair") -> Path:
     """Absolute path to a named agent-map fixture."""
     fname = _AGENT_MAPS.get(name)
     if fname is None:
@@ -43,7 +43,7 @@ def agent_map_path(name: str = "samsung") -> Path:
     return FIXTURES_DIR / fname
 
 
-def load_agent_map(name: str = "samsung") -> Dict[str, Any]:
+def load_agent_map(name: str = "tech_repair") -> Dict[str, Any]:
     """Load a named agent-map fixture as a dict."""
     with open(agent_map_path(name)) as f:
         return json.load(f)

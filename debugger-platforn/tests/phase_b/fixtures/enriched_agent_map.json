@@ -1,8 +1,8 @@
 {
   "version": "1.0",
-  "agent_id": "phase-b-enriched-samsung-support",
+  "agent_id": "phase-b-enriched-tech_repair-support",
   "metadata": {
-    "name": "Samsung Store Support Agent",
+    "name": "TechRepair Store Support Agent",
     "type": "support",
     "purpose": "WhatsApp customer-support agent for a consumer-electronics store: checks order status, updates delivery addresses, handles warranty and refund requests, and escalates to a human when needed.",
     "conversation_language": "English",

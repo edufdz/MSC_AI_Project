@@ -64,7 +64,7 @@ class GeneratedSuite:
 def phase_b():
     """Factory returning cached :class:`GeneratedSuite` objects.
 
-    Signature: ``phase_b(map_name="samsung", use_traces=False, count=40,
+    Signature: ``phase_b(map_name="tech_repair", use_traces=False, count=40,
     variants=2, seed=42, extra=None)``.
     """
     cache: Dict[tuple, GeneratedSuite] = {}
@@ -77,7 +77,7 @@ def phase_b():
     base_dir = Path(tempfile.mkdtemp(prefix="phase_b_et_")) if tmp_root is None else tmp_root
 
     def run(
-        map_name: str = "samsung",
+        map_name: str = "tech_repair",
         use_traces: bool = False,
         count: int = 40,
         variants: int = 2,

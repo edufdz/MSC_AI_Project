@@ -93,7 +93,7 @@
     {
       "turn_number": 6,
       "role": "user",
-      "message": "\u00a1Esto es completamente inaceptable! He llamado ese n\u00famero CUATRO VECES y nadie contesta \u2014 \u00bfme est\u00e1s diciendo que Samsung no tiene otra forma de ayudarme en una emergencia as\u00ed? Necesito hablar con un supervisor AHORA porque tengo una reuni\u00f3n en menos de 90 minutos y no tengo tel\u00e9fono, please.",
+      "message": "\u00a1Esto es completamente inaceptable! He llamado ese n\u00famero CUATRO VECES y nadie contesta \u2014 \u00bfme est\u00e1s diciendo que TechRepair no tiene otra forma de ayudarme en una emergencia as\u00ed? Necesito hablar con un supervisor AHORA porque tengo una reuni\u00f3n en menos de 90 minutos y no tengo tel\u00e9fono, please.",
       "tool_calls": [],
       "timestamp": "2026-07-24 15:04:12.910167+00:00",
       "duration_ms": 0.0

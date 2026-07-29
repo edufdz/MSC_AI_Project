@@ -66,7 +66,7 @@ def make_production_conv(
     escalated: bool = False,
     tool_names: list[str] | None = None,
 ) -> dict:
-    """Minimal conversation in the Samsung WhatsApp export schema."""
+    """Minimal conversation in the TechRepair WhatsApp export schema."""
     tool_calls = [{"name": n} for n in (tool_names or [])]
     messages = [
         {"source": "customer", "text_body": "Hola, quiero saber de mi orden 12345"},
