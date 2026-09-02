@@ -1,0 +1,127 @@
+{
+  "source_file": "tech_repair-live-agent/server-mirror/services/agents/whatsapp/graph/builder.ts",
+  "nodes": [
+    "event_detector",
+    "router",
+    "status",
+    "support",
+    "contact_info",
+    "delivery_logistics",
+    "warranty_answer",
+    "pricing_answer",
+    "memory_extraction",
+    "escalation",
+    "human_taken_over",
+    "response"
+  ],
+  "edges": [
+    [
+      "START",
+      "event_detector"
+    ],
+    [
+      "event_detector",
+      "router"
+    ],
+    [
+      "status",
+      "response"
+    ],
+    [
+      "contact_info",
+      "response"
+    ],
+    [
+      "delivery_logistics",
+      "response"
+    ],
+    [
+      "warranty_answer",
+      "response"
+    ],
+    [
+      "pricing_answer",
+      "response"
+    ],
+    [
+      "memory_extraction",
+      "response"
+    ],
+    [
+      "escalation",
+      "response"
+    ],
+    [
+      "human_taken_over",
+      "response"
+    ],
+    [
+      "response",
+      "END"
+    ]
+  ],
+  "conditional_edges": {
+    "router": {
+      "fn": "routeByIntent",
+      "targets": [
+        "status",
+        "support",
+        "contact_info",
+        "delivery_logistics",
+        "warranty_answer",
+        "pricing_answer",
+        "escalation",
+        "human_taken_over"
+      ]
+    },
+    "support": {
+      "fn": "routeAfterSupport",
+      "targets": [
+        "memory_extraction",
+        "response"
+      ]
+    }
+  },
+  "route_by_intent": {
+    "status": [
+      "ORDER_STATUS"
+    ],
+    "pricing_answer": [
+      "PRICING"
+    ],
+    "warranty_answer": [
+      "WARRANTY_QUESTION"
+    ],
+    "delivery_logistics": [
+      "DELIVERY_LOGISTICS"
+    ],
+    "contact_info": [
+      "CONTACT_INFO_REQUEST"
+    ],
+    "support": [
+      "GREETING",
+      "GOODBYE",
+      "CONFIRMATION",
+      "REJECTION",
+      "GENERAL_SUPPORT",
+      "NEW_SYMPTOM_REPORT",
+      "UNKNOWN",
+      "default"
+    ]
+  },
+  "route_guards": [
+    [
+      "human_taken_over",
+      "state.humanTakenOver"
+    ],
+    [
+      "escalation",
+      "escalated / priority=high / ESCALATION /\nEXPLICIT_HUMAN_REQUEST / COMPLAINT_OR_FRUSTRATION"
+    ]
+  ],
+  "route_after_support": {
+    "on": "GOODBYE",
+    "then": "memory_extraction",
+    "else": "response"
+  }
+}

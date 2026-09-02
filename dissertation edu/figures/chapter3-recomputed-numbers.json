@@ -1,0 +1,21 @@
+{
+  "n_conv": 1299,
+  "n_msg": 24537,
+  "escalated": 291,
+  "requested_human": 221,
+  "unknown_intent": 297,
+  "long_conv": 287,
+  "failed_deliveries": 239,
+  "repeaters": 163,
+  "n_fail": 376,
+  "categories": {
+    "delivery_infra": 14,
+    "silent_abandonment": 9,
+    "comprehension": 153,
+    "loop_stall": 256,
+    "resolution": 221,
+    "hallucination": 13,
+    "data_gap": 48,
+    "missed_escalation": 11
+  }
+}
