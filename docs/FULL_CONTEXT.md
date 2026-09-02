@@ -68,9 +68,12 @@ while saying "you have two orders"; verified working in every run).
    (pyenv 3.13.5, has fastapi/numpy/matplotlib). Phase B/C CLI use
    `debugger-platforn/venv` (`./venv/bin/python`). Both work for the
    comparison scripts.
-6. **Persona-context prompt blocks on stdin.** Non-interactive runs: pipe
-   `printf "\n"` (default-Y uses the pre-made context). Do NOT also redirect
-   `< /dev/null` (kills the pipe → context OFF, changes the experiment).
+6. **Persona context must be stated explicitly.** Non-interactive runs now
+   require one of `--persona-context` (the pre-made Valeria context, and what
+   every recorded run used), `--persona-context-file PATH`, or
+   `--no-persona-context`; omitting all three on a non-TTY is an error rather
+   than a silent default. The old `printf "\n" |` pipe is no longer needed —
+   use `--persona-context`, which is the same setting it selected.
 7. **`@langchain/core` pinned 1.2.3** in tech_repair-live-agent (bun needs
    `uuid.v6`). The agent's OpenAI event-verifier throws non-fatal
    OUTPUT_PARSING_FAILURE ~10% of tests (upstream zod bug, fails open —
@@ -188,7 +191,7 @@ sensitivity configs). RQ4 arm ranking: feedback > blind/template > naive_llm
 cd tech_repair-live-agent && bun run api                  # :3098
 
 # Phase C against it (terminal 2)
-cd debugger-platforn && printf "\n" | ./venv/bin/python execute_tests.py \
+cd debugger-platforn && ./venv/bin/python execute_tests.py --persona-context \
   generated_tech_repair/test_suite.json tech_repair_whatsapp_map_live.json \
   --count 40 --workers 4 --ai-personas -o results_new --no-monitor
 

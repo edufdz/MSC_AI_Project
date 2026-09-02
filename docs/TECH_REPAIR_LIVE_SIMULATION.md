@@ -146,7 +146,8 @@ cd tech_repair-live-agent && bun run api
 # terminal 2
 cd debugger-platforn && source venv/bin/activate
 python execute_tests.py generated_tech_repair/test_suite.json \
-    tech_repair_whatsapp_map_live.json --count 40 --workers 2 -o results
+    tech_repair_whatsapp_map_live.json --count 40 --workers 2 -o results \
+    --persona-context
 ```
 
 > **Always use `tech_repair_whatsapp_map_live.json` for execution.** The

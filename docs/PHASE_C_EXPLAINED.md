@@ -72,15 +72,15 @@ verdict. This has a critical operational consequence in this project:
 A typical live run (agent on `:3098` in another terminal):
 
 ```bash
-cd debugger-platforn && printf "\n" | ./venv/bin/python execute_tests.py \
+cd debugger-platforn && ./venv/bin/python execute_tests.py --persona-context \
   generated_tech_repair/test_suite.json tech_repair_whatsapp_map_live.json \
   --count 40 --workers 4 --ai-personas -o results_new --no-monitor
 ```
 
-(The `printf "\n"` answers the persona-context prompt with default-Y, which loads
-the pre-made Valeria context from `config/persona_context_default.txt`. Do **not**
-redirect `< /dev/null` instead — that turns persona context OFF and changes the
-experiment.)
+(`--persona-context` loads the pre-made Valeria context from
+`config/persona_context_default.txt` — the setting every recorded run used. Pass
+`--no-persona-context` to run without it; omitting both on a non-interactive
+terminal is an error, so the choice can never be defaulted silently.)
 
 ---
 
